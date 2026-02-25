@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Luxury en-suite bathroom installation London. Free full-screen professional 2D planner with realistic fixtures. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
+  <meta name="description" content="Luxury en-suite bathroom installation London. Free full-screen professional 2D planner with realistic rotatable fixtures. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
   <title>En-Suite Bathrooms | Professional 2D Planner • Luxury London</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -96,7 +96,7 @@
     <div class="max-w-7xl mx-auto px-8 text-center">
       <span class="uppercase tracking-widest text-sm gold">PROFESSIONAL 2D PLANNER</span>
       <h2 class="section-title serif text-6xl mt-6">Architect-Grade Full-Screen Bathroom Designer</h2>
-      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Realistic fixtures • Thin walls • Movable pipes • Manhole & grass</p>
+      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Realistic rotatable fixtures • Drag pipes & walls • Mouse wheel to rotate selected item</p>
       
       <div class="mt-16 bg-white rounded-3xl p-16 max-w-3xl mx-auto border border-gold/30">
         <button onclick="launchPlanner()" 
@@ -198,7 +198,7 @@
             <p class="text-xl">Can I use the professional 2D planner?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – launch it, draw thin walls, add realistic fixtures, drag pipes, then send to us.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click to select, drag to move, mouse wheel to rotate, draw walls & pipes.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -257,7 +257,7 @@
     <!-- Toolbar -->
     <div class="bg-zinc-900 py-4 px-8 flex items-center gap-3 border-b border-zinc-800 text-white text-sm overflow-x-auto">
       <button onclick="setTool('select')" id="btn-select" class="tool-btn active px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">Select / Move</button>
-      <button onclick="setTool('wall')" id="btn-wall" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">🧱 Wall (thin)</button>
+      <button onclick="setTool('wall')" id="btn-wall" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">🧱 Wall</button>
       <button onclick="setTool('hot')" id="btn-hot" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2 text-red-400">🔴 Hot Pipe</button>
       <button onclick="setTool('cold')" id="btn-cold" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2 text-blue-400">🔵 Cold Pipe</button>
       <button onclick="setTool('drain')" id="btn-drain" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">⚫ Drainage</button>
@@ -293,7 +293,7 @@
       <canvas id="fullCanvas" class="flex-1 bg-[#f8f1e3]"></canvas>
       <div class="w-80 bg-zinc-900 text-white p-8 overflow-auto">
         <h3 class="gold text-xl mb-6">Selected</h3>
-        <div id="infoPanel" class="text-zinc-400">Click any fixture, wall or pipe to select and drag</div>
+        <div id="infoPanel" class="text-zinc-400">Click to select • Drag to move • Mouse wheel to rotate</div>
       </div>
     </div>
   </div>
@@ -310,13 +310,14 @@
       localStorage.setItem('roomioBannerClosed', 'true');
     }
 
-    // ====================== PROFESSIONAL 2D PLANNER ======================
+    // ====================== FULL PROFESSIONAL 2D PLANNER ======================
     let canvas, ctx;
     let scale = 58, offsetX = 90, offsetY = 70;
     let currentTool = 'select';
     let fixtures = [], walls = [], pipes = [];
-    let selectedItem = null; // fixture or pipe
+    let selectedItem = null; // fixture
     let selectedPipeIndex = -1;
+    let selectedWallIndex = -1;
     let isDragging = false, dragOffsetX = 0, dragOffsetY = 0, drawingStart = null;
 
     function launchPlanner() {
@@ -346,63 +347,68 @@
     function drawFixture(f) {
       const px = offsetX + f.x * scale;
       const py = offsetY + f.y * scale;
-      const s = scale * 0.6;
+      const s = scale * 0.62;
 
       ctx.save();
       ctx.translate(px, py);
+      ctx.rotate(f.rotation || 0);
 
       if (f.type === 'toilet') {
         // Tank
         ctx.fillStyle = '#f1f5f9';
-        ctx.fillRect(-s*0.7, -s*1.1, s*1.4, s*0.5);
+        ctx.fillRect(-s*0.75, -s*1.15, s*1.5, s*0.55);
         ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(-s*0.7, -s*1.1, s*1.4, s*0.5);
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-s*0.75, -s*1.15, s*1.5, s*0.55);
         // Bowl
         ctx.fillStyle = '#f1f5f9';
         ctx.beginPath();
-        ctx.ellipse(0, s*0.35, s*0.7, s*0.55, 0, 0, Math.PI*2);
+        ctx.ellipse(0, s*0.35, s*0.72, s*0.58, 0, 0, Math.PI*2);
         ctx.fill();
         ctx.stroke();
         // Seat
         ctx.fillStyle = '#1e2937';
         ctx.fillRect(-s*0.55, s*0.15, s*1.1, s*0.18);
       } else if (f.type === 'bath') {
+        // Body
         ctx.fillStyle = '#e0f2fe';
         ctx.beginPath();
-        ctx.ellipse(0, s*0.1, s*1.4, s*0.65, 0, 0, Math.PI*2);
+        ctx.ellipse(0, s*0.15, s*1.45, s*0.68, 0, 0, Math.PI*2);
         ctx.fill();
         ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 7;
         ctx.stroke();
         // Rim
         ctx.strokeStyle = '#64748b';
         ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.ellipse(0, s*0.05, s*1.45, s*0.6, 0, 0, Math.PI*2);
+        ctx.ellipse(0, s*0.12, s*1.52, s*0.62, 0, 0, Math.PI*2);
         ctx.stroke();
+        // Taps
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-s*0.6, -s*0.4, s*0.2, s*0.25);
       } else if (f.type === 'shower') {
         ctx.fillStyle = '#bae6fd';
-        ctx.globalAlpha = 0.3;
-        ctx.fillRect(-s*0.9, -s*1.1, s*1.8, s*2.0);
+        ctx.globalAlpha = 0.28;
+        ctx.fillRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
         ctx.globalAlpha = 1;
         ctx.fillStyle = '#e0f2fe';
-        ctx.fillRect(-s*0.9, s*0.8, s*1.8, s*0.25); // tray
+        ctx.fillRect(-s*0.95, s*0.85, s*1.9, s*0.25); // tray
         ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 5;
-        ctx.strokeRect(-s*0.9, -s*1.1, s*1.8, s*2.0);
-        // Head
+        ctx.lineWidth = 6;
+        ctx.strokeRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
+        // Shower head
         ctx.fillStyle = '#475569';
-        ctx.fillRect(-s*0.2, -s*1.15, s*0.4, s*0.15);
+        ctx.fillRect(-s*0.15, -s*1.25, s*0.3, s*0.12);
       } else if (f.type === 'towel-radiator') {
         ctx.fillStyle = '#cbd5e1';
-        ctx.fillRect(-s*0.4, -s*1.2, s*0.8, s*2.4);
+        ctx.fillRect(-s*0.45, -s*1.25, s*0.9, s*2.5);
         ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 8;
-        for (let i = 0; i < 7; i++) {
+        ctx.lineWidth = 7;
+        for (let i = 0; i < 8; i++) {
           ctx.beginPath();
-          ctx.moveTo(-s*0.35, -s*1.0 + i * (s*0.35));
-          ctx.lineTo(s*0.35, -s*1.0 + i * (s*0.35));
+          ctx.moveTo(-s*0.35, -s*1.1 + i * (s*0.32));
+          ctx.lineTo(s*0.35, -s*1.1 + i * (s*0.32));
           ctx.stroke();
         }
       } else if (f.type === 'manhole') {
@@ -417,34 +423,34 @@
         ctx.fillText('MH', 0, 6);
       } else if (f.type === 'grass') {
         ctx.fillStyle = '#4ade80';
-        ctx.fillRect(-s*2, -s*0.8, s*4, s*1.6);
+        ctx.fillRect(-s*2, -s*0.9, s*4, s*1.8);
         ctx.strokeStyle = '#16a34a';
         ctx.lineWidth = 3;
         for (let i = -s*1.8; i < s*1.9; i += s*0.25) {
           ctx.beginPath();
-          ctx.moveTo(i, -s*0.8);
-          ctx.lineTo(i + s*0.2, s*0.7);
+          ctx.moveTo(i, -s*0.9);
+          ctx.lineTo(i + s*0.22, s*0.8);
           ctx.stroke();
         }
       } else if (f.type === 'door') {
         ctx.fillStyle = '#78350f';
-        ctx.fillRect(-s*0.25, -s*1.2, s*0.5, s*2.4);
+        ctx.fillRect(-s*0.25, -s*1.25, s*0.5, s*2.5);
         ctx.fillStyle = '#ca8a04';
-        ctx.fillRect(s*0.1, 0, s*0.08, s*0.08); // handle
+        ctx.fillRect(s*0.12, 0, s*0.1, s*0.1); // handle
         ctx.strokeStyle = '#451a03';
         ctx.lineWidth = 6;
-        ctx.beginPath(); ctx.arc(0, 0, s*1.1, Math.PI*1.5, Math.PI*0.5); ctx.stroke();
+        ctx.beginPath(); ctx.arc(0, 0, s*1.15, Math.PI*1.5, Math.PI*0.5); ctx.stroke();
       } else if (f.type === 'window') {
         ctx.fillStyle = '#bae6fd';
-        ctx.fillRect(-s*1.1, -s*0.9, s*2.2, s*1.6);
+        ctx.fillRect(-s*1.15, -s*0.95, s*2.3, s*1.7);
         ctx.strokeStyle = '#78350f';
-        ctx.lineWidth = 7;
-        ctx.strokeRect(-s*1.1, -s*0.9, s*2.2, s*1.6);
-        ctx.beginPath(); ctx.moveTo(0, -s*0.9); ctx.lineTo(0, s*0.7); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(-s*1.1, 0); ctx.lineTo(s*1.1, 0); ctx.stroke();
+        ctx.lineWidth = 8;
+        ctx.strokeRect(-s*1.15, -s*0.95, s*2.3, s*1.7);
+        ctx.beginPath(); ctx.moveTo(0, -s*0.95); ctx.lineTo(0, s*0.75); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(-s*1.15, 0); ctx.lineTo(s*1.15, 0); ctx.stroke();
       } else {
         ctx.fillStyle = '#e2e8f0';
-        ctx.fillRect(-s*0.8, -s*0.8, s*1.6, s*1.6);
+        ctx.fillRect(-s*0.85, -s*0.85, s*1.7, s*1.7);
       }
       ctx.restore();
     }
@@ -474,9 +480,9 @@
 
       // Pipes
       pipes.forEach((p, i) => {
-        const isSelected = (selectedPipeIndex === i);
+        const isSel = (selectedPipeIndex === i);
         ctx.strokeStyle = p.type === 'hot' ? '#ef4444' : p.type === 'cold' ? '#3b82f6' : '#111827';
-        ctx.lineWidth = isSelected ? 15 : 11;
+        ctx.lineWidth = isSel ? 16 : 11;
         ctx.setLineDash(p.type === 'drain' ? [18,12] : []);
         ctx.beginPath();
         ctx.moveTo(offsetX + p.x1 * scale, offsetY + p.y1 * scale);
@@ -493,8 +499,8 @@
           const px = offsetX + f.x * scale;
           const py = offsetY + f.y * scale;
           ctx.strokeStyle = '#d4af37';
-          ctx.lineWidth = 8;
-          ctx.strokeRect(px - 42, py - 42, 84, 84);
+          ctx.lineWidth = 9;
+          ctx.strokeRect(px - 45, py - 45, 90, 90);
         }
       });
     }
@@ -510,12 +516,12 @@
         const dx = p.x2 - p.x1;
         const dy = p.y2 - p.y1;
         const len2 = dx*dx + dy*dy;
-        let t = ((wx - p.x1) * dx + (wy - p.y1) * dy) / len2;
+        let t = ((wx - p.x1) * dx + (wy - p.y1) * dy) / (len2 || 1);
         t = Math.max(0, Math.min(1, t));
         const projX = p.x1 + t * dx;
         const projY = p.y1 + t * dy;
         const dist = Math.hypot(wx - projX, wy - projY);
-        if (dist < 0.6 && dist < minDist) {
+        if (dist < 0.65 && dist < minDist) {
           minDist = dist;
           closest = i;
         }
@@ -532,11 +538,12 @@
 
       selectedItem = null;
       selectedPipeIndex = -1;
+      selectedWallIndex = -1;
 
-      // Check fixtures
+      // Fixtures
       for (let i = fixtures.length - 1; i >= 0; i--) {
         const f = fixtures[i];
-        if (Math.hypot(f.x - wx, f.y - wy) < 1.1) {
+        if (Math.hypot(f.x - wx, f.y - wy) < 1.2) {
           selectedItem = f;
           isDragging = true;
           dragOffsetX = wx - f.x;
@@ -547,7 +554,7 @@
         }
       }
 
-      // Check pipes
+      // Pipes
       const pipeIdx = getClosestPipe(wx, wy);
       if (pipeIdx !== -1) {
         selectedPipeIndex = pipeIdx;
@@ -562,9 +569,9 @@
       if (currentTool === 'wall' || currentTool === 'hot' || currentTool === 'cold' || currentTool === 'drain') {
         drawingStart = {x: snap(wx), y: snap(wy), type: currentTool};
       } else if (currentTool === 'erase') {
-        fixtures = fixtures.filter(f => Math.hypot(f.x - wx, f.y - wy) > 1.2);
-        walls = walls.filter(w => Math.min(Math.hypot(w.x1 - wx, w.y1 - wy), Math.hypot(w.x2 - wx, w.y2 - wy)) > 1.5);
-        pipes = pipes.filter((p, i) => Math.min(Math.hypot(p.x1 - wx, p.y1 - wy), Math.hypot(p.x2 - wx, p.y2 - wy)) > 1.5);
+        fixtures = fixtures.filter(f => Math.hypot(f.x - wx, f.y - wy) > 1.3);
+        walls = walls.filter(w => Math.min(Math.hypot(w.x1 - wx, w.y1 - wy), Math.hypot(w.x2 - wx, w.y2 - wy)) > 1.6);
+        pipes = pipes.filter(p => Math.min(Math.hypot(p.x1 - wx, p.y1 - wy), Math.hypot(p.x2 - wx, p.y2 - wy)) > 1.6);
         draw();
       }
       updateInfoPanel();
@@ -628,9 +635,28 @@
     }
 
     function onWheel(e) {
-      scale *= e.deltaY < 0 ? 1.12 : 0.89;
-      draw();
-      e.preventDefault();
+      if (selectedItem) {
+        selectedItem.rotation = (selectedItem.rotation || 0) + e.deltaY * 0.008;
+        draw();
+        e.preventDefault();
+      } else if (selectedPipeIndex !== -1) {
+        const p = pipes[selectedPipeIndex];
+        const cx = (p.x1 + p.x2) / 2;
+        const cy = (p.y1 + p.y2) / 2;
+        const dx1 = p.x1 - cx;
+        const dy1 = p.y1 - cy;
+        const dx2 = p.x2 - cx;
+        const dy2 = p.y2 - cy;
+        const angle = e.deltaY * 0.008;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        p.x1 = cx + dx1 * cos - dy1 * sin;
+        p.y1 = cy + dx1 * sin + dy1 * cos;
+        p.x2 = cx + dx2 * cos - dy2 * sin;
+        p.y2 = cy + dx2 * sin + dy2 * cos;
+        draw();
+        e.preventDefault();
+      }
     }
 
     function setTool(tool) {
@@ -643,7 +669,7 @@
     function addFixtureFromDropdown(select) {
       const val = select.value;
       if (!val) return;
-      fixtures.push({type: val, x: snap(4 + Math.random()*3 - 1.5), y: snap(2.5 + Math.random()*3 - 1.5)});
+      fixtures.push({type: val, x: snap(4 + Math.random()*3 - 1.5), y: snap(2.5 + Math.random()*3 - 1.5), rotation: 0});
       draw();
       select.value = '';
     }
@@ -651,11 +677,11 @@
     function updateInfoPanel() {
       const panel = document.getElementById('infoPanel');
       if (selectedItem) {
-        panel.innerHTML = `<span class="text-2xl gold">${selectedItem.type.toUpperCase()}</span><br>Drag to move`;
+        panel.innerHTML = `<span class="text-2xl gold">${selectedItem.type.toUpperCase()}</span><br>Drag to move • Mouse wheel to rotate`;
       } else if (selectedPipeIndex !== -1) {
-        panel.innerHTML = `<span class="text-2xl gold">${pipes[selectedPipeIndex].type.toUpperCase()} PIPE</span><br>Drag to move`;
+        panel.innerHTML = `<span class="text-2xl gold">${pipes[selectedPipeIndex].type.toUpperCase()} PIPE</span><br>Drag to move • Mouse wheel to rotate`;
       } else {
-        panel.innerHTML = 'Click fixture or pipe to select and drag';
+        panel.innerHTML = 'Click fixture or pipe to select • Drag to move • Wheel to rotate';
       }
     }
 
