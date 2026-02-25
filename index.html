@@ -243,14 +243,50 @@
     <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London • © 2026</p>
   </footer>
 
-  <!-- FULL-SCREEN 2D PLANNER MODAL -->
+  <!-- FULL-SCREEN 2D PLANNER MODAL – FULL TOOLBAR RESTORED -->
   <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
+    <!-- Top bar -->
     <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800 text-white">
       <div class="flex items-center gap-4">
         <i class="fa-solid fa-bath text-4xl gold"></i>
         <span class="serif text-3xl tracking-wider">PROFESSIONAL 2D PLANNER</span>
       </div>
       <button onclick="exitPlanner()" class="text-4xl hover:text-gold">✕</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="bg-zinc-900 py-4 px-8 flex items-center gap-3 border-b border-zinc-800 text-white text-sm">
+      <button onclick="setTool('select')" id="btn-select" class="tool-btn active px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">Select / Move</button>
+      <button onclick="setTool('wall')" id="btn-wall" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">🧱 Wall</button>
+      <button onclick="setTool('hot')" id="btn-hot" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2 text-red-400">🔴 Hot Pipe</button>
+      <button onclick="setTool('cold')" id="btn-cold" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2 text-blue-400">🔵 Cold Pipe</button>
+      <button onclick="setTool('drain')" id="btn-drain" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2">⚫ Drainage</button>
+      <button onclick="setTool('erase')" id="btn-erase" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 flex items-center gap-2 text-red-500">Erase</button>
+      
+      <div class="ml-auto">
+        <select onchange="addFixtureFromDropdown(this)" class="bg-zinc-800 border border-gold text-white px-8 py-3 rounded-3xl text-base">
+          <option value="">Add Fixture...</option>
+          <optgroup label="Sanitary">
+            <option value="toilet">Toilet</option>
+            <option value="bath">Freestanding Bath</option>
+            <option value="shower">Shower Enclosure</option>
+            <option value="wallhung">Wall Hung Basin</option>
+            <option value="pedestal">Pedestal Basin</option>
+            <option value="bidet">Bidet</option>
+          </optgroup>
+          <optgroup label="Heating & Furniture">
+            <option value="towel-radiator">Towel Radiator</option>
+            <option value="vanity">Vanity Unit</option>
+            <option value="led-mirror">LED Mirror</option>
+          </optgroup>
+          <optgroup label="External">
+            <option value="manhole">Manhole (Drain)</option>
+            <option value="grass">Grass Area</option>
+            <option value="door">Door</option>
+            <option value="window">Window</option>
+          </optgroup>
+        </select>
+      </div>
     </div>
 
     <div class="flex flex-1 overflow-hidden">
@@ -265,21 +301,20 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // BANNER CLOSE – FIXED
+    // BANNER CLOSE
     function closeRoomioBanner() {
       const b = document.getElementById('roomioBanner');
       if (!b) return;
       b.style.transition = 'opacity 0.4s ease';
       b.style.opacity = '0';
-      setTimeout(() => {
-        b.style.display = 'none';
-      }, 500);
+      setTimeout(() => { b.style.display = 'none'; }, 500);
       localStorage.setItem('roomioBannerClosed', 'true');
     }
 
-    // ====================== 2D PLANNER ======================
+    // ====================== FULL 2D PLANNER ======================
     let canvas, ctx;
     let scale = 58, offsetX = 90, offsetY = 70;
+    let currentTool = 'select';
     let fixtures = [], walls = [], pipes = [], selectedItem = null;
     let isDragging = false, dragOffsetX = 0, dragOffsetY = 0, drawingStart = null;
 
@@ -297,7 +332,7 @@
 
       const resize = () => {
         canvas.width = window.innerWidth - 330;
-        canvas.height = window.innerHeight - 140;
+        canvas.height = window.innerHeight - 180;
         draw();
       };
       resize();
@@ -403,36 +438,73 @@
       const wx = worldX(sx);
       const wy = worldY(sy);
 
-      selectedItem = null;
-      for (let i = fixtures.length - 1; i >= 0; i--) {
-        const f = fixtures[i];
-        if (Math.hypot(f.x - wx, f.y - wy) < 1.1) {
-          selectedItem = f;
-          isDragging = true;
-          dragOffsetX = wx - f.x;
-          dragOffsetY = wy - f.y;
-          updateInfoPanel();
-          draw();
-          return;
+      if (currentTool === 'select') {
+        selectedItem = null;
+        for (let i = fixtures.length - 1; i >= 0; i--) {
+          const f = fixtures[i];
+          if (Math.hypot(f.x - wx, f.y - wy) < 1.1) {
+            selectedItem = f;
+            isDragging = true;
+            dragOffsetX = wx - f.x;
+            dragOffsetY = wy - f.y;
+            updateInfoPanel();
+            draw();
+            return;
+          }
         }
+        updateInfoPanel();
+      } else if (['wall','hot','cold','drain'].includes(currentTool)) {
+        drawingStart = {x: snap(wx), y: snap(wy), type: currentTool};
+      } else if (currentTool === 'erase') {
+        fixtures = fixtures.filter(f => Math.hypot(f.x - wx, f.y - wy) > 1.2);
+        walls = walls.filter(w => Math.min(Math.hypot(w.x1-wx,w.y1-wy), Math.hypot(w.x2-wx,w.y2-wy)) > 1.5);
+        pipes = pipes.filter(p => Math.min(Math.hypot(p.x1-wx,p.y1-wy), Math.hypot(p.x2-wx,p.y2-wy)) > 1.5);
+        draw();
       }
-      updateInfoPanel();
     }
 
     function onMouseMove(e) {
-      if (!isDragging || !selectedItem) return;
       const rect = canvas.getBoundingClientRect();
       const sx = e.clientX - rect.left;
       const sy = e.clientY - rect.top;
       const wx = worldX(sx);
       const wy = worldY(sy);
 
-      selectedItem.x = snap(wx - dragOffsetX);
-      selectedItem.y = snap(wy - dragOffsetY);
-      draw();
+      if (isDragging && selectedItem) {
+        selectedItem.x = snap(wx - dragOffsetX);
+        selectedItem.y = snap(wy - dragOffsetY);
+        draw();
+      } else if (drawingStart) {
+        draw();
+        ctx.strokeStyle = drawingStart.type === 'wall' ? '#3f2a1e' : drawingStart.type === 'hot' ? '#ef4444' : drawingStart.type === 'cold' ? '#3b82f6' : '#111827';
+        ctx.lineWidth = drawingStart.type === 'wall' ? 13 : 11;
+        ctx.setLineDash(drawingStart.type === 'drain' ? [18,12] : []);
+        ctx.beginPath();
+        ctx.moveTo(offsetX + drawingStart.x*scale, offsetY + drawingStart.y*scale);
+        ctx.lineTo(offsetX + snap(wx)*scale, offsetY + snap(wy)*scale);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
     }
 
-    function onMouseUp() {
+    function onMouseUp(e) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const wx = worldX(sx);
+      const wy = worldY(sy);
+
+      if (drawingStart) {
+        const endX = snap(wx);
+        const endY = snap(wy);
+        if (drawingStart.type === 'wall') {
+          walls.push({x1: drawingStart.x, y1: drawingStart.y, x2: endX, y2: endY});
+        } else {
+          pipes.push({x1: drawingStart.x, y1: drawingStart.y, x2: endX, y2: endY, type: drawingStart.type});
+        }
+        drawingStart = null;
+        draw();
+      }
       isDragging = false;
     }
 
@@ -440,6 +512,21 @@
       scale *= e.deltaY < 0 ? 1.12 : 0.89;
       draw();
       e.preventDefault();
+    }
+
+    function setTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-' + tool);
+      if (btn) btn.classList.add('active');
+    }
+
+    function addFixtureFromDropdown(select) {
+      const val = select.value;
+      if (!val) return;
+      fixtures.push({type: val, x: snap(4 + Math.random()*3 - 1.5), y: snap(2.5 + Math.random()*3 - 1.5)});
+      draw();
+      select.value = '';
     }
 
     function updateInfoPanel() {
