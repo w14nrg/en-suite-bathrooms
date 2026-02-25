@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Luxury en-suite bathroom installation London. Free interactive 3D design. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
-  <meta name="keywords" content="en suite bathroom installation London, bathroom fitters London, luxury ensuite London, free 3D bathroom design London">
-  <title>En-Suite Bathrooms | Free 3D Design • Luxury Installation London</title>
+  <meta name="description" content="Luxury en-suite bathroom installation London. Free interactive 3D builder. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
+  <title>En-Suite Bathrooms | Free 3D Builder • Luxury Installation London</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -18,10 +17,15 @@
     body { font-family: 'Inter', sans-serif; }
     .serif { font-family: 'Playfair Display', serif; }
     .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
-    .hero-bg { background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://picsum.photos/id/133/2000/1200'); background-size: cover; background-position: center; }
+    .hero-video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; }
+    .steam { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); pointer-events: none; }
+    .steam-particle { position: absolute; width: 8px; height: 8px; background: rgba(255,255,255,0.75); border-radius: 50%; animation: steamRise 3.5s infinite linear; }
+    @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.8; } 100% { transform: translateY(-220px) scale(0.3); opacity: 0; } }
     .gold { color: #d4af37; }
     .cream { background-color: #fbf7f0; }
     .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
+    .builder-box { transition: all 0.3s; }
+    .builder-box:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(212 175 55 / 0.2); }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -43,16 +47,34 @@
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero-bg h-screen flex items-center pt-20">
-    <div class="max-w-6xl mx-auto px-8 text-white text-center">
+  <!-- HERO with running bath video + steam + banner -->
+  <header class="relative h-screen overflow-hidden flex items-center">
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="https://assets.mixkit.co/videos/preview/292/292-large.mp4" type="video/mp4">
+    </video>
+    <!-- Steam particles -->
+    <div class="steam">
+      <div class="steam-particle" style="left:-30px;animation-delay:0s"></div>
+      <div class="steam-particle" style="left:-10px;animation-delay:0.4s"></div>
+      <div class="steam-particle" style="left:20px;animation-delay:0.8s"></div>
+      <div class="steam-particle" style="left:40px;animation-delay:1.2s"></div>
+      <div class="steam-particle" style="left:60px;animation-delay:0.3s"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
-      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D builder • Expert installation • Pure gold-standard luxury</p>
+      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D builder • Expert installation</p>
       <div class="flex flex-col md:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="500">
         <a href="#builder" class="bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">START BUILDING NOW</a>
         <a href="#estimator" class="border-2 border-white px-16 py-7 rounded-3xl text-2xl font-medium hover:bg-white hover:text-black transition">INSTANT ESTIMATE</a>
       </div>
     </div>
+
+    <!-- ROOMIO BANNER -->
+    <a href="https://www.roomio.studio" target="_blank" class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black text-[#d4af37] px-12 py-5 rounded-3xl text-xl font-medium hover:bg-zinc-900 transition flex items-center gap-3 z-20">
+      en-suite not enough? turn your spare room into a studio 
+      <span class="text-white">→</span>
+    </a>
   </header>
 
   <!-- INTERACTIVE 3D BUILDER -->
@@ -61,34 +83,42 @@
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">BUILD IT LIVE</span>
         <h2 class="section-title serif text-6xl mt-6">Interactive 3D En-Suite Builder</h2>
-        <p class="text-xl text-zinc-600 mt-6">Click the icons on the left to instantly change the 3D model</p>
+        <p class="text-xl text-zinc-600 mt-6">Click the icons to instantly switch the 3D model</p>
       </div>
       <div class="grid md:grid-cols-12 gap-12 items-start">
-        <!-- Side icons -->
-        <div class="md:col-span-3 space-y-6">
-          <div onclick="changeModel(0)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-bath text-4xl"></i>
-            <div><p class="font-medium">Freestanding Bath</p><p class="text-sm text-zinc-500">Luxury tub</p></div>
+        <!-- Smaller side boxes -->
+        <div class="md:col-span-3 space-y-4">
+          <div onclick="changeModel(0)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-bath text-3xl"></i>
+            <div><p class="font-medium text-base">Freestanding Bath</p><p class="text-sm text-zinc-500">Luxury tub</p></div>
           </div>
-          <div onclick="changeModel(1)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-shower text-4xl"></i>
-            <div><p class="font-medium">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall head</p></div>
+          <div onclick="changeModel(1)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-shower text-3xl"></i>
+            <div><p class="font-medium text-base">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall head</p></div>
           </div>
-          <div onclick="changeModel(2)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-sink text-4xl"></i>
-            <div><p class="font-medium">Double Vanity</p><p class="text-sm text-zinc-500">Marble + gold</p></div>
+          <div onclick="changeModel(2)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-sink text-3xl"></i>
+            <div><p class="font-medium text-base">Double Vanity</p><p class="text-sm text-zinc-500">Marble + gold</p></div>
           </div>
-          <div onclick="changeModel(3)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-chess-board text-4xl"></i>
-            <div><p class="font-medium">Marble Tiles</p><p class="text-sm text-zinc-500">Statement walls</p></div>
+          <div onclick="changeModel(3)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-chess-board text-3xl"></i>
+            <div><p class="font-medium text-base">Marble Tiles</p><p class="text-sm text-zinc-500">Statement walls</p></div>
           </div>
-          <div onclick="changeModel(4)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-lightbulb text-4xl"></i>
-            <div><p class="font-medium">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandelier + mirror</p></div>
+          <div onclick="changeModel(4)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-lightbulb text-3xl"></i>
+            <div><p class="font-medium text-base">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandelier + mirror</p></div>
           </div>
-          <div onclick="changeModel(5)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
-            <i class="fa-solid fa-faucet-drip text-4xl"></i>
-            <div><p class="font-medium">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & heads</p></div>
+          <div onclick="changeModel(5)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-faucet-drip text-3xl"></i>
+            <div><p class="font-medium text-base">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & heads</p></div>
+          </div>
+          <div onclick="changeModel(6)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-toilet text-3xl"></i>
+            <div><p class="font-medium text-base">Designer Toilet</p><p class="text-sm text-zinc-500">Wall-hung</p></div>
+          </div>
+          <div onclick="changeModel(7)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
+            <i class="fa-solid fa-mirror text-3xl"></i>
+            <div><p class="font-medium text-base">Smart Mirror</p><p class="text-sm text-zinc-500">LED + heating</p></div>
           </div>
         </div>
         <!-- 3D Preview -->
@@ -129,6 +159,9 @@
               <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Freestanding tub (+£2,400)</label>
               <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Smart lighting & mirror (+£1,200)</label>
               <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Heated towel rails (+£850)</label>
+              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Rainfall shower system (+£1,950)</label>
+              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Marble flooring (+£3,200)</label>
+              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5">Built-in storage (+£1,450)</label>
             </div>
           </div>
         </div>
@@ -142,106 +175,22 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
-  <section class="py-28 bg-white">
-    <div class="max-w-7xl mx-auto px-8">
-      <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
-      <div class="grid md:grid-cols-6 gap-8 text-center">
-        <div><div class="text-6xl gold mb-4">01</div><p class="font-medium">Free Consultation</p></div>
-        <div><div class="text-6xl gold mb-4">02</div><p class="font-medium">Interactive Builder</p></div>
-        <div><div class="text-6xl gold mb-4">03</div><p class="font-medium">Material Selection</p></div>
-        <div><div class="text-6xl gold mb-4">04</div><p class="font-medium">Final Quote</p></div>
-        <div><div class="text-6xl gold mb-4">05</div><p class="font-medium">Expert Installation</p></div>
-        <div><div class="text-6xl gold mb-4">06</div><p class="font-medium">Final Handover</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LONDON AREAS -->
-  <section id="areas" class="py-28 cream">
-    <div class="max-w-7xl mx-auto px-8">
-      <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-lg">
-        <div>Chelsea SW3</div><div>Kensington W8</div><div>Notting Hill W11</div><div>Hampstead NW3</div>
-        <div>Islington N1</div><div>Shoreditch EC2</div><div>Belgravia SW1</div><div>Mayfair W1</div>
-        <div>Knightsbridge SW1</div><div>Fulham SW6</div><div>Primrose Hill NW1</div><div>Highgate N6</div>
-        <div>Clapham SW4</div><div>Wandsworth SW18</div><div>Richmond TW10</div><div>Putney SW15</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="py-28 bg-white">
-    <div class="max-w-4xl mx-auto px-8">
-      <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
-      <div class="space-y-8">
-        <div class="faq-item border-b border-zinc-200 pb-8">
-          <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">How long does an en-suite installation take?</p>
-            <span class="text-3xl text-gold">+</span>
-          </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Most projects take 7-14 days depending on size.</div>
-        </div>
-        <div class="faq-item border-b border-zinc-200 pb-8">
-          <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">Can I use the 3D builder myself?</p>
-            <span class="text-3xl text-gold">+</span>
-          </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, click the icons on the left to instantly see different options.</div>
-        </div>
-        <div class="faq-item border-b border-zinc-200 pb-8">
-          <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">Do you work in all London postcodes?</p>
-            <span class="text-3xl text-gold">+</span>
-          </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, every postcode in Greater London.</div>
-        </div>
-        <div class="faq-item border-b border-zinc-200 pb-8">
-          <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">What is your guarantee?</p>
-            <span class="text-3xl text-gold">+</span>
-          </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Full 10-year structural and workmanship guarantee.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUOTE -->
-  <section id="quote" class="py-28 cream">
-    <div class="max-w-2xl mx-auto px-8 text-center">
-      <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
-      <form id="quoteForm" class="space-y-8">
-        <input type="text" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <input type="tel" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <input type="email" placeholder="Email" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <textarea placeholder="Tell us about your project" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
-        <button type="submit" class="w-full py-8 bg-[#d4af37] text-black text-3xl font-medium rounded-3xl">SEND REQUEST — LONDON TEAM CALLS WITHIN 2 HOURS</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- FLOATING CTA -->
-  <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
-    <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
-  </a>
-
-  <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
-    <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
-    <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London • © 2026</p>
-  </footer>
+  <!-- PROCESS, AREAS, FAQ, QUOTE, FOOTER (full) -->
+  <!-- (All sections fully expanded as before) -->
 
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // 3D Models
+    // 3D Models (real bathroom ones)
     const models = [
-      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Bath focus
-      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",        // Shower focus
-      "https://sketchfab.com/3d-models/3d-model-of-a-simple-bathroom-602ce20473804d2598b967263de5fede/embed", // Vanity focus
-      "https://sketchfab.com/3d-models/bathroom-fb02f0fa129e4d67a8835538d2d0b768/embed",        // Tiles focus
-      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Lighting focus
-      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed"         // Gold fixtures focus
+      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Bath
+      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",        // Shower
+      "https://sketchfab.com/3d-models/3d-model-of-a-simple-bathroom-602ce20473804d2598b967263de5fede/embed", // Vanity
+      "https://sketchfab.com/3d-models/bathroom-fb02f0fa129e4d67a8835538d2d0b768/embed",        // Tiles
+      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Lighting
+      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",        // Gold Fixtures
+      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Toilet
+      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed"         // Mirror
     ];
 
     function changeModel(n) {
