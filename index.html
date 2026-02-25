@@ -98,13 +98,13 @@
     </div>
   </header>
 
-  <!-- PROPER 3D PLANNER - realistic fixtures + rotation + perfect scaling -->
+  <!-- REALISTIC 3D PLANNER WITH YOUR TWEAKS -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">PROPER 3D PLANNER</span>
         <h2 class="section-title serif text-6xl mt-6">Realistic Drag & Rotate 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate room • Click fixture + drag to move • Scroll wheel to rotate fixture • Resize room live</p>
+        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate room • Click fixture to select (gold glow) • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
@@ -113,11 +113,9 @@
             <h3 class="text-xl gold font-medium mb-6">Room Size</h3>
             <div class="space-y-6">
               <div>
-                <div class="flex justify-between text-sm mb-1"><span>Width</span><span id="widthVal" class="font-medium">6.0 m</span></div>
                 <input type="range" id="width" min="3" max="10" step="0.1" value="6" oninput="resizeRoom()" class="w-full accent-gold">
               </div>
               <div>
-                <div class="flex justify-between text-sm mb-1"><span>Depth</span><span id="depthVal" class="font-medium">4.0 m</span></div>
                 <input type="range" id="depth" min="3" max="8" step="0.1" value="4" oninput="resizeRoom()" class="w-full accent-gold">
               </div>
             </div>
@@ -147,13 +145,13 @@
 
         <div class="lg:col-span-8">
           <canvas id="threeCanvas"></canvas>
-          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate room • Click fixture + drag to move • Scroll wheel to rotate fixture</p>
+          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate room • Click fixture (turns gold) → drag to move → scroll wheel to spin • Click floor to deselect</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESTIMATOR, PROCESS, AREAS, FAQ, QUOTE, FLOATING CTA, FOOTER (exactly your originals) -->
+  <!-- ESTIMATOR -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -199,6 +197,7 @@
     </div>
   </section>
 
+  <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -213,6 +212,7 @@
     </div>
   </section>
 
+  <!-- LONDON AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
@@ -225,6 +225,7 @@
     </div>
   </section>
 
+  <!-- FAQ -->
   <section class="py-28 bg-white">
     <div class="max-w-4xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
@@ -241,7 +242,7 @@
             <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – fixtures are now realistic, you can move and rotate them freely.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click fixtures to select, drag to move, scroll to rotate, click floor to deselect.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -261,6 +262,7 @@
     </div>
   </section>
 
+  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -274,6 +276,7 @@
     </div>
   </section>
 
+  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
@@ -360,8 +363,6 @@
     function resizeRoom() {
       roomWidth = parseFloat(document.getElementById('width').value);
       roomDepth = parseFloat(document.getElementById('depth').value);
-      document.getElementById('widthVal').textContent = roomWidth.toFixed(1) + ' m';
-      document.getElementById('depthVal').textContent = roomDepth.toFixed(1) + ' m';
       createRoom();
     }
 
@@ -375,27 +376,18 @@
       group.userData.type = type;
 
       if (type === 'bath') {
-        // Tub body
-        const tub = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.75, 1.4), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        const tub = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.75, 1.4), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         tub.position.y = 0.375;
         group.add(tub);
-        // Rim
-        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.12, 1.5), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.12, 1.5), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         rim.position.y = 0.8;
         group.add(rim);
-        // Legs
-        for (let i = 0; i < 4; i++) {
-          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.5, 16), new THREE.MeshStandardMaterial({ color: 0x78350f }));
-          leg.position.set(i % 2 === 0 ? -1.0 : 1.0, 0.25, i < 2 ? -0.55 : 0.55);
-          group.add(leg);
-        }
-        // Taps
         const tap = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.4, 16), new THREE.MeshStandardMaterial({ color: 0x78350f }));
         tap.position.set(0, 0.9, 0.6);
         tap.rotation.x = Math.PI / 2;
         group.add(tap);
       } else if (type === 'shower') {
-        const tray = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.15, 1.5), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        const tray = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.15, 1.5), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         tray.position.y = 0.075;
         group.add(tray);
         const glassMat = new THREE.MeshStandardMaterial({ color: 0xbae6fd, transparent: true, opacity: 0.35 });
@@ -411,27 +403,27 @@
         head.position.set(0, 2.2, 0.7);
         group.add(head);
       } else if (type === 'toilet') {
-        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 0.65, 32), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 0.65, 32), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         bowl.position.y = 0.325;
         group.add(bowl);
-        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.85, 0.45), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.85, 0.45), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         tank.position.set(0, 0.95, -0.3);
         group.add(tank);
         const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
         seat.position.y = 0.7;
         group.add(seat);
       } else if (type === 'vanity') {
-        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.8, 0.7), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.8, 0.7), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
         cabinet.position.y = 0.4;
         group.add(cabinet);
-        const top = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.15, 0.75), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
+        const top = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.15, 0.75), new THREE.MeshStandardMaterial({ color: 0xffffff }));
         top.position.y = 0.8;
         group.add(top);
         const sink = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.28, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0x64748b }));
         sink.position.set(0, 0.7, 0);
         group.add(sink);
       } else if (type === 'window') {
-        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.5, 0.25), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.5, 0.25), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
         frame.position.y = 2.2;
         group.add(frame);
         const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.25), new THREE.MeshStandardMaterial({ color: 0xbae6fd, side: THREE.DoubleSide }));
@@ -464,9 +456,24 @@
       const intersects = raycaster.intersectObjects(fixtures3D, true);
 
       if (intersects.length > 0) {
-        selectedFixture = intersects[0].object.parent || intersects[0].object;
+        const newSelect = intersects[0].object.parent || intersects[0].object;
+        if (selectedFixture === newSelect) {
+          deselect();
+        } else {
+          deselect();
+          selectedFixture = newSelect;
+          if (selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0xffaa00);
+        }
         isDraggingFixture = true;
+      } else {
+        deselect();
       }
+    }
+
+    function deselect() {
+      if (selectedFixture && selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0x000000);
+      selectedFixture = null;
+      isDraggingFixture = false;
     }
 
     function onMouseMove(e) {
@@ -492,7 +499,7 @@
 
     function onWheel(e) {
       if (selectedFixture) {
-        selectedFixture.rotation.y += e.deltaY * 0.005;
+        selectedFixture.rotation.y += e.deltaY * 0.008;
         e.preventDefault();
       }
     }
@@ -502,13 +509,13 @@
       fixtures3D.forEach(f => {
         summary += `• ${f.userData.type} at (${f.position.x.toFixed(1)}, ${f.position.z.toFixed(1)}) rotated ${f.rotation.y.toFixed(1)}\n`;
       });
-      summary += "\nReady to build this exact layout!";
+      summary += "\nReady to build this exact realistic layout!";
 
       const textarea = document.querySelector('#quoteForm textarea');
       if (textarea) textarea.value = summary;
 
       document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ Realistic 3D design submitted! Fixtures, positions and rotations are in the quote form.");
+      alert("✅ Realistic 3D design submitted! White fixtures, positions and rotations are in the quote form.");
     }
 
     let basePrice = 9800;
