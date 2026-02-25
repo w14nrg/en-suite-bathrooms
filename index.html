@@ -47,7 +47,7 @@
   <header class="hero-bg h-screen flex items-center pt-20">
     <div class="max-w-6xl mx-auto px-8 text-white text-center">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
-      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive builder • Expert installation • Pure gold-standard luxury</p>
+      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D builder • Expert installation • Pure gold-standard luxury</p>
       <div class="flex flex-col md:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="500">
         <a href="#builder" class="bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">START BUILDING NOW</a>
         <a href="#estimator" class="border-2 border-white px-16 py-7 rounded-3xl text-2xl font-medium hover:bg-white hover:text-black transition">INSTANT ESTIMATE</a>
@@ -55,45 +55,45 @@
     </div>
   </header>
 
-  <!-- INTERACTIVE BUILDER -->
+  <!-- INTERACTIVE 3D BUILDER -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">BUILD IT LIVE</span>
-        <h2 class="section-title serif text-6xl mt-6">Interactive En-Suite Builder</h2>
-        <p class="text-xl text-zinc-600 mt-6">Click the icons on the left to instantly see how it looks</p>
+        <h2 class="section-title serif text-6xl mt-6">Interactive 3D En-Suite Builder</h2>
+        <p class="text-xl text-zinc-600 mt-6">Click the icons on the left to instantly change the 3D model</p>
       </div>
       <div class="grid md:grid-cols-12 gap-12 items-start">
         <!-- Side icons -->
         <div class="md:col-span-3 space-y-6">
-          <div onclick="changePreview(0)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(0)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-bath text-4xl"></i>
-            <div><p class="font-medium">Luxury Bath</p><p class="text-sm text-zinc-500">Freestanding or built-in</p></div>
+            <div><p class="font-medium">Freestanding Bath</p><p class="text-sm text-zinc-500">Luxury tub</p></div>
           </div>
-          <div onclick="changePreview(1)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(1)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-shower text-4xl"></i>
-            <div><p class="font-medium">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall & body jets</p></div>
+            <div><p class="font-medium">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall head</p></div>
           </div>
-          <div onclick="changePreview(2)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(2)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-sink text-4xl"></i>
-            <div><p class="font-medium">Double Vanity</p><p class="text-sm text-zinc-500">Marble tops & gold taps</p></div>
+            <div><p class="font-medium">Double Vanity</p><p class="text-sm text-zinc-500">Marble + gold</p></div>
           </div>
-          <div onclick="changePreview(3)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(3)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-chess-board text-4xl"></i>
-            <div><p class="font-medium">Statement Tiles</p><p class="text-sm text-zinc-500">Marble, porcelain, gold</p></div>
+            <div><p class="font-medium">Marble Tiles</p><p class="text-sm text-zinc-500">Statement walls</p></div>
           </div>
-          <div onclick="changePreview(4)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(4)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-lightbulb text-4xl"></i>
-            <div><p class="font-medium">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandeliers & mirrors</p></div>
+            <div><p class="font-medium">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandelier + mirror</p></div>
           </div>
-          <div onclick="changePreview(5)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(5)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-faucet-drip text-4xl"></i>
-            <div><p class="font-medium">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & shower heads</p></div>
+            <div><p class="font-medium">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & heads</p></div>
           </div>
         </div>
-        <!-- Preview -->
+        <!-- 3D Preview -->
         <div class="md:col-span-9 rounded-3xl overflow-hidden shadow-2xl border border-gold/30">
-          <img id="previewImage" src="https://picsum.photos/id/133/1200/800" class="w-full h-auto transition-all duration-700">
+          <iframe id="sketchfab" src="https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed" width="100%" height="620" allowfullscreen style="border:none;"></iframe>
         </div>
       </div>
     </div>
@@ -184,10 +184,10 @@
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">Is the interactive builder free?</p>
+            <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, completely free with no obligation.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, click the icons on the left to instantly see different options.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -234,19 +234,18 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // Builder preview images
-    const previewImages = [
-      "https://picsum.photos/id/133/1200/800",   // Bath focus
-      "https://picsum.photos/id/201/1200/800",   // Shower focus
-      "https://picsum.photos/id/251/1200/800",   // Vanity focus
-      "https://picsum.photos/id/316/1200/800",   // Tiles focus
-      "https://picsum.photos/id/870/1200/800",   // Lighting focus
-      "https://picsum.photos/id/1015/1200/800"   // Gold fixtures focus
+    // 3D Models
+    const models = [
+      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Bath focus
+      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",        // Shower focus
+      "https://sketchfab.com/3d-models/3d-model-of-a-simple-bathroom-602ce20473804d2598b967263de5fede/embed", // Vanity focus
+      "https://sketchfab.com/3d-models/bathroom-fb02f0fa129e4d67a8835538d2d0b768/embed",        // Tiles focus
+      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",   // Lighting focus
+      "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed"         // Gold fixtures focus
     ];
 
-    function changePreview(n) {
-      document.getElementById('previewImage').src = previewImages[n];
-      gsap.from("#previewImage", {opacity:0.6, scale:0.95, duration:0.6});
+    function changeModel(n) {
+      document.getElementById('sketchfab').src = models[n];
     }
 
     // Estimator
@@ -287,7 +286,6 @@
     // Init
     window.onload = () => {
       updateEstimate();
-      changePreview(0);
     };
   </script>
 </body>
