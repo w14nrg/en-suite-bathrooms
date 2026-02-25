@@ -35,7 +35,7 @@
     @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
 
     #threeCanvas { width: 100%; height: 560px; border: 8px solid #d4af37; border-radius: 24px; }
-    #selectedLabel { font-size: 1.1rem; font-weight: 600; color: #d4af37; }
+    #selectedLabel { font-size: 1.25rem; font-weight: 700; color: #d4af37; text-align: center; height: 36px; }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -99,13 +99,13 @@
     </div>
   </header>
 
-  <!-- PROPER 3D PLANNER - with your latest requests -->
+  <!-- SIMPLE 3D PLANNER -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
-        <span class="uppercase tracking-widest text-sm gold">PROPER 3D PLANNER</span>
+        <span class="uppercase tracking-widest text-sm gold">SIMPLE 3D PLANNER</span>
         <h2 class="section-title serif text-6xl mt-6">Realistic Drag & Rotate 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Click fixture → gold glow + "Selected" label appears • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
+        <p class="text-xl text-zinc-600 mt-6">Click fixture to select (gold glow + label) • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
@@ -124,6 +124,8 @@
               <button onclick="addFixture('bath')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-bath text-3xl"></i> Bath</button>
               <button onclick="addFixture('shower')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-shower text-3xl"></i> Shower</button>
               <button onclick="addFixture('toilet')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-toilet text-3xl"></i> Toilet</button>
+              <button onclick="addFixture('wallhung')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Wall Hung Basin</button>
+              <button onclick="addFixture('pedestal')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Pedestal Basin</button>
               <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-3xl"></i> Window</button>
             </div>
           </div>
@@ -132,15 +134,15 @@
         </div>
 
         <div class="lg:col-span-8">
-          <div id="selectedLabel" class="text-center text-gold font-medium h-8"></div>
+          <div id="selectedLabel" class="text-center text-gold font-medium h-8 mb-2"></div>
           <canvas id="threeCanvas"></canvas>
-          <p class="text-center text-sm text-zinc-500 mt-3">Click fixture (gold glow) → drag to move → scroll wheel to rotate • Click floor to deselect</p>
+          <p class="text-center text-sm text-zinc-500 mt-3">Click fixture to select (gold glow + label) • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESTIMATOR -->
+  <!-- ESTIMATOR (unchanged) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -186,7 +188,7 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
+  <!-- PROCESS, AREAS, FAQ, QUOTE, FLOATING CTA, FOOTER (unchanged) -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -201,7 +203,6 @@
     </div>
   </section>
 
-  <!-- LONDON AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
@@ -214,7 +215,6 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="py-28 bg-white">
     <div class="max-w-4xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
@@ -251,7 +251,6 @@
     </div>
   </section>
 
-  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -265,7 +264,6 @@
     </div>
   </section>
 
-  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
@@ -401,6 +399,21 @@
         const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
         seat.position.y = 0.7;
         group.add(seat);
+      } else if (type === 'wallhung') {
+        const basin = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.5, 0.6), new THREE.MeshStandardMaterial({ color: 0xffffff }));
+        basin.position.y = 1.2;
+        group.add(basin);
+        const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.8, 16), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        pipe.rotation.x = Math.PI / 2;
+        pipe.position.set(0, 0.8, 0);
+        group.add(pipe);
+      } else if (type === 'pedestal') {
+        const basin = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.5, 0.6), new THREE.MeshStandardMaterial({ color: 0xffffff }));
+        basin.position.y = 1.2;
+        group.add(basin);
+        const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.8, 32), new THREE.MeshStandardMaterial({ color: 0xffffff }));
+        pedestal.position.y = 0.4;
+        group.add(pedestal);
       } else if (type === 'window') {
         const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.5, 0.25), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
         frame.position.y = 2.2;
@@ -432,7 +445,7 @@
           deselect();
           selectedFixture = newFixture;
           if (selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0xffaa00);
-          selectedFixture.scale.set(1.1, 1.1, 1.1);
+          selectedFixture.scale.set(1.12, 1.12, 1.12);
           document.getElementById('selectedLabel').textContent = `Selected: ${selectedFixture.userData.type.charAt(0).toUpperCase() + selectedFixture.userData.type.slice(1)}`;
         }
         isDraggingFixture = true;
@@ -490,7 +503,7 @@
       if (textarea) textarea.value = summary;
 
       document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ Realistic 3D design submitted! White fixtures, positions and rotations are in the quote form.");
+      alert("✅ Realistic 3D design submitted!");
     }
 
     let basePrice = 9800;
