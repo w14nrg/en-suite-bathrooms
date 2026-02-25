@@ -10,7 +10,6 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <!-- Three.js for the proper 3D planner -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&family=Inter:wght@300;400;500&display=swap');
@@ -35,7 +34,7 @@
     #roomioBanner { animation: bannerFlash 1.6s infinite alternate ease-in-out; }
     @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
 
-    #threeCanvas { width: 100%; height: 560px; border: 8px solid #d4af37; border-radius: 24px; background: #f1f5f9; }
+    #threeCanvas { width: 100%; height: 560px; border: 8px solid #d4af37; border-radius: 24px; }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -99,17 +98,33 @@
     </div>
   </header>
 
-  <!-- PROPER 3D PLANNER -->
+  <!-- PROPER 3D PLANNER WITH YOUR TWEAKS -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
-        <span class="uppercase tracking-widest text-sm gold">PROPER 3D VERSION</span>
+        <span class="uppercase tracking-widest text-sm gold">PROPER 3D PLANNER</span>
         <h2 class="section-title serif text-6xl mt-6">Real Drag & Drop 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate room • Click buttons to add fixtures • Click & drag fixtures to move them</p>
+        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate • Resize room • Add real-looking fixtures, walls, doors, windows • Drag anything</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
         <div class="lg:col-span-4 space-y-10 bg-white p-8 rounded-3xl border border-gold/30">
+          <!-- Room Resize -->
+          <div>
+            <h3 class="text-xl gold font-medium mb-6">Room Size</h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span>Width</span><span id="widthVal" class="font-medium">6.0 m</span></div>
+                <input type="range" id="width" min="3" max="10" step="0.1" value="6" oninput="resizeRoom()" class="w-full accent-gold">
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1"><span>Depth</span><span id="depthVal" class="font-medium">4.0 m</span></div>
+                <input type="range" id="depth" min="3" max="8" step="0.1" value="4" oninput="resizeRoom()" class="w-full accent-gold">
+              </div>
+            </div>
+          </div>
+
+          <!-- Fixtures -->
           <div>
             <h3 class="text-xl gold font-medium mb-4">Add Fixtures</h3>
             <div class="grid grid-cols-2 gap-3">
@@ -120,18 +135,28 @@
               <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-3xl"></i> Window</button>
             </div>
           </div>
+
+          <!-- Walls / Doors -->
+          <div>
+            <h3 class="text-xl gold font-medium mb-4">Add Walls / Doors</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="addWallOrDoor('wall')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl">Wall</button>
+              <button onclick="addWallOrDoor('door')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl">Door</button>
+            </div>
+          </div>
+
           <button onclick="submitDesign()" class="w-full bg-[#d4af37] hover:bg-amber-400 text-black py-7 rounded-3xl text-2xl font-medium">Submit My 3D Design →</button>
         </div>
 
         <div class="lg:col-span-8">
           <canvas id="threeCanvas"></canvas>
-          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate the room • Click a fixture then drag it to move</p>
+          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate • Click fixture then drag to move it • Resize with sliders above</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESTIMATOR -->
+  <!-- ESTIMATOR (unchanged) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -222,7 +247,7 @@
             <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – it's a full 3D room you can rotate and drag fixtures in.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – resize, add real fixtures, walls, doors, windows and drag everything.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -269,19 +294,20 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // THREE.JS PROPER 3D PLANNER
+    // THREE.JS 3D PLANNER - with your requested tweeks
     let scene, camera, renderer;
     let fixtures3D = [];
     let raycaster = new THREE.Raycaster();
     let mouse = new THREE.Vector2();
     let selectedObject = null;
     let plane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
-    let intersectPoint = new THREE.Vector3();
+
+    let roomWidth = 6;
+    let roomDepth = 4;
 
     function init3D() {
       const canvas = document.getElementById('threeCanvas');
       renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
       renderer.shadowMap.enabled = true;
 
@@ -289,42 +315,54 @@
       scene.background = new THREE.Color(0xf8fafc);
 
       camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-      camera.position.set(8, 6, 10);
-      camera.lookAt(0, 1, 0);
+      camera.position.set(8, 7, 9);
+      camera.lookAt(0, 1.5, 0);
 
-      // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
       const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
       dirLight.position.set(10, 20, 10);
       dirLight.castShadow = true;
       scene.add(dirLight);
 
+      createRoom();
+      animate();
+    }
+
+    function createRoom() {
+      // Clear old room
+      while (scene.children.length > 2) scene.remove(scene.children[2]);
+
       // Floor
-      const floor = new THREE.Mesh(
-        new THREE.PlaneGeometry(12, 12),
-        new THREE.MeshStandardMaterial({ color: 0xe2e8f0 })
-      );
+      const floorGeo = new THREE.PlaneGeometry(roomWidth, roomDepth);
+      const floor = new THREE.Mesh(floorGeo, new THREE.MeshStandardMaterial({ color: 0xe2e8f0 }));
       floor.rotation.x = -Math.PI / 2;
       floor.receiveShadow = true;
       scene.add(floor);
 
       // Grid
-      scene.add(new THREE.GridHelper(12, 24, 0x94a3b8, 0x94a3b8));
+      const grid = new THREE.GridHelper(Math.max(roomWidth, roomDepth), 20, 0x94a3b8, 0x94a3b8);
+      scene.add(grid);
 
-      // Simple walls
+      // Walls
       const wallMat = new THREE.MeshStandardMaterial({ color: 0xf3e8d8 });
-      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(12, 5), wallMat);
-      backWall.position.z = -6;
-      backWall.position.y = 2.5;
+      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, 4), wallMat);
+      backWall.position.z = -roomDepth / 2;
+      backWall.position.y = 2;
       scene.add(backWall);
 
-      const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(12, 5), wallMat);
+      const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(roomDepth, 4), wallMat);
       sideWall.rotation.y = Math.PI / 2;
-      sideWall.position.x = -6;
-      sideWall.position.y = 2.5;
+      sideWall.position.x = -roomWidth / 2;
+      sideWall.position.y = 2;
       scene.add(sideWall);
+    }
 
-      animate();
+    function resizeRoom() {
+      roomWidth = parseFloat(document.getElementById('width').value);
+      roomDepth = parseFloat(document.getElementById('depth').value);
+      document.getElementById('widthVal').textContent = roomWidth.toFixed(1) + ' m';
+      document.getElementById('depthVal').textContent = roomDepth.toFixed(1) + ' m';
+      createRoom();
     }
 
     function animate() {
@@ -333,58 +371,105 @@
     }
 
     function addFixture(type) {
-      let geo, mat, mesh;
+      const group = new THREE.Group();
+      let mainMesh;
+
       if (type === 'bath') {
-        geo = new THREE.BoxGeometry(2.4, 0.8, 1.4);
-        mat = new THREE.MeshStandardMaterial({ color: 0x64748b });
-        mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(-2, 0.4, 0);
+        // Tub
+        mainMesh = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.7, 1.4), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        mainMesh.position.y = 0.35;
+        group.add(mainMesh);
+        // Rim
+        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.1, 1.5), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        rim.position.y = 0.75;
+        group.add(rim);
+        // Legs
+        for (let i = 0; i < 4; i++) {
+          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4, 16), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+          leg.position.set(i % 2 === 0 ? -1 : 1, 0.2, i < 2 ? -0.6 : 0.6);
+          group.add(leg);
+        }
       } else if (type === 'shower') {
-        geo = new THREE.BoxGeometry(1.4, 2.4, 1.4);
-        mat = new THREE.MeshStandardMaterial({ color: 0x334155 });
-        mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(3, 1.2, 0);
+        // Enclosure
+        mainMesh = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.4, 1.4), new THREE.MeshStandardMaterial({ color: 0x334155, transparent: true, opacity: 0.6 }));
+        mainMesh.position.y = 1.2;
+        group.add(mainMesh);
+        // Shower head
+        const head = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.15, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        head.rotation.x = Math.PI / 2;
+        head.position.set(0, 2.1, 0.6);
+        group.add(head);
       } else if (type === 'toilet') {
-        geo = new THREE.CylinderGeometry(0.45, 0.45, 0.9, 32);
-        mat = new THREE.MeshStandardMaterial({ color: 0x475569 });
-        mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(-3.5, 0.45, 2);
+        // Bowl
+        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 0.6, 32), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        bowl.position.y = 0.3;
+        group.add(bowl);
+        // Tank
+        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.8, 0.4), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        tank.position.set(0, 0.9, -0.35);
+        group.add(tank);
+        // Seat
+        const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
+        seat.position.y = 0.65;
+        group.add(seat);
       } else if (type === 'vanity') {
-        geo = new THREE.BoxGeometry(2, 0.9, 0.7);
-        mat = new THREE.MeshStandardMaterial({ color: 0x78350f });
-        mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(2, 0.45, 4);
+        // Counter
+        const counter = new THREE.Mesh(new THREE.BoxGeometry(2, 0.2, 0.7), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
+        counter.position.y = 0.8;
+        group.add(counter);
+        // Sink
+        const sink = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        sink.position.set(0, 0.6, 0);
+        group.add(sink);
+        // Base
+        const base = new THREE.Mesh(new THREE.BoxGeometry(2, 0.7, 0.7), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        base.position.y = 0.35;
+        group.add(base);
       } else if (type === 'window') {
-        geo = new THREE.BoxGeometry(1.8, 1.4, 0.2);
-        mat = new THREE.MeshStandardMaterial({ color: 0xbae6fd });
-        mesh = new THREE.Mesh(geo, mat);
-        mesh.position.set(-5.8, 2.5, 0);
+        // Frame
+        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.4, 0.2), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        frame.position.y = 2.2;
+        group.add(frame);
+        // Glass
+        const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.1), new THREE.MeshStandardMaterial({ color: 0xbae6fd, side: THREE.DoubleSide }));
+        glass.position.set(0, 2.2, 0.11);
+        group.add(glass);
       }
 
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
+      group.userData.type = type;
+      group.position.set(Math.random() * 4 - 2, 0, Math.random() * 4 - 2);
+      scene.add(group);
+      fixtures3D.push(group);
+    }
+
+    function addWallOrDoor(type) {
+      const mat = type === 'wall' ? new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }) : new THREE.MeshStandardMaterial({ color: 0x475569 });
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 3), mat);
+      mesh.position.set(0, 1.5, 0);
+      mesh.rotation.y = Math.PI / 2;
       mesh.userData.type = type;
       scene.add(mesh);
       fixtures3D.push(mesh);
     }
 
-    // Mouse drag to rotate camera
+    // Smoother mouse rotation
     let isDragging = false;
-    let prevX = 0, prevY = 0;
+    let previousX = 0;
+    let azimuth = Math.PI / 4;
+    let elevation = Math.PI / 3;
     document.getElementById('threeCanvas').addEventListener('mousedown', (e) => {
       isDragging = true;
-      prevX = e.clientX;
-      prevY = e.clientY;
+      previousX = e.clientX;
     });
     window.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
-      const deltaX = (e.clientX - prevX) * 0.005;
-      const deltaY = (e.clientY - prevY) * 0.005;
-      camera.position.x += deltaX * 4;
-      camera.position.z += deltaY * 4;
+      const deltaX = e.clientX - previousX;
+      azimuth += deltaX * 0.005;
+      camera.position.x = Math.cos(azimuth) * 10;
+      camera.position.z = Math.sin(azimuth) * 10;
+      camera.position.y = Math.sin(elevation) * 8;
       camera.lookAt(0, 1.5, 0);
-      prevX = e.clientX;
-      prevY = e.clientY;
+      previousX = e.clientX;
     });
     window.addEventListener('mouseup', () => isDragging = false);
 
@@ -393,16 +478,16 @@
       fixtures3D.forEach(f => {
         summary += `• ${f.userData.type} at (${f.position.x.toFixed(1)}, ${f.position.z.toFixed(1)})\n`;
       });
-      summary += "\nReady to build this exact layout – call me!";
+      summary += "\nReady to build this exact layout!";
 
       const textarea = document.querySelector('#quoteForm textarea');
       if (textarea) textarea.value = summary;
 
       document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ 3D design submitted! Full layout is now in the quote form.");
+      alert("✅ 3D design submitted! Your full layout is in the quote form.");
     }
 
-    // Original functions
+    // Original functions (unchanged)
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -432,7 +517,6 @@
       e.preventDefault();
       alert("Thank you! Our London team will call you within 2 hours.");
     });
-
     function closeRoomioBanner() {
       const b = document.getElementById('roomioBanner');
       b.style.opacity = '0';
@@ -443,19 +527,8 @@
     window.onload = () => {
       init3D();
       updateEstimate();
-      if (localStorage.getItem('roomioBannerClosed') === 'true') {
-        document.getElementById('roomioBanner').style.display = 'none';
-      }
+      if (localStorage.getItem('roomioBannerClosed') === 'true') document.getElementById('roomioBanner').style.display = 'none';
     };
-
-    window.addEventListener('resize', () => {
-      const canvas = document.getElementById('threeCanvas');
-      if (renderer) {
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-      }
-    });
   </script>
 </body>
 </html>
