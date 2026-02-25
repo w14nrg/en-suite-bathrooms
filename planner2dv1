@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full 2D Bathroom Planner</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+  #toolbar { margin: 10px; }
+  #canvasContainer { border: 1px solid #ccc; margin-top: 10px; }
+  select, button { margin-right: 10px; padding: 5px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/konva@8.4.3/konva.min.js"></script>
+</head>
+<body>
+
+<div id="toolbar">
+  <select id="objectSelect">
+    <option value="none">Select Object</option>
+    <option value="wall">Wall</option>
+    <option value="window">Window</option>
+    <option value="door">Door</option>
+    <option value="toilet">Toilet</option>
+    <option value="sink">Sink</option>
+    <option value="bath">Bath</option>
+    <option value="shower">Shower</option>
+    <option value="mirror">Mirror</option>
+    <option value="radiator">Radiator</option>
+    <option value="pipeHot">Hot Pipe</option>
+    <option value="pipeCold">Cold Pipe</option>
+    <option value="drainage">Drainage</option>
+    <option value="manhole">Manhole</option>
+    <option value="grass">Grass</option>
+  </select>
+  <button id="exportBtn">Export as PNG</button>
+</div>
+
+<div id="canvasContainer">
+  <div id="plannerCanvas"></div>
+</div>
+
+<script>
+const width = 1000;
+const height = 600;
+const gridSize = 40;
+const stage = new Konva.Stage({ container: 'plannerCanvas', width, height });
+const layer = new Konva.Layer();
+stage.add(layer);
+
+// Draw grid
+for(let x=0; x<=width; x+=gridSize){
+  layer.add(new Konva.Line({ points:[x,0,x,height], stroke:'#ddd', strokeWidth:1 }));
+}
+for(let y=0; y<=height; y+=gridSize){
+  layer.add(new Konva.Line({ points:[0,y,width,y], stroke:'#ddd', strokeWidth:1 }));
+}
+
+layer.draw();
+
+const objectSelect = document.getElementById('objectSelect');
+let selectedType = 'none';
+
+objectSelect.onchange = () => { selectedType = objectSelect.value; };
+
+stage.on('click', function(e){
+  if(selectedType === 'none') return;
+  const pos = stage.getPointerPosition();
+  const snappedX = Math.round(pos.x/gridSize)*gridSize;
+  const snappedY = Math.round(pos.y/gridSize)*gridSize;
+
+  let obj;
+
+  if(['wall','window','door'].includes(selectedType)){
+    obj = new Konva.Rect({
+      x: snappedX, y: snappedY,
+      width: gridSize*2, height: gridSize/2,
+      fill: selectedType==='wall'?'#000':selectedType==='window'?'#00f':'#964B00',
+      draggable:true
+    });
+  } else if(selectedType==='grass'){
+    obj = new Konva.Rect({ x:snappedX, y:snappedY, width:gridSize, height:gridSize, fill:'#0f0', draggable:true });
+  } else {
+    obj = new Konva.Rect({ x:snappedX, y:snappedY, width:gridSize, height:gridSize, fill:'#FFA500', draggable:true });
+  }
+
+  // Add transformer for resize/rotate
+  const tr = new Konva.Transformer({ nodes:[obj], rotateEnabled:true, enabledAnchors:['top-left','top-right','bottom-left','bottom-right'] });
+  layer.add(obj);
+  layer.add(tr);
+  obj.on('click', e=> { tr.nodes([obj]); layer.draw(); });
+  layer.draw();
+});
+
+document.getElementById('exportBtn').onclick = () => {
+  const dataURL = stage.toDataURL({ pixelRatio:2 });
+  const link = document.createElement('a');
+  link.download = 'bathroom_plan.png';
+  link.href = dataURL;
+  link.click();
+};
+</script>
+</body>
+</html>
