@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Expert en-suite bathroom installation & full bathroom fitters across London. Luxury design, flawless fitting, 10-year guarantee. Free quote in 24h.">
+  <meta name="keywords" content="en suite bathroom installation London, bathroom fitters London, luxury ensuite installers Chelsea, bathroom renovation London, en-suite bathrooms Kensington">
+  <title>En-Suite Bathrooms | Luxury En-Suite & Bathroom Installation London</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <style>
+    .hero-bg { background-image: linear-gradient(rgba(10,20,40,0.65),rgba(10,20,40,0.65)), url('https://picsum.photos/id/1015/1920/1080'); }
+    .gold { color: #d4af37; }
+    .navy { background-color: #0a1428; }
+    .tail-container { max-width: 1280px; margin: 0 auto; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 navy border-b border-zinc-800">
+    <div class="tail-container px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-bath text-3xl gold"></i>
+        <h1 class="text-2xl font-bold tracking-tighter">en-suite</h1>
+      </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#services" class="hover:gold transition">Services</a>
+        <a href="#gallery" class="hover:gold transition">Gallery</a>
+        <a href="#process" class="hover:gold transition">Process</a>
+        <a href="#areas" class="hover:gold transition">Areas</a>
+        <a href="#contact" class="hover:gold transition">Contact</a>
+      </div>
+      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-semibold px-8 py-3 rounded-full transition text-sm">GET FREE QUOTE</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-bg h-screen bg-cover bg-center flex items-center pt-20">
+    <div class="tail-container px-6 text-center">
+      <h2 class="text-6xl md:text-7xl font-bold leading-none mb-6">London's Most<br>Beautiful En-Suites</h2>
+      <p class="text-xl md:text-2xl mb-10 max-w-2xl mx-auto">Expert design & installation of luxury en-suite bathrooms and full renovations across London. 10-year guarantee. 500+ happy homes.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#quote" class="bg-[#d4af37] text-black font-semibold text-lg px-12 py-6 rounded-2xl hover:scale-105 transition">Book Your Free Site Visit</a>
+        <a href="#gallery" class="border-2 border-white text-white font-semibold text-lg px-12 py-6 rounded-2xl hover:bg-white hover:text-black transition">See Our Work</a>
+      </div>
+      <div class="mt-12 flex justify-center gap-8 text-sm">
+        <div><i class="fa-solid fa-star gold"></i> 4.98 (217 reviews)</div>
+        <div>✓ 10-Year Guarantee</div>
+        <div>✓ London-Wide</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 navy">
+    <div class="tail-container px-6">
+      <h2 class="text-5xl font-bold text-center mb-4">Our London Services</h2>
+      <p class="text-center text-zinc-400 mb-16">From compact en-suites to palatial master bathrooms</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-zinc-900 p-10 rounded-3xl group hover:-translate-y-3 transition">
+          <i class="fa-solid fa-shower text-6xl gold mb-8"></i>
+          <h3 class="text-3xl font-semibold mb-3">En-Suite Installation</h3>
+          <p class="text-zinc-400">Full design, plumbing, tiling & fitting of luxury en-suite bathrooms in London homes.</p>
+        </div>
+        <div class="bg-zinc-900 p-10 rounded-3xl group hover:-translate-y-3 transition">
+          <i class="fa-solid fa-bath text-6xl gold mb-8"></i>
+          <h3 class="text-3xl font-semibold mb-3">Full Bathroom Renovation</h3>
+          <p class="text-zinc-400">Complete strip-out and luxury refit — wet rooms, walk-in showers, freestanding tubs.</p>
+        </div>
+        <div class="bg-zinc-900 p-10 rounded-3xl group hover:-translate-y-3 transition">
+          <i class="fa-solid fa-ruler-combined text-6xl gold mb-8"></i>
+          <h3 class="text-3xl font-semibold mb-3">Space-Saving Solutions</h3>
+          <p class="text-zinc-400">Bespoke compact en-suites for London flats, Victorian terraces & new builds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE CONFIGURATOR -->
+  <section class="py-24 bg-zinc-900">
+    <div class="tail-container px-6">
+      <h2 class="text-5xl font-bold text-center mb-12">Design Your Dream En-Suite</h2>
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+        <div>
+          <img id="preview" src="https://picsum.photos/id/1015/800/800" class="rounded-3xl shadow-2xl w-full" alt="Bathroom preview">
+        </div>
+        <div class="space-y-8">
+          <div>
+            <p class="text-sm uppercase tracking-widest text-zinc-400 mb-3">Style</p>
+            <div class="grid grid-cols-3 gap-3" id="styleBtns">
+              <button onclick="changeStyle(0)" class="active-style p-4 bg-zinc-800 rounded-2xl text-center">Modern</button>
+              <button onclick="changeStyle(1)" class="p-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-center">Spa</button>
+              <button onclick="changeStyle(2)" class="p-4 bg-zinc-800 hover:bg-zinc-700 rounded-2xl text-center">Classic</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-sm uppercase tracking-widest text-zinc-400 mb-3">Marble Colour</p>
+            <div class="flex gap-4">
+              <div onclick="changeMarble(0)" class="w-12 h-12 bg-[#f5f0e6] rounded-full cursor-pointer ring-2 ring-offset-4 ring-offset-zinc-900 ring-amber-300"></div>
+              <div onclick="changeMarble(1)" class="w-12 h-12 bg-[#2a2a2a] rounded-full cursor-pointer"></div>
+              <div onclick="changeMarble(2)" class="w-12 h-12 bg-[#c9a96e] rounded-full cursor-pointer"></div>
+            </div>
+          </div>
+          <button onclick="alert('Quote request sent! Our London team will contact you within 2 hours.')" class="w-full bg-[#d4af37] text-black py-8 text-xl font-semibold rounded-3xl hover:scale-105 transition">Get This Exact Look – Free Quote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="py-24">
+    <div class="tail-container px-6">
+      <div class="flex justify-between items-end mb-12">
+        <h2 class="text-5xl font-bold">Recent London Installations</h2>
+        <div class="flex gap-3 text-sm">
+          <button onclick="filterGallery('all')" class="active-filter px-6 py-3 bg-zinc-800 rounded-full">All</button>
+          <button onclick="filterGallery('luxury')" class="px-6 py-3 hover:bg-zinc-800 rounded-full">Luxury</button>
+          <button onclick="filterGallery('compact')" class="px-6 py-3 hover:bg-zinc-800 rounded-full">Compact</button>
+        </div>
+      </div>
+      <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 navy">
+    <div class="tail-container px-6">
+      <h2 class="text-5xl font-bold text-center mb-16">Our 6-Step London Process</h2>
+      <div class="grid md:grid-cols-6 gap-8">
+        <div class="text-center"><div class="text-6xl mb-4">1</div><p class="font-medium">Free Consultation</p></div>
+        <div class="text-center"><div class="text-6xl mb-4">2</div><p class="font-medium">3D Design</p></div>
+        <div class="text-center"><div class="text-6xl mb-4">3</div><p class="font-medium">Material Selection</p></div>
+        <div class="text-center"><div class="text-6xl mb-4">4</div><p class="font-medium">Project Schedule</p></div>
+        <div class="text-center"><div class="text-6xl mb-4">5</div><p class="font-medium">Installation (4-10 days)</p></div>
+        <div class="text-center"><div class="text-6xl mb-4">6</div><p class="font-medium">Final Walkthrough</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-24 bg-zinc-900">
+    <div class="tail-container px-6">
+      <div class="swiper testimonials">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide text-center max-w-2xl mx-auto">
+            <p class="italic text-2xl">"The en-suite they installed in our Chelsea townhouse is better than the 5-star hotels we've stayed in. Flawless."</p>
+            <p class="mt-8 font-semibold">— Sarah & James Harrington, SW3</p>
+          </div>
+          <!-- Add more slides as needed -->
+        </div>
+        <div class="swiper-pagination mt-10"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE SECTION -->
+  <section id="quote" class="py-24 navy">
+    <div class="tail-container px-6 max-w-2xl mx-auto text-center">
+      <h2 class="text-5xl font-bold mb-8">Ready for your dream bathroom?</h2>
+      <form id="quoteForm" class="space-y-6">
+        <input type="text" placeholder="Full Name" class="w-full bg-zinc-800 border-0 rounded-2xl px-8 py-6 text-lg" required>
+        <input type="tel" placeholder="Phone Number" class="w-full bg-zinc-800 border-0 rounded-2xl px-8 py-6 text-lg" required>
+        <input type="email" placeholder="Email" class="w-full bg-zinc-800 border-0 rounded-2xl px-8 py-6 text-lg" required>
+        <textarea placeholder="Tell us about your project (e.g. 2m x 3m en-suite in Kensington)" class="w-full bg-zinc-800 border-0 rounded-2xl px-8 py-6 text-lg h-40"></textarea>
+        <button type="submit" class="w-full bg-[#d4af37] text-black font-bold text-2xl py-8 rounded-3xl hover:bg-amber-400 transition">SEND REQUEST — WE'LL CALL WITHIN 2 HOURS</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="navy py-20">
+    <div class="tail-container px-6 text-center">
+      <p class="text-3xl font-bold mb-2">en-suite bathrooms</p>
+      <p class="text-zinc-400">Expert En-Suite & Bathroom Installation Across All London Postcodes</p>
+      <div class="my-8 text-sm">📍 Serving Kensington, Chelsea, Notting Hill, Hampstead, Islington, Shoreditch & beyond</div>
+      <div class="flex justify-center gap-8 text-2xl">
+        <i class="fa-brands fa-instagram cursor-pointer hover:gold"></i>
+        <i class="fa-brands fa-facebook cursor-pointer hover:gold"></i>
+      </div>
+      <p class="text-xs text-zinc-500 mt-12">© 2026 En-Suite Bathrooms Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center">
+    <img id="lightboxImg" class="max-h-[90vh] max-w-[90vw] rounded-3xl">
+    <button onclick="closeLightbox()" class="absolute top-8 right-8 text-5xl text-white">×</button>
+  </div>
+
+  <script>
+    // Tailwind script
+    function initTailwind() {
+      tailwind.config = {
+        content: [],
+        theme: { extend: { colors: { gold: '#d4af37' } } }
+      }
+    }
+    initTailwind();
+
+    // Gallery images (luxury London style)
+    const galleryImages = [
+      {url: "https://picsum.photos/id/1015/800/800", cat: "luxury"},
+      {url: "https://picsum.photos/id/133/800/800", cat: "luxury"},
+      {url: "https://picsum.photos/id/201/800/800", cat: "compact"},
+      {url: "https://picsum.photos/id/251/800/800", cat: "luxury"},
+      {url: "https://picsum.photos/id/316/800/800", cat: "compact"},
+      {url: "https://picsum.photos/id/870/800/800", cat: "luxury"},
+    ];
+
+    function renderGallery(filter = 'all') {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+      galleryImages.forEach(img => {
+        if (filter === 'all' || img.cat === filter) {
+          const div = document.createElement('div');
+          div.className = 'aspect-square overflow-hidden rounded-3xl cursor-pointer group';
+          div.innerHTML = `<img src="${img.url}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onclick="openLightbox('${img.url}')">`;
+          grid.appendChild(div);
+        }
+      });
+    }
+
+    function filterGallery(cat) {
+      document.querySelectorAll('#galleryGrid ~ button').forEach(b => b.classList.remove('active-filter'));
+      renderGallery(cat);
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+
+    // Simple Configurator
+    const previews = [
+      "https://picsum.photos/id/1015/800/800", // modern
+      "https://picsum.photos/id/133/800/800",  // spa
+      "https://picsum.photos/id/201/800/800"   // classic
+    ];
+    function changeStyle(n) {
+      document.getElementById('preview').src = previews[n];
+    }
+    function changeMarble(n) {
+      // could add more advanced overlay but this shows capability
+      alert("Marble updated! (In full production version this would be live preview)");
+    }
+
+    // Swiper
+    window.onload = () => {
+      renderGallery('all');
+      new Swiper('.testimonials', {
+        loop: true,
+        autoplay: { delay: 5000 },
+        pagination: { el: '.swiper-pagination', clickable: true }
+      });
+
+      // Form
+      document.getElementById('quoteForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert("✅ Thank you! Our London team will call you within 2 hours with a tailored quote.");
+      });
+    };
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
