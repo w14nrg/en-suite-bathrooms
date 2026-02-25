@@ -96,7 +96,7 @@
     <div class="max-w-7xl mx-auto px-8 text-center">
       <span class="uppercase tracking-widest text-sm gold">PROFESSIONAL 2D PLANNER</span>
       <h2 class="section-title serif text-6xl mt-6">Architect-Grade Full-Screen Bathroom Designer</h2>
-      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Realistic rotatable fixtures • Thin walls & pipes • Drag • Scroll to rotate</p>
+      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Realistic rotatable fixtures • Thin walls & pipes • Drag • Scroll to rotate • Scroll when nothing selected to zoom</p>
       
       <div class="mt-16 bg-white rounded-3xl p-16 max-w-3xl mx-auto border border-gold/30">
         <button onclick="launchPlanner()" 
@@ -198,7 +198,7 @@
             <p class="text-xl">Can I use the professional 2D planner?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click to select, drag to move, mouse wheel to rotate anything.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click to select, drag to move, mouse wheel to rotate, scroll when nothing selected to zoom in/out.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -293,7 +293,7 @@
       <canvas id="fullCanvas" class="flex-1 bg-[#f8f1e3]"></canvas>
       <div class="w-80 bg-zinc-900 text-white p-8 overflow-auto">
         <h3 class="gold text-xl mb-6">Selected</h3>
-        <div id="infoPanel" class="text-zinc-400">Click fixture/pipe/wall to select • Drag to move • Mouse wheel to rotate</div>
+        <div id="infoPanel" class="text-zinc-400">Click fixture/pipe to select • Drag to move • Mouse wheel to rotate or zoom</div>
       </div>
     </div>
   </div>
@@ -352,86 +352,101 @@
       ctx.translate(px, py);
       ctx.rotate(f.rotation || 0);
 
-      ctx.shadowColor = 'rgba(0,0,0,0.25)';
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetX = 4;
-      ctx.shadowOffsetY = 6;
+      ctx.shadowColor = 'rgba(0,0,0,0.35)';
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetX = 8;
+      ctx.shadowOffsetY = 10;
 
       if (f.type === 'toilet') {
         // Tank
-        ctx.fillStyle = '#f1f5f9';
-        ctx.fillRect(-s*0.75, -s*1.15, s*1.5, s*0.55);
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(-s*0.75, -s*1.15, s*1.5, s*0.55);
-        // Lid
-        ctx.fillStyle = '#e2e8f0';
-        ctx.fillRect(-s*0.78, -s*1.25, s*1.56, s*0.15);
-        // Bowl
-        ctx.fillStyle = '#f1f5f9';
-        ctx.beginPath();
-        ctx.ellipse(0, s*0.35, s*0.72, s*0.58, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.stroke();
-        // Seat
-        ctx.fillStyle = '#1e2937';
-        ctx.fillRect(-s*0.55, s*0.15, s*1.1, s*0.18);
-        ctx.strokeStyle = '#0f172a';
-        ctx.strokeRect(-s*0.55, s*0.15, s*1.1, s*0.18);
-      } else if (f.type === 'bath') {
-        ctx.fillStyle = '#e0f2fe';
-        ctx.beginPath();
-        ctx.ellipse(0, s*0.12, s*1.48, s*0.68, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 6;
-        ctx.stroke();
-        // Rim
-        ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.ellipse(0, s*0.08, s*1.55, s*0.62, 0, 0, Math.PI*2);
-        ctx.stroke();
-        // Legs
-        ctx.fillStyle = '#475569';
-        ctx.fillRect(-s*1.1, s*0.55, s*0.18, s*0.4);
-        ctx.fillRect(s*0.92, s*0.55, s*0.18, s*0.4);
-        // Taps
-        ctx.fillStyle = '#64748b';
-        ctx.fillRect(-s*0.65, -s*0.45, s*0.22, s*0.3);
-      } else if (f.type === 'shower') {
-        ctx.fillStyle = '#bae6fd';
-        ctx.globalAlpha = 0.28;
-        ctx.fillRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = '#e0f2fe';
-        ctx.fillRect(-s*0.95, s*0.85, s*1.9, s*0.25);
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(-s*0.75, -s*1.2, s*1.5, s*0.6);
         ctx.strokeStyle = '#334155';
         ctx.lineWidth = 5;
-        ctx.strokeRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
+        ctx.strokeRect(-s*0.75, -s*1.2, s*1.5, s*0.6);
+        // Lid
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillRect(-s*0.78, -s*1.35, s*1.56, s*0.2);
+        // Bowl
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.ellipse(0, s*0.4, s*0.75, s*0.62, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+        // Base
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillRect(-s*0.6, s*0.8, s*1.2, s*0.25);
+        // Seat
+        ctx.fillStyle = '#1e2937';
+        ctx.fillRect(-s*0.55, s*0.22, s*1.1, s*0.2);
+      } else if (f.type === 'bath') {
+        // Outer tub
+        ctx.fillStyle = '#e0f2fe';
+        ctx.beginPath();
+        ctx.ellipse(0, s*0.18, s*1.55, s*0.75, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 8;
+        ctx.stroke();
+        // Inner basin
+        ctx.fillStyle = '#bae6fd';
+        ctx.beginPath();
+        ctx.ellipse(0, s*0.15, s*1.38, s*0.58, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Rim highlight
+        ctx.strokeStyle = '#f0f9ff';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.ellipse(0, s*0.08, s*1.52, s*0.65, 0, 0, Math.PI*2);
+        ctx.stroke();
+        // Feet
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(-s*1.1, s*0.6, s*0.22, s*0.45);
+        ctx.fillRect(s*0.88, s*0.6, s*0.22, s*0.45);
+        // Taps
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-s*0.7, -s*0.5, s*0.25, s*0.32);
+      } else if (f.type === 'shower') {
+        // Glass
+        ctx.fillStyle = '#bae6fd';
+        ctx.globalAlpha = 0.25;
+        ctx.fillRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
+        ctx.globalAlpha = 1;
+        // Tray
+        ctx.fillStyle = '#e0f2fe';
+        ctx.fillRect(-s*0.95, s*0.85, s*1.9, s*0.25);
         // Frame
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 6;
+        ctx.strokeRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
+        // Vertical glass lines
         ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(-s*0.95, -s*1.15); ctx.lineTo(-s*0.95, s*0.85); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(s*0.95, -s*1.15); ctx.lineTo(s*0.95, s*0.85); ctx.stroke();
-        // Head
+        ctx.beginPath(); ctx.moveTo(-s*0.3, -s*1.15); ctx.lineTo(-s*0.3, s*0.85); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s*0.3, -s*1.15); ctx.lineTo(s*0.3, s*0.85); ctx.stroke();
+        // Shower head + arm
         ctx.fillStyle = '#475569';
         ctx.fillRect(-s*0.15, -s*1.25, s*0.3, s*0.12);
+        ctx.fillRect(-s*0.08, -s*1.4, s*0.16, s*0.2);
       } else if (f.type === 'towel-radiator') {
         ctx.fillStyle = '#cbd5e1';
         ctx.fillRect(-s*0.45, -s*1.25, s*0.9, s*2.5);
         ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 7;
         for (let i = 0; i < 8; i++) {
           ctx.beginPath();
           ctx.moveTo(-s*0.35, -s*1.1 + i * (s*0.32));
           ctx.lineTo(s*0.35, -s*1.1 + i * (s*0.32));
           ctx.stroke();
         }
+        // Vertical pipes
+        ctx.lineWidth = 9;
+        ctx.beginPath(); ctx.moveTo(-s*0.42, -s*1.25); ctx.lineTo(-s*0.42, s*1.25); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s*0.42, -s*1.25); ctx.lineTo(s*0.42, s*1.25); ctx.stroke();
       } else if (f.type === 'manhole') {
         ctx.fillStyle = '#1e2937';
         ctx.beginPath(); ctx.arc(0, 0, s*0.95, 0, Math.PI*2); ctx.fill();
         ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 7;
+        ctx.lineWidth = 8;
         ctx.beginPath(); ctx.moveTo(-s*0.6, 0); ctx.lineTo(s*0.6, 0); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(0, -s*0.6); ctx.lineTo(0, s*0.6); ctx.stroke();
         ctx.fillStyle = '#cbd5e1';
@@ -650,28 +665,38 @@
     }
 
     function onWheel(e) {
-      if (selectedItem) {
-        selectedItem.rotation = (selectedItem.rotation || 0) + e.deltaY * 0.008;
-        draw();
-        e.preventDefault();
-      } else if (selectedPipeIndex !== -1) {
-        const p = pipes[selectedPipeIndex];
-        const cx = (p.x1 + p.x2) / 2;
-        const cy = (p.y1 + p.y2) / 2;
-        const dx1 = p.x1 - cx;
-        const dy1 = p.y1 - cy;
-        const dx2 = p.x2 - cx;
-        const dy2 = p.y2 - cy;
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      if (selectedItem || selectedPipeIndex !== -1) {
         const angle = e.deltaY * 0.008;
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        p.x1 = cx + dx1 * cos - dy1 * sin;
-        p.y1 = cy + dx1 * sin + dy1 * cos;
-        p.x2 = cx + dx2 * cos - dy2 * sin;
-        p.y2 = cy + dx2 * sin + dy2 * cos;
-        draw();
-        e.preventDefault();
+        if (selectedItem) {
+          selectedItem.rotation = (selectedItem.rotation || 0) + angle;
+        } else if (selectedPipeIndex !== -1) {
+          const p = pipes[selectedPipeIndex];
+          const cx = (p.x1 + p.x2) / 2;
+          const cy = (p.y1 + p.y2) / 2;
+          const dx1 = p.x1 - cx;
+          const dy1 = p.y1 - cy;
+          const dx2 = p.x2 - cx;
+          const dy2 = p.y2 - cy;
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+          p.x1 = cx + dx1 * cos - dy1 * sin;
+          p.y1 = cy + dx1 * sin + dy1 * cos;
+          p.x2 = cx + dx2 * cos - dy2 * sin;
+          p.y2 = cy + dx2 * sin + dy2 * cos;
+        }
+      } else {
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        const oldScale = scale;
+        scale *= factor;
+        offsetX = mouseX - (mouseX - offsetX) * (scale / oldScale);
+        offsetY = mouseY - (mouseY - offsetY) * (scale / oldScale);
       }
+      draw();
+      e.preventDefault();
     }
 
     function setTool(tool) {
@@ -696,7 +721,7 @@
       } else if (selectedPipeIndex !== -1) {
         panel.innerHTML = `<span class="text-2xl gold">${pipes[selectedPipeIndex].type.toUpperCase()} PIPE</span><br>Drag to move • Mouse wheel to rotate`;
       } else {
-        panel.innerHTML = 'Click fixture or pipe to select • Drag to move • Wheel to rotate';
+        panel.innerHTML = 'Click fixture/pipe to select • Drag to move • Wheel to rotate/zoom';
       }
     }
 
