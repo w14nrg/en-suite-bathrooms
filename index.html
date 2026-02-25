@@ -30,34 +30,52 @@
     .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
 
-    .builder-box { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-    .builder-box:hover { transform: translateY(-8px); }
-
     #roomioBanner { animation: bannerFlash 1.6s infinite alternate ease-in-out; }
     @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
 
+    /* SCALED GRAPH PAPER BACKGROUND - NO MORE MOUNTAIN */
     .room-preview {
       position: relative;
       width: 100%;
-      height: 520px;
-      background: #e0f2fe url('https://picsum.photos/id/1015/1200/800') center/cover;
+      height: 560px;
+      background-color: #f8fafc;
+      background-image: 
+        linear-gradient(#cbd5e1 1px, transparent 1px),
+        linear-gradient(90deg, #cbd5e1 1px, transparent 1px);
+      background-size: 35px 35px; /* scaled graph */
       border: 8px solid #d4af37;
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
     }
+
+    /* PROPER SANITARY WARE - rectangular with real Font Awesome icons */
     .fixture {
       position: absolute;
-      width: 68px; height: 68px;
-      background: rgba(255,255,255,0.95);
-      border: 3px solid #d4af37;
-      border-radius: 9999px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; cursor: move; user-select: none;
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+      width: 92px;
+      height: 92px;
+      background: white;
+      border: 4px solid #d4af37;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: move;
+      user-select: none;
+      box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.3);
       transition: all 0.2s;
+      font-size: 42px;
+      color: #b45309;
     }
-    .fixture:active { transform: scale(1.15); z-index: 50; }
+    .fixture:active { transform: scale(1.12); z-index: 50; }
+    .fixture-label { font-size: 11px; font-weight: 600; color: #78350f; margin-top: 2px; }
+
+    /* WALLS & DOORS - draggable lines */
+    .wall-h { position: absolute; height: 9px; background: #78350f; border-radius: 4px; cursor: move; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2); }
+    .wall-v { position: absolute; width: 9px; background: #78350f; border-radius: 4px; cursor: move; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2); }
+    .door-h { position: absolute; height: 9px; background: #475569; border-radius: 4px; cursor: move; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2); }
+    .door-v { position: absolute; width: 9px; background: #475569; border-radius: 4px; cursor: move; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2); }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -111,7 +129,6 @@
       </div>
     </div>
 
-    <!-- FULL-WIDTH FLASHING ROOMIO BANNER -->
     <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-950 to-black py-6 z-[9999] border-t-4 border-[#d4af37]">
       <div class="max-w-7xl mx-auto px-8 flex items-center justify-between text-white w-full">
         <span class="text-xl md:text-2xl serif tracking-wider text-[#d4af37]">en-suite not enough?</span>
@@ -122,13 +139,13 @@
     </div>
   </header>
 
-  <!-- FULL INTERACTIVE 3D BUILDER - visitors can actually build & submit -->
+  <!-- FULL INTERACTIVE PLANNER -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">BUILT BY OUR TEAM</span>
         <h2 class="section-title serif text-6xl mt-6">Build Your Own Luxury En-Suite</h2>
-        <p class="text-xl text-zinc-600 mt-6">Set dimensions • Choose wall colour • Add & drag fixtures • Submit your exact design</p>
+        <p class="text-xl text-zinc-600 mt-6">Scaled graph paper • Real sanitary icons • Drag walls, doors & fixtures</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
@@ -164,20 +181,30 @@
           </div>
 
           <div>
-            <h3 class="text-xl gold font-medium mb-4">Add Fixtures (drag them!)</h3>
+            <h3 class="text-xl gold font-medium mb-4">Add Sanitary Ware</h3>
             <div class="grid grid-cols-2 gap-3">
-              <button onclick="addFixture('bath')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-bath text-2xl"></i> Bath</button>
-              <button onclick="addFixture('shower')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-shower text-2xl"></i> Shower</button>
-              <button onclick="addFixture('toilet')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-toilet text-2xl"></i> Toilet</button>
-              <button onclick="addFixture('vanity')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-2xl"></i> Vanity</button>
-              <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-2xl"></i> Window</button>
+              <button onclick="addFixture('bath')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-bath text-3xl"></i> Bath</button>
+              <button onclick="addFixture('shower')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-shower text-3xl"></i> Shower</button>
+              <button onclick="addFixture('toilet')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-toilet text-3xl"></i> Toilet</button>
+              <button onclick="addFixture('vanity')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Vanity</button>
+              <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-3xl"></i> Window</button>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl gold font-medium mb-4">Add Walls & Doors</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="addLine('wall-h')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl text-sm">Horizontal Wall</button>
+              <button onclick="addLine('wall-v')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl text-sm">Vertical Wall</button>
+              <button onclick="addLine('door-h')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl text-sm">Horizontal Door</button>
+              <button onclick="addLine('door-v')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl text-sm">Vertical Door</button>
             </div>
           </div>
 
           <button onclick="submitDesign()" class="w-full bg-[#d4af37] hover:bg-amber-400 text-black py-7 rounded-3xl text-2xl font-medium">Submit My Custom Design →</button>
         </div>
 
-        <!-- LIVE DRAGGABLE PREVIEW -->
+        <!-- GRAPH PAPER PREVIEW -->
         <div class="lg:col-span-8">
           <div class="room-preview" id="preview"></div>
           <div id="fixtureList" class="mt-6 flex flex-wrap gap-3"></div>
@@ -186,7 +213,7 @@
     </div>
   </section>
 
-  <!-- ESTIMATOR -->
+  <!-- ESTIMATOR (your original) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -277,7 +304,7 @@
             <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – set dimensions, add fixtures, drag them around, and submit your design.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – use the scaled graph paper, add real sanitary ware, drag walls/doors/fixtures exactly where you want.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -305,7 +332,7 @@
         <input type="text" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" placeholder="Email" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <textarea placeholder="Tell us about your project (your custom design will appear here automatically)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
+        <textarea placeholder="Tell us about your project (your custom graph design will appear here automatically)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
         <button type="submit" class="w-full py-8 bg-[#d4af37] text-black text-3xl font-medium rounded-3xl">SEND REQUEST — LONDON TEAM CALLS WITHIN 2 HOURS</button>
       </form>
     </div>
@@ -349,17 +376,49 @@
       const div = document.createElement('div');
       div.className = 'fixture';
       div.id = id;
-      div.style.left = (30 + Math.random() * 40) + '%';
-      div.style.top = (30 + Math.random() * 40) + '%';
+      div.style.left = (20 + Math.random() * 50) + '%';
+      div.style.top = (20 + Math.random() * 50) + '%';
 
       let icon = '';
-      if (type === 'bath') icon = '🛁';
-      else if (type === 'shower') icon = '🚿';
-      else if (type === 'toilet') icon = '🚽';
-      else if (type === 'vanity') icon = '🪞';
-      else if (type === 'window') icon = '🪟';
+      let label = '';
+      if (type === 'bath') { icon = 'fa-bath'; label = 'Bath'; }
+      else if (type === 'shower') { icon = 'fa-shower'; label = 'Shower'; }
+      else if (type === 'toilet') { icon = 'fa-toilet'; label = 'Toilet'; }
+      else if (type === 'vanity') { icon = 'fa-sink'; label = 'Vanity'; }
+      else if (type === 'window') { icon = 'fa-window-maximize'; label = 'Window'; }
 
-      div.innerHTML = icon;
+      div.innerHTML = `<i class="fa-solid ${icon}"></i><div class="fixture-label">${label}</div>`;
+      preview.appendChild(div);
+      makeDraggable(div);
+
+      fixtures.push({id: id, type: type});
+      renderFixtureList();
+    }
+
+    function addLine(type) {
+      const id = 'line-' + Date.now();
+      const preview = document.getElementById('preview');
+      const div = document.createElement('div');
+      div.id = id;
+      div.style.left = '15%';
+      div.style.top = '40%';
+
+      if (type === 'wall-h') {
+        div.className = 'wall-h';
+        div.style.width = '260px';
+      } else if (type === 'wall-v') {
+        div.className = 'wall-v';
+        div.style.height = '260px';
+      } else if (type === 'door-h') {
+        div.className = 'door-h';
+        div.style.width = '110px';
+        div.innerHTML = '<div class="absolute -top-5 text-[10px] font-bold text-white">DOOR</div>';
+      } else if (type === 'door-v') {
+        div.className = 'door-v';
+        div.style.height = '110px';
+        div.innerHTML = '<div class="absolute -left-5 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white rotate-90">DOOR</div>';
+      }
+
       preview.appendChild(div);
       makeDraggable(div);
 
@@ -399,9 +458,12 @@
       const list = document.getElementById('fixtureList');
       list.innerHTML = '';
       fixtures.forEach((f, i) => {
+        let name = f.type;
+        if (f.type.includes('wall')) name = f.type === 'wall-h' ? 'Horizontal Wall' : 'Vertical Wall';
+        if (f.type.includes('door')) name = f.type === 'door-h' ? 'Horizontal Door' : 'Vertical Door';
         const pill = document.createElement('div');
         pill.className = 'bg-white border border-gold/30 px-5 py-2 rounded-3xl flex items-center gap-3 text-sm';
-        pill.innerHTML = `<span class="text-2xl">${f.type === 'bath' ? '🛁' : f.type === 'shower' ? '🚿' : f.type === 'toilet' ? '🚽' : f.type === 'vanity' ? '🪞' : '🪟'}</span> ${f.type} <button onclick="removeFixture(${i})" class="ml-4 text-red-500 font-bold">×</button>`;
+        pill.innerHTML = `${name} <button onclick="removeFixture(${i})" class="ml-4 text-red-500 font-bold">×</button>`;
         list.appendChild(pill);
       });
     }
@@ -417,18 +479,22 @@
     function submitDesign() {
       const w = document.getElementById('width').value;
       const d = document.getElementById('depth').value;
-      const items = fixtures.map(f => f.type).join(', ') || 'none';
+      const items = fixtures.map(f => {
+        if (f.type.includes('wall')) return f.type === 'wall-h' ? 'Horiz Wall' : 'Vert Wall';
+        if (f.type.includes('door')) return f.type === 'door-h' ? 'Horiz Door' : 'Vert Door';
+        return f.type.charAt(0).toUpperCase() + f.type.slice(1);
+      }).join(', ') || 'none';
 
-      const summary = `MY CUSTOM 3D DESIGN:\nWidth: ${w}m × Depth: ${d}m\nWall colour: ${wallColor}\nFixtures: ${items}\n\n(Everything is already dragged into position exactly how I want it)\n\nPlease call me to discuss this layout!`;
+      const summary = `MY CUSTOM GRAPH DESIGN:\nWidth: ${w}m × Depth: ${d}m\nWall: ${wallColor}\nItems: ${items}\n(Everything positioned exactly on the scaled graph)\n\nPlease call me – ready to build!`;
 
       const textarea = document.querySelector('#quoteForm textarea');
       if (textarea) textarea.value = summary;
 
       document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ Your custom design has been added to the quote form below. Our London team will receive it instantly.");
+      alert("✅ Design saved to quote form! Your exact layout (with walls, doors & sanitary ware) is included.");
     }
 
-    // Estimator functions
+    // Estimator, FAQ, form (unchanged)
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -445,25 +511,18 @@
       document.querySelectorAll('.style-btn')[n].classList.add('active');
       updateEstimate();
     }
-    function saveEstimate() {
-      alert("Estimate saved! Our London team will contact you shortly.");
-    }
-
-    // FAQ
+    function saveEstimate() { alert("Estimate saved! Our London team will contact you shortly."); }
     function toggleFAQ(el) {
       const answer = el.nextElementSibling;
       answer.classList.toggle('hidden');
       const sign = el.querySelector('span');
       sign.textContent = sign.textContent === '+' ? '−' : '+';
     }
-
-    // Form submit
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
       e.preventDefault();
       alert("Thank you! Our London team will call you within 2 hours.");
     });
 
-    // Roomio banner
     function closeRoomioBanner() {
       const b = document.getElementById('roomioBanner');
       b.style.opacity = '0';
@@ -471,13 +530,10 @@
       localStorage.setItem('roomioBannerClosed', 'true');
     }
 
-    // INIT
     window.onload = () => {
       updatePreview();
       document.getElementById('preview').style.backgroundColor = '#f3e8d8';
-      if (localStorage.getItem('roomioBannerClosed') === 'true') {
-        document.getElementById('roomioBanner').style.display = 'none';
-      }
+      if (localStorage.getItem('roomioBannerClosed') === 'true') document.getElementById('roomioBanner').style.display = 'none';
       updateEstimate();
     };
   </script>
