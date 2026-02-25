@@ -17,10 +17,27 @@
     body { font-family: 'Inter', sans-serif; }
     .serif { font-family: 'Playfair Display', serif; }
     .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
-    .hero-bg { background-image: url('https://picsum.photos/id/1015/2000/1200'); background-size: cover; background-position: center; }
     .gold { color: #d4af37; }
     .cream { background-color: #fbf7f0; }
     .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
+
+    /* MOVING HERO VIDEO - luxury bathroom with bathtub + running taps */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.5));
+      z-index: 1;
+    }
+
+    /* Your original fancy animations (water, bubbles, steam) stay exactly the same - now layered perfectly over the video */
     .water-stream { position: absolute; top: 38%; left: 48%; width: 4px; height: 180px; background: linear-gradient(transparent, #a5f3fc, #67e8f9); animation: waterFlow 0.8s linear infinite; opacity: 0.85; z-index: 5; }
     .bubbles { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; overflow: hidden; pointer-events: none; z-index: 6; }
     .bubble { position: absolute; bottom: -50px; background: rgba(255,255,255,0.75); border-radius: 50%; animation: bubbleRise linear infinite; }
@@ -28,15 +45,20 @@
     .steam { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 7; }
     .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
+
     .builder-box { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
     .builder-box:hover { transform: translateY(-8px); }
-    #roomioBanner { animation: bannerPulse 2.5s infinite; transition: all 0.4s; }
+
+    /* ROOMIO BANNER - now dead centre, scrolls with site (fixed), flashes until X clicked */
+    #roomioBanner {
+      animation: bannerPulse 2.5s infinite;
+      transition: all 0.4s;
+    }
     @keyframes bannerPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
-
-  <!-- NAVBAR -->
+  <!-- NAVBAR (unchanged) -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-7">
     <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
       <div class="flex items-center gap-4">
@@ -53,14 +75,16 @@
     </div>
   </nav>
 
-  <!-- HERO with animated bath + running tap + bubbles + steam -->
+  <!-- HERO - FANCY MOVING BATHROOM VIDEO + your running taps / bubbles / steam -->
   <header class="relative h-screen overflow-hidden flex items-center">
-    <div class="hero-bg absolute inset-0"></div>
+    <!-- MOVING LUXURY BATHROOM VIDEO (bathtub + taps running) -->
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
 
-    <!-- Running water from tap -->
+    <!-- Your original animations (water stream from tap, bubbles in tub, rising steam) -->
     <div class="water-stream"></div>
-
-    <!-- Bubbles -->
     <div class="bubbles">
       <div class="bubble" style="left:22%; width:18px; height:18px; animation-duration:4.8s; animation-delay:0s"></div>
       <div class="bubble" style="left:35%; width:12px; height:12px; animation-duration:6.2s; animation-delay:0.5s"></div>
@@ -68,8 +92,6 @@
       <div class="bubble" style="left:61%; width:15px; height:15px; animation-duration:7s; animation-delay:0.3s"></div>
       <div class="bubble" style="left:74%; width:20px; height:20px; animation-duration:4.5s; animation-delay:1.8s"></div>
     </div>
-
-    <!-- Steam -->
     <div class="steam">
       <div class="steam-particle" style="left:-40px; animation-delay:0s"></div>
       <div class="steam-particle" style="left:-20px; animation-delay:0.6s"></div>
@@ -78,7 +100,7 @@
       <div class="steam-particle" style="left:60px; animation-delay:1.8s"></div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10">
+    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
       <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D builder • Expert installation</p>
       <div class="flex flex-col md:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="500">
@@ -87,15 +109,15 @@
       </div>
     </div>
 
-    <!-- Elegant full-width Roomio Banner (fixed, scrolls with page, pulses until X) -->
-    <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-900 to-amber-900 py-6 text-center z-50 flex items-center justify-center gap-6 shadow-2xl">
+    <!-- ROOMIO BANNER - CENTRE OF SCREEN, scrolls with site, flashes until X clicked -->
+    <div id="roomioBanner" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-black via-zinc-900 to-amber-900 py-9 px-12 rounded-3xl text-center z-[9999] max-w-lg shadow-2xl border border-[#d4af37]/50">
       <span class="text-2xl serif tracking-wider text-[#d4af37]">en-suite not enough? turn your spare room into a studio</span>
-      <a href="https://www.roomio.studio" target="_blank" class="underline hover:no-underline text-2xl text-[#d4af37] font-medium">click here →</a>
-      <button onclick="document.getElementById('roomioBanner').style.display='none'" class="ml-8 text-4xl text-[#d4af37] hover:text-white transition">×</button>
+      <a href="https://www.roomio.studio" target="_blank" class="block mt-4 underline hover:no-underline text-2xl text-[#d4af37] font-medium">click here →</a>
+      <button onclick="closeRoomioBanner()" class="absolute top-4 right-4 text-4xl text-[#d4af37] hover:text-white transition">×</button>
     </div>
   </header>
 
-  <!-- INTERACTIVE 3D BUILDER -->
+  <!-- INTERACTIVE 3D BUILDER (unchanged) -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -137,7 +159,7 @@
     </div>
   </section>
 
-  <!-- ESTIMATOR -->
+  <!-- ESTIMATOR (unchanged) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -183,7 +205,7 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
+  <!-- PROCESS (unchanged) -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -198,7 +220,7 @@
     </div>
   </section>
 
-  <!-- LONDON AREAS -->
+  <!-- LONDON AREAS (unchanged) -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
@@ -211,7 +233,7 @@
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- FAQ (unchanged) -->
   <section class="py-28 bg-white">
     <div class="max-w-4xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
@@ -248,7 +270,7 @@
     </div>
   </section>
 
-  <!-- QUOTE -->
+  <!-- QUOTE (unchanged) -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -262,7 +284,7 @@
     </div>
   </section>
 
-  <!-- FLOATING CTA -->
+  <!-- FLOATING CTA (unchanged) -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
@@ -275,7 +297,7 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // 3D Models (all bathrooms)
+    // 3D Models (unchanged)
     const models = [
       "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",
       "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",
@@ -286,12 +308,11 @@
       "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",
       "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed"
     ];
-
     function changeModel(n) {
       document.getElementById('sketchfab').src = models[n];
     }
 
-    // Estimator
+    // Estimator (unchanged)
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -312,7 +333,7 @@
       alert("Estimate saved! Our London team will contact you shortly.");
     }
 
-    // FAQ
+    // FAQ (unchanged)
     function toggleFAQ(el) {
       const answer = el.nextElementSibling;
       answer.classList.toggle('hidden');
@@ -320,15 +341,26 @@
       sign.textContent = sign.textContent === '+' ? '−' : '+';
     }
 
-    // Form
+    // Form (unchanged)
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
       e.preventDefault();
       alert("Thank you! Our London team will call you within 2 hours.");
     });
 
+    // ROOMIO BANNER CLOSE FUNCTION + memory
+    function closeRoomioBanner() {
+      const banner = document.getElementById('roomioBanner');
+      banner.style.opacity = '0';
+      setTimeout(() => { banner.style.display = 'none'; }, 400);
+      localStorage.setItem('roomioBannerClosed', 'true');
+    }
+
     // Init
     window.onload = () => {
       updateEstimate();
+      if (localStorage.getItem('roomioBannerClosed') === 'true') {
+        document.getElementById('roomioBanner').style.display = 'none';
+      }
     };
   </script>
 </body>
