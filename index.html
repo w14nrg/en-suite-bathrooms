@@ -268,7 +268,8 @@
           <option value="">Add Fixture...</option>
           <optgroup label="Sanitary">
             <option value="toilet">Toilet</option>
-            <option value="bath">Freestanding Bath</option>
+            <option value="alcove-bath">Normal Alcove Bath</option>
+            <option value="freestanding-bath">Freestanding Bath</option>
             <option value="shower">Shower Enclosure</option>
             <option value="wallhung">Wall Hung Basin</option>
             <option value="pedestal">Pedestal Basin</option>
@@ -359,7 +360,7 @@
 
       if (f.type === 'toilet') {
         // Tank
-        ctx.fillStyle = '#f8fafc';
+        ctx.fillStyle = '#f1f5f9';
         ctx.fillRect(-s*0.75, -s*1.2, s*1.5, s*0.6);
         ctx.strokeStyle = '#334155';
         ctx.lineWidth = 5;
@@ -368,7 +369,7 @@
         ctx.fillStyle = '#e2e8f0';
         ctx.fillRect(-s*0.78, -s*1.35, s*1.56, s*0.2);
         // Bowl
-        ctx.fillStyle = '#f8fafc';
+        ctx.fillStyle = '#f1f5f9';
         ctx.beginPath();
         ctx.ellipse(0, s*0.4, s*0.75, s*0.62, 0, 0, Math.PI*2);
         ctx.fill();
@@ -379,74 +380,70 @@
         // Seat
         ctx.fillStyle = '#1e2937';
         ctx.fillRect(-s*0.55, s*0.22, s*1.1, s*0.2);
-      } else if (f.type === 'bath') {
-        // Outer tub
+      } else if (f.type === 'alcove-bath') {
+        // Normal inset bath
+        ctx.fillStyle = '#e0f2fe';
+        ctx.fillRect(-s*1.4, -s*0.4, s*2.8, s*0.9);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 8;
+        ctx.strokeRect(-s*1.4, -s*0.4, s*2.8, s*0.9);
+        // Inner
+        ctx.fillStyle = '#bae6fd';
+        ctx.fillRect(-s*1.3, -s*0.3, s*2.6, s*0.7);
+        // Rim
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(-s*1.4, -s*0.4, s*2.8, s*0.9);
+        // Taps
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(s*0.8, -s*0.5, s*0.25, s*0.3);
+      } else if (f.type === 'freestanding-bath') {
         ctx.fillStyle = '#e0f2fe';
         ctx.beginPath();
-        ctx.ellipse(0, s*0.18, s*1.55, s*0.75, 0, 0, Math.PI*2);
+        ctx.ellipse(0, s*0.15, s*1.5, s*0.7, 0, 0, Math.PI*2);
         ctx.fill();
         ctx.strokeStyle = '#334155';
         ctx.lineWidth = 8;
         ctx.stroke();
-        // Inner basin
-        ctx.fillStyle = '#bae6fd';
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.ellipse(0, s*0.15, s*1.38, s*0.58, 0, 0, Math.PI*2);
-        ctx.fill();
-        // Rim highlight
-        ctx.strokeStyle = '#f0f9ff';
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.ellipse(0, s*0.08, s*1.52, s*0.65, 0, 0, Math.PI*2);
+        ctx.ellipse(0, s*0.1, s*1.55, s*0.65, 0, 0, Math.PI*2);
         ctx.stroke();
-        // Feet
         ctx.fillStyle = '#475569';
-        ctx.fillRect(-s*1.1, s*0.6, s*0.22, s*0.45);
-        ctx.fillRect(s*0.88, s*0.6, s*0.22, s*0.45);
-        // Taps
-        ctx.fillStyle = '#64748b';
-        ctx.fillRect(-s*0.7, -s*0.5, s*0.25, s*0.32);
+        ctx.fillRect(-s*1.1, s*0.55, s*0.22, s*0.45);
+        ctx.fillRect(s*0.88, s*0.55, s*0.22, s*0.45);
       } else if (f.type === 'shower') {
-        // Glass
         ctx.fillStyle = '#bae6fd';
-        ctx.globalAlpha = 0.25;
+        ctx.globalAlpha = 0.28;
         ctx.fillRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
         ctx.globalAlpha = 1;
-        // Tray
         ctx.fillStyle = '#e0f2fe';
         ctx.fillRect(-s*0.95, s*0.85, s*1.9, s*0.25);
-        // Frame
         ctx.strokeStyle = '#334155';
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 5;
         ctx.strokeRect(-s*0.95, -s*1.15, s*1.9, s*2.1);
-        // Vertical glass lines
         ctx.lineWidth = 3;
         ctx.beginPath(); ctx.moveTo(-s*0.3, -s*1.15); ctx.lineTo(-s*0.3, s*0.85); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(s*0.3, -s*1.15); ctx.lineTo(s*0.3, s*0.85); ctx.stroke();
-        // Shower head + arm
         ctx.fillStyle = '#475569';
         ctx.fillRect(-s*0.15, -s*1.25, s*0.3, s*0.12);
-        ctx.fillRect(-s*0.08, -s*1.4, s*0.16, s*0.2);
       } else if (f.type === 'towel-radiator') {
         ctx.fillStyle = '#cbd5e1';
         ctx.fillRect(-s*0.45, -s*1.25, s*0.9, s*2.5);
         ctx.strokeStyle = '#475569';
-        ctx.lineWidth = 7;
+        ctx.lineWidth = 6;
         for (let i = 0; i < 8; i++) {
           ctx.beginPath();
           ctx.moveTo(-s*0.35, -s*1.1 + i * (s*0.32));
           ctx.lineTo(s*0.35, -s*1.1 + i * (s*0.32));
           ctx.stroke();
         }
-        // Vertical pipes
-        ctx.lineWidth = 9;
-        ctx.beginPath(); ctx.moveTo(-s*0.42, -s*1.25); ctx.lineTo(-s*0.42, s*1.25); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(s*0.42, -s*1.25); ctx.lineTo(s*0.42, s*1.25); ctx.stroke();
       } else if (f.type === 'manhole') {
         ctx.fillStyle = '#1e2937';
         ctx.beginPath(); ctx.arc(0, 0, s*0.95, 0, Math.PI*2); ctx.fill();
         ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 7;
         ctx.beginPath(); ctx.moveTo(-s*0.6, 0); ctx.lineTo(s*0.6, 0); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(0, -s*0.6); ctx.lineTo(0, s*0.6); ctx.stroke();
         ctx.fillStyle = '#cbd5e1';
@@ -479,6 +476,40 @@
         ctx.strokeRect(-s*1.15, -s*0.95, s*2.3, s*1.7);
         ctx.beginPath(); ctx.moveTo(0, -s*0.95); ctx.lineTo(0, s*0.75); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(-s*1.15, 0); ctx.lineTo(s*1.15, 0); ctx.stroke();
+      } else if (f.type === 'wallhung') {
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(-s*0.9, -s*0.3, s*1.8, s*0.5);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-s*0.9, -s*0.3, s*1.8, s*0.5);
+        ctx.fillStyle = '#64748b';
+        ctx.fillRect(-s*0.8, s*0.15, s*0.2, s*0.4);
+      } else if (f.type === 'pedestal') {
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(-s*0.9, -s*0.3, s*1.8, s*0.5);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-s*0.9, -s*0.3, s*1.8, s*0.5);
+        ctx.fillStyle = '#f1f5f9';
+        ctx.beginPath();
+        ctx.ellipse(0, s*0.6, s*0.45, s*0.25, 0, 0, Math.PI*2);
+        ctx.fill();
+      } else if (f.type === 'bidet') {
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(-s*0.6, -s*0.2, s*1.2, s*0.5);
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-s*0.6, -s*0.2, s*1.2, s*0.5);
+      } else if (f.type === 'vanity') {
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(-s*1.1, -s*0.4, s*2.2, s*0.8);
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(-s*1.0, -s*0.8, s*2.0, s*0.5);
+      } else if (f.type === 'led-mirror') {
+        ctx.fillStyle = '#1e2937';
+        ctx.fillRect(-s*0.9, -s*0.9, s*1.8, s*1.2);
+        ctx.fillStyle = '#bae6fd';
+        ctx.fillRect(-s*0.8, -s*0.8, s*1.6, s*1.0);
       } else {
         ctx.fillStyle = '#e2e8f0';
         ctx.fillRect(-s*0.85, -s*0.85, s*1.7, s*1.7);
@@ -499,7 +530,7 @@
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
       }
 
-      // Walls – thinner
+      // Walls
       ctx.strokeStyle = '#3f2a1e';
       ctx.lineWidth = 9;
       walls.forEach(w => {
@@ -509,7 +540,7 @@
         ctx.stroke();
       });
 
-      // Pipes – thinner
+      // Pipes
       pipes.forEach((p, i) => {
         const isSel = (selectedPipeIndex === i);
         ctx.strokeStyle = p.type === 'hot' ? '#ef4444' : p.type === 'cold' ? '#3b82f6' : '#111827';
@@ -637,7 +668,7 @@
         ctx.setLineDash(drawingStart.type === 'drain' ? [18,12] : []);
         ctx.beginPath();
         ctx.moveTo(offsetX + drawingStart.x * scale, offsetY + drawingStart.y * scale);
-        ctx.lineTo(offsetX + snap(wx) * scale, offsetY + snap(wy) * scale);
+        ctx.lineTo(offsetX + wx * scale, offsetY + wy * scale);
         ctx.stroke();
         ctx.setLineDash([]);
       }
