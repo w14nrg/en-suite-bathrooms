@@ -35,6 +35,7 @@
     @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
 
     #threeCanvas { width: 100%; height: 560px; border: 8px solid #d4af37; border-radius: 24px; }
+    #selectedLabel { font-size: 1.1rem; font-weight: 600; color: #d4af37; }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -98,13 +99,13 @@
     </div>
   </header>
 
-  <!-- REALISTIC 3D PLANNER WITH YOUR TWEAKS -->
+  <!-- PROPER 3D PLANNER - with your latest requests -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">PROPER 3D PLANNER</span>
         <h2 class="section-title serif text-6xl mt-6">Realistic Drag & Rotate 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate room • Click fixture to select (gold glow) • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
+        <p class="text-xl text-zinc-600 mt-6">Click fixture → gold glow + "Selected" label appears • Drag to move • Scroll wheel to rotate • Click floor to deselect</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
@@ -112,12 +113,8 @@
           <div>
             <h3 class="text-xl gold font-medium mb-6">Room Size</h3>
             <div class="space-y-6">
-              <div>
-                <input type="range" id="width" min="3" max="10" step="0.1" value="6" oninput="resizeRoom()" class="w-full accent-gold">
-              </div>
-              <div>
-                <input type="range" id="depth" min="3" max="8" step="0.1" value="4" oninput="resizeRoom()" class="w-full accent-gold">
-              </div>
+              <div><input type="range" id="width" min="3" max="10" step="0.1" value="6" oninput="resizeRoom()" class="w-full accent-gold"></div>
+              <div><input type="range" id="depth" min="3" max="8" step="0.1" value="4" oninput="resizeRoom()" class="w-full accent-gold"></div>
             </div>
           </div>
 
@@ -127,16 +124,7 @@
               <button onclick="addFixture('bath')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-bath text-3xl"></i> Bath</button>
               <button onclick="addFixture('shower')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-shower text-3xl"></i> Shower</button>
               <button onclick="addFixture('toilet')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-toilet text-3xl"></i> Toilet</button>
-              <button onclick="addFixture('vanity')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Vanity</button>
               <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-3xl"></i> Window</button>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-xl gold font-medium mb-4">Add Walls / Doors</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <button onclick="addWallOrDoor('wall')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl">Wall</button>
-              <button onclick="addWallOrDoor('door')" class="bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl">Door</button>
             </div>
           </div>
 
@@ -144,8 +132,9 @@
         </div>
 
         <div class="lg:col-span-8">
+          <div id="selectedLabel" class="text-center text-gold font-medium h-8"></div>
           <canvas id="threeCanvas"></canvas>
-          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate room • Click fixture (turns gold) → drag to move → scroll wheel to spin • Click floor to deselect</p>
+          <p class="text-center text-sm text-zinc-500 mt-3">Click fixture (gold glow) → drag to move → scroll wheel to rotate • Click floor to deselect</p>
         </div>
       </div>
     </div>
@@ -242,7 +231,7 @@
             <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click fixtures to select, drag to move, scroll to rotate, click floor to deselect.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click fixture to select (gold glow + label), drag to move, scroll wheel to rotate, click floor to deselect.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -412,16 +401,6 @@
         const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
         seat.position.y = 0.7;
         group.add(seat);
-      } else if (type === 'vanity') {
-        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.8, 0.7), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
-        cabinet.position.y = 0.4;
-        group.add(cabinet);
-        const top = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.15, 0.75), new THREE.MeshStandardMaterial({ color: 0xffffff }));
-        top.position.y = 0.8;
-        group.add(top);
-        const sink = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.28, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0x64748b }));
-        sink.position.set(0, 0.7, 0);
-        group.add(sink);
       } else if (type === 'window') {
         const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.5, 0.25), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
         frame.position.y = 2.2;
@@ -436,16 +415,6 @@
       fixtures3D.push(group);
     }
 
-    function addWallOrDoor(type) {
-      const mat = type === 'wall' ? new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }) : new THREE.MeshStandardMaterial({ color: 0x475569 });
-      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 3), mat);
-      mesh.position.set(0, 1.5, 0);
-      mesh.rotation.y = Math.PI / 2;
-      mesh.userData.type = type;
-      scene.add(mesh);
-      fixtures3D.push(mesh);
-    }
-
     function onMouseDown(e) {
       const canvas = document.getElementById('threeCanvas');
       const rect = canvas.getBoundingClientRect();
@@ -456,13 +425,15 @@
       const intersects = raycaster.intersectObjects(fixtures3D, true);
 
       if (intersects.length > 0) {
-        const newSelect = intersects[0].object.parent || intersects[0].object;
-        if (selectedFixture === newSelect) {
+        const newFixture = intersects[0].object.parent || intersects[0].object;
+        if (selectedFixture === newFixture) {
           deselect();
         } else {
           deselect();
-          selectedFixture = newSelect;
+          selectedFixture = newFixture;
           if (selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0xffaa00);
+          selectedFixture.scale.set(1.1, 1.1, 1.1);
+          document.getElementById('selectedLabel').textContent = `Selected: ${selectedFixture.userData.type.charAt(0).toUpperCase() + selectedFixture.userData.type.slice(1)}`;
         }
         isDraggingFixture = true;
       } else {
@@ -471,9 +442,13 @@
     }
 
     function deselect() {
-      if (selectedFixture && selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0x000000);
+      if (selectedFixture) {
+        if (selectedFixture.material) selectedFixture.material.emissive = new THREE.Color(0x000000);
+        selectedFixture.scale.set(1, 1, 1);
+      }
       selectedFixture = null;
       isDraggingFixture = false;
+      document.getElementById('selectedLabel').textContent = '';
     }
 
     function onMouseMove(e) {
