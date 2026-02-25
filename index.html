@@ -17,7 +17,8 @@
     body { font-family: 'Inter', sans-serif; }
     .serif { font-family: 'Playfair Display', serif; }
     .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
-    .hero-video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; filter: brightness(0.85); }
+    .hero-video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; }
+    .hero-bg { background-image: url('https://picsum.photos/id/133/2000/1200'); background-size: cover; background-position: center; }
     .steam { position: absolute; bottom: 22%; left: 52%; transform: translateX(-50%); pointer-events: none; z-index: 10; }
     .steam-particle { position: absolute; width: 9px; height: 9px; background: rgba(255,255,255,0.85); border-radius: 50%; animation: steamRise 4s infinite ease-out; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-260px) scale(0.2); opacity: 0; } }
@@ -26,7 +27,8 @@
     .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
     .builder-box { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
     .builder-box:hover { transform: translateY(-8px); }
-    #roomioBanner { transition: all 0.4s; }
+    #roomioBanner { animation: pulse 2s infinite; transition: all 0.4s; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -48,11 +50,12 @@
     </div>
   </nav>
 
-  <!-- HERO with running bath video + steam + elegant Roomio banner -->
+  <!-- HERO with video + steam + elegant full-width Roomio banner -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://assets.mixkit.co/videos/preview/292/292-large.mp4" type="video/mp4">
     </video>
+    <div class="hero-bg absolute inset-0"></div>
 
     <!-- Steam -->
     <div class="steam">
@@ -72,11 +75,11 @@
       </div>
     </div>
 
-    <!-- Elegant Roomio Banner -->
-    <div id="roomioBanner" class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black text-[#d4af37] px-10 py-5 rounded-3xl text-xl font-medium flex items-center gap-4 z-20 shadow-2xl">
-      <span>en-suite not enough? turn your spare room into a studio</span>
-      <a href="https://www.roomio.studio" target="_blank" class="underline hover:no-underline">click here →</a>
-      <button onclick="document.getElementById('roomioBanner').style.display='none'" class="ml-6 text-[#d4af37] hover:text-white text-2xl leading-none">×</button>
+    <!-- Elegant full-width Roomio Banner -->
+    <div id="roomioBanner" class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-900 to-amber-950 text-[#d4af37] py-6 text-center z-20 shadow-2xl flex items-center justify-center gap-6">
+      <span class="text-2xl font-medium serif tracking-wider">en-suite not enough? turn your spare room into a studio</span>
+      <a href="https://www.roomio.studio" target="_blank" class="underline hover:no-underline text-2xl font-medium">click here →</a>
+      <button onclick="document.getElementById('roomioBanner').style.display='none'" class="ml-8 text-4xl leading-none hover:text-white transition">×</button>
     </div>
   </header>
 
@@ -122,7 +125,7 @@
     </div>
   </section>
 
-  <!-- ESTIMATOR + PROCESS + AREAS + FAQ + QUOTE + FOOTER (full) -->
+  <!-- ESTIMATOR + FULL BOTTOM SECTIONS -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -260,6 +263,7 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
+    // 3D Models (real bathrooms)
     const models = [
       "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",
       "https://sketchfab.com/3d-models/bathroom-83491c1d449c4e68a8e33f0080d79089/embed",
@@ -275,6 +279,7 @@
       document.getElementById('sketchfab').src = models[n];
     }
 
+    // Estimator
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -295,6 +300,7 @@
       alert("Estimate saved! Our London team will contact you shortly.");
     }
 
+    // FAQ
     function toggleFAQ(el) {
       const answer = el.nextElementSibling;
       answer.classList.toggle('hidden');
@@ -302,11 +308,13 @@
       sign.textContent = sign.textContent === '+' ? '−' : '+';
     }
 
+    // Form
     document.getElementById('quoteForm').addEventListener('submit', (e) => {
       e.preventDefault();
       alert("Thank you! Our London team will call you within 2 hours.");
     });
 
+    // Init
     window.onload = () => {
       updateEstimate();
     };
