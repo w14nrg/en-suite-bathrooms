@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Luxury en-suite bathroom installation London. Free interactive 3D builder. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
-  <title>En-Suite Bathrooms | Free 3D Builder • Luxury Installation London</title>
+  <meta name="description" content="Luxury en-suite bathroom installation London. Free full-screen 2D planner with walls & pipe runs. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
+  <title>En-Suite Bathrooms | Free Full-Screen 2D Planner • Luxury London</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&family=Inter:wght@300;400;500&display=swap');
     body { font-family: 'Inter', sans-serif; }
@@ -34,13 +32,12 @@
     #roomioBanner { animation: bannerFlash 1.6s infinite alternate ease-in-out; }
     @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
 
-    #threeCanvas { width: 100%; height: 560px; border: 8px solid #d4af37; border-radius: 24px; touch-action: none; }
-    #selectedLabel { font-size: 1.25rem; font-weight: 700; color: #d4af37; text-align: center; height: 36px; }
+    #plannerModal canvas { image-rendering: crisp-edges; }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
 
-  <!-- NAVBAR (unchanged) -->
+  <!-- NAVBAR -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-7">
     <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
       <div class="flex items-center gap-4">
@@ -48,21 +45,22 @@
         <span class="text-4xl serif tracking-widest font-light">EN-SUITE</span>
       </div>
       <div class="hidden md:flex gap-10 text-lg font-light">
-        <a href="#builder" class="hover:gold transition">Interactive Builder</a>
+        <a href="#builder" class="hover:gold transition">2D Planner</a>
         <a href="#estimator" class="hover:gold transition">Instant Estimator</a>
         <a href="#areas" class="hover:gold transition">Areas</a>
         <a href="#quote" class="hover:gold transition">Contact</a>
       </div>
-      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-10 py-4 rounded-full transition">BOOK FREE 3D</a>
+      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-10 py-4 rounded-full transition">BOOK FREE QUOTE</a>
     </div>
   </nav>
 
-  <!-- HERO (unchanged) -->
+  <!-- HERO -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
+
     <div class="water-stream"></div>
     <div class="bubbles">
       <div class="bubble" style="left:22%; width:18px; height:18px; animation-duration:4.8s; animation-delay:0s"></div>
@@ -81,11 +79,8 @@
 
     <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
-      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D builder • Expert installation</p>
-      <div class="flex flex-col md:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="500">
-        <a href="#builder" class="bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">START BUILDING NOW</a>
-        <a href="#estimator" class="border-2 border-white px-16 py-7 rounded-3xl text-2xl font-medium hover:bg-white hover:text-black transition">INSTANT ESTIMATE</a>
-      </div>
+      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free full-screen 2D planner with walls & pipe runs</p>
+      <a href="#builder" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">START YOUR FLOOR PLAN NOW</a>
     </div>
 
     <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-950 to-black py-6 z-[9999] border-t-4 border-[#d4af37]">
@@ -98,64 +93,32 @@
     </div>
   </header>
 
-  <!-- SIMPLE 3D PLANNER – FULLY FIXED -->
+  <!-- BUILDER SECTION – 2D ONLY -->
   <section id="builder" class="cream py-28">
-    <div class="max-w-7xl mx-auto px-8">
-      <div class="text-center mb-16">
-        <span class="uppercase tracking-widest text-sm gold">SIMPLE 3D PLANNER</span>
-        <h2 class="section-title serif text-6xl mt-6">Realistic Drag & Rotate 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Click any fixture = select instantly (gold glow + label) • Drag to move • Scroll/buttons to rotate • Click floor to deselect</p>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-12">
-        <div class="lg:col-span-4 space-y-10 bg-white p-8 rounded-3xl border border-gold/30">
-          <div>
-            <h3 class="text-xl gold font-medium mb-6">Room Size</h3>
-            <div class="space-y-6">
-              <div><input type="range" id="width" min="3" max="10" step="0.1" value="6" oninput="resizeRoom()" class="w-full accent-gold"></div>
-              <div><input type="range" id="depth" min="3" max="8" step="0.1" value="4" oninput="resizeRoom()" class="w-full accent-gold"></div>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-xl gold font-medium mb-4">Add Fixtures</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <button onclick="addFixture('bath')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-bath text-3xl"></i> Bath</button>
-              <button onclick="addFixture('shower')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-shower text-3xl"></i> Shower</button>
-              <button onclick="addFixture('toilet')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-toilet text-3xl"></i> Toilet</button>
-              <button onclick="addFixture('wallhung')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Wall Hung Basin</button>
-              <button onclick="addFixture('pedestal')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-sink text-3xl"></i> Pedestal Basin</button>
-              <button onclick="addFixture('window')" class="flex items-center gap-3 bg-white border border-gold/30 hover:border-gold p-4 rounded-2xl"><i class="fa-solid fa-window-maximize text-3xl"></i> Window</button>
-            </div>
-          </div>
-
-          <button onclick="submitDesign()" class="w-full bg-[#d4af37] hover:bg-amber-400 text-black py-7 rounded-3xl text-2xl font-medium">Submit My 3D Design →</button>
-        </div>
-
-        <div class="lg:col-span-8">
-          <div id="selectedLabel" class="text-center text-gold font-medium h-8 mb-2"></div>
-          <canvas id="threeCanvas"></canvas>
-          
-          <!-- Rotate buttons (desktop + mobile) -->
-          <div id="rotatePanel" class="hidden flex justify-center gap-4 mt-4">
-            <button onclick="rotateFixture(-0.5)" class="flex items-center gap-2 px-8 py-3 bg-white border-2 border-[#d4af37] hover:bg-[#d4af37] hover:text-black rounded-2xl text-lg font-medium transition-all">⟲ Rotate Left</button>
-            <button onclick="rotateFixture(0.5)" class="flex items-center gap-2 px-8 py-3 bg-white border-2 border-[#d4af37] hover:bg-[#d4af37] hover:text-black rounded-2xl text-lg font-medium transition-all">Rotate Right ⟳</button>
-          </div>
-
-          <p class="text-center text-sm text-zinc-500 mt-3">Click any fixture to select (gold glow + label) • Drag to move • Scroll or buttons to rotate • Click floor to deselect</p>
-        </div>
+    <div class="max-w-7xl mx-auto px-8 text-center">
+      <span class="uppercase tracking-widest text-sm gold">PROFESSIONAL TOOL</span>
+      <h2 class="section-title serif text-6xl mt-6">Full-Screen 2D Bathroom Planner</h2>
+      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Recreate your exact room. Draw walls. Plan hot, cold & drainage pipes. Choose from 15+ luxury fixtures. Desktop-optimised for precision.</p>
+      
+      <div class="mt-16 bg-white rounded-3xl p-16 max-w-3xl mx-auto border border-gold/30">
+        <div class="text-7xl mb-6">🗺️</div>
+        <h3 class="text-3xl serif mb-4">Ready to design your perfect en-suite?</h3>
+        <button onclick="launchPlanner()" 
+                class="mt-8 bg-[#d4af37] hover:bg-amber-400 text-black px-20 py-8 rounded-3xl text-3xl font-medium transition-all active:scale-95">
+          LAUNCH FULL-SCREEN 2D PLANNER →
+        </button>
+        <p class="text-sm text-zinc-500 mt-10">Best on desktop/laptop (mouse precision)</p>
       </div>
     </div>
   </section>
 
-  <!-- ESTIMATOR, PROCESS, AREAS, FAQ, QUOTE, FLOATING CTA, FOOTER (unchanged) -->
+  <!-- ESTIMATOR -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">CALCULATE LIVE</span>
         <h2 class="section-title serif text-6xl">Instant Project Estimator</h2>
       </div>
-      <!-- (rest of estimator unchanged) -->
       <div class="grid lg:grid-cols-2 gap-16">
         <div class="space-y-12">
           <div>
@@ -189,19 +152,19 @@
           <p class="uppercase text-sm gold tracking-widest">YOUR ESTIMATED PRICE</p>
           <p id="estimatePrice" class="text-7xl font-light text-gold mt-4">£14,750</p>
           <p class="text-sm text-zinc-500 mt-2">Includes full London installation • 10-year guarantee</p>
-          <button onclick="saveEstimate()" class="mt-16 w-full bg-[#d4af37] text-black py-8 rounded-3xl text-2xl font-medium">SAVE THIS ESTIMATE & GET FREE 3D</button>
+          <button onclick="saveEstimate()" class="mt-16 w-full bg-[#d4af37] text-black py-8 rounded-3xl text-2xl font-medium">SAVE THIS ESTIMATE & GET FREE DESIGN</button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROCESS (unchanged) -->
+  <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
       <div class="grid md:grid-cols-6 gap-8 text-center">
         <div><div class="text-6xl gold mb-4">01</div><p class="font-medium">Free Consultation</p></div>
-        <div><div class="text-6xl gold mb-4">02</div><p class="font-medium">Interactive Builder</p></div>
+        <div><div class="text-6xl gold mb-4">02</div><p class="font-medium">2D Planner</p></div>
         <div><div class="text-6xl gold mb-4">03</div><p class="font-medium">Material Selection</p></div>
         <div><div class="text-6xl gold mb-4">04</div><p class="font-medium">Final Quote</p></div>
         <div><div class="text-6xl gold mb-4">05</div><p class="font-medium">Expert Installation</p></div>
@@ -210,7 +173,7 @@
     </div>
   </section>
 
-  <!-- AREAS (unchanged) -->
+  <!-- AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
@@ -223,7 +186,7 @@
     </div>
   </section>
 
-  <!-- FAQ (unchanged) -->
+  <!-- FAQ -->
   <section class="py-28 bg-white">
     <div class="max-w-4xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
@@ -237,10 +200,10 @@
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">Can I use the 3D builder myself?</p>
+            <p class="text-xl">Can I use the 2D planner myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – click fixture to select instantly, drag to move, scroll or buttons to rotate, click floor to deselect.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – launch the full-screen planner, draw walls, drag fixtures, add pipe runs, then send it straight to us.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -260,7 +223,7 @@
     </div>
   </section>
 
-  <!-- QUOTE FORM (unchanged) -->
+  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -268,282 +231,329 @@
         <input type="text" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" placeholder="Email" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <textarea placeholder="Tell us about your project (your realistic 3D design will appear here)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
+        <textarea id="quoteTextarea" placeholder="Tell us about your project (your 2D layout will appear here)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
         <button type="submit" class="w-full py-8 bg-[#d4af37] text-black text-3xl font-medium rounded-3xl">SEND REQUEST — LONDON TEAM CALLS WITHIN 2 HOURS</button>
       </form>
     </div>
   </section>
 
+  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
 
+  <!-- FOOTER -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London • © 2026</p>
   </footer>
 
+  <!-- FULL-SCREEN 2D PLANNER MODAL -->
+  <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
+    <!-- Top toolbar -->
+    <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800">
+      <div class="flex items-center gap-4 text-white">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <span class="serif text-3xl tracking-wider">EN-SUITE 2D PLANNER</span>
+      </div>
+      <div class="flex items-center gap-8 text-white">
+        <div class="flex gap-2 text-sm">
+          <button onclick="setTool('select')" id="btn-select" class="tool-btn active px-6 py-3 rounded-2xl hover:bg-zinc-800">Select / Move</button>
+          <button onclick="setTool('wall')" id="btn-wall" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800">🧱 Wall</button>
+          <button onclick="setTool('hot')" id="btn-hot" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 text-red-400">🔴 Hot Pipe</button>
+          <button onclick="setTool('cold')" id="btn-cold" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 text-blue-400">🔵 Cold Pipe</button>
+          <button onclick="setTool('drain')" id="btn-drain" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800">⚫ Drainage</button>
+          <button onclick="setTool('erase')" id="btn-erase" class="tool-btn px-6 py-3 rounded-2xl hover:bg-zinc-800 text-red-500">Erase</button>
+        </div>
+        <select onchange="addFixtureFromDropdown(this)" class="bg-zinc-900 border border-gold text-white px-8 py-4 rounded-3xl text-lg">
+          <option value="">Add Fixture / Fitting...</option>
+          <optgroup label="Sanitary">
+            <option value="toilet">Toilet</option>
+            <option value="wallhung">Wall Hung Basin</option>
+            <option value="pedestal">Pedestal Basin</option>
+            <option value="doublebasin">Double Vanity</option>
+            <option value="shower">Shower Tray</option>
+            <option value="bath">Freestanding Bath</option>
+            <option value="bidet">Bidet</option>
+          </optgroup>
+          <optgroup label="Furniture & Heating">
+            <option value="radiator">Towel Radiator</option>
+            <option value="vanity">Vanity Unit</option>
+            <option value="mirror">LED Mirror</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="window">Window</option>
+            <option value="door">Door</option>
+          </optgroup>
+        </select>
+        <button onclick="exitPlanner()" class="text-4xl leading-none hover:text-gold">✕</button>
+      </div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden">
+      <canvas id="fullCanvas" class="flex-1 bg-[#f8f1e3] cursor-crosshair"></canvas>
+      <!-- Right info panel -->
+      <div class="w-80 bg-zinc-900 text-white p-8 overflow-auto">
+        <h3 class="gold text-xl mb-6">Selected</h3>
+        <div id="infoPanel" class="text-zinc-400">Nothing selected.<br><br>Click any fixture, wall or pipe.</div>
+        <button onclick="deleteSelected()" class="mt-12 w-full py-4 border border-red-400 text-red-400 hover:bg-red-950 rounded-2xl">Delete Selected</button>
+      </div>
+    </div>
+
+    <div class="bg-black py-4 px-8 text-xs text-zinc-400 flex justify-between items-center">
+      <div>0.25 m grid snap • Mouse wheel = zoom • Desktop optimised</div>
+      <button onclick="sendPlannerToQuote()" class="bg-[#d4af37] text-black px-10 py-4 rounded-2xl font-medium">SEND THIS LAYOUT TO LONDON TEAM →</button>
+    </div>
+  </div>
+
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // ====================== 3D PLANNER ======================
-    let scene, camera, renderer, floorMesh;
-    let fixtures3D = [];
-    let raycaster = new THREE.Raycaster();
-    let mouse = new THREE.Vector2();
-    let selectedFixture = null;
+    // =============== FULL-SCREEN 2D PLANNER ===============
+    let canvas, ctx;
+    let scale = 55;
+    let offsetX = 80, offsetY = 60;
+    let currentTool = 'select';
+    let fixtures = [];
+    let walls = [];
+    let pipes = [];
+    let selectedItem = null;
     let isDragging = false;
-    let roomWidth = 6;
-    let roomDepth = 4;
+    let dragOffsetX = 0, dragOffsetY = 0;
+    let drawingStart = null;
 
-    const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.25, metalness: 0.05 });
-    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, roughness: 0.2, metalness: 0.9 });
+    const fixtureIcons = {
+      toilet:'🚽', wallhung:'🚰', pedestal:'🪒', doublebasin:'🪞', shower:'🚿',
+      bath:'🛁', bidet:'🚽', radiator:'♨️', vanity:'🪑', mirror:'🪞', window:'🪟', door:'🚪'
+    };
 
-    function init3D() {
-      const canvas = document.getElementById('threeCanvas');
-      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-      renderer.shadowMap.enabled = true;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xf8f5f0);
-
-      camera = new THREE.PerspectiveCamera(48, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-      camera.position.set(7.8, 6.8, 8.8);
-      camera.lookAt(0, 1.2, 0);
-
-      // Lighting
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const hemi = new THREE.HemisphereLight(0xffffff, 0x9ca3af, 0.6);
-      scene.add(hemi);
-      const dirLight = new THREE.DirectionalLight(0xffffff, 1.15);
-      dirLight.position.set(12, 25, 18);
-      dirLight.castShadow = true;
-      dirLight.shadow.mapSize.width = 2048;
-      dirLight.shadow.mapSize.height = 2048;
-      scene.add(dirLight);
-
-      createRoom();
-
-      const canvasEl = document.getElementById('threeCanvas');
-      // Pointer events (works for mouse + touch on all devices)
-      canvasEl.addEventListener('pointerdown', onPointerDown);
-      canvasEl.addEventListener('pointermove', onPointerMove);
-      canvasEl.addEventListener('pointerup', onPointerUp);
-      canvasEl.addEventListener('wheel', onWheel, { passive: false });
-
-      window.addEventListener('resize', () => {
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-        camera.aspect = canvas.clientWidth / canvas.clientHeight;
-        camera.updateProjectionMatrix();
-      });
-
-      animate();
+    function launchPlanner() {
+      if (window.innerWidth < 1024) {
+        alert("This professional planner works best on desktop or laptop.\n\nPlease open on a larger screen for the best experience (mouse precision + full keyboard support).");
+        return;
+      }
+      document.getElementById('plannerModal').classList.remove('hidden');
+      initPlannerCanvas();
+      const modal = document.getElementById('plannerModal');
+      if (modal.requestFullscreen) modal.requestFullscreen();
     }
 
-    function getFixtureRoot(obj) {
-      while (obj && !obj.userData.type) obj = obj.parent;
-      return obj && obj.userData.type ? obj : null;
+    function initPlannerCanvas() {
+      canvas = document.getElementById('fullCanvas');
+      ctx = canvas.getContext('2d');
+      
+      function resize() {
+        canvas.width = canvas.parentElement.clientWidth - 320;
+        canvas.height = canvas.parentElement.clientHeight;
+        draw();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      canvas.addEventListener('mousedown', onMouseDown);
+      canvas.addEventListener('mousemove', onMouseMove);
+      canvas.addEventListener('mouseup', onMouseUp);
+      canvas.addEventListener('wheel', onWheel);
+      canvas.addEventListener('contextmenu', e => e.preventDefault());
     }
 
-    function createRoom() {
-      scene.children = scene.children.filter(c => !c.userData.isRoom);
-      const floorGeo = new THREE.PlaneGeometry(roomWidth, roomDepth);
-      const floorMat = new THREE.MeshStandardMaterial({ color: 0xe2d9c9, roughness: 0.85 });
-      floorMesh = new THREE.Mesh(floorGeo, floorMat);
-      floorMesh.rotation.x = -Math.PI / 2;
-      floorMesh.receiveShadow = true;
-      floorMesh.userData.isRoom = true;
-      scene.add(floorMesh);
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const grid = new THREE.GridHelper(Math.max(roomWidth, roomDepth), 20, 0xc4b8a0, 0xc4b8a0);
-      grid.userData.isRoom = true;
-      scene.add(grid);
-
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0xf5ede1 });
-      const backWall = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, 4.2), wallMat);
-      backWall.position.set(0, 2.1, -roomDepth / 2);
-      backWall.userData.isRoom = true;
-      scene.add(backWall);
-
-      const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(roomDepth, 4.2), wallMat);
-      sideWall.rotation.y = Math.PI / 2;
-      sideWall.position.set(-roomWidth / 2, 2.1, 0);
-      sideWall.userData.isRoom = true;
-      scene.add(sideWall);
-    }
-
-    function resizeRoom() {
-      roomWidth = parseFloat(document.getElementById('width').value);
-      roomDepth = parseFloat(document.getElementById('depth').value);
-      createRoom();
-    }
-
-    function addFixture(type) {
-      const group = new THREE.Group();
-      group.userData.type = type;
-
-      if (type === 'bath') {
-        const tub = new THREE.Mesh(new THREE.BoxGeometry(2.35, 0.72, 1.35), whiteMat);
-        tub.position.y = 0.36; tub.castShadow = true;
-        group.add(tub);
-        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.48, 0.12, 1.48), whiteMat);
-        rim.position.y = 0.72;
-        group.add(rim);
-        const faucet = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.55, 16), chromeMat);
-        faucet.position.set(-0.65, 0.9, 0.55); faucet.rotation.x = Math.PI / 2;
-        group.add(faucet);
-      } else if (type === 'shower') {
-        const tray = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.15, 1.6), whiteMat);
-        tray.position.y = 0.075; group.add(tray);
-        const glassMat = new THREE.MeshStandardMaterial({ color: 0xbae6fd, transparent: true, opacity: 0.28 });
-        const backG = new THREE.Mesh(new THREE.PlaneGeometry(1.55, 2.3), glassMat);
-        backG.position.set(0, 1.2, -0.8); group.add(backG);
-        const sideG = new THREE.Mesh(new THREE.PlaneGeometry(1.55, 2.3), glassMat);
-        sideG.rotation.y = Math.PI / 2; sideG.position.set(-0.8, 1.2, 0); group.add(sideG);
-        const head = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.1, 32), chromeMat);
-        head.position.set(0, 2.35, 0.65); head.rotation.x = Math.PI / 2; group.add(head);
-      } else if (type === 'toilet') {
-        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.44, 0.68, 48), whiteMat);
-        bowl.position.y = 0.34; group.add(bowl);
-        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.85, 0.45), whiteMat);
-        tank.position.set(0, 0.95, -0.27); group.add(tank);
-        const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.07, 0.58), new THREE.MeshStandardMaterial({ color: 0x1f2937 }));
-        seat.position.y = 0.68; group.add(seat);
-      } else if (type === 'wallhung') {
-        const basin = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.2, 0.55), whiteMat);
-        basin.position.y = 1.05; group.add(basin);
-        const support = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.12, 0.45), chromeMat);
-        support.position.y = 0.9; group.add(support);
-      } else if (type === 'pedestal') {
-        const basin = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.2, 0.58), whiteMat);
-        basin.position.y = 1.1; group.add(basin);
-        const ped = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.3, 0.82, 32), whiteMat);
-        ped.position.y = 0.41; group.add(ped);
-      } else if (type === 'window') {
-        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.6, 0.22), new THREE.MeshStandardMaterial({ color: 0x3f2a1e }));
-        frame.position.y = 2.25; group.add(frame);
-        const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 1.35), new THREE.MeshStandardMaterial({ color: 0xa5d6ff, side: THREE.DoubleSide }));
-        glass.position.set(0, 2.25, 0.12); group.add(glass);
+      ctx.strokeStyle = '#e5d9c8';
+      ctx.lineWidth = 1;
+      for (let x = offsetX % (scale*0.25); x < canvas.width; x += scale*0.25) {
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+      }
+      for (let y = offsetY % (scale*0.25); y < canvas.height; y += scale*0.25) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
       }
 
-      const margin = 1.1;
-      group.position.set(
-        (Math.random() - 0.5) * (roomWidth - margin * 2),
-        0,
-        (Math.random() - 0.5) * (roomDepth - margin * 2)
-      );
-      if (type === 'window') group.position.y = 1.85;
+      ctx.strokeStyle = '#3f2a1e';
+      ctx.lineWidth = 22;
+      walls.forEach(w => {
+        ctx.beginPath();
+        ctx.moveTo(offsetX + w.x1*scale, offsetY + w.y1*scale);
+        ctx.lineTo(offsetX + w.x2*scale, offsetY + w.y2*scale);
+        ctx.stroke();
+      });
 
-      scene.add(group);
-      fixtures3D.push(group);
-    }
+      pipes.forEach(p => {
+        ctx.strokeStyle = p.type === 'hot' ? '#ef4444' : p.type === 'cold' ? '#3b82f6' : '#111827';
+        ctx.lineWidth = 11;
+        ctx.setLineDash(p.type === 'drain' ? [18,12] : []);
+        ctx.beginPath();
+        ctx.moveTo(offsetX + p.x1*scale, offsetY + p.y1*scale);
+        ctx.lineTo(offsetX + p.x2*scale, offsetY + p.y2*scale);
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
 
-    function highlight(fixture, active) {
-      if (!fixture) return;
-      const scale = active ? 1.085 : 1;
-      fixture.scale.set(scale, scale, scale);
-      const col = active ? new THREE.Color(0xd4af37) : new THREE.Color(0x000000);
-      fixture.traverse(child => {
-        if (child.isMesh && child.material) {
-          child.material.emissive = col;
+      fixtures.forEach(f => {
+        const px = offsetX + f.x * scale;
+        const py = offsetY + f.y * scale;
+        ctx.font = '52px system-ui';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(fixtureIcons[f.type] || '📦', px, py);
+
+        if (selectedItem === f) {
+          ctx.strokeStyle = '#d4af37';
+          ctx.lineWidth = 8;
+          ctx.strokeRect(px-38, py-38, 76, 76);
         }
       });
     }
 
-    function selectFixture(fixture) {
-      if (selectedFixture) highlight(selectedFixture, false);
-      selectedFixture = fixture;
-      highlight(selectedFixture, true);
-      document.getElementById('selectedLabel').innerHTML = `✅ Selected: <span class="capitalize">${fixture.userData.type}</span>`;
-      document.getElementById('rotatePanel').classList.remove('hidden');
-    }
+    function worldX(sx) { return (sx - offsetX) / scale; }
+    function worldY(sy) { return (sy - offsetY) / scale; }
+    function snap(v) { return Math.round(v * 4) / 4; }
 
-    function deselect() {
-      if (selectedFixture) highlight(selectedFixture, false);
-      selectedFixture = null;
-      document.getElementById('selectedLabel').innerHTML = '';
-      document.getElementById('rotatePanel').classList.add('hidden');
-    }
-
-    function onPointerDown(e) {
-      const canvas = document.getElementById('threeCanvas');
+    function onMouseDown(e) {
       const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const wx = worldX(sx);
+      const wy = worldY(sy);
 
-      mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-
-      const fixtureHits = raycaster.intersectObjects(fixtures3D, true);
-      if (fixtureHits.length > 0) {
-        const hitGroup = getFixtureRoot(fixtureHits[0].object);
-        if (hitGroup) {
-          if (selectedFixture !== hitGroup) selectFixture(hitGroup);
-          isDragging = true;
-          return;
+      if (currentTool === 'select') {
+        selectedItem = null;
+        for (let i = fixtures.length-1; i >= 0; i--) {
+          const f = fixtures[i];
+          if (Math.hypot(f.x - wx, f.y - wy) < 0.9) {
+            selectedItem = f;
+            isDragging = true;
+            dragOffsetX = wx - f.x;
+            dragOffsetY = wy - f.y;
+            updateInfoPanel();
+            draw();
+            return;
+          }
         }
+        selectedItem = null;
+        updateInfoPanel();
+      } else if (['wall','hot','cold','drain'].includes(currentTool)) {
+        drawingStart = {x: snap(wx), y: snap(wy), type: currentTool};
+      } else if (currentTool === 'erase') {
+        // erase logic
+        fixtures = fixtures.filter(f => Math.hypot(f.x - wx, f.y - wy) > 0.9);
+        walls = walls.filter(w => {
+          const d1 = Math.hypot(w.x1 - wx, w.y1 - wy);
+          const d2 = Math.hypot(w.x2 - wx, w.y2 - wy);
+          return d1 > 1 && d2 > 1;
+        });
+        pipes = pipes.filter(p => {
+          const d1 = Math.hypot(p.x1 - wx, p.y1 - wy);
+          const d2 = Math.hypot(p.x2 - wx, p.y2 - wy);
+          return d1 > 1 && d2 > 1;
+        });
+        draw();
       }
-
-      // Clicked empty / floor → deselect
-      deselect();
-      isDragging = false;
     }
 
-    function onPointerMove(e) {
-      if (!isDragging || !selectedFixture) return;
-      const canvas = document.getElementById('threeCanvas');
+    function onMouseMove(e) {
       const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const wx = worldX(sx);
+      const wy = worldY(sy);
 
-      mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-      const floorHit = raycaster.intersectObject(floorMesh);
-      if (floorHit.length > 0) {
-        let x = Math.max(-roomWidth / 2 + 0.8, Math.min(roomWidth / 2 - 0.8, floorHit[0].point.x));
-        let z = Math.max(-roomDepth / 2 + 0.8, Math.min(roomDepth / 2 - 0.8, floorHit[0].point.z));
-        selectedFixture.position.set(x, selectedFixture.position.y, z);
+      if (isDragging && selectedItem) {
+        selectedItem.x = snap(wx - dragOffsetX);
+        selectedItem.y = snap(wy - dragOffsetY);
+        draw();
+      } else if (drawingStart) {
+        draw();
+        ctx.strokeStyle = drawingStart.type === 'wall' ? '#3f2a1e' : drawingStart.type === 'hot' ? '#ef4444' : drawingStart.type === 'cold' ? '#3b82f6' : '#111827';
+        ctx.lineWidth = drawingStart.type === 'wall' ? 22 : 11;
+        ctx.setLineDash(drawingStart.type === 'drain' ? [18,12] : []);
+        ctx.beginPath();
+        ctx.moveTo(offsetX + drawingStart.x*scale, offsetY + drawingStart.y*scale);
+        ctx.lineTo(offsetX + snap(wx)*scale, offsetY + snap(wy)*scale);
+        ctx.stroke();
+        ctx.setLineDash([]);
       }
     }
 
-    function onPointerUp() {
+    function onMouseUp(e) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const wx = worldX(sx);
+      const wy = worldY(sy);
+
+      if (drawingStart) {
+        const endX = snap(wx);
+        const endY = snap(wy);
+        if (drawingStart.type === 'wall') {
+          walls.push({x1: drawingStart.x, y1: drawingStart.y, x2: endX, y2: endY});
+        } else {
+          pipes.push({x1: drawingStart.x, y1: drawingStart.y, x2: endX, y2: endY, type: drawingStart.type});
+        }
+        drawingStart = null;
+        draw();
+      }
       isDragging = false;
     }
 
     function onWheel(e) {
-      if (selectedFixture) {
-        selectedFixture.rotation.y += e.deltaY * 0.006;
-        e.preventDefault();
+      scale *= e.deltaY < 0 ? 1.12 : 0.89;
+      draw();
+      e.preventDefault();
+    }
+
+    function setTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('btn-'+tool);
+      if (btn) btn.classList.add('active');
+    }
+
+    function addFixtureFromDropdown(select) {
+      const val = select.value;
+      if (!val) return;
+      fixtures.push({type: val, x: snap(3.5 + Math.random()*2-1), y: snap(2 + Math.random()*2-1)});
+      draw();
+      select.value = '';
+    }
+
+    function updateInfoPanel() {
+      const panel = document.getElementById('infoPanel');
+      if (selectedItem) {
+        panel.innerHTML = `<span class="text-5xl">${fixtureIcons[selectedItem.type]}</span><br><span class="text-2xl gold">${selectedItem.type.toUpperCase()}</span><br>Position: ${selectedItem.x.toFixed(1)}m × ${selectedItem.y.toFixed(1)}m`;
+      } else {
+        panel.innerHTML = 'Nothing selected.<br><br>Click any item to edit.';
       }
     }
 
-    function rotateFixture(delta) {
-      if (selectedFixture) selectedFixture.rotation.y += delta;
+    function deleteSelected() {
+      if (!selectedItem) return;
+      fixtures = fixtures.filter(f => f !== selectedItem);
+      selectedItem = null;
+      updateInfoPanel();
+      draw();
     }
 
-    function animate() {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+    function exitPlanner() {
+      if (document.fullscreenElement) document.exitFullscreen();
+      document.getElementById('plannerModal').classList.add('hidden');
     }
 
-    function submitDesign() {
-      let summary = "MY REALISTIC 3D DESIGN:\n";
-      fixtures3D.forEach(f => {
-        summary += `• ${f.userData.type.toUpperCase()} at (${f.position.x.toFixed(1)}, ${f.position.z.toFixed(1)}) rotated ${f.rotation.y.toFixed(1)}\n`;
-      });
-      const textarea = document.querySelector('#quoteForm textarea');
-      if (textarea) textarea.value = summary + "\nReady for this exact luxury layout!";
-      document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ Design submitted – our London team will call you!");
+    function sendPlannerToQuote() {
+      let summary = "MY 2D FLOOR PLAN:\n";
+      summary += `Fixtures: ${fixtures.length}\n`;
+      fixtures.forEach(f => summary += `• ${f.type} @ (${f.x.toFixed(1)}, ${f.y.toFixed(1)})\n`);
+      summary += `Walls: ${walls.length} • Pipes: ${pipes.length}\nReady for London installation!`;
+      
+      const textarea = document.getElementById('quoteTextarea');
+      if (textarea) textarea.value = summary;
+      
+      exitPlanner();
+      document.getElementById('quote').scrollIntoView({behavior:'smooth'});
+      alert("✅ Layout sent! Our London team will call with your quote.");
     }
 
-    // ====================== OTHER FUNCTIONS (unchanged) ======================
+    // =============== ESTIMATOR & OTHER FUNCTIONS ===============
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -579,7 +589,6 @@
     }
 
     window.onload = () => {
-      init3D();
       updateEstimate();
       if (localStorage.getItem('roomioBannerClosed') === 'true') document.getElementById('roomioBanner').style.display = 'none';
     };
