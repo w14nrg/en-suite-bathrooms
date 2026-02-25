@@ -98,18 +98,17 @@
     </div>
   </header>
 
-  <!-- PROPER 3D PLANNER WITH YOUR TWEAKS -->
+  <!-- PROPER 3D PLANNER (realistic fixtures + working drag) -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">PROPER 3D PLANNER</span>
         <h2 class="section-title serif text-6xl mt-6">Real Drag & Drop 3D Bathroom Planner</h2>
-        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate • Resize room • Add real-looking fixtures, walls, doors, windows • Drag anything</p>
+        <p class="text-xl text-zinc-600 mt-6">Drag mouse to rotate • Resize room • Add realistic fixtures • Click & drag anything</p>
       </div>
 
       <div class="grid lg:grid-cols-12 gap-12">
         <div class="lg:col-span-4 space-y-10 bg-white p-8 rounded-3xl border border-gold/30">
-          <!-- Room Resize -->
           <div>
             <h3 class="text-xl gold font-medium mb-6">Room Size</h3>
             <div class="space-y-6">
@@ -124,7 +123,6 @@
             </div>
           </div>
 
-          <!-- Fixtures -->
           <div>
             <h3 class="text-xl gold font-medium mb-4">Add Fixtures</h3>
             <div class="grid grid-cols-2 gap-3">
@@ -136,7 +134,6 @@
             </div>
           </div>
 
-          <!-- Walls / Doors -->
           <div>
             <h3 class="text-xl gold font-medium mb-4">Add Walls / Doors</h3>
             <div class="grid grid-cols-2 gap-3">
@@ -150,13 +147,13 @@
 
         <div class="lg:col-span-8">
           <canvas id="threeCanvas"></canvas>
-          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate • Click fixture then drag to move it • Resize with sliders above</p>
+          <p class="text-center text-sm text-zinc-500 mt-3">Drag mouse to rotate • Click a fixture then drag to move it</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ESTIMATOR (unchanged) -->
+  <!-- ESTIMATOR, PROCESS, AREAS, FAQ, QUOTE, FLOATING CTA, FOOTER (unchanged) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -202,7 +199,6 @@
     </div>
   </section>
 
-  <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -217,7 +213,6 @@
     </div>
   </section>
 
-  <!-- LONDON AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
@@ -230,7 +225,6 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section class="py-28 bg-white">
     <div class="max-w-4xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Frequently Asked Questions</h2>
@@ -247,7 +241,7 @@
             <p class="text-xl">Can I use the 3D builder myself?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – resize, add real fixtures, walls, doors, windows and drag everything.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes – the fixtures now look realistic and you can drag them freely.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -267,7 +261,6 @@
     </div>
   </section>
 
-  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -281,7 +274,6 @@
     </div>
   </section>
 
-  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
@@ -294,14 +286,12 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // THREE.JS 3D PLANNER - with your requested tweeks
-    let scene, camera, renderer;
+    let scene, camera, renderer, floorMesh;
     let fixtures3D = [];
     let raycaster = new THREE.Raycaster();
     let mouse = new THREE.Vector2();
-    let selectedObject = null;
-    let plane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
-
+    let selectedFixture = null;
+    let isDraggingFixture = false;
     let roomWidth = 6;
     let roomDepth = 4;
 
@@ -325,22 +315,34 @@
       scene.add(dirLight);
 
       createRoom();
+
+      const canvasEl = document.getElementById('threeCanvas');
+      canvasEl.addEventListener('mousedown', onMouseDown);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+
       animate();
     }
 
     function createRoom() {
-      // Clear old room
-      while (scene.children.length > 2) scene.remove(scene.children[2]);
+      // Remove old room objects
+      for (let i = scene.children.length - 1; i >= 0; i--) {
+        const child = scene.children[i];
+        if (child.userData.isRoom) scene.remove(child);
+      }
 
       // Floor
       const floorGeo = new THREE.PlaneGeometry(roomWidth, roomDepth);
-      const floor = new THREE.Mesh(floorGeo, new THREE.MeshStandardMaterial({ color: 0xe2e8f0 }));
-      floor.rotation.x = -Math.PI / 2;
-      floor.receiveShadow = true;
-      scene.add(floor);
+      const floorMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0 });
+      floorMesh = new THREE.Mesh(floorGeo, floorMat);
+      floorMesh.rotation.x = -Math.PI / 2;
+      floorMesh.receiveShadow = true;
+      floorMesh.userData.isRoom = true;
+      scene.add(floorMesh);
 
       // Grid
       const grid = new THREE.GridHelper(Math.max(roomWidth, roomDepth), 20, 0x94a3b8, 0x94a3b8);
+      grid.userData.isRoom = true;
       scene.add(grid);
 
       // Walls
@@ -348,12 +350,14 @@
       const backWall = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, 4), wallMat);
       backWall.position.z = -roomDepth / 2;
       backWall.position.y = 2;
+      backWall.userData.isRoom = true;
       scene.add(backWall);
 
       const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(roomDepth, 4), wallMat);
       sideWall.rotation.y = Math.PI / 2;
       sideWall.position.x = -roomWidth / 2;
       sideWall.position.y = 2;
+      sideWall.userData.isRoom = true;
       scene.add(sideWall);
     }
 
@@ -372,79 +376,87 @@
 
     function addFixture(type) {
       const group = new THREE.Group();
-      let mainMesh;
+      group.userData.type = type;
 
       if (type === 'bath') {
-        // Tub
-        mainMesh = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.7, 1.4), new THREE.MeshStandardMaterial({ color: 0x64748b }));
-        mainMesh.position.y = 0.35;
-        group.add(mainMesh);
+        // Tub body
+        const tub = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.8, 1.4), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        tub.position.y = 0.4;
+        group.add(tub);
         // Rim
-        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.1, 1.5), new THREE.MeshStandardMaterial({ color: 0x475569 }));
-        rim.position.y = 0.75;
+        const rim = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.15, 1.5), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        rim.position.y = 0.8;
         group.add(rim);
         // Legs
         for (let i = 0; i < 4; i++) {
-          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4, 16), new THREE.MeshStandardMaterial({ color: 0x78350f }));
-          leg.position.set(i % 2 === 0 ? -1 : 1, 0.2, i < 2 ? -0.6 : 0.6);
+          const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.5, 16), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+          leg.position.set(i % 2 === 0 ? -1.0 : 1.0, 0.25, i < 2 ? -0.55 : 0.55);
           group.add(leg);
         }
       } else if (type === 'shower') {
-        // Enclosure
-        mainMesh = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.4, 1.4), new THREE.MeshStandardMaterial({ color: 0x334155, transparent: true, opacity: 0.6 }));
-        mainMesh.position.y = 1.2;
-        group.add(mainMesh);
+        // Tray
+        const tray = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.15, 1.5), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        tray.position.y = 0.075;
+        group.add(tray);
+        // Glass walls
+        const glassMat = new THREE.MeshStandardMaterial({ color: 0xbae6fd, transparent: true, opacity: 0.4 });
+        const back = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 2.2), glassMat);
+        back.position.set(0, 1.1, -0.7);
+        group.add(back);
+        const side1 = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 2.2), glassMat);
+        side1.rotation.y = Math.PI / 2;
+        side1.position.set(-0.7, 1.1, 0);
+        group.add(side1);
         // Shower head
-        const head = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.15, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        const head = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.18, 0.3, 16), new THREE.MeshStandardMaterial({ color: 0x475569 }));
         head.rotation.x = Math.PI / 2;
-        head.position.set(0, 2.1, 0.6);
+        head.position.set(0, 2.2, 0.6);
         group.add(head);
       } else if (type === 'toilet') {
         // Bowl
-        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 0.6, 32), new THREE.MeshStandardMaterial({ color: 0x475569 }));
-        bowl.position.y = 0.3;
+        const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.35, 0.65, 32), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        bowl.position.y = 0.325;
         group.add(bowl);
         // Tank
-        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.8, 0.4), new THREE.MeshStandardMaterial({ color: 0x475569 }));
-        tank.position.set(0, 0.9, -0.35);
+        const tank = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.85, 0.45), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+        tank.position.set(0, 0.95, -0.3);
         group.add(tank);
-        // Seat
-        const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
-        seat.position.y = 0.65;
-        group.add(seat);
+        // Lid
+        const lid = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.6), new THREE.MeshStandardMaterial({ color: 0x334155 }));
+        lid.position.y = 0.7;
+        group.add(lid);
       } else if (type === 'vanity') {
-        // Counter
-        const counter = new THREE.Mesh(new THREE.BoxGeometry(2, 0.2, 0.7), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
-        counter.position.y = 0.8;
-        group.add(counter);
+        // Cabinet
+        const cabinet = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.8, 0.7), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        cabinet.position.y = 0.4;
+        group.add(cabinet);
+        // Top
+        const top = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.15, 0.75), new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }));
+        top.position.y = 0.8;
+        group.add(top);
         // Sink
-        const sink = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0x64748b }));
-        sink.position.set(0, 0.6, 0);
+        const sink = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.28, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        sink.position.set(0, 0.7, 0);
         group.add(sink);
-        // Base
-        const base = new THREE.Mesh(new THREE.BoxGeometry(2, 0.7, 0.7), new THREE.MeshStandardMaterial({ color: 0x78350f }));
-        base.position.y = 0.35;
-        group.add(base);
       } else if (type === 'window') {
         // Frame
-        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.4, 0.2), new THREE.MeshStandardMaterial({ color: 0x78350f }));
+        const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.5, 0.25), new THREE.MeshStandardMaterial({ color: 0x78350f }));
         frame.position.y = 2.2;
         group.add(frame);
         // Glass
-        const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.1), new THREE.MeshStandardMaterial({ color: 0xbae6fd, side: THREE.DoubleSide }));
-        glass.position.set(0, 2.2, 0.11);
+        const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.25), new THREE.MeshStandardMaterial({ color: 0xbae6fd, side: THREE.DoubleSide }));
+        glass.position.set(0, 2.2, 0.13);
         group.add(glass);
       }
 
-      group.userData.type = type;
-      group.position.set(Math.random() * 4 - 2, 0, Math.random() * 4 - 2);
+      group.position.set(Math.random() * 3 - 1.5, 0, Math.random() * 3 - 1.5);
       scene.add(group);
       fixtures3D.push(group);
     }
 
     function addWallOrDoor(type) {
       const mat = type === 'wall' ? new THREE.MeshStandardMaterial({ color: 0xf3e8d8 }) : new THREE.MeshStandardMaterial({ color: 0x475569 });
-      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 3), mat);
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 3), mat);
       mesh.position.set(0, 1.5, 0);
       mesh.rotation.y = Math.PI / 2;
       mesh.userData.type = type;
@@ -452,42 +464,58 @@
       fixtures3D.push(mesh);
     }
 
-    // Smoother mouse rotation
-    let isDragging = false;
-    let previousX = 0;
-    let azimuth = Math.PI / 4;
-    let elevation = Math.PI / 3;
-    document.getElementById('threeCanvas').addEventListener('mousedown', (e) => {
-      isDragging = true;
-      previousX = e.clientX;
-    });
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const deltaX = e.clientX - previousX;
-      azimuth += deltaX * 0.005;
-      camera.position.x = Math.cos(azimuth) * 10;
-      camera.position.z = Math.sin(azimuth) * 10;
-      camera.position.y = Math.sin(elevation) * 8;
-      camera.lookAt(0, 1.5, 0);
-      previousX = e.clientX;
-    });
-    window.addEventListener('mouseup', () => isDragging = false);
+    function onMouseDown(e) {
+      const canvas = document.getElementById('threeCanvas');
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(fixtures3D, true);
+
+      if (intersects.length > 0) {
+        selectedFixture = intersects[0].object.parent || intersects[0].object;
+        isDraggingFixture = true;
+      }
+    }
+
+    function onMouseMove(e) {
+      if (!isDraggingFixture || !selectedFixture) return;
+
+      const canvas = document.getElementById('threeCanvas');
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObject(floorMesh);
+
+      if (intersects.length > 0) {
+        selectedFixture.position.x = intersects[0].point.x;
+        selectedFixture.position.z = intersects[0].point.z;
+      }
+    }
+
+    function onMouseUp() {
+      isDraggingFixture = false;
+      selectedFixture = null;
+    }
 
     function submitDesign() {
       let summary = "MY 3D DESIGN:\n";
       fixtures3D.forEach(f => {
         summary += `• ${f.userData.type} at (${f.position.x.toFixed(1)}, ${f.position.z.toFixed(1)})\n`;
       });
-      summary += "\nReady to build this exact layout!";
+      summary += "\nReady to build this exact realistic layout!";
 
       const textarea = document.querySelector('#quoteForm textarea');
       if (textarea) textarea.value = summary;
 
       document.getElementById('quote').scrollIntoView({ behavior: 'smooth' });
-      alert("✅ 3D design submitted! Your full layout is in the quote form.");
+      alert("✅ 3D design submitted! Realistic fixtures & positions are in the quote form.");
     }
 
-    // Original functions (unchanged)
+    // Original functions
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -504,9 +532,7 @@
       document.querySelectorAll('.style-btn')[n].classList.add('active');
       updateEstimate();
     }
-    function saveEstimate() {
-      alert("Estimate saved! Our London team will contact you shortly.");
-    }
+    function saveEstimate() { alert("Estimate saved!"); }
     function toggleFAQ(el) {
       const answer = el.nextElementSibling;
       answer.classList.toggle('hidden');
