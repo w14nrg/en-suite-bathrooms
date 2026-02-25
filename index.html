@@ -18,15 +18,10 @@
     body { font-family: 'Inter', sans-serif; }
     .serif { font-family: 'Playfair Display', serif; }
     .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
-    .hero-bg { background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://picsum.photos/id/1015/2000/1200'); background-size: cover; background-position: center; }
+    .hero-bg { background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://picsum.photos/id/133/2000/1200'); background-size: cover; background-position: center; }
     .gold { color: #d4af37; }
     .cream { background-color: #fbf7f0; }
     .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
-    .masonry { column-count: 1; }
-    @media (min-width: 768px) { .masonry { column-count: 2; } }
-    @media (min-width: 1024px) { .masonry { column-count: 3; } }
-    .style-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-    .style-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px -12px rgb(212 175 55 / 0.25); }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
@@ -39,9 +34,8 @@
         <span class="text-4xl serif tracking-widest font-light">EN-SUITE</span>
       </div>
       <div class="hidden md:flex gap-10 text-lg font-light">
-        <a href="#3d" class="hover:gold transition">Free 3D Design</a>
+        <a href="#builder" class="hover:gold transition">Interactive Builder</a>
         <a href="#estimator" class="hover:gold transition">Instant Estimator</a>
-        <a href="#styles" class="hover:gold transition">Discover Your Style</a>
         <a href="#areas" class="hover:gold transition">Areas</a>
         <a href="#quote" class="hover:gold transition">Contact</a>
       </div>
@@ -53,35 +47,53 @@
   <header class="hero-bg h-screen flex items-center pt-20">
     <div class="max-w-6xl mx-auto px-8 text-white text-center">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
-      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive 3D design • Expert installation • Pure gold-standard luxury</p>
+      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free interactive builder • Expert installation • Pure gold-standard luxury</p>
       <div class="flex flex-col md:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="500">
-        <a href="#3d" class="bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">GET YOUR FREE 3D DESIGN</a>
+        <a href="#builder" class="bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition">START BUILDING NOW</a>
         <a href="#estimator" class="border-2 border-white px-16 py-7 rounded-3xl text-2xl font-medium hover:bg-white hover:text-black transition">INSTANT ESTIMATE</a>
       </div>
     </div>
   </header>
 
-  <!-- FREE INTERACTIVE 3D DESIGN -->
-  <section id="3d" class="cream py-28">
+  <!-- INTERACTIVE BUILDER -->
+  <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
-        <span class="uppercase tracking-widest text-sm gold">PLAY WITH IT LIVE</span>
-        <h2 class="section-title serif text-6xl mt-6">Free Interactive 3D Design</h2>
-        <p class="text-xl text-zinc-600 mt-6 max-w-2xl mx-auto">Drag to rotate • Scroll to zoom • Click the styles below to switch instantly</p>
+        <span class="uppercase tracking-widest text-sm gold">BUILD IT LIVE</span>
+        <h2 class="section-title serif text-6xl mt-6">Interactive En-Suite Builder</h2>
+        <p class="text-xl text-zinc-600 mt-6">Click the icons on the left to instantly see how it looks</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-16 items-center">
-        <div data-aos="fade-right">
-          <div class="flex flex-wrap gap-4 mb-10">
-            <button onclick="switchModel(0)" class="model-btn active px-8 py-4 bg-white rounded-2xl border-2 border-gold font-medium">Modern Marble</button>
-            <button onclick="switchModel(1)" class="model-btn px-8 py-4 bg-white rounded-2xl border-2 border-gold font-medium">Spa Retreat</button>
-            <button onclick="switchModel(2)" class="model-btn px-8 py-4 bg-white rounded-2xl border-2 border-gold font-medium">Classic Gold</button>
-            <button onclick="switchModel(3)" class="model-btn px-8 py-4 bg-white rounded-2xl border-2 border-gold font-medium">Timeless White</button>
+      <div class="grid md:grid-cols-12 gap-12 items-start">
+        <!-- Side icons -->
+        <div class="md:col-span-3 space-y-6">
+          <div onclick="changePreview(0)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-bath text-4xl"></i>
+            <div><p class="font-medium">Luxury Bath</p><p class="text-sm text-zinc-500">Freestanding or built-in</p></div>
           </div>
-          <button onclick="window.open('https://planner5d.com/editor', '_blank')" class="bg-[#d4af37] text-black px-16 py-7 rounded-3xl text-2xl font-medium w-full md:w-auto">BUILD YOUR OWN FULL CUSTOM BATHROOM FREE</button>
-          <p class="text-sm text-zinc-500 mt-6">Opens the world's best free 3D planner — drag walls, add baths, change colours in real time</p>
+          <div onclick="changePreview(1)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-shower text-4xl"></i>
+            <div><p class="font-medium">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall & body jets</p></div>
+          </div>
+          <div onclick="changePreview(2)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-sink text-4xl"></i>
+            <div><p class="font-medium">Double Vanity</p><p class="text-sm text-zinc-500">Marble tops & gold taps</p></div>
+          </div>
+          <div onclick="changePreview(3)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-chess-board text-4xl"></i>
+            <div><p class="font-medium">Statement Tiles</p><p class="text-sm text-zinc-500">Marble, porcelain, gold</p></div>
+          </div>
+          <div onclick="changePreview(4)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-lightbulb text-4xl"></i>
+            <div><p class="font-medium">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandeliers & mirrors</p></div>
+          </div>
+          <div onclick="changePreview(5)" class="builder-icon flex items-center gap-5 p-6 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+            <i class="fa-solid fa-faucet-drip text-4xl"></i>
+            <div><p class="font-medium">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & shower heads</p></div>
+          </div>
         </div>
-        <div data-aos="fade-left" class="rounded-3xl overflow-hidden shadow-2xl border border-gold/30">
-          <iframe id="sketchfab" src="https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed" width="100%" height="620" allowfullscreen style="border:none;"></iframe>
+        <!-- Preview -->
+        <div class="md:col-span-9 rounded-3xl overflow-hidden shadow-2xl border border-gold/30">
+          <img id="previewImage" src="https://picsum.photos/id/133/1200/800" class="w-full h-auto transition-all duration-700">
         </div>
       </div>
     </div>
@@ -130,57 +142,13 @@
     </div>
   </section>
 
-  <!-- DISCOVER YOUR SIGNATURE STYLE -->
-  <section id="styles" class="py-28 cream">
-    <div class="max-w-7xl mx-auto px-8">
-      <div class="text-center mb-16">
-        <span class="uppercase tracking-widest text-sm gold">FIND YOUR VIBE</span>
-        <h2 class="section-title serif text-6xl">Discover Your Signature Style</h2>
-      </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div onclick="selectStyleCard(0)" class="style-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer">
-          <img src="https://picsum.photos/id/1015/600/400" class="w-full h-64 object-cover">
-          <div class="p-8">
-            <h3 class="text-2xl font-medium">Modern Marble Palace</h3>
-            <p class="text-zinc-600 mt-3">Clean lines, dramatic veining, matte gold accents</p>
-            <button class="mt-8 w-full bg-gold text-white py-4 rounded-2xl">See in 3D</button>
-          </div>
-        </div>
-        <div onclick="selectStyleCard(1)" class="style-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer">
-          <img src="https://picsum.photos/id/133/600/400" class="w-full h-64 object-cover">
-          <div class="p-8">
-            <h3 class="text-2xl font-medium">Spa Serenity Retreat</h3>
-            <p class="text-zinc-600 mt-3">Soft lighting, natural stone, calming oasis</p>
-            <button class="mt-8 w-full bg-gold text-white py-4 rounded-2xl">See in 3D</button>
-          </div>
-        </div>
-        <div onclick="selectStyleCard(2)" class="style-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer">
-          <img src="https://picsum.photos/id/201/600/400" class="w-full h-64 object-cover">
-          <div class="p-8">
-            <h3 class="text-2xl font-medium">Classic Gold Timeless</h3>
-            <p class="text-zinc-600 mt-3">Ornate details, warm tones, heritage luxury</p>
-            <button class="mt-8 w-full bg-gold text-white py-4 rounded-2xl">See in 3D</button>
-          </div>
-        </div>
-        <div onclick="selectStyleCard(3)" class="style-card bg-white rounded-3xl overflow-hidden shadow-xl cursor-pointer">
-          <img src="https://picsum.photos/id/251/600/400" class="w-full h-64 object-cover">
-          <div class="p-8">
-            <h3 class="text-2xl font-medium">Timeless White Elegance</h3>
-            <p class="text-zinc-600 mt-3">Crisp white, subtle textures, pure sophistication</p>
-            <button class="mt-8 w-full bg-gold text-white py-4 rounded-2xl">See in 3D</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
       <div class="grid md:grid-cols-6 gap-8 text-center">
         <div><div class="text-6xl gold mb-4">01</div><p class="font-medium">Free Consultation</p></div>
-        <div><div class="text-6xl gold mb-4">02</div><p class="font-medium">Free 3D Design</p></div>
+        <div><div class="text-6xl gold mb-4">02</div><p class="font-medium">Interactive Builder</p></div>
         <div><div class="text-6xl gold mb-4">03</div><p class="font-medium">Material Selection</p></div>
         <div><div class="text-6xl gold mb-4">04</div><p class="font-medium">Final Quote</p></div>
         <div><div class="text-6xl gold mb-4">05</div><p class="font-medium">Expert Installation</p></div>
@@ -212,11 +180,11 @@
             <p class="text-xl">How long does an en-suite installation take?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Most projects take 7-14 days depending on size. We give you an exact timeline after the 3D design.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Most projects take 7-14 days depending on size.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
-            <p class="text-xl">Is the 3D design really free?</p>
+            <p class="text-xl">Is the interactive builder free?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
           <div class="faq-answer hidden mt-6 text-zinc-600">Yes, completely free with no obligation.</div>
@@ -226,7 +194,7 @@
             <p class="text-xl">Do you work in all London postcodes?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, we cover every postcode in Greater London.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, every postcode in Greater London.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -247,7 +215,7 @@
         <input type="text" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" placeholder="Email" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <textarea placeholder="Tell us about your project (size, style, postcode)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
+        <textarea placeholder="Tell us about your project" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
         <button type="submit" class="w-full py-8 bg-[#d4af37] text-black text-3xl font-medium rounded-3xl">SEND REQUEST — LONDON TEAM CALLS WITHIN 2 HOURS</button>
       </form>
     </div>
@@ -266,26 +234,22 @@
   <script>
     AOS.init({ duration: 1200, once: true });
 
-    // 3D Model Switcher
-    const models = [
-      "https://sketchfab.com/3d-models/bathroom-hotel-d730f2fa434541ba8729bdae5d2b009b/embed",
-      "https://sketchfab.com/3d-models/modern-bathroom-3d-model-5d8e4f7c8d4a4b5a9d2f2b1c4e5f6a7b/embed",
-      "https://sketchfab.com/3d-models/classic-luxury-bathroom-xyz789123/embed",
-      "https://sketchfab.com/3d-models/timeless-white-bathroom-abc456/embed"
+    // Builder preview images
+    const previewImages = [
+      "https://picsum.photos/id/133/1200/800",   // Bath focus
+      "https://picsum.photos/id/201/1200/800",   // Shower focus
+      "https://picsum.photos/id/251/1200/800",   // Vanity focus
+      "https://picsum.photos/id/316/1200/800",   // Tiles focus
+      "https://picsum.photos/id/870/1200/800",   // Lighting focus
+      "https://picsum.photos/id/1015/1200/800"   // Gold fixtures focus
     ];
-    function switchModel(n) {
-      document.getElementById('sketchfab').src = models[n];
-      document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.model-btn')[n].classList.add('active');
+
+    function changePreview(n) {
+      document.getElementById('previewImage').src = previewImages[n];
+      gsap.from("#previewImage", {opacity:0.6, scale:0.95, duration:0.6});
     }
 
-    // Style cards switch 3D model
-    function selectStyleCard(n) {
-      switchModel(n);
-      document.getElementById('3d').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Instant Estimator
+    // Estimator
     let basePrice = 9800;
     function updateEstimate() {
       const size = parseInt(document.getElementById('sizeSlider').value);
@@ -303,10 +267,10 @@
       updateEstimate();
     }
     function saveEstimate() {
-      alert("Estimate saved! Our London team will create your free 3D design based on this.");
+      alert("Estimate saved! Our London team will contact you shortly.");
     }
 
-    // FAQ Toggle
+    // FAQ
     function toggleFAQ(el) {
       const answer = el.nextElementSibling;
       answer.classList.toggle('hidden');
@@ -323,6 +287,7 @@
     // Init
     window.onload = () => {
       updateEstimate();
+      changePreview(0);
     };
   </script>
 </body>
