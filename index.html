@@ -21,15 +21,16 @@
     .gold { color: #d4af37; }
     .cream { background-color: #fbf7f0; }
     .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
-    .bubbles { position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; overflow: hidden; pointer-events: none; z-index: 5; }
-    .bubble { position: absolute; bottom: -50px; background: rgba(255,255,255,0.6); border-radius: 50%; animation: bubbleRise 6s linear infinite; }
+    .water-stream { position: absolute; top: 38%; left: 48%; width: 4px; height: 180px; background: linear-gradient(transparent, #a5f3fc, #67e8f9); animation: waterFlow 0.8s linear infinite; opacity: 0.85; z-index: 5; }
+    .bubbles { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; overflow: hidden; pointer-events: none; z-index: 6; }
+    .bubble { position: absolute; bottom: -50px; background: rgba(255,255,255,0.75); border-radius: 50%; animation: bubbleRise linear infinite; }
     @keyframes bubbleRise { to { transform: translateY(-800px); opacity: 0; } }
-    .steam { position: absolute; bottom: 28%; left: 48%; pointer-events: none; z-index: 10; }
-    .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.75); border-radius: 50%; animation: steamRise 4s infinite linear; }
+    .steam { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 7; }
+    .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
-    .builder-box { transition: all 0.3s; }
+    .builder-box { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
     .builder-box:hover { transform: translateY(-8px); }
-    #roomioBanner { animation: bannerPulse 3s infinite; }
+    #roomioBanner { animation: bannerPulse 2.5s infinite; transition: all 0.4s; }
     @keyframes bannerPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
   </style>
 </head>
@@ -52,18 +53,20 @@
     </div>
   </nav>
 
-  <!-- HERO with animated bath + bubbles + steam -->
+  <!-- HERO with animated bath + running tap + bubbles + steam -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <div class="hero-bg absolute inset-0"></div>
 
+    <!-- Running water from tap -->
+    <div class="water-stream"></div>
+
     <!-- Bubbles -->
     <div class="bubbles">
-      <div class="bubble" style="left:15%; width:22px; height:22px; animation-duration:5.2s; animation-delay:0s"></div>
-      <div class="bubble" style="left:28%; width:14px; height:14px; animation-duration:6.8s; animation-delay:0.8s"></div>
-      <div class="bubble" style="left:42%; width:28px; height:28px; animation-duration:4.9s; animation-delay:1.4s"></div>
-      <div class="bubble" style="left:55%; width:18px; height:18px; animation-duration:7.1s; animation-delay:0.3s"></div>
-      <div class="bubble" style="left:68%; width:25px; height:25px; animation-duration:5.7s; animation-delay:2.1s"></div>
-      <div class="bubble" style="left:82%; width:16px; height:16px; animation-duration:6.3s; animation-delay:1.7s"></div>
+      <div class="bubble" style="left:22%; width:18px; height:18px; animation-duration:4.8s; animation-delay:0s"></div>
+      <div class="bubble" style="left:35%; width:12px; height:12px; animation-duration:6.2s; animation-delay:0.5s"></div>
+      <div class="bubble" style="left:48%; width:25px; height:25px; animation-duration:5.1s; animation-delay:1.2s"></div>
+      <div class="bubble" style="left:61%; width:15px; height:15px; animation-duration:7s; animation-delay:0.3s"></div>
+      <div class="bubble" style="left:74%; width:20px; height:20px; animation-duration:4.5s; animation-delay:1.8s"></div>
     </div>
 
     <!-- Steam -->
@@ -84,11 +87,11 @@
       </div>
     </div>
 
-    <!-- Elegant full-width Roomio Banner -->
-    <div id="roomioBanner" class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-900 to-amber-900 py-6 text-center z-20 flex items-center justify-center gap-6">
+    <!-- Elegant full-width Roomio Banner (fixed, scrolls with page, pulses until X) -->
+    <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-900 to-amber-900 py-6 text-center z-50 flex items-center justify-center gap-6 shadow-2xl">
       <span class="text-2xl serif tracking-wider text-[#d4af37]">en-suite not enough? turn your spare room into a studio</span>
       <a href="https://www.roomio.studio" target="_blank" class="underline hover:no-underline text-2xl text-[#d4af37] font-medium">click here →</a>
-      <button onclick="document.getElementById('roomioBanner').style.display='none'" class="ml-8 text-4xl text-[#d4af37] hover:text-white">×</button>
+      <button onclick="document.getElementById('roomioBanner').style.display='none'" class="ml-8 text-4xl text-[#d4af37] hover:text-white transition">×</button>
     </div>
   </header>
 
@@ -102,28 +105,28 @@
       </div>
       <div class="grid md:grid-cols-12 gap-12 items-start">
         <div class="md:col-span-3 space-y-4">
-          <div onclick="changeModel(0)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(0)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-bath text-3xl"></i><div><p class="font-medium">Freestanding Bath</p><p class="text-sm text-zinc-500">Luxury tub</p></div>
           </div>
-          <div onclick="changeModel(1)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(1)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-shower text-3xl"></i><div><p class="font-medium">Walk-In Shower</p><p class="text-sm text-zinc-500">Rainfall head</p></div>
           </div>
-          <div onclick="changeModel(2)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(2)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-sink text-3xl"></i><div><p class="font-medium">Double Vanity</p><p class="text-sm text-zinc-500">Marble + gold</p></div>
           </div>
-          <div onclick="changeModel(3)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(3)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-chess-board text-3xl"></i><div><p class="font-medium">Marble Tiles</p><p class="text-sm text-zinc-500">Statement walls</p></div>
           </div>
-          <div onclick="changeModel(4)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(4)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-lightbulb text-3xl"></i><div><p class="font-medium">Luxury Lighting</p><p class="text-sm text-zinc-500">Chandelier</p></div>
           </div>
-          <div onclick="changeModel(5)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(5)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-faucet-drip text-3xl"></i><div><p class="font-medium">Gold Fixtures</p><p class="text-sm text-zinc-500">Taps & heads</p></div>
           </div>
-          <div onclick="changeModel(6)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(6)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-toilet text-3xl"></i><div><p class="font-medium">Designer Toilet</p><p class="text-sm text-zinc-500">Wall-hung</p></div>
           </div>
-          <div onclick="changeModel(7)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition">
+          <div onclick="changeModel(7)" class="builder-box flex items-center gap-4 p-5 bg-white rounded-3xl cursor-pointer hover:bg-gold hover:text-white transition border border-transparent hover:border-gold">
             <i class="fa-solid fa-mirror text-3xl"></i><div><p class="font-medium">Smart Mirror</p><p class="text-sm text-zinc-500">LED heating</p></div>
           </div>
         </div>
@@ -134,7 +137,7 @@
     </div>
   </section>
 
-  <!-- ESTIMATOR + PROCESS + AREAS + FAQ + QUOTE + FOOTER (full) -->
+  <!-- ESTIMATOR -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
