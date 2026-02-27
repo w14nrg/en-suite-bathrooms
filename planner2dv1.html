@@ -2,303 +2,275 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>En-Suite & Bathroom 2D Planner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>En-Suite 2D Planner</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
 <style>
-body {
+body{
   margin:0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background:#f3f4f6;
-  overflow:hidden;
+  font-family:system-ui, -apple-system, sans-serif;
+  background:#f1f3f6;
 }
 
-#sidebar {
-  position:absolute;
-  left:0;
-  top:0;
-  bottom:0;
-  width:260px;
-  background:#ffffff;
-  border-right:1px solid #e5e7eb;
-  padding:20px;
-  box-sizing:border-box;
-  overflow-y:auto;
-}
-
-h2 {
-  margin-top:0;
+header{
+  height:60px;
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  font-weight:600;
   font-size:18px;
 }
 
-button {
-  width:100%;
-  padding:10px;
-  margin-bottom:8px;
-  border-radius:8px;
+#controls{
+  height:60px;
+  background:#ffffff;
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:0 20px;
+}
+
+select, button{
+  padding:8px 12px;
+  border-radius:6px;
   border:1px solid #d1d5db;
   background:white;
   cursor:pointer;
 }
 
-button.active {
-  background:#111827;
-  color:white;
+canvas{
+  border:none;
 }
 
-canvas {
-  position:absolute;
-  left:260px;
-  top:0;
-  background:#faf9f6;
-}
 </style>
 </head>
-
 <body>
 
-<div id="sidebar">
-  <h2>Tools</h2>
+<header>En-Suite & Bathroom 2D Planner</header>
 
-  <button onclick="setTool('select')" id="tool-select" class="active">Select / Move</button>
-  <button onclick="setTool('wall')" id="tool-wall">Draw Wall</button>
-  <button onclick="setTool('hot')" id="tool-hot">Hot Pipe</button>
-  <button onclick="setTool('cold')" id="tool-cold">Cold Pipe</button>
-  <button onclick="setTool('drain')" id="tool-drain">Drain</button>
+<div id="controls">
 
-  <h2>Fixtures</h2>
+<select id="toolSelect">
+  <option value="select">Select Tool</option>
+  <option value="wall">Draw Wall</option>
+</select>
 
-  <button onclick="addFixture('toilet')">Toilet 700x360</button>
-  <button onclick="addFixture('bath')">Bath 1700x700</button>
-  <button onclick="addFixture('shower')">Shower 900x900</button>
-  <button onclick="addFixture('vanity')">Vanity 600x450</button>
-  <button onclick="addFixture('radiator')">Towel Rad 500x1200</button>
-  <button onclick="addFixture('door')">Door 762</button>
+<select id="fixtureSelect">
+  <option value="">Add Fixture</option>
+  <option value="toilet">Toilet 700x360</option>
+  <option value="compactToilet">Compact Toilet 600x360</option>
+  <option value="bath">Bath 1700x700</option>
+  <option value="bathSmall">Bath 1500x700</option>
+  <option value="shower800">Shower 800x800</option>
+  <option value="shower900">Shower 900x900</option>
+  <option value="vanity600">Vanity 600x450</option>
+  <option value="vanity800">Vanity 800x450</option>
+  <option value="towelRad">Towel Rail 500x1200</option>
+  <option value="door762">Door 762</option>
+  <option value="window900">Window 900x600</option>
+</select>
 
-  <h2>Export</h2>
-  <button onclick="exportPNG()">Export PNG</button>
+<button onclick="rotateSelected()">Rotate 90°</button>
+<button onclick="deleteSelected()">Delete</button>
+<button onclick="exportPNG()">Export PNG</button>
+
 </div>
 
-<canvas id="canvas"></canvas>
+<canvas id="c"></canvas>
 
 <script>
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const canvas = new fabric.Canvas('c');
+canvas.setHeight(window.innerHeight - 120);
+canvas.setWidth(window.innerWidth);
 
+const GRID = 100;
 let tool = "select";
-let scale = 0.5; // zoom level
-let offsetX = 400;
-let offsetY = 200;
-
-const GRID = 100; // 100mm grid
-
-let fixtures = [];
-let walls = [];
-let pipes = [];
-
-let selected = null;
-let drawing = null;
-let dragging = false;
-let dragOffset = {x:0,y:0};
-
-function resize(){
-  canvas.width = window.innerWidth - 260;
-  canvas.height = window.innerHeight;
-  draw();
-}
-window.addEventListener("resize", resize);
-resize();
-
-function setTool(t){
-  tool = t;
-  document.querySelectorAll("#sidebar button").forEach(b=>b.classList.remove("active"));
-  document.getElementById("tool-"+t)?.classList.add("active");
-}
-
-function worldX(x){ return (x - offsetX)/scale; }
-function worldY(y){ return (y - offsetY)/scale; }
-
-function snap(v){ return Math.round(v/GRID)*GRID; }
-
-function addFixture(type){
-  const sizes = {
-    toilet:{w:360,h:700},
-    bath:{w:700,h:1700},
-    shower:{w:900,h:900},
-    vanity:{w:600,h:450},
-    radiator:{w:500,h:1200},
-    door:{w:40,h:762}
-  };
-  fixtures.push({
-    type,
-    x:0,
-    y:0,
-    w:sizes[type].w,
-    h:sizes[type].h,
-    rotation:0
-  });
-  draw();
-}
+let wallDrawing = false;
+let wallLine;
 
 function drawGrid(){
-  ctx.strokeStyle="#e5e7eb";
-  ctx.lineWidth=1;
-  for(let x = offsetX % (GRID*scale); x < canvas.width; x += GRID*scale){
-    ctx.beginPath();
-    ctx.moveTo(x,0);
-    ctx.lineTo(x,canvas.height);
-    ctx.stroke();
+  for(let i=0;i<200;i++){
+    canvas.add(new fabric.Line([ i*GRID,0,i*GRID,20000 ],{
+      stroke:'#e5e7eb',
+      selectable:false,
+      evented:false
+    }));
+    canvas.add(new fabric.Line([ 0,i*GRID,20000,i*GRID ],{
+      stroke:'#e5e7eb',
+      selectable:false,
+      evented:false
+    }));
   }
-  for(let y = offsetY % (GRID*scale); y < canvas.height; y += GRID*scale){
-    ctx.beginPath();
-    ctx.moveTo(0,y);
-    ctx.lineTo(canvas.width,y);
-    ctx.stroke();
+}
+drawGrid();
+
+document.getElementById("toolSelect").onchange = function(){
+  tool = this.value;
+};
+
+document.getElementById("fixtureSelect").onchange = function(){
+  if(this.value) addFixture(this.value);
+  this.value="";
+};
+
+canvas.on("mouse:down", function(opt){
+  if(tool==="wall"){
+    wallDrawing = true;
+    const p = canvas.getPointer(opt.e);
+    wallLine = new fabric.Line([p.x,p.y,p.x,p.y],{
+      stroke:"#4b5563",
+      strokeWidth:20,
+      selectable:true
+    });
+    canvas.add(wallLine);
+  }
+});
+
+canvas.on("mouse:move", function(opt){
+  if(wallDrawing){
+    const p = canvas.getPointer(opt.e);
+    wallLine.set({ x2:p.x, y2:p.y });
+    canvas.renderAll();
+  }
+});
+
+canvas.on("mouse:up", function(){
+  wallDrawing = false;
+});
+
+function rotateSelected(){
+  const obj = canvas.getActiveObject();
+  if(obj){
+    obj.rotate((obj.angle||0)+90);
+    canvas.renderAll();
   }
 }
 
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  drawGrid();
-
-  ctx.save();
-  ctx.translate(offsetX,offsetY);
-  ctx.scale(scale,scale);
-
-  // Walls
-  ctx.strokeStyle="#4b5563";
-  ctx.lineWidth=20;
-  walls.forEach(w=>{
-    ctx.beginPath();
-    ctx.moveTo(w.x1,w.y1);
-    ctx.lineTo(w.x2,w.y2);
-    ctx.stroke();
-  });
-
-  // Pipes
-  pipes.forEach(p=>{
-    ctx.strokeStyle = p.type=="hot"?"#ef4444":p.type=="cold"?"#3b82f6":"#111827";
-    ctx.lineWidth=10;
-    if(p.type=="drain") ctx.setLineDash([30,20]);
-    ctx.beginPath();
-    ctx.moveTo(p.x1,p.y1);
-    ctx.lineTo(p.x2,p.y2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  });
-
-  // Fixtures
-  fixtures.forEach(f=>{
-    ctx.save();
-    ctx.translate(f.x,f.y);
-    ctx.rotate(f.rotation);
-
-    ctx.fillStyle="#ffffff";
-    ctx.strokeStyle="#111827";
-    ctx.lineWidth=4;
-
-    if(f.type=="door"){
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.lineTo(0,f.h);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(0,0,f.h,0,Math.PI/2);
-      ctx.stroke();
-    } else {
-      ctx.beginPath();
-      ctx.rect(-f.w/2,-f.h/2,f.w,f.h);
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    if(selected===f){
-      ctx.strokeStyle="#d97706";
-      ctx.lineWidth=6;
-      ctx.strokeRect(-f.w/2,-f.h/2,f.w,f.h);
-    }
-
-    ctx.restore();
-  });
-
-  ctx.restore();
+function deleteSelected(){
+  const obj = canvas.getActiveObject();
+  if(obj){
+    canvas.remove(obj);
+  }
 }
-
-canvas.addEventListener("mousedown",e=>{
-  const wx = snap(worldX(e.offsetX));
-  const wy = snap(worldY(e.offsetY));
-
-  if(tool==="select"){
-    for(let i=fixtures.length-1;i>=0;i--){
-      let f=fixtures[i];
-      if(wx>f.x-f.w/2 && wx<f.x+f.w/2 &&
-         wy>f.y-f.h/2 && wy<f.y+f.h/2){
-        selected=f;
-        dragging=true;
-        dragOffset.x=wx-f.x;
-        dragOffset.y=wy-f.y;
-        return;
-      }
-    }
-    selected=null;
-  }
-  else if(tool==="wall" || tool==="hot" || tool==="cold" || tool==="drain"){
-    drawing={x1:wx,y1:wy,type:tool};
-  }
-  draw();
-});
-
-canvas.addEventListener("mousemove",e=>{
-  const wx = snap(worldX(e.offsetX));
-  const wy = snap(worldY(e.offsetY));
-
-  if(dragging && selected){
-    selected.x = wx - dragOffset.x;
-    selected.y = wy - dragOffset.y;
-    draw();
-  }
-});
-
-canvas.addEventListener("mouseup",e=>{
-  dragging=false;
-
-  if(drawing){
-    drawing.x2 = snap(worldX(e.offsetX));
-    drawing.y2 = snap(worldY(e.offsetY));
-    if(drawing.type==="wall") walls.push(drawing);
-    else pipes.push(drawing);
-    drawing=null;
-  }
-  draw();
-});
-
-canvas.addEventListener("wheel",e=>{
-  e.preventDefault();
-  const zoom = e.deltaY>0 ? 0.9 : 1.1;
-  scale*=zoom;
-  draw();
-});
-
-window.addEventListener("keydown",e=>{
-  if(e.key==="Delete" && selected){
-    fixtures=fixtures.filter(f=>f!==selected);
-    selected=null;
-    draw();
-  }
-  if(e.key==="r" && selected){
-    selected.rotation+=Math.PI/2;
-    draw();
-  }
-});
 
 function exportPNG(){
   const link=document.createElement("a");
-  link.download="ensuite-plan.png";
-  link.href=canvas.toDataURL("image/png");
+  link.download="bathroom-plan.png";
+  link.href=canvas.toDataURL({format:'png'});
   link.click();
 }
 
-draw();
+function addFixture(type){
+
+  let obj;
+
+  switch(type){
+
+    case "toilet":
+      obj = new fabric.Group([
+        new fabric.Rect({width:360,height:700,fill:"#fff",stroke:"#111",strokeWidth:2}),
+        new fabric.Circle({radius:150,top:-200,fill:"#f3f4f6",stroke:"#111",strokeWidth:2})
+      ]);
+      break;
+
+    case "compactToilet":
+      obj = new fabric.Rect({width:360,height:600,fill:"#fff",stroke:"#111",strokeWidth:2});
+      break;
+
+    case "bath":
+      obj = new fabric.Rect({width:700,height:1700,rx:40,ry:40,fill:"#fff",stroke:"#111",strokeWidth:2});
+      break;
+
+    case "bathSmall":
+      obj = new fabric.Rect({width:700,height:1500,rx:40,ry:40,fill:"#fff",stroke:"#111",strokeWidth:2});
+      break;
+
+    case "shower800":
+      obj = new fabric.Rect({width:800,height:800,fill:"#e0f2fe",stroke:"#0284c7",strokeWidth:3});
+      break;
+
+    case "shower900":
+      obj = new fabric.Rect({width:900,height:900,fill:"#e0f2fe",stroke:"#0284c7",strokeWidth:3});
+      break;
+
+    case "vanity600":
+      obj = new fabric.Rect({width:600,height:450,fill:"#fef3c7",stroke:"#92400e",strokeWidth:2});
+      break;
+
+    case "vanity800":
+      obj = new fabric.Rect({width:800,height:450,fill:"#fef3c7",stroke:"#92400e",strokeWidth:2});
+      break;
+
+    case "towelRad":
+      obj = new fabric.Rect({width:500,height:1200,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2});
+      break;
+
+    case "door762":
+      obj = new fabric.Group([
+        new fabric.Line([0,0,0,762],{stroke:"#111",strokeWidth:4}),
+        new fabric.Circle({
+          radius:762,
+          startAngle:0,
+          endAngle:Math.PI/2,
+          stroke:"#111",
+          fill:"",
+          strokeWidth:2
+        })
+      ]);
+      break;
+
+    case "window900":
+      obj = new fabric.Rect({width:900,height:600,fill:"#dbeafe",stroke:"#1d4ed8",strokeWidth:2});
+      break;
+  }
+
+  obj.set({
+    left:500,
+    top:300,
+    hasRotatingPoint:true,
+    cornerSize:12,
+    transparentCorners:false
+  });
+
+  canvas.add(obj);
+  canvas.setActiveObject(obj);
+}
+
+let panning=false;
+
+canvas.on("mouse:down",function(opt){
+  if(opt.e.spaceKey){
+    panning=true;
+    canvas.selection=false;
+  }
+});
+
+canvas.on("mouse:move",function(opt){
+  if(panning && opt && opt.e){
+    const e = opt.e;
+    canvas.relativePan({ x:e.movementX, y:e.movementY });
+  }
+});
+
+canvas.on("mouse:up",function(){
+  panning=false;
+  canvas.selection=true;
+});
+
+canvas.on("mouse:wheel",function(opt){
+  let zoom = canvas.getZoom();
+  zoom *= 0.999 ** opt.e.deltaY;
+  if(zoom>3) zoom=3;
+  if(zoom<0.2) zoom=0.2;
+  canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+  opt.e.preventDefault();
+});
+
 </script>
 </body>
 </html>
