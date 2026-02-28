@@ -6,11 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 <style>
-body{margin:0;font-family:system-ui;background:#f1f3f6;overflow:hidden;}
-header{height:60px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 20px;font-weight:600;font-size:18px;}
-#controls{height:60px;background:#ffffff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;padding:0 20px;flex-wrap: wrap;}
-select,button{padding:6px 12px;border-radius:6px;border:1px solid #d1d5db;background:white;cursor:pointer;}
-canvas{border:none;}
+body { margin:0; font-family:system-ui; background:#f1f3f6; overflow:hidden; }
+header { height:60px; background:white; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; padding:0 20px; font-weight:600; font-size:18px; }
+#controls { height:60px; background:#ffffff; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; gap:10px; padding:0 20px; flex-wrap: wrap; }
+select, button { padding:6px 12px; border-radius:6px; border:1px solid #d1d5db; background:white; cursor:pointer; }
+canvas { border:none; }
 </style>
 </head>
 <body>
@@ -54,13 +54,12 @@ canvas{border:none;}
 <button onclick="rotateSelected()">Rotate 90°</button>
 <button onclick="deleteSelected()">Delete</button>
 <button onclick="exportPNG()">Export PNG</button>
-
 </div>
 
 <canvas id="c"></canvas>
 
 <script>
-const canvas = new fabric.Canvas('c',{ selection:true });
+const canvas = new fabric.Canvas('c', { selection:true });
 canvas.setHeight(window.innerHeight - 120);
 canvas.setWidth(window.innerWidth);
 const GRID=50;
@@ -69,13 +68,11 @@ let tool="select";
 let wallDrawing=false;
 let wallLine;
 
-function drawGrid(){
-  for(let i=0;i<1000;i++){
-    canvas.add(new fabric.Line([i*GRID,0,i*GRID,10000],{stroke:'#e5e7eb', selectable:false, evented:false}));
-    canvas.add(new fabric.Line([0,i*GRID,10000,i*GRID],{stroke:'#e5e7eb', selectable:false, evented:false}));
-  }
+// Draw grid
+for(let i=0;i<1000;i++){
+  canvas.add(new fabric.Line([i*GRID,0,i*GRID,10000],{stroke:'#e5e7eb', selectable:false, evented:false}));
+  canvas.add(new fabric.Line([0,i*GRID,10000,i*GRID],{stroke:'#e5e7eb', selectable:false, evented:false}));
 }
-drawGrid();
 
 window.addEventListener("resize",()=>{
   canvas.setHeight(window.innerHeight - 120);
@@ -91,9 +88,7 @@ canvas.on("mouse:down", function(opt){
   if(tool==="wall"){
     wallDrawing=true;
     const p = canvas.getPointer(opt.e);
-    wallLine=new fabric.Line([p.x,p.y,p.x,p.y],{
-      stroke:"#4b5563", strokeWidth:8, selectable:true
-    });
+    wallLine=new fabric.Line([p.x,p.y,p.x,p.y],{ stroke:"#4b5563", strokeWidth:6, selectable:true });
     canvas.add(wallLine);
   } else if(tool==="erase"){
     const obj = canvas.findTarget(opt.e);
@@ -115,19 +110,10 @@ canvas.on("mouse:up",function(){ wallDrawing=false; });
 canvas.on("mouse:wheel",function(opt){
   let zoom = canvas.getZoom();
   zoom *= 0.999 ** opt.e.deltaY;
-  if(zoom>3) zoom=3; if(zoom<0.2) zoom=0.2;
+  zoom = Math.min(Math.max(zoom,0.2),3);
   canvas.zoomToPoint({x:opt.e.offsetX,y:opt.e.offsetY}, zoom);
   opt.e.preventDefault();
 });
-
-let panning=false;
-canvas.on("mouse:down",function(opt){
-  if(opt.e.spaceKey){ panning=true; canvas.selection=false; }
-});
-canvas.on("mouse:move",function(opt){
-  if(panning && opt && opt.e){ canvas.relativePan({ x:opt.e.movementX, y:opt.e.movementY }); }
-});
-canvas.on("mouse:up",function(){ panning=false; canvas.selection=true; });
 
 // Rotate / Delete / Export
 function rotateSelected(){
@@ -147,14 +133,14 @@ function exportPNG(){
   link.click();
 }
 
-// Fixtures with realistic shapes
+// Fixtures with proper visual shapes
 function addFixture(type){
   let obj;
   switch(type){
     case "toilet":
       obj=new fabric.Group([
-        new fabric.Rect({width:80,height:40,fill:"#fff",stroke:"#111",strokeWidth:2,top:20,left:-40}),
-        new fabric.Rect({width:50,height:60,fill:"#f3f4f6",stroke:"#111",strokeWidth:2,top:-30,left:-25}),
+        new fabric.Rect({width:60,height:40,fill:"#fff",stroke:"#111",strokeWidth:2,top:10,left:-30}),
+        new fabric.Rect({width:40,height:60,fill:"#f3f4f6",stroke:"#111",strokeWidth:2,top:-30,left:-20}),
         new fabric.Rect({width:10,height:20,fill:"#999",stroke:"#111",strokeWidth:1,top:-35,left:-5}) // flush
       ]);
       break;
@@ -171,7 +157,10 @@ function addFixture(type){
       ]);
       break;
     case "shower":
-      obj=new fabric.Rect({width:80,height:80,fill:"#bae6fd",stroke:"#0284c7",strokeWidth:2});
+      obj=new fabric.Group([
+        new fabric.Rect({width:80,height:80,fill:"#bae6fd",stroke:"#0284c7",strokeWidth:2}),
+        new fabric.Rect({width:15,height:15,fill:"#fbbf24",stroke:"#92400e",strokeWidth:1,top:10,left:10}) // tap
+      ]);
       break;
     case "basinWall":
       obj=new fabric.Group([
