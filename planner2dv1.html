@@ -2,302 +2,367 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>En-Suite & Bathroom 2D Planner</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>En-Suite & Bathrooms – Professional 2D Planner</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
 <style>
-body{margin:0;font-family:Arial, sans-serif; background:#f1f2f6; overflow:hidden;}
-header{height:60px; background:white; border-bottom:1px solid #ddd; display:flex;align-items:center; padding:0 20px; font-size:20px; font-weight:600;}
-#controls{height:60px; background:white; border-bottom:1px solid #ddd; display:flex;align-items:center; gap:10px; padding:0 20px;}
-select, button{padding:6px 12px; border:1px solid #bbb; border-radius:6px; background:white; cursor:pointer;}
-canvas{border:none;}
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+}
+header{
+    background:#111;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    font-size:22px;
+    letter-spacing:1px;
+}
+#toolbar{
+    background:#fff;
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+select,button{
+    padding:6px 10px;
+    font-size:14px;
+}
+#status{
+    margin-left:auto;
+    font-size:13px;
+    color:#555;
+}
+canvas{
+    background:#fff;
+    border:1px solid #ccc;
+}
 </style>
 </head>
+
 <body>
 
-<header>En-Suite & Bathroom 2D Planner</header>
+<header>En-Suite & Bathrooms – Professional 2D Planner</header>
 
-<div id="controls">
-
-<select id="toolSelect">
-  <option value="select">Select / Move</option>
-  <option value="wall">Draw Wall</option>
-  <option value="erase">Erase</option>
+<div id="toolbar">
+<select id="tool">
+<option value="select">Select / Move</option>
+<option value="wall">Draw Wall</option>
+<option value="door">Door</option>
+<option value="window">Window</option>
+<option value="toilet">Toilet</option>
+<option value="basin">Basin</option>
+<option value="bath">Bath</option>
+<option value="shower">Shower</option>
+<option value="radiator">Radiator</option>
+<option value="manhole">Manhole</option>
+<option value="grass">Grass</option>
+<option value="socket">Socket</option>
+<option value="light">Light</option>
 </select>
 
-<select id="fixtureSelect">
-  <option value="">Add Fixture</option>
-  <optgroup label="Sanitary">
-    <option value="toilet">Toilet</option>
-    <option value="bathAlcove">Alcove Bath</option>
-    <option value="bathFree">Freestanding Bath</option>
-    <option value="shower">Shower Tray</option>
-    <option value="basinWall">Wall Hung Basin</option>
-    <option value="basinPedestal">Pedestal Basin</option>
-    <option value="bidet">Bidet</option>
-  </optgroup>
-  <optgroup label="Heating / Furniture">
-    <option value="towelRad">Towel Radiator</option>
-    <option value="vanity">Vanity Unit</option>
-    <option value="ledMirror">LED Mirror</option>
-  </optgroup>
-  <optgroup label="Doors / Windows / Others">
-    <option value="door">Door</option>
-    <option value="window">Window</option>
-    <option value="manhole">Manhole</option>
-    <option value="grass">Grass</option>
-    <option value="socket">Socket</option>
-    <option value="light">Light</option>
-    <option value="switch">Switch</option>
-  </optgroup>
-</select>
-
-<button onclick="rotateSelected()">Rotate 90°</button>
 <button onclick="deleteSelected()">Delete</button>
+<button onclick="savePlan()">Save Plan</button>
+<button onclick="loadPlan()">Load Plan</button>
 <button onclick="exportPNG()">Export PNG</button>
 
+<div id="status">Mode: Select</div>
 </div>
 
-<canvas id="c"></canvas>
+<canvas id="planner" width="2400" height="1400"></canvas>
 
 <script>
 
-const canvas = new fabric.Canvas('c',{selection:true});
-canvas.setHeight(window.innerHeight - 120);
-canvas.setWidth(window.innerWidth);
-const GRID = 50;
+/* ===============================
+   INITIAL SETUP
+================================= */
 
-let tool = "select";
-let wallDrawing = false;
-let wallLine;
+const canvas = new fabric.Canvas("planner", {
+    preserveObjectStacking:true,
+    selection:true
+});
 
-// draw grid
-function drawGrid() {
-  const w = canvas.getWidth();
-  const h = canvas.getHeight();
-  for(let i = 0; i < w/GRID*2; i++){
-    canvas.add(new fabric.Line([i*GRID,0,i*GRID,h], {stroke:'#e5e5e5', selectable:false, evented:false}));
-  }
-  for(let j = 0; j < h/GRID*2; j++){
-    canvas.add(new fabric.Line([0,j*GRID,w,j*GRID], {stroke:'#e5e5e5', selectable:false, evented:false}));
-  }
+let currentTool = "select";
+let drawingWall = false;
+let wallLine = null;
+let isPanning = false;
+
+const gridSize = 40;
+const canvasWidth = 2400;
+const canvasHeight = 1400;
+
+/* ===============================
+   GRID SYSTEM
+================================= */
+
+function drawGrid(){
+    for(let i=0;i<=canvasWidth/gridSize;i++){
+        const vertical = new fabric.Line([i*gridSize,0,i*gridSize,canvasHeight],{
+            stroke:"#eee",
+            selectable:false,
+            evented:false,
+            excludeFromExport:true
+        });
+        canvas.add(vertical);
+    }
+    for(let i=0;i<=canvasHeight/gridSize;i++){
+        const horizontal = new fabric.Line([0,i*gridSize,canvasWidth,i*gridSize],{
+            stroke:"#eee",
+            selectable:false,
+            evented:false,
+            excludeFromExport:true
+        });
+        canvas.add(horizontal);
+    }
 }
 drawGrid();
 
-// handle resize
-window.addEventListener("resize", () => {
-  canvas.setHeight(window.innerHeight - 120);
-  canvas.setWidth(window.innerWidth);
-  canvas.renderAll();
+/* ===============================
+   TOOL MANAGEMENT
+================================= */
+
+const toolSelect = document.getElementById("tool");
+const statusText = document.getElementById("status");
+
+toolSelect.addEventListener("change", function(){
+    currentTool = this.value;
+    drawingWall = false;
+    canvas.discardActiveObject();
+    canvas.requestRenderAll();
+    statusText.innerText = "Mode: " + this.options[this.selectedIndex].text;
 });
 
-// tool selection
-document.getElementById("toolSelect").onchange = function() {
-  tool = this.value;
-};
-document.getElementById("fixtureSelect").onchange = function() {
-  if(this.value) addFixture(this.value);
-  this.value = "";
-};
+/* ===============================
+   WALL ENGINE (ISOLATED)
+================================= */
 
-// user draws wall only when wall tool active
-canvas.on("mouse:down", function(opt) {
-  if(tool === "wall"){
-    wallDrawing = true;
-    const p = canvas.getPointer(opt.e);
-    wallLine = new fabric.Line([p.x,p.y,p.x,p.y], {
-      stroke:"#4b5563",
-      strokeWidth:6,
-      selectable:true
-    });
-    canvas.add(wallLine);
-  } else if(tool === "erase"){
-    const obj = canvas.findTarget(opt.e);
-    if(obj) canvas.remove(obj);
-  }
-});
-
-canvas.on("mouse:move", function(opt){
-  if(wallDrawing && wallLine){
-    const p = canvas.getPointer(opt.e);
-    wallLine.set({ x2: p.x, y2: p.y });
-    canvas.renderAll();
-  }
-});
-
-canvas.on("mouse:up", function(){
-  wallDrawing = false;
-  wallLine = null;
-});
-
-// zoom
-canvas.on("mouse:wheel", function(opt){
-  let zoom = canvas.getZoom();
-  zoom *= 0.999 ** opt.e.deltaY;
-  if(zoom > 3) zoom = 3;
-  if(zoom < 0.2) zoom = 0.2;
-  canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-  opt.e.preventDefault();
-});
-
-// pan
-let panning = false;
 canvas.on("mouse:down", function(opt){
-  if(opt.e.spaceKey){
-    panning = true;
-    canvas.selection = false;
-  }
+
+    if(currentTool === "wall"){
+        drawingWall = true;
+        const pointer = canvas.getPointer(opt.e);
+
+        wallLine = new fabric.Line(
+            [snap(pointer.x), snap(pointer.y), snap(pointer.x), snap(pointer.y)],
+            {
+                stroke:"#333",
+                strokeWidth:6,
+                selectable:true,
+                objectCaching:false
+            }
+        );
+
+        canvas.add(wallLine);
+    }
+
+    if(opt.e.code === "Space"){
+        isPanning = true;
+        canvas.selection = false;
+    }
 });
+
 canvas.on("mouse:move", function(opt){
-  if(panning && opt && opt.e){
-    canvas.relativePan({ x: opt.e.movementX, y: opt.e.movementY });
-  }
+
+    if(drawingWall && currentTool === "wall"){
+        const pointer = canvas.getPointer(opt.e);
+        wallLine.set({
+            x2: snap(pointer.x),
+            y2: snap(pointer.y)
+        });
+        canvas.requestRenderAll();
+    }
+
+    if(isPanning){
+        const delta = new fabric.Point(opt.e.movementX, opt.e.movementY);
+        canvas.relativePan(delta);
+    }
 });
+
 canvas.on("mouse:up", function(){
-  panning = false;
-  canvas.selection = true;
+    drawingWall = false;
+    isPanning = false;
+    canvas.selection = true;
 });
 
-// rotate / delete / export
-function rotateSelected(){
-  const obj = canvas.getActiveObject();
-  if(obj) obj.rotate((obj.angle || 0) + 90);
-  canvas.renderAll();
+/* ===============================
+   SNAP TO GRID
+================================= */
+
+function snap(value){
+    return Math.round(value / gridSize) * gridSize;
 }
+
+/* ===============================
+   ZOOM
+================================= */
+
+canvas.on("mouse:wheel", function(opt){
+    let zoom = canvas.getZoom();
+    zoom *= 0.999 ** opt.e.deltaY;
+    zoom = Math.min(Math.max(zoom,0.5),3);
+    canvas.zoomToPoint({x:opt.e.offsetX,y:opt.e.offsetY}, zoom);
+    opt.e.preventDefault();
+});
+
+/* ===============================
+   SVG SYMBOL LIBRARY
+================================= */
+
+function addSVG(svg){
+    fabric.loadSVGFromString(svg, function(objects, options){
+        const obj = fabric.util.groupSVGElements(objects, options);
+        obj.set({
+            left:600,
+            top:400,
+            originX:"center",
+            originY:"center",
+            cornerStyle:"circle",
+            cornerSize:8,
+            transparentCorners:false
+        });
+        canvas.add(obj).setActiveObject(obj);
+        canvas.requestRenderAll();
+    });
+}
+
+const symbols = {
+
+/* Proper CAD-style fixtures */
+
+toilet:`<svg viewBox="0 0 120 200">
+<rect x="30" y="0" width="60" height="45" stroke="#000" fill="none" stroke-width="3"/>
+<ellipse cx="60" cy="125" rx="40" ry="60" stroke="#000" fill="none" stroke-width="3"/>
+<ellipse cx="60" cy="125" rx="20" ry="35" stroke="#000" fill="none" stroke-width="2"/>
+</svg>`,
+
+basin:`<svg viewBox="0 0 160 100">
+<rect x="10" y="35" width="140" height="50" rx="20" stroke="#000" fill="none" stroke-width="3"/>
+<circle cx="80" cy="60" r="5" fill="#000"/>
+<rect x="70" y="5" width="20" height="25" stroke="#000" fill="none" stroke-width="3"/>
+</svg>`,
+
+bath:`<svg viewBox="0 0 260 120">
+<rect x="10" y="25" width="240" height="80" rx="50" stroke="#000" fill="none" stroke-width="3"/>
+<circle cx="210" cy="35" r="6" fill="#000"/>
+<circle cx="230" cy="35" r="6" fill="#000"/>
+</svg>`,
+
+shower:`<svg viewBox="0 0 120 120">
+<rect x="10" y="10" width="100" height="100" stroke="#000" fill="none" stroke-width="3"/>
+<circle cx="60" cy="60" r="6" fill="#000"/>
+</svg>`,
+
+radiator:`<svg viewBox="0 0 150 240">
+${Array.from({length:8}).map((_,i)=>`<rect x="${20+i*14}" y="10" width="8" height="220" stroke="#000" fill="none" stroke-width="3"/>`).join('')}
+</svg>`,
+
+door:`<svg viewBox="0 0 160 160">
+<line x1="10" y1="150" x2="150" y2="150" stroke="#000" stroke-width="6"/>
+<path d="M10 150 A140 140 0 0 1 150 10" fill="none" stroke="#000" stroke-width="2"/>
+</svg>`,
+
+window:`<svg viewBox="0 0 200 40">
+<rect x="10" y="10" width="180" height="20" stroke="#000" fill="none" stroke-width="3"/>
+</svg>`,
+
+manhole:`<svg viewBox="0 0 150 150">
+<circle cx="75" cy="75" r="65" stroke="#000" fill="none" stroke-width="3"/>
+${Array.from({length:6}).map((_,i)=>`<line x1="20" y1="${40+i*15}" x2="130" y2="${40+i*15}" stroke="#000"/>`).join('')}
+</svg>`,
+
+grass:`<svg viewBox="0 0 150 150">
+<rect width="150" height="150" stroke="#000" fill="none" stroke-width="2"/>
+${Array.from({length:10}).map((_,i)=>`<line x1="${15+i*13}" y1="150" x2="${25+i*13}" y2="100" stroke="#000"/>`).join('')}
+</svg>`,
+
+socket:`<svg viewBox="0 0 100 100">
+<rect x="15" y="15" width="70" height="70" stroke="#000" fill="none" stroke-width="3"/>
+<circle cx="40" cy="50" r="6" fill="#000"/>
+<circle cx="60" cy="50" r="6" fill="#000"/>
+</svg>`,
+
+light:`<svg viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="35" stroke="#000" fill="none" stroke-width="3"/>
+<circle cx="50" cy="50" r="6" fill="#000"/>
+</svg>`
+};
+
+/* Auto add symbol */
+toolSelect.addEventListener("change", function(){
+    if(symbols[this.value]){
+        addSVG(symbols[this.value]);
+        this.value="select";
+        currentTool="select";
+        statusText.innerText="Mode: Select";
+    }
+});
+
+/* ===============================
+   OBJECT CONTROLS
+================================= */
+
+canvas.on("object:moving", function(opt){
+    if(currentTool !== "wall"){
+        opt.target.set({
+            left:snap(opt.target.left),
+            top:snap(opt.target.top)
+        });
+    }
+});
+
+/* ===============================
+   DELETE SUPPORT
+================================= */
+
 function deleteSelected(){
-  const obj = canvas.getActiveObject();
-  if(obj) canvas.remove(obj);
+    const obj = canvas.getActiveObject();
+    if(obj) canvas.remove(obj);
 }
+
+document.addEventListener("keydown",function(e){
+    if(e.key==="Delete"){
+        deleteSelected();
+    }
+});
+
+/* ===============================
+   SAVE / LOAD
+================================= */
+
+function savePlan(){
+    const json = JSON.stringify(canvas.toJSON(["excludeFromExport"]));
+    localStorage.setItem("ensuitePlan", json);
+    alert("Plan Saved");
+}
+
+function loadPlan(){
+    const json = localStorage.getItem("ensuitePlan");
+    if(json){
+        canvas.loadFromJSON(json,function(){
+            drawGrid();
+            canvas.renderAll();
+        });
+    }
+}
+
+/* ===============================
+   EXPORT
+================================= */
+
 function exportPNG(){
-  const link = document.createElement("a");
-  link.download = "bathroom-plan.png";
-  link.href = canvas.toDataURL({ format:'png' });
-  link.click();
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL({
+        format:"png",
+        multiplier:2
+    });
+    link.download="ensuite-plan.png";
+    link.click();
 }
 
-// add fixtures using SVG-like Fabric groups
-function addFixture(type){
-  let obj;
-
-  // each group visually resembles the fixture
-  switch(type){
-
-    case "toilet":
-      obj = new fabric.Group([
-        // bowl outline
-        new fabric.Circle({ radius:35, fill:"#fff", stroke:"#111", strokeWidth:3 }),
-        // tank
-        new fabric.Rect({ width:60, height:20, top:-45, left:-30, fill:"#fff", stroke:"#111", strokeWidth:2 }),
-        // seat top
-        new fabric.Circle({ radius:25, fill:"#e5e7eb", stroke:"#111", strokeWidth:2 })
-      ]);
-      break;
-
-    case "bathAlcove":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:80, height:160, rx:12, ry:12, fill:"#dbeafe", stroke:"#0284c7", strokeWidth:2 }),
-        // taps
-        new fabric.Circle({ radius:6, top:-8, left:-20, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 }),
-        new fabric.Circle({ radius:6, top:-8, left:20, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 })
-      ]);
-      break;
-
-    case "bathFree":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:100, height:160, rx:40, ry:40, fill:"#dbeafe", stroke:"#0284c7", strokeWidth:2 }),
-        new fabric.Circle({ radius:6, top:-10, left:-30, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 }),
-        new fabric.Circle({ radius:6, top:-10, left:30, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 })
-      ]);
-      break;
-
-    case "shower":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:80, height:80, fill:"#bae6fd", stroke:"#0284c7", strokeWidth:2 }),
-        new fabric.Circle({ radius:4, top:30, left:0, fill:"#64748b" }) // waste
-      ]);
-      break;
-
-    case "basinWall":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:60, height:40, fill:"#fef3c7", stroke:"#92400e", strokeWidth:2 }),
-        new fabric.Circle({ radius:5, top:-4, left:-15, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 }),
-        new fabric.Circle({ radius:5, top:-4, left:15, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 })
-      ]);
-      break;
-
-    case "basinPedestal":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:60, height:50, fill:"#fef3c7", stroke:"#92400e", strokeWidth:2 }),
-        new fabric.Circle({ radius:5, top:-6, left:-18, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 }),
-        new fabric.Circle({ radius:5, top:-6, left:18, fill:"#fbbf24", stroke:"#92400e", strokeWidth:1 })
-      ]);
-      break;
-
-    case "bidet":
-      obj = new fabric.Group([
-        new fabric.Rect({width:50,height:50, fill:"#fff", stroke:"#111", strokeWidth:2})
-      ]);
-      break;
-
-    case "towelRad":
-      obj = new fabric.Group([
-        new fabric.Rect({width:20,height:80, fill:"#f1f5f9", stroke:"#334155", strokeWidth:2}),
-        ...Array.from({length:6}).map((_,i) =>
-          new fabric.Line([-8, -30 + i*10, 8, -30 + i*10], { stroke:"#334155", strokeWidth:2 })
-        )
-      ]);
-      break;
-
-    case "vanity":
-      obj = new fabric.Rect({ width:80, height:40, fill:"#fde68a", stroke:"#92400e", strokeWidth:2 });
-      break;
-
-    case "ledMirror":
-      obj = new fabric.Circle({ radius:30, fill:"#dbeafe", stroke:"#0284c7", strokeWidth:2 });
-      break;
-
-    case "door":
-      obj = new fabric.Group([
-        new fabric.Rect({ width:10, height:70, fill:"#78350f", stroke:"#111", strokeWidth:2 }),
-        new fabric.Arc({ left: -5, top: 0, startAngle:0, endAngle: Math.PI/2, stroke:"#111", strokeWidth:2, fill:"" })
-      ]);
-      break;
-
-    case "window":
-      obj = new fabric.Rect({ width:80, height:30, fill:"#dbeafe", stroke:"#0284c7", strokeWidth:2 });
-      break;
-
-    case "manhole":
-      obj = new fabric.Circle({ radius:30, fill:"#1e2937", stroke:"#64748b", strokeWidth:3 });
-      break;
-
-    case "grass":
-      obj = new fabric.Rect({ width:100, height:60, fill:"#4ade80", stroke:"#166534", strokeWidth:2 });
-      break;
-
-    case "socket":
-      obj = new fabric.Circle({ radius:8, fill:"#fcd34d", stroke:"#b45309", strokeWidth:2 });
-      break;
-
-    case "light":
-      obj = new fabric.Circle({ radius:12, fill:"#facc15", stroke:"#78350f", strokeWidth:2 });
-      break;
-
-    case "switch":
-      obj = new fabric.Rect({ width:10, height:20, fill:"#fbbf24", stroke:"#b45309", strokeWidth:2 });
-      break;
-  }
-
-  if(obj){
-    obj.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:10, transparentCorners:false });
-    canvas.add(obj);
-    canvas.setActiveObject(obj);
-    canvas.renderAll();
-  }
-}
 </script>
-
 </body>
 </html>
