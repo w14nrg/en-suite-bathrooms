@@ -8,8 +8,9 @@
 <style>
 body{margin:0;font-family:system-ui;background:#f1f3f6;overflow:hidden;}
 header{height:60px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 20px;font-weight:600;font-size:18px;}
-#controls{height:60px;background:#ffffff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;padding:0 20px;flex-wrap:wrap;}
+#controls{height:60px;background:#ffffff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;padding:0 20px;flex-wrap: wrap;}
 select,button{padding:6px 12px;border-radius:6px;border:1px solid #d1d5db;background:white;cursor:pointer;}
+canvas{border:none;}
 </style>
 </head>
 <body>
@@ -25,146 +26,201 @@ select,button{padding:6px 12px;border-radius:6px;border:1px solid #d1d5db;backgr
 
 <select id="fixtureSelect">
 <option value="">Add Fixture</option>
+<optgroup label="Sanitary">
 <option value="toilet">Toilet</option>
-<option value="bath">Bath</option>
-<option value="basin">Basin</option>
+<option value="bathAlcove">Alcove Bath</option>
+<option value="bathFree">Freestanding Bath</option>
 <option value="shower">Shower</option>
+<option value="basinWall">Wall Hung Basin</option>
+<option value="basinPedestal">Pedestal Basin</option>
+<option value="bidet">Bidet</option>
+</optgroup>
+<optgroup label="Heating & Furniture">
+<option value="towelRad">Towel Radiator</option>
+<option value="vanity">Vanity Unit</option>
+<option value="ledMirror">LED Mirror</option>
+</optgroup>
+<optgroup label="External / Others">
 <option value="door">Door</option>
+<option value="window">Window</option>
 <option value="manhole">Manhole</option>
+<option value="grass">Grass</option>
 <option value="socket">Socket</option>
 <option value="light">Light</option>
+<option value="switch">Switch</option>
+<option value="pipeHot">Hot Pipe</option>
+<option value="pipeCold">Cold Pipe</option>
+<option value="drain">Drain</option>
+</optgroup>
 </select>
 
 <button onclick="rotateSelected()">Rotate 90°</button>
 <button onclick="deleteSelected()">Delete</button>
+<button onclick="exportPNG()">Export PNG</button>
+
 </div>
 
 <canvas id="c"></canvas>
 
 <script>
-const canvas = new fabric.Canvas('c',{selection:true});
+const canvas = new fabric.Canvas('c',{ selection:true });
 canvas.setHeight(window.innerHeight - 120);
 canvas.setWidth(window.innerWidth);
-
 const GRID=50;
-for(let i=0;i<200;i++){
+let tool="select";
+let wallDrawing=false;
+let wallLine;
+
+// Draw grid
+for(let i=0;i<1000;i++){
   canvas.add(new fabric.Line([i*GRID,0,i*GRID,10000],{stroke:'#e5e7eb', selectable:false, evented:false}));
   canvas.add(new fabric.Line([0,i*GRID,10000,i*GRID],{stroke:'#e5e7eb', selectable:false, evented:false}));
 }
 
-let tool="select";
-let wallDrawing=false;
-let wallLine=null;
+// Resize canvas on window change
+window.addEventListener("resize",()=>{
+  canvas.setHeight(window.innerHeight - 120);
+  canvas.setWidth(window.innerWidth);
+  canvas.renderAll();
+});
 
+// Tool selection
 document.getElementById("toolSelect").onchange=function(){ tool=this.value; };
 document.getElementById("fixtureSelect").onchange=function(){ if(this.value) addFixture(this.value); this.value=""; };
 
-canvas.on("mouse:down",function(opt){
-
+// Wall drawing
+canvas.on("mouse:down", function(opt){
   if(tool==="wall"){
-    if(opt.target) return;
     wallDrawing=true;
-    const p=canvas.getPointer(opt.e);
+    const p = canvas.getPointer(opt.e);
     wallLine=new fabric.Line([p.x,p.y,p.x,p.y],{
-      stroke:"#374151",
-      strokeWidth:12,
-      selectable:true
+      stroke:"#4b5563", strokeWidth:4, selectable:true
     });
     canvas.add(wallLine);
+  } else if(tool==="erase"){
+    const obj = canvas.findTarget(opt.e);
+    if(obj) canvas.remove(obj);
   }
-
-  if(tool==="erase"){
-    if(opt.target) canvas.remove(opt.target);
-  }
-
 });
 
 canvas.on("mouse:move",function(opt){
-  if(wallDrawing && tool==="wall"){
+  if(wallDrawing){
     const p=canvas.getPointer(opt.e);
     wallLine.set({x2:p.x,y2:p.y});
-    canvas.requestRenderAll();
+    canvas.renderAll();
   }
 });
 
 canvas.on("mouse:up",function(){ wallDrawing=false; });
-canvas.on("object:moving",function(){ wallDrawing=false; });
 
+// Zoom & Pan
+canvas.on("mouse:wheel",function(opt){
+  let zoom = canvas.getZoom();
+  zoom *= 0.999 ** opt.e.deltaY;
+  if(zoom>3) zoom=3; if(zoom<0.2) zoom=0.2;
+  canvas.zoomToPoint({x:opt.e.offsetX,y:opt.e.offsetY}, zoom);
+  opt.e.preventDefault();
+});
+
+// Rotate / Delete / Export
 function rotateSelected(){
-  const obj=canvas.getActiveObject();
+  const obj = canvas.getActiveObject();
   if(obj){ obj.rotate((obj.angle||0)+90); canvas.renderAll(); }
 }
 
 function deleteSelected(){
-  const obj=canvas.getActiveObject();
+  const obj = canvas.getActiveObject();
   if(obj) canvas.remove(obj);
 }
 
-function addSVG(svgString){
-  fabric.loadSVGFromString(svgString,function(objects,options){
-    const obj=fabric.util.groupSVGElements(objects,options);
-    obj.set({
-      left:300,
-      top:300,
-      originX:"center",
-      originY:"center"
-    });
+function exportPNG(){
+  const link=document.createElement("a");
+  link.download="bathroom-plan.png";
+  link.href=canvas.toDataURL({format:'png'});
+  link.click();
+}
+
+// Add fixtures with realistic vector shapes
+function addFixture(type){
+  let obj;
+  switch(type){
+    case "toilet":
+      obj=new fabric.Group([
+        new fabric.Circle({radius:25,fill:"#fff",stroke:"#111",strokeWidth:2}),
+        new fabric.Rect({width:10,height:10,fill:"#999",top:-20,left:5}) // flush
+      ]);
+      break;
+    case "bathAlcove":
+      obj=new fabric.Rect({width:80,height:160,fill:"#dbeafe",rx:15,ry:15,stroke:"#0284c7",strokeWidth:2});
+      break;
+    case "bathFree":
+      obj=new fabric.Rect({width:100,height:160,fill:"#dbeafe",rx:40,ry:40,stroke:"#0284c7",strokeWidth:2});
+      break;
+    case "shower":
+      obj=new fabric.Rect({width:80,height:80,fill:"#bae6fd",stroke:"#0284c7",strokeWidth:2});
+      break;
+    case "basinWall":
+      obj=new fabric.Group([
+        new fabric.Rect({width:50,height:40,fill:"#fef3c7",stroke:"#92400e",strokeWidth:2}),
+        new fabric.Rect({width:10,height:10,fill:"#fbbf24",top:5,left:20}) // tap
+      ]);
+      break;
+    case "basinPedestal":
+      obj=new fabric.Group([
+        new fabric.Rect({width:50,height:50,fill:"#fef3c7",stroke:"#92400e",strokeWidth:2}),
+        new fabric.Rect({width:10,height:10,fill:"#fbbf24",top:5,left:20}) // tap
+      ]);
+      break;
+    case "bidet":
+      obj=new fabric.Circle({radius:25,fill:"#fff",stroke:"#111",strokeWidth:2});
+      break;
+    case "towelRad":
+      obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2});
+      break;
+    case "vanity":
+      obj=new fabric.Rect({width:80,height:40,fill:"#fde68a",stroke:"#92400e",strokeWidth:2});
+      break;
+    case "ledMirror":
+      obj=new fabric.Rect({width:60,height:60,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2});
+      break;
+    case "door":
+      obj=new fabric.Rect({width:15,height:70,fill:"#78350f",stroke:"#111",strokeWidth:2});
+      break;
+    case "window":
+      obj=new fabric.Rect({width:60,height:40,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2});
+      break;
+    case "manhole":
+      obj=new fabric.Circle({radius:30,fill:"#1e2937",stroke:"#64748b",strokeWidth:3});
+      break;
+    case "grass":
+      obj=new fabric.Rect({width:80,height:40,fill:"#4ade80",stroke:"#166534",strokeWidth:2});
+      break;
+    case "socket":
+      obj=new fabric.Circle({radius:8,fill:"#fcd34d",stroke:"#b45309",strokeWidth:2});
+      break;
+    case "light":
+      obj=new fabric.Circle({radius:12,fill:"#facc15",stroke:"#78350f",strokeWidth:2});
+      break;
+    case "switch":
+      obj=new fabric.Rect({width:10,height:20,fill:"#fbbf24",stroke:"#b45309",strokeWidth:2});
+      break;
+    case "pipeHot":
+      obj=new fabric.Line([0,0,50,0],{stroke:"#ef4444",strokeWidth:6});
+      break;
+    case "pipeCold":
+      obj=new fabric.Line([0,0,50,0],{stroke:"#3b82f6",strokeWidth:6});
+      break;
+    case "drain":
+      obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]});
+      break;
+  }
+  if(obj){
+    obj.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
     canvas.add(obj);
     canvas.setActiveObject(obj);
-  });
-}
-
-function addFixture(type){
-
-  const svgs={
-
-toilet:`<svg viewBox="0 0 200 260">
-<rect x="70" y="0" width="60" height="50" fill="white" stroke="black" stroke-width="4"/>
-<ellipse cx="100" cy="150" rx="70" ry="90" fill="white" stroke="black" stroke-width="4"/>
-<ellipse cx="100" cy="150" rx="35" ry="55" fill="white" stroke="black" stroke-width="3"/>
-<circle cx="100" cy="25" r="6" fill="black"/>
-</svg>`,
-
-bath:`<svg viewBox="0 0 300 140">
-<rect x="10" y="40" width="280" height="70" rx="50" fill="white" stroke="black" stroke-width="4"/>
-<circle cx="230" cy="50" r="6" fill="black"/>
-<circle cx="250" cy="50" r="6" fill="black"/>
-</svg>`,
-
-basin:`<svg viewBox="0 0 200 150">
-<rect x="30" y="60" width="140" height="60" rx="25" fill="white" stroke="black" stroke-width="4"/>
-<circle cx="100" cy="90" r="6" fill="black"/>
-<rect x="85" y="20" width="30" height="30" fill="white" stroke="black" stroke-width="4"/>
-</svg>`,
-
-shower:`<svg viewBox="0 0 150 150">
-<rect x="20" y="20" width="110" height="110" fill="white" stroke="black" stroke-width="4"/>
-<circle cx="75" cy="75" r="8" fill="black"/>
-</svg>`,
-
-door:`<svg viewBox="0 0 200 200">
-<line x1="20" y1="100" x2="180" y2="100" stroke="black" stroke-width="4"/>
-<path d="M100 100 A80 80 0 0 1 180 20" fill="none" stroke="black" stroke-width="3"/>
-</svg>`,
-
-manhole:`<svg viewBox="0 0 150 150">
-<circle cx="75" cy="75" r="60" fill="white" stroke="black" stroke-width="4"/>
-</svg>`,
-
-socket:`<svg viewBox="0 0 100 100">
-<rect x="20" y="20" width="60" height="60" fill="white" stroke="black" stroke-width="3"/>
-<circle cx="40" cy="50" r="5" fill="black"/>
-<circle cx="60" cy="50" r="5" fill="black"/>
-</svg>`,
-
-light:`<svg viewBox="0 0 120 120">
-<circle cx="60" cy="60" r="40" fill="white" stroke="black" stroke-width="4"/>
-</svg>`
-
-  };
-
-  addSVG(svgs[type]);
+  }
 }
 </script>
+
 </body>
 </html>
