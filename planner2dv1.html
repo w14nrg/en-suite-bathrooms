@@ -10,7 +10,7 @@ body{margin:0;font-family:system-ui;background:#f1f3f6;overflow:hidden;}
 header{height:60px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 20px;font-weight:600;font-size:18px;}
 #controls{height:60px;background:#ffffff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:10px;padding:0 20px;flex-wrap: wrap;}
 select,button{padding:6px 12px;border-radius:6px;border:1px solid #d1d5db;background:white;cursor:pointer;}
-canvas{border:none;}
+canvas{border:none;background:#f8fafc;}
 </style>
 </head>
 <body>
@@ -85,7 +85,7 @@ document.getElementById("fixtureSelect").onchange=function(){ if(this.value) add
 // Wall drawing - YOUR ORIGINAL + ONE LINE FIX
 canvas.on("mouse:down", function(opt){
   if(tool==="wall"){
-    if(canvas.findTarget(opt.e)) return; // stops wall when clicking fixtures
+    if(canvas.findTarget(opt.e)) return;
     wallDrawing=true;
     const p = canvas.getPointer(opt.e);
     wallLine=new fabric.Line([p.x,p.y,p.x,p.y],{
@@ -131,59 +131,35 @@ function exportPNG(){
   link.click();
 }
 
-// REAL PNG ICONS FOR SANITARY (everything else is your original shapes)
+// FIXED addFixture with correct PNG URLs + scope fix for obj
 function addFixture(type){
   let url = '';
   let scale = 0.65;
+  let obj;   // ← declared here so non-image fixtures work
 
   switch(type){
-    case "toilet": url = 'https://cdn-icons-png.flaticon.com/512/3144/3144455.png'; scale = 0.85; break;
+    case "toilet": url = 'https://cdn-icons-png.flaticon.com/512/185/185547.png'; scale = 0.85; break;
     case "bathAlcove": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
     case "bathFree": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
     case "shower": url = 'https://cdn-icons-png.flaticon.com/512/997/997998.png'; scale = 0.75; break;
     case "basinWall": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
     case "basinPedestal": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
-    case "bidet": url = 'https://cdn-icons-png.flaticon.com/512/3144/3144455.png'; scale = 0.75; break;
-    // all other fixtures are your original shapes (exact same as your first code)
-    case "towelRad":
-      obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2});
-      break;
-    case "vanity":
-      obj=new fabric.Rect({width:80,height:40,fill:"#fde68a",stroke:"#92400e",strokeWidth:2});
-      break;
-    case "ledMirror":
-      obj=new fabric.Rect({width:60,height:60,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2});
-      break;
-    case "door":
-      obj=new fabric.Rect({width:15,height:70,fill:"#78350f",stroke:"#111",strokeWidth:2});
-      break;
-    case "window":
-      obj=new fabric.Rect({width:60,height:40,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2});
-      break;
-    case "manhole":
-      obj=new fabric.Circle({radius:30,fill:"#1e2937",stroke:"#64748b",strokeWidth:3});
-      break;
-    case "grass":
-      obj=new fabric.Rect({width:80,height:40,fill:"#4ade80",stroke:"#166534",strokeWidth:2});
-      break;
-    case "socket":
-      obj=new fabric.Circle({radius:8,fill:"#fcd34d",stroke:"#b45309",strokeWidth:2});
-      break;
-    case "light":
-      obj=new fabric.Circle({radius:12,fill:"#facc15",stroke:"#78350f",strokeWidth:2});
-      break;
-    case "switch":
-      obj=new fabric.Rect({width:10,height:20,fill:"#fbbf24",stroke:"#b45309",strokeWidth:2});
-      break;
-    case "pipeHot":
-      obj=new fabric.Line([0,0,50,0],{stroke:"#ef4444",strokeWidth:6});
-      break;
-    case "pipeCold":
-      obj=new fabric.Line([0,0,50,0],{stroke:"#3b82f6",strokeWidth:6});
-      break;
-    case "drain":
-      obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]});
-      break;
+    case "bidet": url = 'https://cdn-icons-png.flaticon.com/512/185/185547.png'; scale = 0.75; break;
+
+    // your original shapes for everything else (exact same as your first code)
+    case "towelRad": obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2}); break;
+    case "vanity": obj=new fabric.Rect({width:80,height:40,fill:"#fde68a",stroke:"#92400e",strokeWidth:2}); break;
+    case "ledMirror": obj=new fabric.Rect({width:60,height:60,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
+    case "door": obj=new fabric.Rect({width:15,height:70,fill:"#78350f",stroke:"#111",strokeWidth:2}); break;
+    case "window": obj=new fabric.Rect({width:60,height:40,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
+    case "manhole": obj=new fabric.Circle({radius:30,fill:"#1e2937",stroke:"#64748b",strokeWidth:3}); break;
+    case "grass": obj=new fabric.Rect({width:80,height:40,fill:"#4ade80",stroke:"#166534",strokeWidth:2}); break;
+    case "socket": obj=new fabric.Circle({radius:8,fill:"#fcd34d",stroke:"#b45309",strokeWidth:2}); break;
+    case "light": obj=new fabric.Circle({radius:12,fill:"#facc15",stroke:"#78350f",strokeWidth:2}); break;
+    case "switch": obj=new fabric.Rect({width:10,height:20,fill:"#fbbf24",stroke:"#b45309",strokeWidth:2}); break;
+    case "pipeHot": obj=new fabric.Line([0,0,50,0],{stroke:"#ef4444",strokeWidth:6}); break;
+    case "pipeCold": obj=new fabric.Line([0,0,50,0],{stroke:"#3b82f6",strokeWidth:6}); break;
+    case "drain": obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]}); break;
   }
 
   if(url){ // real PNG for sanitary
