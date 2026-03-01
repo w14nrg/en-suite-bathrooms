@@ -1,624 +1,259 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HOME ROUGH EDITOR v0.95</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> -->
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>En-Suite & Bathroom 2D Planner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <style>
+        body { margin: 0; font-family: system-ui; background: #f1f3f6; overflow: hidden; }
+        header { height: 60px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; padding: 0 20px; font-weight: 600; font-size: 18px; }
+        #controls { height: 60px; background: #ffffff; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 10px; padding: 0 20px; flex-wrap: wrap; }
+        select, button { padding: 6px 12px; border-radius: 6px; border: 1px solid #d1d5db; background: white; cursor: pointer; }
+        canvas { border: none; }
+    </style>
 </head>
-
-<body style="background:#f2eee5;margin:0;padding:0; ">
-
-  <header>Make by Home Rough Editor Ver.0.95</header>
-
-  <svg id="lin" viewBox="0 0 1100 700" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg"
-    style="z-index:2;margin:0;padding:0;width:100vw;height:100vh;position:absolute;top:0;left:0;right:0;bottom:0">
-
-    <defs>
-      <linearGradient id="gradientRed" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#e65d5e" stop-opacity="1" />
-        <stop offset="100%" stop-color="#e33b3c" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientYellow" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#FDEB71" stop-opacity="1" />
-        <stop offset="100%" stop-color="#F8D800" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientGreen" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#c0f7d9" stop-opacity="1" />
-        <stop offset="100%" stop-color="#6ce8a3" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientSky" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#c4e0f4" stop-opacity="1" />
-        <stop offset="100%" stop-color="#87c8f7" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientOrange" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#f9ad67" stop-opacity="1" />
-        <stop offset="100%" stop-color="#f97f00" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientWhite" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-        <stop offset="100%" stop-color="#f0f0f0" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientGrey" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#666" stop-opacity="1" />
-        <stop offset="100%" stop-color="#aaa" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#4f72a6" stop-opacity="1" />
-        <stop offset="100%" stop-color="#365987" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientPurple" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#E2B0FF" stop-opacity="1" />
-        <stop offset="100%" stop-color="#9F44D3" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientPink" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#f6c4dd" stop-opacity="1" />
-        <stop offset="100%" stop-color="#f699c7" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientBlack" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#3c3b3b" stop-opacity="1" />
-        <stop offset="100%" stop-color="#000000" stop-opacity="1" />
-      </linearGradient>
-      <linearGradient id="gradientNeutral" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
-        <stop offset="0%" stop-color="#dbc6a0" stop-opacity="1" />
-        <stop offset="100%" stop-color="#c69d56" stop-opacity="1" />
-      </linearGradient>
-
-      <pattern id="grass" patternUnits="userSpaceOnUse" width="256" height="256">
-        <image
-          xlink:href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWh5nEP_Trwo96CJjev6lnKe0_dRdA63RJFaoc3-msedgxveJd"
-          x="0" y="0" width="256" height="256" />
-      </pattern>
-      <pattern id="wood" patternUnits="userSpaceOnUse" width="32" height="256">
-        <image
-          xlink:href="https://orig00.deviantart.net/e1f2/f/2015/164/8/b/old_oak_planks___seamless_texture_by_rls0812-d8x6htl.jpg"
-          x="0" y="0" width="256" height="256" />
-      </pattern>
-      <pattern id="tiles" patternUnits="userSpaceOnUse" width="25" height="25">
-        <image
-          xlink:href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrkoI2Eiw8ya3J_swhfpZdi_ug2sONsI6TxEd1xN5af3DX9J3R"
-          x="0" y="0" width="256" height="256" />
-      </pattern>
-      <pattern id="granite" patternUnits="userSpaceOnUse" width="256" height="256">
-        <image
-          xlink:href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_nEMhnWVV47lxEn5T_HWxvFwkujFTuw6Ff26dRTl4rDaE8AdEQ"
-          x="0" y="0" width="256" height="256" />
-      </pattern>
-      <pattern id="smallGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#777" stroke-width="0.25" />
-      </pattern>
-      <pattern id="grid" width="180" height="180" patternUnits="userSpaceOnUse">
-        <rect width="180" height="180" fill="url(#smallGrid)" />
-        <path d="M 200 10 L 200 0 L 190 0 M 0 10 L 0 0 L 10 0 M 0 190 L 0 200 L 10 200 M 190 200 L 200 200 L 200 190"
-          fill="none" stroke="#999" stroke-width="0.8" />
-      </pattern>
-      <pattern id="hatch" width="5" height="5" patternTransform="rotate(50 0 0)" patternUnits="userSpaceOnUse">
-        <path d="M 0 0 L 0 5 M 10 0 L 10 10 Z" style="stroke:#666;stroke-width:5;" />
-      </pattern>
-    </defs>
-    <g id="boxgrid">
-      <rect width="8000" height="5000" x="-3500" y="-2000" fill="url(#grid)" />
-    </g>
-    <g id="boxpath"></g>
-    <g id="boxSurface"></g>
-    <g id="boxRoom"></g>
-    <g id="boxwall"></g>
-    <g id="boxcarpentry"></g>
-    <g id="boxEnergy"></g>
-    <g id="boxFurniture"></g>
-    <g id="boxbind"></g>
-    <g id="boxArea"></g>
-    <g id="boxRib"></g>
-    <g id="boxScale"></g>
-    <g id="boxText"></g>
-    <g id="boxDebug"></g>
-  </svg>
-
-  <div id="areaValue"></div>
-
-  <div id="reportTools" class="leftBox" style="width:500px;overflow-y: scroll;overflow-x: hidden">
-    <h2><i class="fa fa-calculator" aria-hidden="true"></i> Report plan.</h2>
-    <br /><br />
-    <h2 class="toHide" id="reportTotalSurface" style="display:none"></h2>
-    <h2 class="toHide" id="reportNumberSurface" style="display:none"></h2>
-    <hr />
-    <section id="reportRooms" class="toHide" style="display:none">
-    </section>
-    <button class="btn btn-info fully" style="margin-top:50px"
-      onclick="$('#reportTools').hide('500', function(){$('#panel').show(300);});mode = 'select_mode';"><i
-        class="fa fa-2x fa-backward" aria-hidden="true"></i></button>
-  </div>
-
-  <div id="wallTools" class="leftBox">
-    <h2 id="titleWallTools">Modify the wall</h2>
-    <hr />
-    <section id="rangeThick">
-      <p>Width [<span id="wallWidthScale"></span>] : <span id="wallWidthVal"></span> cm</span></p>
-      <input type="range" id="wallWidth" step="0.1" class="range" />
-    </section>
-    <ul class="list-unstyled">
-      <section id="cutWall">
-        <p>Cut the wall :<br /><small>A cut will be made at each wall encountered.</small></p>
-        <li><button class="btn btn-light shadow fully" onclick="editor.splitWall();"><i class="fa fa-2x fa-cutlery"
-              aria-hidden="true"></i></button></li>
-      </section>
-      <br />
-      <section id="separate">
-        <p>Separation wall :<br /><small>Transform the wall into simple separation line.</small></p>
-        <li><button class="btn btn-light shadow fully" onclick="editor.invisibleWall();" id="wallInvisible"><i
-              class="fa fa-2x fa-crop" aria-hidden="true"></i></button></li>
-      </section>
-      <section id="recombine">
-        <p>Transform to wall :<br /><small>The thickness will be identical to the last known.</small></p>
-        <li><button class="btn btn-light shadow fully" onclick="editor.visibleWall();" id="wallVisible"><i
-              class="fa fa-2x fa-crop" aria-hidden="true"></i></button></li>
-      </section>
-      <br />
-      <li><button class="btn btn-danger fully" id="wallTrash"><i class="fa fa-2x fa-trash"
-            aria-hidden="true"></i></button></li>
-      <li><button class="btn btn-info fully" style="margin-top:50px"
-          onclick="fonc_button('select_mode');$('#boxinfo').html('Selection mode');$('#wallTools').hide('300');$('#panel').show('300');"><i
-            class="fa fa-2x fa-backward" aria-hidden="true"></i></button></li>
-    </ul>
-  </div>
-
-  <div id="objBoundingBox" class="leftBox">
-    <h2>Modify object</h2>
-    <hr />
-    <section id="objBoundingBoxScale">
-      <p>Width [<span id="bboxWidthScale"></span>] : <span id="bboxWidthVal"></span> cm</span></p>
-      <input type="range" id="bboxWidth" step="1" class="range" />
-      <p>Length [<span id="bboxHeightScale"></span>] : <span id="bboxHeightVal"></span> cm</span></p>
-      <input type="range" id="bboxHeight" step="1" class="range" />
-    </section>
-
-    <section id="objBoundingBoxRotation">
-      <p><i class="fa fa-compass" aria-hidden="true"></i> Rotation : <span id="bboxRotationVal"></span> °</p>
-      <input type="range" id="bboxRotation" step="1" class="range" min="-180" max="180" />
-    </section>
-
-    <div id="stepsCounter" style="display:none;">
-      <p><span id="bboxSteps">Nb steps [2-15] : <span id="bboxStepsVal">0</span></span></p>
-      <button class="btn btn-info" id="bboxStepsAdd"><i class="fa fa-plus" aria-hidden="true"></i></button>
-      <button class="btn btn-info" id="bboxStepsMinus"><i class="fa fa-minus" aria-hidden="true"></i></button>
+<body>
+    <header>En-Suite & Bathroom 2D Planner</header>
+    <div id="controls">
+        <select id="toolSelect">
+            <option value="select">Select Tool</option>
+            <option value="wall">Draw Wall</option>
+            <option value="hotPipe">Draw Hot Pipe</option>
+            <option value="coldPipe">Draw Cold Pipe</option>
+            <option value="chPipe">Draw CH Pipe</option>
+            <option value="drain">Draw Drain</option>
+            <option value="erase">Erase</option>
+        </select>
+        <select id="fixtureSelect">
+            <option value="">Add Fixture</option>
+            <optgroup label="Sanitary">
+                <option value="toilet">Toilet</option>
+                <option value="wallHungToilet">Wall Hung Toilet</option>
+                <option value="backToWallToilet">Back to Wall Toilet</option>
+                <option value="bathAlcove">Alcove Bath</option>
+                <option value="bathFree">Freestanding Bath</option>
+                <option value="shower">Shower</option>
+                <option value="basinWall">Wall Hung Basin</option>
+                <option value="basinPedestal">Pedestal Basin</option>
+                <option value="bidet">Bidet</option>
+            </optgroup>
+            <optgroup label="Heating & Furniture">
+                <option value="towelRad">Towel Radiator</option>
+                <option value="ledMirror">LED Mirror</option>
+            </optgroup>
+            <optgroup label="External / Others">
+                <option value="door">Door</option>
+                <option value="window">Window</option>
+                <option value="manhole">Manhole</option>
+                <option value="grass">Grass</option>
+                <option value="socket">Socket</option>
+                <option value="light">Light</option>
+                <option value="switch">Switch</option>
+            </optgroup>
+        </select>
+        <button onclick="rotateSelected()">Rotate 90°</button>
+        <button onclick="deleteSelected()">Delete</button>
+        <button onclick="exportPNG()">Export PNG</button>
     </div>
+    <canvas id="c"></canvas>
 
-    <div id="objBoundingBoxColor" style="display:none">
-      <div class="color textEditorColor" data-type="gradientRed"
-        style="color:#f55847;background:linear-gradient(30deg, #f55847, #f00);"></div>
-      <div class="color textEditorColor" data-type="gradientYellow"
-        style="color:#e4c06e;background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
-      <div class="color textEditorColor" data-type="gradientGreen"
-        style="color:#88cc6c;background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
-      <div class="color textEditorColor" data-type="gradientSky"
-        style="color:#77e1f4;background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
-      <div class="color textEditorColor" data-type="gradientBlue"
-        style="color:#4f72a6;background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
-      <div class="color textEditorColor" data-type="gradientGrey"
-        style="color:#666666;background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
-      <div class="color textEditorColor" data-type="gradientWhite"
-        style="color:#fafafa;background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
-      <div class="color textEditorColor" data-type="gradientOrange"
-        style="color:#f9ad67;background:linear-gradient(30deg, #f9ad67, #f97f00);"></div>
-      <div class="color textEditorColor" data-type="gradientPurple"
-        style="color:#a784d9;background:linear-gradient(30deg,#a784d9, #8951da);"></div>
-      <div class="color textEditorColor" data-type="gradientPink"
-        style="color:#df67bd;background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
-      <div class="color textEditorColor" data-type="gradientBlack"
-        style="color:#3c3b3b;background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
-      <div class="color textEditorColor" data-type="gradientNeutral"
-        style="color:#e2c695;background:linear-gradient(30deg,#e2c695, #c69d56);"></div>
-      <div style="clear:both"></div>
-    </div>
+    <script>
+        const canvas = new fabric.Canvas('c', { selection: true });
+        canvas.setHeight(window.innerHeight - 120);
+        canvas.setWidth(window.innerWidth);
+        const GRID = 50;
+        let tool = "select";
+        let drawing = false;
+        let currentLine;
 
-    <br /><br />
-    <button class="btn btn-danger fully" id="bboxTrash"><i class="fa fa-2x fa-trash" aria-hidden="true"></i></button>
-    <button class="btn btn-info" style="margin-top:100px"
-      onclick="fonc_button('select_mode');$('#boxinfo').html('Selection mode');$('#objBoundingBox').hide(100);$('#panel').show(200);binder.graph.remove();delete binder;"><i
-        class="fa fa-2x fa-backward" aria-hidden="true"></i></button>
-  </div>
+        // Draw grid
+        for (let i = 0; i < 1000; i++) {
+            canvas.add(new fabric.Line([i * GRID, 0, i * GRID, 10000], { stroke: '#e5e7eb', selectable: false, evented: false }));
+            canvas.add(new fabric.Line([0, i * GRID, 10000, i * GRID], { stroke: '#e5e7eb', selectable: false, evented: false }));
+        }
 
-  <div id="objTools" class="leftBox">
-    <h2>Modify door/window</h2>
-    <hr />
-    <ul class="list-unstyled">
-      <br /><br />
-      <li><button class="btn btn-light shadow fully" id="objToolsHinge">Reverse hinges</button></li>
+        // Resize canvas on window change
+        window.addEventListener("resize", () => {
+            canvas.setHeight(window.innerHeight - 120);
+            canvas.setWidth(window.innerWidth);
+            canvas.renderAll();
+        });
 
-      <p>Width [<span id="doorWindowWidthScale"></span>] : <span id="doorWindowWidthVal"></span> cm</span></p>
-      <input type="range" id="doorWindowWidth" step="1" class="range" />
-      <br />
-      <li><button class="btn btn-danger fully objTrash"><i class="fa fa-2x fa-trash" aria-hidden="true"></i></button>
-      </li>
-      <li><button class="btn btn-info" style="margin-top:100px"
-          onclick="fonc_button('select_mode');$('#boxinfo').html('Selection mode');$('#objTools').hide('100');$('#panel').show('200');binder.graph.remove();delete binder;rib();"><i
-            class="fa fa-2x fa-backward" aria-hidden="true"></i></button></li>
-    </ul>
-  </div>
+        // Tool selection
+        document.getElementById("toolSelect").onchange = function() { tool = this.value; };
+        document.getElementById("fixtureSelect").onchange = function() { if (this.value) addFixture(this.value); this.value = ""; };
 
-  <div id="roomTools" class="leftBox">
-    <span style="color:#08d">Home Rough Editor</span> estimated a surface of :<br /><b><span class="size"></span></b>
-    <br /><br />
-    <p>If you have the actual area, you can write it</p>
-    <div class="input-group">
-      <input type="text" class="form-control" id="roomSurface" placeholder="surface réelle"
-        aria-describedby="basic-addon2">
-      <span class="input-group-addon" id="basic-addon2">m²</span>
-    </div>
-    <br />
-    <input type="hidden" id="roomName" value="" />
-    Wording :<br />
-    <select class="form-select" aria-label="Default select example" id="roomLabel">
-      <option selected value="0">None</option>
-      <option value="1">Lounge</option>
-      <option value="2">Lunchroom</option>
-      <option value="3">Kitchen</option>
-      <option value="4">Toilet</option>
-      <option value="5">Bathroom</option>
-      <option value="6">Bedroom 1</option>
-      <option value="7">Bedroom 2</option>
-      <option value="8">Bedroom 3</option>
-      <option value="9">Locker</option>
-      <option value="10">Office</option>
-      <option value="11">Hall</option>
-      <option value="12">Loggia</option>
-      <option value="13">Bath 2</option>
-      <option value="14">Toilet 2</option>
-      <option value="15">Bedroom 4</option>
-      <option value="16">Bedroom 5</option>
-      <option value="17">Balcony</option>
-      <option value="18">Terrace</option>
-      <option value="19">Corridor</option>
-      <option value="20">Garage</option>
-      <option value="21">Clearance</option>
-    </select>
-    <br />
-    <br />
-    Meter :
-    <div class="funkyradio">
-      <div class="funkyradio-success">
-        <input type="checkbox" name="roomShow" value="showSurface" id="seeArea" checked />
-        <label for="seeArea">Show the surface</label>
-      </div>
-    </div>
-    <div class="funkyradio">
-      <div class="funkyradio-success">
-        <input type="radio" name="roomAction" id="addAction" value="add" checked />
-        <label for="addAction">Add the surface</label>
-      </div>
-      <div class="funkyradio-warning">
-        <input type="radio" name="roomAction" id="passAction" value="pass" />
-        <label for="passAction">Ignore the surface</label>
-      </div>
-    </div>
-    <hr />
+        // Drawing for walls, pipes, drains
+        canvas.on("mouse:down", function(opt) {
+            if (["wall", "hotPipe", "coldPipe", "chPipe", "drain"].includes(tool)) {
+                if (canvas.findTarget(opt.e)) return;
+                drawing = true;
+                const p = canvas.getPointer(opt.e);
+                let strokeColor, strokeWidth = 4, strokeDashArray = null;
+                switch (tool) {
+                    case "wall":
+                        strokeColor = "#4b5563";
+                        break;
+                    case "hotPipe":
+                        strokeColor = "#ef4444";
+                        strokeWidth = 6;
+                        break;
+                    case "coldPipe":
+                        strokeColor = "#3b82f6";
+                        strokeWidth = 6;
+                        break;
+                    case "chPipe":
+                        strokeColor = "#f59e0b"; // Orange for CH pipe
+                        strokeWidth = 6;
+                        break;
+                    case "drain":
+                        strokeColor = "#111";
+                        strokeWidth = 6;
+                        strokeDashArray = [15, 10];
+                        break;
+                }
+                currentLine = new fabric.Line([p.x, p.y, p.x, p.y], {
+                    stroke: strokeColor, strokeWidth, strokeDashArray, selectable: true
+                });
+                canvas.add(currentLine);
+            } else if (tool === "erase") {
+                const obj = canvas.findTarget(opt.e);
+                if (obj) canvas.remove(obj);
+            }
+        });
+        canvas.on("mouse:move", function(opt) {
+            if (drawing) {
+                const p = canvas.getPointer(opt.e);
+                currentLine.set({ x2: p.x, y2: p.y });
+                canvas.renderAll();
+            }
+        });
+        canvas.on("mouse:up", function() { drawing = false; });
 
-    <p>Colors</p>
-    <div class="roomColor" data-type="gradientRed" style="background:linear-gradient(30deg, #f55847, #f00);"></div>
-    <div class="roomColor" data-type="gradientYellow" style="background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
-    <div class="roomColor" data-type="gradientGreen" style="background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
-    <div class="roomColor" data-type="gradientSky" style="background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
-    <div class="roomColor" data-type="gradientBlue" style="background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
-    <div class="roomColor" data-type="gradientGrey" style="background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
-    <div class="roomColor" data-type="gradientWhite" style="background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
-    <div class="roomColor" data-type="gradientOrange" style="background:linear-gradient(30deg, #f9ad67, #f97f00);">
-    </div>
-    <div class="roomColor" data-type="gradientPurple" style="background:linear-gradient(30deg,#a784d9, #8951da);"></div>
-    <div class="roomColor" data-type="gradientPink" style="background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
-    <div class="roomColor" data-type="gradientBlack" style="background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
-    <div class="roomColor" data-type="gradientNeutral" style="background:linear-gradient(30deg,#e2c695, #c69d56);">
-    </div>
-    <br /><br />
-    <p>Matérials</p>
-    <div class="roomColor" data-type="wood"
-      style="background: url('https://orig00.deviantart.net/e1f2/f/2015/164/8/b/old_oak_planks___seamless_texture_by_rls0812-d8x6htl.jpg');">
-    </div>
-    <div class="roomColor" data-type="tiles"
-      style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrkoI2Eiw8ya3J_swhfpZdi_ug2sONsI6TxEd1xN5af3DX9J3R');">
-    </div>
-    <div class="roomColor" data-type="granite"
-      style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9_nEMhnWVV47lxEn5T_HWxvFwkujFTuw6Ff26dRTl4rDaE8AdEQ');">
-    </div>
-    <div class="roomColor" data-type="grass"
-      style="background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWh5nEP_Trwo96CJjev6lnKe0_dRdA63RJFaoc3-msedgxveJd');">
-    </div>
-    <div data-type="#ff008a" style="clear:both"></div>
-    <br /><br />
-    <input type="hidden" id="roomBackground" value="gradientNeutral" />
-    <input type="hidden" id="roomIndex" value="" />
-    <button type="button" class="btn btn-primary" id="applySurface">Apply</button>
-    <button type="button" class="btn btn-danger" id="resetRoomTools">Cancel</button>
+        // Zoom & Pan
+        canvas.on("mouse:wheel", function(opt) {
+            let zoom = canvas.getZoom();
+            zoom *= 0.999 ** opt.e.deltaY;
+            if (zoom > 3) zoom = 3; if (zoom < 0.2) zoom = 0.2;
+            canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+            opt.e.preventDefault();
+        });
 
-    <br />
-  </div>
+        // Rotate / Delete / Export
+        function rotateSelected() {
+            const obj = canvas.getActiveObject();
+            if (obj) { obj.rotate((obj.angle || 0) + 90); canvas.renderAll(); }
+        }
+        function deleteSelected() {
+            const obj = canvas.getActiveObject();
+            if (obj) canvas.remove(obj);
+        }
+        function exportPNG() {
+            const link = document.createElement("a");
+            link.download = "bathroom-plan.png";
+            link.href = canvas.toDataURL({ format: 'png' });
+            link.click();
+        }
 
-  <div id="panel" class="leftBox">
-    <ul class="list-unstyled">
-      <li><button class="btn disabled halfy " id="undo" title="undo"><i class="fa fa-chevron-circle-left"
-            aria-hidden="true"></i>
-          <button class="btn disabled halfy pull-right" id="redo" title="redo"><i class="fa fa-chevron-circle-right"
-              aria-hidden="true"></i></button>
-      </li>
-      <br />
-      <li><button class="btn btn-success fully " id="select_mode" style="box-shadow:2px 2px 3px #ccc;"><i
-            class="fa fa-2x fa-mouse-pointer" aria-hidden="true"></i></button></li>
-      <br />
-      <li>
-        <button class="btn btn-light shadow fully " style="margin-bottom:0px" id="line_mode" data-toggle="tooltip"
-          data-placement="right" title="Make walls">WALL</button>
-        <button class="mt-2 btn btn-light shadow fully " style="margin-bottom:0px" id="partition_mode"
-          data-toggle="tooltip" data-placement="right" title="Make partitions wall">PARTITION</button>
-        <div class="funkyradio" style="font-size:0.8em">
-          <div class="funkyradio-success">
-            <input type="checkbox" id="multi" checked />
-            <label for="multi">MULTIPLE</label>
-          </div>
-        </div>
-      </li>
-      <br />
-      <li><button class="btn btn-light shadow fully " id="room_mode">CONFIG. ROOMS</button></li>
-      <br />
-      <li><button class="btn btn-light shadow fully " id="node_mode"><i class="fa fa-2x fa-scissors"
-            aria-hidden="true"></i></button></li>
-      <br />
-      <li><button class="btn btn-light shadow fully " id="distance_mode" data-toggle="tooltip" data-placement="right"
-          title="Add a measurement">MEASURE</button></li>
-      <li><button class="btn btn-light shadow fully " id="text_mode" data-toggle="tooltip" data-placement="right"
-          title="Add text">TEXT</button></li>
-      <br />
-      <div id="door_list" class="list-unstyled sub"
-        style="box-shadow:2px 2px 3px #ccc;display:none;background:#fff;border-radius: 0 5px 5px 0; padding:10px;position:absolute;left:200px;width:150px">
-        <button class="btn fully door" id="aperture">Aperture</button>
-        <button class="btn fully door" id="simple">Simple</button>
-        <button class="btn fully door" id="double">Double</button>
-        <button class="btn fully door" id="pocket">Pocket</button>
-      </div>
-      <li><button class="btn btn-light shadow fully " id="door_mode"
-          onclick="$('.sub').hide();$('#door_list').toggle(200);$('#window_list').hide();">DOOR</button></li>
-
-      <div id="window_list" class="list-unstyled sub"
-        style="box-shadow:2px 2px 3px #ccc;display:none;background:#fff;border-radius: 0 5px 5px 0; padding:10px;position:absolute;left:200px;width:150px">
-        <button class="btn fully window" id="fix">Fix</button>
-        <button class="btn fully window" id="flap">Simple</button>
-        <button class="btn fully window" id="twin">Double</button>
-        <button class="btn fully window" id="bay">Slide</button>
-      </div>
-      <li><button class="btn btn-light shadow fully " id="window_mode"
-          onclick="$('.sub').hide();$('#window_list').toggle(200);$('#door_list').hide()">WINDOW</button></li>
-      <li><button class="btn btn-light shadow fully object" id="stair_mode"
-          onclick="$('.sub').hide();$('#door_list').hide()">STAIR</button></li>
-      <br />
-      <div id="energy_list" class="list-unstyled sub"
-        style="box-shadow:2px 2px 3px #ccc;display:none;background:#fff;border-radius: 0 5px 5px 0; padding:10px;position:absolute;left:200px;bottom:40px;width:600px">
-        <div style="width:600px;float:left;padding:10px">
-          <p>Energy</p>
-          <div style="float:left;padding:10px;margin:5px;border:1px solid #ddd;border-radius:5px">
-            <p>High current</p>
-            <div style="width:120px;float:left;padding:2px">
-              <button class="btn btn-light fully object" id="gtl">Switchboard</button>
-              <button class="btn btn-light fully object" id="switch">Switch</button>
-              <button class="btn btn-light fully object" id="doubleSwitch">Multiways</button>
-              <button class="btn btn-light fully object" id="dimmer">Variator</button>
-
-            </div>
-            <div style="width:120px;float:left;padding:2px">
-              <button class="btn btn-light fully object" id="plug">Electrical outlet</button>
-              <button class="btn btn-light fully object" id="plug20">Outlet 20A</button>
-              <button class="btn btn-light fully object" id="plug32">Outlet 32A</button>
-              <button class="btn btn-light fully object" id="rooflight shadow">Ceiling lamp</button>
-              <button class="btn btn-light fully object" id="walllight shadow">Wall light</button>
-            </div>
-          </div>
-          <div style="width:130px;float:left;padding:10px;margin:5px;border:1px solid #ddd;border-radius:5px">
-            <p>Low current</p>
-            <button class="btn btn-light fully object" id="www">Internet access</button>
-            <button class="btn btn-light fully object" id="rj45">RJ45 plug</button>
-            <button class="btn btn-light fully object" id="tv">Antenna plug</button>
-          </div>
-
-          <div style="width:130px;float:left;padding:10px;margin:5px;border:1px solid #ddd;border-radius:5px">
-            <p>Thermal</p>
-            <button class="btn btn-light fully object" id="boiler">Boiler</button>
-            <button class="btn btn-light fully object" id="heater">Water heater</button>
-            <button class="btn btn-light fully object" id="radiator">Radiator</button>
-          </div>
-        </div>
-
-      </div>
-      <li><button class="btn btn-light shadow fully " id="object_mode"
-          onclick="$('.sub').hide();$('#energy_list').toggle(200);">ENERGY</button></li>
-      <!-- <li><button class="btn btn-light shadow fully " id="object_mode" onclick="$('.sub').hide();$('#object_list').toggle(200);">FURNITURE</button></li> -->
-      <br />
-
-      <li><button class="btn btn-light shadow fully " id="layer_mode"
-          onclick="$('.sub').hide();$('#layer_list').toggle(200);">Layers</button></li>
-
-      <div id="layer_list" class="list-unstyled sub"
-        style="box-shadow:2px 2px 3px #ccc;display:none;background:#fff;border-radius: 0 5px 5px 0; padding:10px;position:absolute;left:200px;bottom:100px;width:200px">
-        <div class="funkyradio" style="font-size:0.8em">
-          <div class="funkyradio-info">
-            <input type="checkbox" id="showRib" checked />
-            <label for="showRib">Measurement</label>
-          </div>
-        </div>
-        <div class="funkyradio" style="font-size:0.8em">
-          <div class="funkyradio-info">
-            <input type="checkbox" id="showArea" checked />
-            <label for="showArea">Surface</label>
-          </div>
-        </div>
-        <div class="funkyradio" style="font-size:0.8em">
-          <div class="funkyradio-info">
-            <input type="checkbox" id="showLayerRoom" checked />
-            <label for="showLayerRoom">Texture</label>
-          </div>
-        </div>
-        <div class="funkyradio" style="font-size:0.8em">
-          <div class="funkyradio-info">
-            <input type="checkbox" id="showLayerEnergy" checked />
-            <label for="showLayerEnergy">Energy</label>
-          </div>
-        </div>
-      </div>
-
-      <li><button class="btn btn-light shadow halfy " id="report_mode" title="Show report"><i class="fa fa-calculator"
-            aria-hidden="true"></i>
-          <button class="btn btn-light shadow halfy pull-right"
-            onclick="fullscreen();this.style.display='none';$('#nofull_mode').show();" id="full_mode"
-            title="Full screen"><i class="fa fa-expand" aria-hidden="true"></i></button>
-          <button class="btn btn-light shadow halfy pull-right" style="display:none"
-            onclick="outFullscreen();this.style.display='none';$('#full_mode').show();" id="nofull_mode"
-            data-toggle="tooltip" data-placement="right" title="Full screen"><i class="fa fa-compress"
-              aria-hidden="true"></i></button>
-      <li>
-
-        <div style="clear:both"></div>
-    </ul>
-  </div>
-
-  <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg  modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <h4 class="modal-title" id="myModalLabel">Welcome Home Rough Editor v0.95</h4>
-        </div>
-        <div class="modal-body m-2">
-          <div id="recover">
-            <p>A plan exists in historical, would you like recover him ?</p>
-            <button class="btn btn-success shadow" data-bs-dismiss="modal"
-              onclick="initHistory('recovery');">YES</button></p>
-            <hr />
-            <p>Or are you prefer start a new plan ?</p>
-          </div>
-          <div class="w-100 d-flex justify-content-center  flex-column gap-4 flex-md-row">
-            <div class="boxMouseOver"><img src="img/newPlanEmpty.jpg" class="img-fluid" onclick="initHistory();"
-                data-bs-dismiss="modal" /></div>
-            <div class=" boxMouseOver"><img src="img/newPlanSquare.jpg" class="img-fluid"
-                onclick="initHistory('newSquare');" data-bs-dismiss="modal" /></div>
-            <div class=" boxMouseOver"><img src="img/newPlanL.jpg" class="img-fluid" onclick="initHistory('newL');"
-                data-bs-dismiss="modal" /></div>
-          </div>
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-light shadow" data-dismiss="modal">CLOSE</button>
-          <button type="button" class="btn btn-primary">YES</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="textToLayer" tabindex="-1" role="dialog" aria-labelledby="textToLayerLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span
-              aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="textToLayerLabel">Text editor</h4>
-        </div>
-        <div class="modal-body">
-          <p>Choose police color</p>
-          <div class="color textEditorColor" data-type="gradientRed"
-            style="color:#f55847;background:linear-gradient(30deg, #f55847, #f00);"></div>
-          <div class="color textEditorColor" data-type="gradientYellow"
-            style="color:#e4c06e;background:linear-gradient(30deg,#e4c06e, #ffb000);"></div>
-          <div class="color textEditorColor" data-type="gradientGreen"
-            style="color:#88cc6c;background:linear-gradient(30deg,#88cc6c, #60c437);"></div>
-          <div class="color textEditorColor" data-type="gradientSky"
-            style="color:#77e1f4;background:linear-gradient(30deg,#77e1f4, #00d9ff);"></div>
-          <div class="color textEditorColor" data-type="gradientBlue"
-            style="color:#4f72a6;background:linear-gradient(30deg,#4f72a6, #284d7e);"></div>
-          <div class="color textEditorColor" data-type="gradientGrey"
-            style="color:#666666;background:linear-gradient(30deg,#666666, #aaaaaa);"></div>
-          <div class="color textEditorColor" data-type="gradientWhite"
-            style="color:#fafafa;background:linear-gradient(30deg,#fafafa, #eaeaea);"></div>
-          <div class="color textEditorColor" data-type="gradientOrange"
-            style="color:#f9ad67;background:linear-gradient(30deg, #f9ad67, #f97f00);"></div>
-          <div class="color textEditorColor" data-type="gradientPurple"
-            style="color:#a784d9;background:linear-gradient(30deg,#a784d9, #8951da);"></div>
-          <div class="color textEditorColor" data-type="gradientPink"
-            style="color:#df67bd;background:linear-gradient(30deg,#df67bd, #e22aae);"></div>
-          <div class="color textEditorColor" data-type="gradientBlack"
-            style="color:#3c3b3b;background:linear-gradient(30deg,#3c3b3b, #000000);"></div>
-          <div class="color textEditorColor" data-type="gradientNeutral"
-            style="color:#e2c695;background:linear-gradient(30deg,#e2c695, #c69d56);"></div>
-          <div style="clear:both"></div>
-          <hr />
-          <p>Police size</p>
-          <input type="range" list="tickmarks" id="sizePolice" step="0.1" min="10" max="30" value="15" class="range"
-            style="width:200px" />
-          <hr />
-          <p contenteditable="true" id="labelBox" onfocus="this.innerHTML='';"
-            style="font-size:15px;padding:5px;border-radius:5px;color:#333">Your text</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-light shadow" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" onclick="$('#textToLayer').modal('hide');">Apply</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div style="position:absolute;bottom:10px;left:210px;font-size:1.5em;color:#08d" id="boxinfo">
-  </div>
-
-  <div id="moveBox"
-    style="position:absolute;right:-150px;top:10px;color:#08d;background:transparent;z-index:2;text-align:center;transition-duration: 0.2s;transition-timing-function: ease-in;">
-    <p style="margin:0px 0 0 0;font-size:11px" onclick="document.location='https://github.com/ekymoz/homeRoughEditor'">
-      <img src="https://cdn4.iconfinder.com/data/icons/mathematics-doodle-3/48/102-128.png" width=20px /> Home Rough
-      Editor
-    </p>
-    <div class="pull-right" style="margin:10px">
-      <p style="margin:0"><button class="btn btn-xs btn-info zoom" data-zoom="zoomtop"
-          style="box-shadow:2px 2px 3px #ccc;"><i class="fa fa-arrow-up" aria-hidden="true"></i></button></p>
-      <p style="margin:0">
-        <button class="btn btn-xs btn-info zoom" data-zoom="zoomleft" style="box-shadow:2px 2px 3px #ccc;"><i
-            class="fa fa-arrow-left" aria-hidden="true"></i></button>
-        <button class="btn btn-xs btn-light shadow zoom" data-zoom="zoomreset" style="box-shadow:2px 2px 3px #ccc;"><i
-            class="fa fa-bullseye" aria-hidden="true"></i></button>
-        <button class="btn btn-xs btn-info zoom" data-zoom="zoomright" style="box-shadow:2px 2px 3px #ccc;"><i
-            class="fa fa-arrow-right" aria-hidden="true"></i></button>
-      </p>
-      <p style="margin:0"><button class="btn btn-xs btn-info zoom" data-zoom="zoombottom"
-          style="box-shadow:2px 2px 3px #ccc;"><i class="fa fa-arrow-down" aria-hidden="true"></i></button></p>
-    </div>
-  </div>
-
-  <div id="zoomBox"
-    style="position:absolute;z-index:100;right:-150px;bottom:20px;text-align:center;background:transparent;padding:0px;color:#fff;transition-duration: 0.2s;transition-timing-function: ease-in;">
-    <div class="pull-right" style="margin-right:10px">
-      <button class="btn btn btn-light shadow zoom" data-zoom="zoomin" style="box-shadow:2px 2px 3px #ccc;"><i
-          class="fa fa-plus" aria-hidden="true"></i></button>
-      <button class="btn btn btn-light shadow zoom" data-zoom="zoomout" style="box-shadow:2px 2px 3px #ccc;"><i
-          class="fa fa-minus" aria-hidden="true"></i></button>
-    </div>
-    <div style="clear:both"></div>
-    <div id="scaleVal" class="pull-right"
-      style="box-shadow:2px 2px 3px #ccc;width:60px;height:20px;background:#4b79aa;border-radius:4px;margin-right:10px">
-      1m
-    </div>
-
-    <div style="clear:both"></div>
-  </div>
+        // Fixture addition with consistent colors and improved looks
+        function addFixture(type) {
+            const fillColor = '#f1f5f9';
+            const strokeColor = '#1e2937';
+            const strokeWidth = 3;
+            let obj;
+            switch(type){
+                case "toilet":
+                    obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(70);
+                    break;
+                case "wallHungToilet":
+                    // Similar to toilet but without floor base, tank on wall
+                    obj = new fabric.Path('M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(70);
+                    break;
+                case "backToWallToilet":
+                    // Tank hidden, bowl flush to wall
+                    obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(70);
+                    break;
+                case "bathAlcove":
+                    obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H84C88.4183 1 92 4.58172 92 9V40C92 44.4183 88.4183 48 84 48H9C4.58172 48 1 44.4183 1 40V9Z M12 11C12 8.23858 14.2386 6 17 6H75C77.7614 6 80 8.23858 80 11V38C80 40.7614 77.7614 43 75 43H17C14.2386 43 12 40.7614 12 38V11Z M11.5 26.5C11.5 26.5 12 26 12 25C12 24 11.5 23.5 11.5 23.5L22.0074 22.6917C23.3519 22.5883 24.5 23.6514 24.5 25C24.5 26.3486 23.3519 27.4117 22.0074 27.3083L11.5 26.5Z M8 21.5C9.933 21.5 11.5 23.067 11.5 25C11.5 26.933 9.933 28.5 8 28.5C6.067 28.5 4.5 26.933 4.5 25C4.5 23.067 6.067 21.5 8 21.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(180);
+                    break;
+                case "bathFree":
+                    obj = new fabric.Path('M1 24.5C1 11.5213 11.5213 1 24.5 1H68.5C81.4787 1 92 11.5213 92 24.5C92 37.4787 81.4787 48 68.5 48H24.5C11.5213 48 1 37.4787 1 24.5Z M9 24.5C9 14.7042 17.6278 7.15038 27.3377 8.44503L43.262 10.5683C45.4112 10.8548 47.5888 10.8548 49.738 10.5683L65.6623 8.44503C75.3722 7.15038 84 14.7042 84 24.5C84 34.2958 75.3722 41.8496 65.6623 40.555L49.738 38.4317C47.5888 38.1452 45.4112 38.1452 43.262 38.4317L27.3377 40.555C17.6278 41.8496 9 34.2958 9 24.5Z M18 24.5C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 24.5C73 30.299 68.299 35 62.5 35H28.5C22.701 35 18 30.299 18 24.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(175);
+                    break;
+                case "shower":
+                    obj = new fabric.Path('M6.70817 7.37289L45.3371 42.6307M44.3387 7.36777L6.33874 42.3678M23.3536 22.8447L28.3536 27.8447M44.3641 22.5409L23.3641 27.8532M1 1L45 1.19812V7.19812H6.17647V42.1981H45V49H1V1ZM32 25.1982C32 28.512 29.3137 31.1982 26 31.1982C22.6863 31.1982 20 28.512 20 25.1982C20 21.8845 22.6863 19.1982 26 19.1982C29.3137 19.1982 32 21.8845 32 25.1982ZM29.75 25.1982C29.75 27.2693 28.0711 28.9482 26 28.9482C23.9289 28.9482 22.25 27.2693 22.25 25.1982C22.25 23.1272 23.9289 21.4482 26 21.4482C28.0711 21.4482 29.75 23.1272 29.75 25.1982ZM27.5 25.1982C27.5 26.0267 26.8284 26.6982 26 26.6982C25.1716 26.6982 24.5 26.0267 24.5 25.1982C24.5 24.3698 25.1716 23.6982 26 23.6982C26.8284 23.6982 27.5 24.3698 27.5 25.1982Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(95);
+                    break;
+                case "basinWall":
+                    obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H57C61.4183 1 65 4.58172 65 9V41C65 45.4183 61.4183 49 57 49H9C4.58172 49 1 45.4183 1 41V9Z M7 13C7 10.7909 8.79086 9 11 9H55C57.2091 9 59 10.7909 59 13V37C59 39.2091 57.2091 41 55 41H11C8.79086 41 7 39.2091 7 37V13Z M35 25.5C35 26.8807 33.8807 28 32.5 28C31.1193 28 30 26.8807 30 25.5C30 24.1193 31.1193 23 32.5 23C33.8807 23 35 24.1193 35 25.5Z M31.7433 9.05588C31.7433 9.05588 32.3556 9.40943 33.3216 9.15061C34.2875 8.89179 34.641 8.27942 34.641 8.27942L38.1413 18.2196C38.5892 19.4916 37.8594 20.8757 36.5568 21.2247C35.2542 21.5737 33.9302 20.7399 33.6821 19.4144L31.7433 9.05588Z M35.6673 4.38071C36.1676 6.24784 35.0596 8.16702 33.1925 8.66732C31.3253 9.16762 29.4062 8.05958 28.9059 6.19245C28.4056 4.32532 29.5136 2.40614 31.3807 1.90584C33.2479 1.40554 35.1671 2.51358 35.6673 4.38071Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(80);
+                    break;
+                case "basinPedestal":
+                    obj = new fabric.Path('M1 4C1 2.34315 2.34315 1 4 1H62C63.6569 1 65 2.34315 65 4V25C65 38.2548 54.2548 49 41 49H25C11.7452 49 1 38.2548 1 25V4Z M57 25C57 34.2958 48.3722 41.8496 38.6623 40.555L22.738 38.4317C20.5888 38.1452 18.4112 38.1452 16.262 38.4317L0.3377 40.555C-9.3722 41.8496 -18 34.2958 -18 25C-18 15.7042 -9.3722 8.15038 0.3377 9.44503L16.262 11.5683C18.4112 11.8548 20.5888 11.8548 22.738 11.5683L38.6623 9.44503C48.3722 8.15038 57 15.7042 57 25Z M18 25C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 25C73 31.299 68.299 35 62.5 35H28.5C22.701 35 18 31.299 18 25Z M31 10.5C31 10.5 31.5 11 32.5 11C33.5 11 34 10.5 34 10.5L34 20.5074C34 21.8519 32.8519 23 31.5 23C30.1481 23 29 21.8519 29 20.5074L29 10.5Z M36 6.5C36 8.433 34.433 10 32.5 10C30.567 10 29 8.433 29 6.5C29 4.567 30.567 3 32.5 3C34.433 3 36 4.567 36 6.5Z M35 28.5C35 29.8807 33.8807 31 32.5 31C31.1193 31 30 29.8807 30 28.5C30 27.1193 31.1193 26 32.5 26C33.8807 26 35 27.1193 35 28.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(80);
+                    break;
+                case "bidet":
+                    obj = new fabric.Path('M46.989 33.0731C46.989 53.4671 37.3818 69.9996 25.5307 69.9996C13.6795 69.9996 4.07227 53.4671 4.07227 33.0731C4.07227 19.1497 4 18 4 18C4.17549 18.0144 15.9306 18.2553 26.5002 17.9993C36.1582 17.7654 46.989 17.9999 46.989 17.9999C46.989 17.9999 46.989 21.6119 46.989 33.0731Z M41 44.5C41 54.7173 34.0604 63 25.5 63C16.9396 63 10 54.7173 10 44.5C10 34.2827 16.9396 26 25.5 26C34.0604 26 41 34.2827 41 44.5Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 38.4183 28.3137 42 25 42C21.6863 42 19 38.4183 19 33C19 27.5817 21.6863 24 25 24C28.3137 24 31 27.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth });
+                    obj.scaleToWidth(70);
+                    break;
+                case "towelRad":
+                    // Improved with small horizontal lines
+                    obj = new fabric.Group([
+                        new fabric.Rect({ width: 20, height: 80, fill: fillColor, stroke: strokeColor, strokeWidth }),
+                        new fabric.Line([0, 10, 20, 10], { stroke: strokeColor, strokeWidth: 2, top: 10 }),
+                        new fabric.Line([0, 25, 20, 25], { stroke: strokeColor, strokeWidth: 2, top: 25 }),
+                        new fabric.Line([0, 40, 20, 40], { stroke: strokeColor, strokeWidth: 2, top: 40 }),
+                        new fabric.Line([0, 55, 20, 55], { stroke: strokeColor, strokeWidth: 2, top: 55 }),
+                        new fabric.Line([0, 70, 20, 70], { stroke: strokeColor, strokeWidth: 2, top: 70 })
+                    ], { left: 0, top: 0 });
+                    break;
+                case "ledMirror":
+                    obj = new fabric.Rect({ width: 60, height: 60, fill: fillColor, stroke: strokeColor, strokeWidth });
+                    break;
+                case "door":
+                    // Improved with opening arc
+                    obj = new fabric.Group([
+                        new fabric.Rect({ width: 15, height: 70, fill: fillColor, stroke: strokeColor, strokeWidth }),
+                        new fabric.Path('M0 0 Q15 0 15 15', { fill: '', stroke: strokeColor, strokeWidth: 2, left: 15, top: 0 }) // Arc indicating opening
+                    ], { left: 0, top: 0 });
+                    break;
+                case "window":
+                    // Improved with panes
+                    obj = new fabric.Group([
+                        new fabric.Rect({ width: 60, height: 40, fill: fillColor, stroke: strokeColor, strokeWidth }),
+                        new fabric.Line([30, 0, 30, 40], { stroke: strokeColor, strokeWidth: 2 }),
+                        new fabric.Line([0, 20, 60, 20], { stroke: strokeColor, strokeWidth: 2 })
+                    ], { left: 0, top: 0 });
+                    break;
+                case "manhole":
+                    obj = new fabric.Circle({ radius: 30, fill: fillColor, stroke: strokeColor, strokeWidth });
+                    break;
+                case "grass":
+                    obj = new fabric.Rect({ width: 80, height: 40, fill: '#4ade80', stroke: '#166534', strokeWidth: 2 });
+                    break;
+                case "socket":
+                    obj = new fabric.Circle({ radius: 8, fill: fillColor, stroke: strokeColor, strokeWidth });
+                    break;
+                case "light":
+                    obj = new fabric.Circle({ radius: 12, fill: fillColor, stroke: strokeColor, strokeWidth });
+                    break;
+                case "switch":
+                    obj = new fabric.Rect({ width: 10, height: 20, fill: fillColor, stroke: strokeColor, strokeWidth });
+                    break;
+            }
+            if (obj) {
+                obj.set({ left: 300, top: 300, hasRotatingPoint: true, cornerSize: 12, transparentCorners: false });
+                canvas.add(obj);
+                canvas.setActiveObject(obj);
+                canvas.renderAll();
+            }
+        }
+    </script>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
-  integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-  integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-<script src="mousewheel.js"></script>
-<script src="func.js"></script>
-<script src="qSVG.js"></script>
-<script src="editor.js"></script>
-<script src="engine.js"></script>
-
 </html>
-
