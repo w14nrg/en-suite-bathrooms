@@ -65,24 +65,20 @@ let tool="select";
 let wallDrawing=false;
 let wallLine;
 
-// Draw grid - exact same as your original
 for(let i=0;i<1000;i++){
   canvas.add(new fabric.Line([i*GRID,0,i*GRID,10000],{stroke:'#e5e7eb', selectable:false, evented:false}));
   canvas.add(new fabric.Line([0,i*GRID,10000,i*GRID],{stroke:'#e5e7eb', selectable:false, evented:false}));
 }
 
-// Resize canvas on window change - exact same
 window.addEventListener("resize",()=>{
   canvas.setHeight(window.innerHeight - 120);
   canvas.setWidth(window.innerWidth);
   canvas.renderAll();
 });
 
-// Tool selection - exact same
 document.getElementById("toolSelect").onchange=function(){ tool=this.value; };
 document.getElementById("fixtureSelect").onchange=function(){ if(this.value) addFixture(this.value); this.value=""; };
 
-// Wall drawing - YOUR ORIGINAL + ONE LINE FIX
 canvas.on("mouse:down", function(opt){
   if(tool==="wall"){
     if(canvas.findTarget(opt.e)) return;
@@ -106,7 +102,6 @@ canvas.on("mouse:move",function(opt){
 });
 canvas.on("mouse:up",function(){ wallDrawing=false; });
 
-// Zoom & Pan - exact same
 canvas.on("mouse:wheel",function(opt){
   let zoom = canvas.getZoom();
   zoom *= 0.999 ** opt.e.deltaY;
@@ -115,7 +110,6 @@ canvas.on("mouse:wheel",function(opt){
   opt.e.preventDefault();
 });
 
-// Rotate / Delete / Export - exact same
 function rotateSelected(){
   const obj = canvas.getActiveObject();
   if(obj){ obj.rotate((obj.angle||0)+90); canvas.renderAll(); }
@@ -131,50 +125,114 @@ function exportPNG(){
   link.click();
 }
 
-// FIXED addFixture with correct PNG URLs + scope fix for obj
+// REAL EMBEDDED SVG ICONS (no external links, no wrong icons ever)
 function addFixture(type){
-  let url = '';
-  let scale = 0.65;
-  let obj;   // ← declared here so non-image fixtures work
+  console.log("Adding fixture:", type);
+
+  let dataURL = '';
 
   switch(type){
-    case "toilet": url = 'https://cdn-icons-png.flaticon.com/512/185/185547.png'; scale = 0.85; break;
-    case "bathAlcove": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
-    case "bathFree": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
-    case "shower": url = 'https://cdn-icons-png.flaticon.com/512/997/997998.png'; scale = 0.75; break;
-    case "basinWall": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
-    case "basinPedestal": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
-    case "bidet": url = 'https://cdn-icons-png.flaticon.com/512/185/185547.png'; scale = 0.75; break;
-
-    // your original shapes for everything else (exact same as your first code)
-    case "towelRad": obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2}); break;
-    case "vanity": obj=new fabric.Rect({width:80,height:40,fill:"#fde68a",stroke:"#92400e",strokeWidth:2}); break;
-    case "ledMirror": obj=new fabric.Rect({width:60,height:60,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
-    case "door": obj=new fabric.Rect({width:15,height:70,fill:"#78350f",stroke:"#111",strokeWidth:2}); break;
-    case "window": obj=new fabric.Rect({width:60,height:40,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
-    case "manhole": obj=new fabric.Circle({radius:30,fill:"#1e2937",stroke:"#64748b",strokeWidth:3}); break;
-    case "grass": obj=new fabric.Rect({width:80,height:40,fill:"#4ade80",stroke:"#166534",strokeWidth:2}); break;
-    case "socket": obj=new fabric.Circle({radius:8,fill:"#fcd34d",stroke:"#b45309",strokeWidth:2}); break;
-    case "light": obj=new fabric.Circle({radius:12,fill:"#facc15",stroke:"#78350f",strokeWidth:2}); break;
-    case "switch": obj=new fabric.Rect({width:10,height:20,fill:"#fbbf24",stroke:"#b45309",strokeWidth:2}); break;
-    case "pipeHot": obj=new fabric.Line([0,0,50,0],{stroke:"#ef4444",strokeWidth:6}); break;
-    case "pipeCold": obj=new fabric.Line([0,0,50,0],{stroke:"#3b82f6",strokeWidth:6}); break;
-    case "drain": obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]}); break;
+    case "toilet":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="12" width="44" height="22" rx="4" fill="#f1f5f9" stroke="#1e2937" stroke-width="4"/>
+          <ellipse cx="40" cy="48" rx="30" ry="22" fill="#f1f5f9" stroke="#1e2937" stroke-width="4"/>
+          <ellipse cx="40" cy="52" rx="24" ry="16" fill="#cbd5e1" stroke="#475569" stroke-width="3"/>
+          <rect x="32" y="15" width="16" height="8" rx="2" fill="#64748b"/>
+        </svg>
+      `);
+      break;
+    case "bathAlcove":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="160" height="60" rx="15" fill="#e0f2fe" stroke="#0369a1" stroke-width="8"/>
+          <rect x="20" y="25" width="140" height="40" rx="10" fill="#bae6fd"/>
+          <rect x="70" y="5" width="40" height="10" fill="#64748b" rx="2"/>
+          <circle cx="95" cy="8" r="6" fill="#94a3b8"/>
+        </svg>
+      `);
+      break;
+    case "bathFree":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="8" width="160" height="64" rx="28" fill="#e0f2fe" stroke="#0369a1" stroke-width="8"/>
+          <rect x="22" y="22" width="136" height="44" rx="18" fill="#bae6fd"/>
+        </svg>
+      `);
+      break;
+    case "shower":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="84" height="84" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="6"/>
+          <rect x="14" y="14" width="72" height="72" fill="transparent" stroke="#64748b" stroke-width="4"/>
+          <line x1="50" y1="14" x2="50" y2="86" stroke="#64748b" stroke-width="3" stroke-dasharray="6 4"/>
+          <line x1="35" y1="5" x2="55" y2="12" stroke="#334155" stroke-width="5"/>
+          <circle cx="48" cy="12" r="9" fill="#cbd5e1" stroke="#1e2937"/>
+          <circle cx="45" cy="65" r="6" fill="#64748b"/>
+        </svg>
+      `);
+      break;
+    case "basinWall":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="40" cy="35" rx="35" ry="20" fill="#f1f5f9" stroke="#1e2937" stroke-width="4"/>
+          <rect x="52" y="8" width="10" height="25" fill="#64748b" rx="2"/>
+        </svg>
+      `);
+      break;
+    case "basinPedestal":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="40" cy="35" rx="35" ry="20" fill="#f1f5f9" stroke="#1e2937" stroke-width="4"/>
+          <rect x="28" y="50" width="24" height="25" fill="#e2e8f0" stroke="#1e2937" rx="3"/>
+          <rect x="52" y="18" width="10" height="25" fill="#64748b" rx="2"/>
+        </svg>
+      `);
+      break;
+    case "bidet":
+      dataURL = 'data:image/svg+xml;base64,' + btoa(`
+        <svg width="70" height="50" viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="35" cy="28" rx="30" ry="20" fill="#f1f5f9" stroke="#1e2937" stroke-width="4"/>
+        </svg>
+      `);
+      break;
+    default:
+      // original shapes for non-sanitary
+      let obj;
+      switch(type){
+        case "towelRad": obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2}); break;
+        case "vanity": obj=new fabric.Rect({width:80,height:40,fill:"#fde68a",stroke:"#92400e",strokeWidth:2}); break;
+        case "ledMirror": obj=new fabric.Rect({width:60,height:60,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
+        case "door": obj=new fabric.Rect({width:15,height:70,fill:"#78350f",stroke:"#111",strokeWidth:2}); break;
+        case "window": obj=new fabric.Rect({width:60,height:40,fill:"#dbeafe",stroke:"#0284c7",strokeWidth:2}); break;
+        case "manhole": obj=new fabric.Circle({radius:30,fill:"#1e2937",stroke:"#64748b",strokeWidth:3}); break;
+        case "grass": obj=new fabric.Rect({width:80,height:40,fill:"#4ade80",stroke:"#166534",strokeWidth:2}); break;
+        case "socket": obj=new fabric.Circle({radius:8,fill:"#fcd34d",stroke:"#b45309",strokeWidth:2}); break;
+        case "light": obj=new fabric.Circle({radius:12,fill:"#facc15",stroke:"#78350f",strokeWidth:2}); break;
+        case "switch": obj=new fabric.Rect({width:10,height:20,fill:"#fbbf24",stroke:"#b45309",strokeWidth:2}); break;
+        case "pipeHot": obj=new fabric.Line([0,0,50,0],{stroke:"#ef4444",strokeWidth:6}); break;
+        case "pipeCold": obj=new fabric.Line([0,0,50,0],{stroke:"#3b82f6",strokeWidth:6}); break;
+        case "drain": obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]}); break;
+      }
+      if(obj){
+        obj.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
+        canvas.add(obj);
+        canvas.setActiveObject(obj);
+      }
+      return;
   }
 
-  if(url){ // real PNG for sanitary
-    fabric.Image.fromURL(url, function(img) {
-      img.scale(scale);
+  if(dataURL){
+    fabric.Image.fromURL(dataURL, function(img) {
+      img.scale(0.9);
       img.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
       canvas.add(img);
       canvas.setActiveObject(img);
+      console.log("✅ SVG fixture added successfully");
     });
-  } else if(obj){ // original shapes for others
-    obj.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
-    canvas.add(obj);
-    canvas.setActiveObject(obj);
   }
 }
+console.log("✅ Planner loaded - try adding a Toilet now");
 </script>
 </body>
 </html>
