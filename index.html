@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Luxury en-suite bathroom installation London. Free full-screen Ensuite Planner with realistic rotatable fixtures. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
-  <title>En-Suite Bathrooms | Ensuite Planner • Luxury London</title>
+  <meta name="description" content="Luxury en-suite bathroom installation London within the M25. Expert fitters Chelsea, Kensington, Notting Hill. 10-year guarantee.">
+  <title>En-Suite Bathrooms | Luxury London Installations</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
@@ -40,28 +40,35 @@
     .planner-select { background: #374151; border: 2px solid #d4af37; color: white; padding: 10px 16px; border-radius: 9999px; font-size: 15px; }
     .planner-btn { background: #d4af37; color: black; padding: 10px 24px; border-radius: 9999px; font-weight: 600; transition: all 0.2s; }
     .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
+
+    /* Mobile fixes */
+    @media (max-width: 768px) {
+      .section-title { font-size: 2.8rem; line-height: 1.1; }
+      .nav { py-4; }
+    }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900">
 
   <!-- NAVBAR -->
-  <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-7">
-    <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
+  <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-4">
         <i class="fa-solid fa-bath text-5xl gold"></i>
         <span class="text-4xl serif tracking-widest font-light">EN-SUITE</span>
       </div>
-      <div class="hidden md:flex gap-10 text-lg font-light">
+      <div class="hidden md:flex gap-8 text-lg font-light">
         <a href="#builder" class="hover:gold transition">Ensuite Planner</a>
         <a href="#estimator" class="hover:gold transition">Instant Estimator</a>
+        <a href="#about" class="hover:gold transition">About Us</a>
         <a href="#areas" class="hover:gold transition">Areas</a>
         <a href="#quote" class="hover:gold transition">Contact</a>
       </div>
-      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-10 py-4 rounded-full transition">BOOK FREE QUOTE</a>
+      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-8 py-4 rounded-full transition">BOOK FREE QUOTE</a>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO – cleaned, no planner mention -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -86,8 +93,8 @@
 
     <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
-      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Free ensuite 2D planner</p>
-      <a href="#builder" onclick="launchPlanner(); return false;" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition cursor-pointer">START YOUR ENSUITE PLAN NOW</a>
+      <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Expert installation across all London postcodes within the M25</p>
+      <a href="#builder" onclick="launchPlanner(); return false;" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition cursor-pointer">LAUNCH ENSUITE PLANNER</a>
     </div>
 
     <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-950 to-black py-6 z-[9999] border-t-4 border-[#d4af37]">
@@ -100,13 +107,11 @@
     </div>
   </header>
 
-  <!-- BUILDER -->
+  <!-- BUILDER – simplified, no long feature list -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8 text-center">
       <span class="uppercase tracking-widest text-sm gold">ENSUITE 2D PLANNER</span>
-      <h2 class="section-title serif text-6xl mt-6">Full-Screen Ensuite Designer</h2>
-      <p class="text-xl text-zinc-600 max-w-2xl mx-auto mt-6">Realistic fixtures • Thin walls & pipes • Drag everything • Mouse wheel to rotate/zoom • Shift+wheel to resize</p>
-      
+      <h2 class="section-title serif text-6xl mt-6">Design Your Perfect En-Suite</h2>
       <div class="mt-16 bg-white rounded-3xl p-16 max-w-3xl mx-auto border border-gold/30">
         <button onclick="launchPlanner()" class="mt-8 bg-[#d4af37] hover:bg-amber-400 text-black px-20 py-8 rounded-3xl text-3xl font-medium transition-all active:scale-95">
           LAUNCH ENSUITE PLANNER →
@@ -115,21 +120,62 @@
     </div>
   </section>
 
-  <!-- INSTANT ESTIMATOR – NEW VERSION £5,500 BASIC -->
+  <!-- NEW ENSUITE ADVANTAGE / ABOUT SECTION -->
+  <section id="about" class="py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-16">
+        <span class="uppercase tracking-widest text-sm gold">WHY AN ENSUITE?</span>
+        <h2 class="section-title serif text-6xl mt-6">Private Comfort or Smart Investment</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-16">
+        <!-- Private Home -->
+        <div class="bg-cream p-10 rounded-3xl">
+          <h3 class="text-3xl serif mb-6">For Your Family Home</h3>
+          <p class="text-xl text-zinc-600 leading-relaxed">Enjoy hotel-style luxury every morning. No more queuing for the bathroom. A private en-suite gives you and your family privacy, convenience and a real sense of home.</p>
+          <ul class="mt-8 space-y-4 text-lg">
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Complete privacy for the main bedroom</li>
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Increases daily comfort & property appeal</li>
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Adds up to 5% to your home’s value in London (Savills 2025)</li>
+          </ul>
+        </div>
+
+        <!-- Rental Investment -->
+        <div class="bg-[#fbf7f0] p-10 rounded-3xl border-2 border-gold">
+          <h3 class="text-3xl serif mb-6 text-gold">For Landlords & Investors</h3>
+          <p class="text-xl leading-relaxed">Turn a spare room into a high-yield asset.</p>
+          <div class="mt-8 space-y-6 text-lg">
+            <div class="flex justify-between border-b pb-4">
+              <span>Average London room rent (shared bathroom)</span>
+              <span class="font-medium">£985 pcm</span>
+            </div>
+            <div class="flex justify-between border-b pb-4">
+              <span>Room with private en-suite</span>
+              <span class="font-medium text-gold">£1,150 – £1,350 pcm</span>
+            </div>
+            <div class="text-sm text-zinc-600">+£165–£365 extra per month • Recoup your investment in 2–4 years</div>
+            <p class="text-sm text-zinc-500">Sources: SpareRoom Q4 2025, Savills, Direct Line 2025. En-suites command 15–30% rental premium in London flatshares & HMOs.</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-sm text-zinc-500 mt-12">All figures are for guidance only. Final prices confirmed after free site visit.</p>
+    </div>
+  </section>
+
+  <!-- INSTANT ESTIMATOR – 3.5 m² min + dropdown upgrades -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
         <span class="uppercase tracking-widest text-sm gold">CALCULATE LIVE</span>
         <h2 class="section-title serif text-6xl">Instant Project Estimator</h2>
-        <p class="mt-4 text-zinc-600 max-w-xl mx-auto">Starts at £5,500 for a proper basic en-suite (small bath + toilet + wall-hung basin in 4 m² minimum room)</p>
+        <p class="mt-4 text-zinc-600 max-w-xl mx-auto">Starts at £5,500 for a proper basic en-suite (3.5 m² minimum room)</p>
       </div>
       <div class="grid lg:grid-cols-2 gap-16">
         <div class="space-y-12">
           <!-- ROOM SIZE -->
           <div>
-            <label class="block text-sm gold mb-3">ROOM SIZE (m²) – Basic at 4 m²</label>
-            <input type="range" id="sizeSlider" min="4" max="15" value="5" oninput="updateEstimate()" class="w-full accent-gold">
-            <div class="flex justify-between text-sm"><span>4 m²</span><span id="sizeValue" class="font-medium">5 m²</span><span>15 m²</span></div>
+            <label class="block text-sm gold mb-3">ROOM SIZE (m²) – Basic at 3.5 m²</label>
+            <input type="range" id="sizeSlider" min="3.5" max="15" step="0.5" value="4" oninput="updateEstimate()" class="w-full accent-gold">
+            <div class="flex justify-between text-sm"><span>3.5 m²</span><span id="sizeValue" class="font-medium">4 m²</span><span>15 m²</span></div>
           </div>
 
           <!-- WHAT BASIC INCLUDES -->
@@ -141,26 +187,31 @@
               <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Lino/vinyl flooring</li>
               <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Basic electrics, lighting & extractor</li>
               <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> 3×2 timber stud walls where needed</li>
-              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> All water/electrics/drainage within easy reach (no long runs)</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> All water/electrics/drainage within easy reach</li>
               <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Full professional London installation + 10-year guarantee</li>
             </ul>
           </div>
 
-          <!-- UPGRADE OPTIONS -->
+          <!-- UPGRADE DROPDOWN -->
           <div>
-            <label class="block text-sm gold mb-4">UPGRADE OPTIONS (click to add)</label>
-            <div class="space-y-4">
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="2400">Freestanding bath upgrade</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="1950">Rainfall shower system</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="2200">Full wall tiling (instead of splashback)</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="1800">Porcelain tiled floor (instead of lino)</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="1800">Underfloor heating</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="1200">LED mirror + smart lighting</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="850">Heated towel radiator</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="1450">Built-in vanity storage</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="650">Bluetooth speakers</label>
-              <label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" onclick="updateEstimate()" class="accent-gold w-5 h-5 upgrade-cb" data-price="950">Marble-effect premium splashback</label>
+            <label class="block text-sm gold mb-3">Add Upgrades (multiple allowed)</label>
+            <div class="flex gap-3">
+              <select id="upgradeSelect" class="flex-1 planner-select">
+                <option value="">Choose upgrade...</option>
+                <option value="2400">Freestanding bath upgrade (+£2,400)</option>
+                <option value="1950">Rainfall shower system (+£1,950)</option>
+                <option value="2200">Full wall tiling (instead of splashback) (+£2,200)</option>
+                <option value="1800">Porcelain tiled floor (instead of lino) (+£1,800)</option>
+                <option value="1800">Underfloor heating (+£1,800)</option>
+                <option value="1200">LED mirror + smart lighting (+£1,200)</option>
+                <option value="850">Heated towel radiator (+£850)</option>
+                <option value="1450">Built-in vanity storage (+£1,450)</option>
+                <option value="650">Bluetooth speakers (+£650)</option>
+                <option value="950">Marble-effect premium splashback (+£950)</option>
+              </select>
+              <button onclick="addUpgrade()" class="planner-btn px-8">Add</button>
             </div>
+            <div id="addedUpgrades" class="mt-6 space-y-3"></div>
           </div>
         </div>
 
@@ -168,8 +219,9 @@
         <div class="bg-cream p-12 rounded-3xl border border-gold/30 h-fit sticky top-28">
           <p class="uppercase text-sm gold tracking-widest">YOUR ESTIMATED PRICE</p>
           <p id="estimatePrice" class="text-7xl font-light text-gold mt-4">£5,500</p>
-          <p class="text-sm text-zinc-500 mt-2">Basic 4–5 m² en-suite • Full London installation • 10-year guarantee</p>
-          <button onclick="saveEstimate()" class="mt-16 w-full bg-[#d4af37] text-black py-8 rounded-3xl text-2xl font-medium">SAVE THIS ESTIMATE &amp; GET FREE DESIGN</button>
+          <p class="text-sm text-zinc-500 mt-2">Basic 3.5–4 m² en-suite • Full London installation • 10-year guarantee</p>
+          <button onclick="saveEstimate()" class="mt-16 w-full bg-[#d4af37] text-black py-8 rounded-3xl text-2xl font-medium">SAVE THIS ESTIMATE & GET FREE DESIGN</button>
+          <p class="text-xs text-zinc-400 mt-6 text-center">All prices for guidance only. Final quote after site visit.</p>
         </div>
       </div>
     </div>
@@ -190,11 +242,10 @@
     </div>
   </section>
 
-  <!-- AREAS, FAQ, QUOTE, FLOATING CTA, FOOTER unchanged from previous version -->
   <!-- AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
-      <h2 class="text-center text-5xl mb-12">Serving Every London Postcode</h2>
+      <h2 class="text-center text-5xl mb-12">Serving All London Postcodes within the M25</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-lg">
         <div>Chelsea SW3</div><div>Kensington W8</div><div>Notting Hill W11</div><div>Hampstead NW3</div>
         <div>Islington N1</div><div>Shoreditch EC2</div><div>Belgravia SW1</div><div>Mayfair W1</div>
@@ -228,7 +279,7 @@
             <p class="text-xl">Do you work in all London postcodes?</p>
             <span class="text-3xl text-gold">+</span>
           </div>
-          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, every postcode in Greater London.</div>
+          <div class="faq-answer hidden mt-6 text-zinc-600">Yes, every postcode within the M25.</div>
         </div>
         <div class="faq-item border-b border-zinc-200 pb-8">
           <div onclick="toggleFAQ(this)" class="flex justify-between cursor-pointer items-center">
@@ -249,7 +300,7 @@
         <input type="text" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" placeholder="Email" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-        <textarea id="quoteTextarea" placeholder="Tell us about your project (your ensuite layout will appear here)" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
+        <textarea id="quoteTextarea" placeholder="Tell us about your project" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40"></textarea>
         <button type="submit" class="w-full py-8 bg-[#d4af37] text-black text-3xl font-medium rounded-3xl">SEND REQUEST — LONDON TEAM CALLS WITHIN 2 HOURS</button>
       </form>
     </div>
@@ -263,10 +314,11 @@
   <!-- FOOTER -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
-    <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London • © 2026</p>
+    <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London within the M25 • © 2026</p>
+    <p class="text-xs text-zinc-400 mt-4">All prices shown are for guidance only. Final quote given after site visit.</p>
   </footer>
 
-  <!-- ENSUITE PLANNER MODAL (unchanged from last version) -->
+  <!-- ENSUITE PLANNER MODAL -->
   <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
     <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800 text-white">
       <div class="flex items-center gap-4">
@@ -347,7 +399,7 @@
       localStorage.setItem('roomioBannerClosed', 'true');
     }
 
-    // ==================== ENSUITE PLANNER (same as before) ====================
+    // ==================== ENSUITE PLANNER ====================
     let fabricCanvas;
     let tool = "select";
     let drawing = false;
@@ -505,16 +557,53 @@
       document.getElementById('plannerModal').classList.add('hidden');
     }
 
-    // ==================== NEW ESTIMATOR LOGIC ====================
-    let basePrice = 5500; // £5,500 for basic 4 m² en-suite
+    // ==================== ESTIMATOR WITH DROPDOWN UPGRADES ====================
+    let basePrice = 5500;
+    let addedUpgrades = [];
+
+    function addUpgrade() {
+      const select = document.getElementById('upgradeSelect');
+      if (!select.value) return;
+
+      const price = parseInt(select.value);
+      const text = select.options[select.selectedIndex].text;
+
+      addedUpgrades.push({ text: text.split(' (+')[0], price: price });
+
+      renderAddedUpgrades();
+      updateEstimate();
+      select.value = '';
+    }
+
+    function removeUpgrade(index) {
+      addedUpgrades.splice(index, 1);
+      renderAddedUpgrades();
+      updateEstimate();
+    }
+
+    function renderAddedUpgrades() {
+      const container = document.getElementById('addedUpgrades');
+      container.innerHTML = '';
+      addedUpgrades.forEach((item, i) => {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between items-center bg-white border border-gold/30 rounded-2xl px-6 py-4';
+        div.innerHTML = `
+          <span>${item.text}</span>
+          <div class="flex items-center gap-4">
+            <span class="font-medium text-gold">+£${item.price}</span>
+            <button onclick="removeUpgrade(${i})" class="text-red-500 hover:text-red-700 text-xl">×</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
 
     function updateEstimate() {
-      const size = parseInt(document.getElementById('sizeSlider').value);
-      let price = basePrice + (size - 4) * 950; // £950 per extra m²
+      const size = parseFloat(document.getElementById('sizeSlider').value);
+      let price = basePrice + Math.max(0, (size - 3.5) * 950);
 
-      // Add upgrades
-      document.querySelectorAll('.upgrade-cb:checked').forEach(cb => {
-        price += parseInt(cb.dataset.price);
+      addedUpgrades.forEach(item => {
+        price += item.price;
       });
 
       document.getElementById('estimatePrice').textContent = '£' + Math.round(price).toLocaleString();
