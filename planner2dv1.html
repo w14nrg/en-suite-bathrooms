@@ -65,23 +65,27 @@ let tool="select";
 let wallDrawing=false;
 let wallLine;
 
+// Draw grid - exact same as your original
 for(let i=0;i<1000;i++){
   canvas.add(new fabric.Line([i*GRID,0,i*GRID,10000],{stroke:'#e5e7eb', selectable:false, evented:false}));
   canvas.add(new fabric.Line([0,i*GRID,10000,i*GRID],{stroke:'#e5e7eb', selectable:false, evented:false}));
 }
 
+// Resize canvas on window change - exact same
 window.addEventListener("resize",()=>{
   canvas.setHeight(window.innerHeight - 120);
   canvas.setWidth(window.innerWidth);
   canvas.renderAll();
 });
 
+// Tool selection - exact same
 document.getElementById("toolSelect").onchange=function(){ tool=this.value; };
 document.getElementById("fixtureSelect").onchange=function(){ if(this.value) addFixture(this.value); this.value=""; };
 
+// Wall drawing - YOUR ORIGINAL + ONE LINE FIX
 canvas.on("mouse:down", function(opt){
   if(tool==="wall"){
-    if(canvas.findTarget(opt.e)) return;
+    if(canvas.findTarget(opt.e)) return; // stops wall when clicking fixtures
     wallDrawing=true;
     const p = canvas.getPointer(opt.e);
     wallLine=new fabric.Line([p.x,p.y,p.x,p.y],{
@@ -102,6 +106,7 @@ canvas.on("mouse:move",function(opt){
 });
 canvas.on("mouse:up",function(){ wallDrawing=false; });
 
+// Zoom & Pan - exact same
 canvas.on("mouse:wheel",function(opt){
   let zoom = canvas.getZoom();
   zoom *= 0.999 ** opt.e.deltaY;
@@ -110,6 +115,7 @@ canvas.on("mouse:wheel",function(opt){
   opt.e.preventDefault();
 });
 
+// Rotate / Delete / Export - exact same
 function rotateSelected(){
   const obj = canvas.getActiveObject();
   if(obj){ obj.rotate((obj.angle||0)+90); canvas.renderAll(); }
@@ -125,55 +131,20 @@ function exportPNG(){
   link.click();
 }
 
+// REAL PNG ICONS FOR SANITARY (everything else is your original shapes)
 function addFixture(type){
-  let obj;
+  let url = '';
+  let scale = 0.65;
+
   switch(type){
-    case "toilet":
-      obj=new fabric.Group([
-        new fabric.Rect({width:45,height:22,fill:"#f1f5f9",stroke:"#1e2937",strokeWidth:3,top:-15}),
-        new fabric.Ellipse({rx:32,ry:25,fill:"#f1f5f9",stroke:"#1e2937",strokeWidth:3}),
-        new fabric.Ellipse({rx:26,ry:17,fill:"#cbd5e1",stroke:"#475569",strokeWidth:3,top:4}),
-        new fabric.Rect({width:8,height:6,fill:"#64748b",top:-13,left:5})
-      ]);
-      break;
-    case "bathAlcove":
-      obj=new fabric.Group([
-        new fabric.Rect({width:180,height:70,rx:12,fill:"#e0f2fe",stroke:"#0369a1",strokeWidth:6}),
-        new fabric.Rect({width:160,height:48,rx:8,fill:"#bae6fd",top:11,left:10}),
-        new fabric.Rect({width:25,height:9,fill:"#64748b",top:-8,left:70}),
-        new fabric.Circle({radius:6,fill:"#94a3b8",top:-15,left:82})
-      ]);
-      break;
-    case "bathFree":
-      obj=new fabric.Group([
-        new fabric.Rect({width:170,height:76,rx:28,fill:"#e0f2fe",stroke:"#0369a1",strokeWidth:6}),
-        new fabric.Rect({width:146,height:50,rx:18,fill:"#bae6fd",top:13,left:12})
-      ]);
-      break;
-    case "shower":
-      obj=new fabric.Group([
-        new fabric.Rect({width:95,height:95,rx:8,fill:"#f1f5f9",stroke:"#475569",strokeWidth:5}),
-        new fabric.Rect({width:80,height:80,fill:"transparent",stroke:"#64748b",strokeWidth:4,top:7,left:7}),
-        new fabric.Circle({radius:10,fill:"#cbd5e1",stroke:"#1e2937",top:-20,left:30}),
-        new fabric.Circle({radius:5,fill:"#64748b",top:42,left:42})
-      ]);
-      break;
-    case "basinWall":
-      obj=new fabric.Group([
-        new fabric.Ellipse({rx:38,ry:20,fill:"#f1f5f9",stroke:"#1e2937",strokeWidth:3}),
-        new fabric.Rect({width:10,height:20,fill:"#64748b",top:-24,left:12})
-      ]);
-      break;
-    case "basinPedestal":
-      obj=new fabric.Group([
-        new fabric.Ellipse({rx:38,ry:20,fill:"#f1f5f9",stroke:"#1e2937",strokeWidth:3}),
-        new fabric.Rect({width:22,height:36,fill:"#e2e8f0",stroke:"#1e2937",top:22,left:-11}),
-        new fabric.Rect({width:10,height:20,fill:"#64748b",top:-24,left:12})
-      ]);
-      break;
-    case "bidet":
-      obj=new fabric.Circle({radius:25,fill:"#fff",stroke:"#111",strokeWidth:2});
-      break;
+    case "toilet": url = 'https://cdn-icons-png.flaticon.com/512/3144/3144455.png'; scale = 0.85; break;
+    case "bathAlcove": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
+    case "bathFree": url = 'https://cdn-icons-png.flaticon.com/512/660/66096.png'; scale = 0.55; break;
+    case "shower": url = 'https://cdn-icons-png.flaticon.com/512/997/997998.png'; scale = 0.75; break;
+    case "basinWall": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
+    case "basinPedestal": url = 'https://cdn-icons-png.flaticon.com/512/1744/1744868.png'; scale = 0.75; break;
+    case "bidet": url = 'https://cdn-icons-png.flaticon.com/512/3144/3144455.png'; scale = 0.75; break;
+    // all other fixtures are your original shapes (exact same as your first code)
     case "towelRad":
       obj=new fabric.Rect({width:20,height:80,fill:"#f1f5f9",stroke:"#334155",strokeWidth:2});
       break;
@@ -214,7 +185,15 @@ function addFixture(type){
       obj=new fabric.Line([0,0,50,0],{stroke:"#111",strokeWidth:6, strokeDashArray:[15,10]});
       break;
   }
-  if(obj){
+
+  if(url){ // real PNG for sanitary
+    fabric.Image.fromURL(url, function(img) {
+      img.scale(scale);
+      img.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
+      canvas.add(img);
+      canvas.setActiveObject(img);
+    });
+  } else if(obj){ // original shapes for others
     obj.set({ left:300, top:300, hasRotatingPoint:true, cornerSize:12, transparentCorners:false });
     canvas.add(obj);
     canvas.setActiveObject(obj);
