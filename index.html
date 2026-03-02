@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&family=Inter:wght@300;400;500&display=swap');
+    html, body { overflow-x: hidden; }
     body { font-family: 'Inter', sans-serif; }
     .serif { font-family: 'Playfair Display', serif; }
     .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
@@ -35,19 +36,17 @@
     .planner-select { background: #374151; border: 2px solid #d4af37; color: white; padding: 10px 16px; border-radius: 9999px; font-size: 15px; }
     .planner-btn { background: #d4af37; color: black; padding: 10px 24px; border-radius: 9999px; font-weight: 600; transition: all 0.2s; }
     .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
-    /* Hover read-more boxes */
-    .hover-card { transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
-    .hover-card:hover { transform: translateY(-4px); }
+    /* Click-to-toggle Read More (works on mobile + desktop) */
     .hover-card .more-box { opacity: 0; max-height: 0; overflow: hidden; transition: all 0.4s ease; }
-    .hover-card:hover .more-box { opacity: 1; max-height: 420px; }
+    .hover-card .toggle-btn { transition: all 0.3s; }
     @media (max-width: 768px) {
       .section-title { font-size: 2.8rem; line-height: 1.1; }
-      header .max-w-6xl { padding-top: 5.5rem !important; }
+      header .max-w-6xl { padding-top: 6.5rem !important; }
     }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900 overflow-x-hidden">
-  <!-- NAVBAR -->
+  <!-- NAVBAR (unchanged) -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-4">
@@ -64,7 +63,7 @@
       <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-8 py-4 rounded-full transition">BOOK FREE QUOTE</a>
     </div>
   </nav>
-  <!-- HERO – spacing fixed -->
+  <!-- HERO – extra mobile padding for zero shift -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -85,7 +84,7 @@
       <div class="steam-particle" style="left:35px; animation-delay:0.4s"></div>
       <div class="steam-particle" style="left:60px; animation-delay:1.8s"></div>
     </div>
-    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative pt-20">
+    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative pt-20 md:pt-24">
       <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">LONDON'S MOST LAVISH ENSUITES</h1>
       <p class="text-3xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="300">Expert en-suite bathroom installation across all London postcodes within the M25</p>
       <a href="#estimator" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition cursor-pointer">GET INSTANT ESTIMATE</a>
@@ -99,7 +98,7 @@
       </div>
     </div>
   </header>
-  <!-- BUILDER -->
+  <!-- BUILDER (unchanged) -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8 text-center">
       <span class="uppercase tracking-widest text-sm gold">ENSUITE 2D PLANNER</span>
@@ -111,7 +110,7 @@
       </div>
     </div>
   </section>
-  <!-- ENSUITE ADVANTAGE / ABOUT US – hover boxes added -->
+  <!-- ABOUT US – now clickable Read More / Read Less (mobile friendly) -->
   <section id="about" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -120,7 +119,7 @@
       </div>
       <div class="grid md:grid-cols-2 gap-16">
         <!-- Family Home -->
-        <div class="hover-card bg-cream p-10 rounded-3xl group">
+        <div class="hover-card bg-cream p-10 rounded-3xl cursor-pointer" onclick="toggleMore(this)">
           <h3 class="text-3xl serif mb-6">For Your Family Home</h3>
           <p class="text-xl text-zinc-600 leading-relaxed">Enjoy hotel-style luxury every morning. No more queuing for the bathroom. A private en-suite gives you and your family privacy, convenience and a real sense of home.</p>
           <ul class="mt-8 space-y-4 text-lg">
@@ -131,10 +130,10 @@
           <div class="more-box mt-10 pt-8 border-t border-gold/30 text-base text-zinc-600">
             Families across Chelsea, Kensington and Notting Hill tell us this single change transformed their mornings. No more rushed bathroom schedules, no more arguments over hot water, and a noticeable increase in property value when you eventually sell. Recent Savills and Knight Frank reports (2025-2026) confirm en-suite additions in family homes deliver the highest satisfaction and resale uplift of any home improvement under £15k.
           </div>
-          <div class="mt-6 text-gold font-medium flex items-center gap-2 group-hover:text-amber-600 transition">Hover for full details →</div>
+          <button onclick="event.stopImmediatePropagation(); toggleMore(this.closest('.hover-card'))" class="toggle-btn mt-6 text-gold font-medium flex items-center gap-2">Read more →</button>
         </div>
         <!-- Landlords & Investors -->
-        <div class="hover-card bg-[#fbf7f0] p-10 rounded-3xl border-2 border-gold group">
+        <div class="hover-card bg-[#fbf7f0] p-10 rounded-3xl border-2 border-gold cursor-pointer" onclick="toggleMore(this)">
           <h3 class="text-3xl serif mb-6 text-gold">For Landlords & Investors</h3>
           <p class="text-xl leading-relaxed">Turn a spare room into a high-yield asset.</p>
           <div class="mt-8 space-y-6 text-lg">
@@ -152,12 +151,12 @@
           <div class="more-box mt-10 pt-8 border-t border-gold/30 text-base text-zinc-600">
             Adding an en-suite is currently the highest-ROI upgrade in the London rental market. Real 2026 listings show ensuite rooms letting 2–3 weeks faster with almost zero void periods. A typical 5-bed HMO jumps from £5,000–£5,800/month to £6,800–£8,000+/month once all rooms have private bathrooms. Payback is usually under 2 years and you also gain a 4–7% uplift in property valuation. Tenants happily pay the premium for the privacy and modern finish.
           </div>
-          <div class="mt-6 text-gold font-medium flex items-center gap-2 group-hover:text-amber-600 transition">Hover for full investment breakdown →</div>
+          <button onclick="event.stopImmediatePropagation(); toggleMore(this.closest('.hover-card'))" class="toggle-btn mt-6 text-gold font-medium flex items-center gap-2">Read more →</button>
         </div>
       </div>
     </div>
   </section>
-  <!-- INSTANT ESTIMATOR – slider now starts at 3.5 -->
+  <!-- ESTIMATOR (slider still starts at 3.5) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -222,7 +221,7 @@
       </div>
     </div>
   </section>
-  <!-- PROCESS – icons added -->
+  <!-- PROCESS (icons unchanged) -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -236,13 +235,13 @@
       </div>
     </div>
   </section>
-  <!-- AREAS -->
+  <!-- AREAS (unchanged) -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving All London Postcodes within the M25</h2>
     </div>
   </section>
-  <!-- QUOTE -->
+  <!-- QUOTE (unchanged) -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -255,11 +254,11 @@
       </form>
     </div>
   </section>
-  <!-- FLOATING CTA -->
+  <!-- FLOATING CTA (unchanged) -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
-  <!-- FOOTER – smaller text + full M25 list -->
+  <!-- FOOTER – massively expanded postcode list for full M25 SEO -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London within the M25 • © 2026</p>
@@ -274,13 +273,19 @@
         <div>Croydon CR0</div><div>Kingston KT1</div><div>Twickenham TW1</div><div>Sutton SM1</div><div>Orpington BR6</div><div>Romford RM1</div>
         <div>Ilford IG1</div><div>Walthamstow E17</div><div>Stratford E15</div><div>Canary Wharf E14</div><div>Greenwich SE10</div><div>Lewisham SE13</div>
         <div>Peckham SE15</div><div>Acton W3</div><div>Teddington TW11</div><div>Surbiton KT6</div><div>Dartford DA1</div><div>Woodford IG8</div>
+        <div>Hounslow TW3</div><div>Isleworth TW7</div><div>Brentford TW8</div><div>Uxbridge UB8</div><div>Watford WD3</div><div>St Albans AL2</div>
+        <div>Guildford GU20</div><div>Virginia Water GU25</div><div>Kingston KT2</div><div>Kingston KT3</div><div>Surbiton KT5</div><div>New Malden KT3</div>
+        <div>Croydon CR2</div><div>Croydon CR4</div><div>Sutton SM2</div><div>Sutton SM3</div><div>Beckenham BR3</div><div>Bexleyheath DA7</div>
+        <div>Erith DA8</div><div>Dartford DA2</div><div>Sevenoaks TN14</div><div>Brentwood CM13</div><div>Romford RM2</div><div>Ilford IG2</div>
+        <div>Enfield EN2</div><div>Barnet EN4</div><div>Potters Bar EN6</div><div>Hatfield AL9</div><div>Welwyn Garden City AL8</div><div>Hertford SG13</div>
       </div>
     </div>
    
     <p class="text-xs text-zinc-400 mt-12">All prices shown are for guidance only. Final quote given after free site visit.</p>
   </footer>
-  <!-- ENSUITE PLANNER MODAL (full & unchanged) -->
+  <!-- PLANNER MODAL & MOBILE POPUP (full & unchanged) -->
   <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
+    <!-- full modal code unchanged from your original -->
     <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800 text-white">
       <div class="flex items-center gap-4">
         <i class="fa-solid fa-bath text-4xl gold"></i>
@@ -289,6 +294,7 @@
       <button onclick="exitPlanner()" class="text-4xl hover:text-gold transition">✕</button>
     </div>
     <div id="plannerControls" class="bg-[#1f2937] py-4 px-8 flex items-center gap-3 border-b border-[#d4af37]/50 text-white text-sm overflow-x-auto">
+      <!-- full controls unchanged -->
       <select id="toolSelect" class="planner-select">
         <option value="select">Select / Move</option>
         <option value="wall">🧱 Draw Wall</option>
@@ -333,7 +339,6 @@
       <canvas id="c" class="absolute inset-0"></canvas>
     </div>
   </div>
-  <!-- MOBILE POPUP -->
   <div id="mobilePopup" class="hidden fixed inset-0 bg-black/90 z-[100000] flex items-center justify-center">
     <div class="bg-[#fbf7f0] rounded-3xl max-w-md mx-6 p-10 text-center border-2 border-[#d4af37]">
       <i class="fa-solid fa-laptop text-7xl gold mb-6"></i>
@@ -342,6 +347,7 @@
       <button onclick="closeMobilePopup()" class="mt-8 w-full bg-[#d4af37] hover:bg-amber-400 text-black py-6 rounded-3xl text-xl font-medium">OK, GOT IT</button>
     </div>
   </div>
+
   <script>
     AOS.init({ duration: 1200, once: true });
     function closeRoomioBanner() {
@@ -352,7 +358,21 @@
       setTimeout(() => { b.style.display = 'none'; }, 500);
       localStorage.setItem('roomioBannerClosed', 'true');
     }
-    // ==================== ENSUITE PLANNER ====================
+    // ==================== NEW TOGGLE FOR READ MORE (mobile + desktop) ====================
+    function toggleMore(card) {
+      const box = card.querySelector('.more-box');
+      const btn = card.querySelector('.toggle-btn');
+      if (box.style.maxHeight === '420px') {
+        box.style.maxHeight = '0';
+        box.style.opacity = '0';
+        btn.textContent = 'Read more →';
+      } else {
+        box.style.maxHeight = '420px';
+        box.style.opacity = '1';
+        btn.textContent = 'Read less ×';
+      }
+    }
+    // ==================== ENSUITE PLANNER (full unchanged) ====================
     let fabricCanvas;
     let tool = "select";
     let drawing = false;
@@ -492,7 +512,7 @@
     function exitPlanner() {
       document.getElementById('plannerModal').classList.add('hidden');
     }
-    // ==================== ESTIMATOR ====================
+    // ==================== ESTIMATOR (starts at 3.5) ====================
     let basePrice = 5500;
     let addedUpgrades = [];
     function addUpgrade() {
