@@ -36,12 +36,14 @@
     .planner-select { background: #374151; border: 2px solid #d4af37; color: white; padding: 10px 16px; border-radius: 9999px; font-size: 15px; }
     .planner-btn { background: #d4af37; color: black; padding: 10px 24px; border-radius: 9999px; font-weight: 600; transition: all 0.2s; }
     .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
-    /* Click-to-toggle Read More (works on mobile + desktop) */
     .hover-card .more-box { opacity: 0; max-height: 0; overflow: hidden; transition: all 0.4s ease; }
     .hover-card .toggle-btn { transition: all 0.3s; }
+    /* Mobile postcode fix + estimator fix */
     @media (max-width: 768px) {
       .section-title { font-size: 2.8rem; line-height: 1.1; }
       header .max-w-6xl { padding-top: 6.5rem !important; }
+      .estimator-price-box { position: static !important; width: 100% !important; }
+      .footer-postcodes { font-size: 0.75rem !important; }
     }
   </style>
 </head>
@@ -63,7 +65,7 @@
       <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-8 py-4 rounded-full transition">BOOK FREE QUOTE</a>
     </div>
   </nav>
-  <!-- HERO – extra mobile padding for zero shift -->
+  <!-- HERO (unchanged) -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -110,7 +112,7 @@
       </div>
     </div>
   </section>
-  <!-- ABOUT US – now clickable Read More / Read Less (mobile friendly) -->
+  <!-- ABOUT US (toggle unchanged) -->
   <section id="about" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -118,7 +120,6 @@
         <h2 class="section-title serif text-6xl mt-6">Private Comfort or Smart Investment</h2>
       </div>
       <div class="grid md:grid-cols-2 gap-16">
-        <!-- Family Home -->
         <div class="hover-card bg-cream p-10 rounded-3xl cursor-pointer" onclick="toggleMore(this)">
           <h3 class="text-3xl serif mb-6">For Your Family Home</h3>
           <p class="text-xl text-zinc-600 leading-relaxed">Enjoy hotel-style luxury every morning. No more queuing for the bathroom. A private en-suite gives you and your family privacy, convenience and a real sense of home.</p>
@@ -132,7 +133,6 @@
           </div>
           <button onclick="event.stopImmediatePropagation(); toggleMore(this.closest('.hover-card'))" class="toggle-btn mt-6 text-gold font-medium flex items-center gap-2">Read more →</button>
         </div>
-        <!-- Landlords & Investors -->
         <div class="hover-card bg-[#fbf7f0] p-10 rounded-3xl border-2 border-gold cursor-pointer" onclick="toggleMore(this)">
           <h3 class="text-3xl serif mb-6 text-gold">For Landlords & Investors</h3>
           <p class="text-xl leading-relaxed">Turn a spare room into a high-yield asset.</p>
@@ -156,7 +156,7 @@
       </div>
     </div>
   </section>
-  <!-- ESTIMATOR (slider still starts at 3.5) -->
+  <!-- INSTANT ESTIMATOR – mobile fixed (no side overflow) -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -211,7 +211,7 @@
             <p class="text-xs text-zinc-500 mt-4">* Plumbing & drainage or electrics upgrades only required if existing services are not easily accessible and new runs will be needed.</p>
           </div>
         </div>
-        <div class="bg-cream p-12 rounded-3xl border border-gold/30 h-fit sticky top-28">
+        <div class="estimator-price-box bg-cream p-12 rounded-3xl border border-gold/30 h-fit sticky lg:top-28">
           <p class="uppercase text-sm gold tracking-widest">YOUR ESTIMATED PRICE</p>
           <p id="estimatePrice" class="text-7xl font-light text-gold mt-4">£5,500</p>
           <p class="text-sm text-zinc-500 mt-2">Basic 3.5–4 m² en-suite • Full London installation • 10-year guarantee</p>
@@ -221,7 +221,7 @@
       </div>
     </div>
   </section>
-  <!-- PROCESS (icons unchanged) -->
+  <!-- PROCESS – £ icon fixed -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -229,7 +229,7 @@
         <div class="flex flex-col items-center"><i class="fa-solid fa-phone-volume text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">01</div><p class="font-medium">Free Consultation</p></div>
         <div class="flex flex-col items-center"><i class="fa-solid fa-drafting-compass text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">02</div><p class="font-medium">Ensuite Planner</p></div>
         <div class="flex flex-col items-center"><i class="fa-solid fa-palette text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">03</div><p class="font-medium">Material Selection</p></div>
-        <div class="flex flex-col items-center"><i class="fa-solid fa-file-invoice-dollar text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">04</div><p class="font-medium">Final Quote</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-file-invoice text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">04</div><p class="font-medium">Final Quote</p></div>
         <div class="flex flex-col items-center"><i class="fa-solid fa-screwdriver-wrench text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">05</div><p class="font-medium">Expert Installation</p></div>
         <div class="flex flex-col items-center"><i class="fa-solid fa-handshake text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">06</div><p class="font-medium">Final Handover</p></div>
       </div>
@@ -258,14 +258,14 @@
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
-  <!-- FOOTER – massively expanded postcode list for full M25 SEO -->
+  <!-- FOOTER – smaller on mobile -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London within the M25 • © 2026</p>
    
     <div class="max-w-7xl mx-auto px-8 mt-12">
       <p class="uppercase tracking-widest text-sm gold mb-6">Serving every postcode within the M25</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center text-base">
+      <div class="footer-postcodes grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center text-xs md:text-sm">
         <div>Chelsea SW3</div><div>Kensington W8</div><div>Notting Hill W11</div><div>Hampstead NW3</div><div>Islington N1</div><div>Shoreditch EC2</div>
         <div>Belgravia SW1</div><div>Mayfair W1</div><div>Knightsbridge SW1X</div><div>Fulham SW6</div><div>Primrose Hill NW1</div><div>Highgate N6</div>
         <div>Clapham SW4</div><div>Wandsworth SW18</div><div>Richmond TW9</div><div>Putney SW15</div><div>Wimbledon SW19</div><div>Chiswick W4</div>
@@ -285,7 +285,6 @@
   </footer>
   <!-- PLANNER MODAL & MOBILE POPUP (full & unchanged) -->
   <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
-    <!-- full modal code unchanged from your original -->
     <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800 text-white">
       <div class="flex items-center gap-4">
         <i class="fa-solid fa-bath text-4xl gold"></i>
@@ -294,7 +293,6 @@
       <button onclick="exitPlanner()" class="text-4xl hover:text-gold transition">✕</button>
     </div>
     <div id="plannerControls" class="bg-[#1f2937] py-4 px-8 flex items-center gap-3 border-b border-[#d4af37]/50 text-white text-sm overflow-x-auto">
-      <!-- full controls unchanged -->
       <select id="toolSelect" class="planner-select">
         <option value="select">Select / Move</option>
         <option value="wall">🧱 Draw Wall</option>
@@ -358,7 +356,6 @@
       setTimeout(() => { b.style.display = 'none'; }, 500);
       localStorage.setItem('roomioBannerClosed', 'true');
     }
-    // ==================== NEW TOGGLE FOR READ MORE (mobile + desktop) ====================
     function toggleMore(card) {
       const box = card.querySelector('.more-box');
       const btn = card.querySelector('.toggle-btn');
@@ -372,7 +369,7 @@
         btn.textContent = 'Read less ×';
       }
     }
-    // ==================== ENSUITE PLANNER (full unchanged) ====================
+    // ==================== ENSUITE PLANNER (unchanged) ====================
     let fabricCanvas;
     let tool = "select";
     let drawing = false;
@@ -512,7 +509,7 @@
     function exitPlanner() {
       document.getElementById('plannerModal').classList.add('hidden');
     }
-    // ==================== ESTIMATOR (starts at 3.5) ====================
+    // ==================== ESTIMATOR ====================
     let basePrice = 5500;
     let addedUpgrades = [];
     function addUpgrade() {
