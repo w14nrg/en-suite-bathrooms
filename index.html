@@ -38,17 +38,17 @@
     .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
     .hover-card .more-box { opacity: 0; max-height: 0; overflow: hidden; transition: all 0.4s ease; }
     .hover-card .toggle-btn { transition: all 0.3s; }
-    /* Mobile postcode fix + estimator fix */
     @media (max-width: 768px) {
       .section-title { font-size: 2.8rem; line-height: 1.1; }
       header .max-w-6xl { padding-top: 6.5rem !important; }
-      .estimator-price-box { position: static !important; width: 100% !important; }
+      #estimator { padding-bottom: 160px !important; } /* stops floating button overlap */
+      .estimator-price-box { margin-top: 3rem !important; width: 100% !important; }
       .footer-postcodes { font-size: 0.75rem !important; }
     }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900 overflow-x-hidden">
-  <!-- NAVBAR (unchanged) -->
+  <!-- NAVBAR -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-4">
@@ -65,7 +65,7 @@
       <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-8 py-4 rounded-full transition">BOOK FREE QUOTE</a>
     </div>
   </nav>
-  <!-- HERO (unchanged) -->
+  <!-- HERO -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -156,7 +156,7 @@
       </div>
     </div>
   </section>
-  <!-- INSTANT ESTIMATOR – mobile fixed (no side overflow) -->
+  <!-- INSTANT ESTIMATOR – mobile stacking + padding fixed -->
   <section id="estimator" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -164,7 +164,7 @@
         <h2 class="section-title serif text-6xl">Instant Project Estimator</h2>
         <p class="mt-4 text-zinc-600 max-w-xl mx-auto">Starts at £5,500 for a proper basic en-suite (3.5 m² minimum room)</p>
       </div>
-      <div class="grid lg:grid-cols-2 gap-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <div class="space-y-12">
           <div>
             <label class="block text-sm gold mb-3">ROOM SIZE (m²) – Basic at 3.5 m²</label>
@@ -211,7 +211,7 @@
             <p class="text-xs text-zinc-500 mt-4">* Plumbing & drainage or electrics upgrades only required if existing services are not easily accessible and new runs will be needed.</p>
           </div>
         </div>
-        <div class="estimator-price-box bg-cream p-12 rounded-3xl border border-gold/30 h-fit sticky lg:top-28">
+        <div class="estimator-price-box bg-cream p-12 rounded-3xl border border-gold/30 h-fit">
           <p class="uppercase text-sm gold tracking-widest">YOUR ESTIMATED PRICE</p>
           <p id="estimatePrice" class="text-7xl font-light text-gold mt-4">£5,500</p>
           <p class="text-sm text-zinc-500 mt-2">Basic 3.5–4 m² en-suite • Full London installation • 10-year guarantee</p>
@@ -221,7 +221,7 @@
       </div>
     </div>
   </section>
-  <!-- PROCESS – £ icon fixed -->
+  <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step London Process</h2>
@@ -235,13 +235,13 @@
       </div>
     </div>
   </section>
-  <!-- AREAS (unchanged) -->
+  <!-- AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving All London Postcodes within the M25</h2>
     </div>
   </section>
-  <!-- QUOTE (unchanged) -->
+  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <h2 class="text-6xl serif mb-12">Ready for your luxury en-suite?</h2>
@@ -254,15 +254,14 @@
       </form>
     </div>
   </section>
-  <!-- FLOATING CTA (unchanged) -->
+  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
-  <!-- FOOTER – smaller on mobile -->
+  <!-- FOOTER -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert Luxury En-Suite Installation Across All London within the M25 • © 2026</p>
-   
     <div class="max-w-7xl mx-auto px-8 mt-12">
       <p class="uppercase tracking-widest text-sm gold mb-6">Serving every postcode within the M25</p>
       <div class="footer-postcodes grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center text-xs md:text-sm">
@@ -280,10 +279,9 @@
         <div>Enfield EN2</div><div>Barnet EN4</div><div>Potters Bar EN6</div><div>Hatfield AL9</div><div>Welwyn Garden City AL8</div><div>Hertford SG13</div>
       </div>
     </div>
-   
     <p class="text-xs text-zinc-400 mt-12">All prices shown are for guidance only. Final quote given after free site visit.</p>
   </footer>
-  <!-- PLANNER MODAL & MOBILE POPUP (full & unchanged) -->
+  <!-- PLANNER MODAL & MOBILE POPUP (unchanged) -->
   <div id="plannerModal" class="hidden fixed inset-0 bg-zinc-950 z-[99999] flex flex-col">
     <div class="bg-black py-5 px-8 flex items-center justify-between border-b border-zinc-800 text-white">
       <div class="flex items-center gap-4">
