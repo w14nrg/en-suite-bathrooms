@@ -56,7 +56,7 @@
     }
     @media (max-width: 768px) {
       .section-title { font-size: 2.8rem; line-height: 1.1; }
-      header .max-w-6xl { padding-top: 6.5rem !important; }
+      header .max-w-6xl { padding-top: 9.5rem !important; } /* FIXED: increased so hero no longer sits behind fixed navbar */
       #estimator { padding-bottom: 160px !important; }
       .estimator-price-box { margin-top: 3rem !important; width: 100% !important; }
       .footer-postcodes { font-size: 0.75rem !important; }
@@ -65,12 +65,15 @@
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900 overflow-x-hidden">
-  <!-- NAVBAR -->
+  <!-- NAVBAR – updated with BATHROOMS in gold under EN-SUITE -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <div class="flex items-center gap-4">
         <i class="fa-solid fa-bath text-5xl gold"></i>
-        <span class="text-4xl serif tracking-widest font-light brand-name">EN-SUITE</span>
+        <div class="flex flex-col items-start -space-y-1">
+          <span class="text-4xl serif tracking-widest font-light brand-name">EN-SUITE</span>
+          <span class="text-xs font-medium tracking-[4px] gold">BATHROOMS</span>
+        </div>
       </div>
       <div class="hidden md:flex gap-8 text-lg font-light">
         <a href="#builder" class="hover:gold transition">Ensuite Planner</a>
@@ -82,7 +85,7 @@
       <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-8 py-4 rounded-full transition send-btn">BOOK FREE QUOTE</a>
     </div>
   </nav>
-  <!-- HERO -->
+  <!-- HERO – padding fixed for mobile so content is no longer behind header -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -130,7 +133,7 @@
       </div>
     </div>
   </section>
-  <!-- ABOUT US (only luxury words removed – stats kept exactly as original) -->
+  <!-- ABOUT US (stats kept exactly as original) -->
   <section id="about" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -239,7 +242,7 @@
       </div>
     </div>
   </section>
-  <!-- PROCESS – updated to real-world steps only -->
+  <!-- PROCESS – real-world steps only -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step Process</h2>
@@ -271,17 +274,14 @@
       </form>
     </div>
   </section>
-  <!-- FLOATING CTA – improved -->
+  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50 send-btn">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
-  <!-- FOOTER – postcodes list removed, everything else kept -->
+  <!-- FOOTER – postcodes list removed -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert En-Suite Bathroom Installation within the M25 • © 2026</p>
-    <div class="max-w-7xl mx-auto px-8 mt-12">
-      <p class="uppercase tracking-widest text-sm gold mb-6">Serving every area within the M25</p>
-    </div>
     <p class="text-xs text-zinc-400 mt-12">All prices shown are for guidance only. Final quote after free site visit.</p>
   </footer>
   <!-- PLANNER MODAL & MOBILE POPUP (unchanged) -->
@@ -369,7 +369,6 @@
         btn.textContent = 'Read less ×';
       }
     }
-    // ==================== ENSUITE PLANNER (unchanged) ====================
     let fabricCanvas;
     let tool = "select";
     let drawing = false;
@@ -509,7 +508,6 @@
     function exitPlanner() {
       document.getElementById('plannerModal').classList.add('hidden');
     }
-    // ==================== ESTIMATOR ====================
     let basePrice = 5500;
     let addedUpgrades = [];
     function addUpgrade() {
