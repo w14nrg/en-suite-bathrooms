@@ -29,7 +29,6 @@
     .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
 
-    /* PERFECT LOGO – matches your screenshot exactly */
     .logo-wrapper { display: flex; align-items: center; gap: 16px; }
     .logo-text .en-suite { font-size: 2.25rem; line-height: 1; font-weight: 300; letter-spacing: -1px; }
     .logo-text .bathrooms { font-size: 0.95rem; letter-spacing: 0.45em; font-weight: 500; color: #d4af37; margin-top: -4px; }
@@ -45,7 +44,7 @@
     .send-btn:hover { background: #e6c45a; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(212,175,55,0.5); }
 
     @media (max-width: 768px) {
-      .section-title { font-size: 2.6rem !important; line-height: 1.1; }
+      .section-title { font-size: 2.6rem !important; }
       .logo-text .en-suite { font-size: 1.85rem; }
       header .max-w-6xl { padding-top: 7rem !important; }
     }
@@ -72,7 +71,7 @@
     </div>
   </nav>
 
-  <!-- HERO – INSTANT ESTIMATE BUTTON REMOVED -->
+  <!-- HERO -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -241,19 +240,12 @@
     </div>
   </section>
 
-  <!-- QUOTE FORM -->
+  <!-- QUOTE FORM – YOUR FORMSPREE LINK IS ALREADY IN -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-6 text-center">
       <h2 class="section-title serif text-6xl mb-12">Get Your Free Quote</h2>
       
-      <!-- FORMSPREE – I DID IT FOR YOU (JUST REPLACE THE CODE BELOW) -->
-      <!-- 1. Go to formspree.io (free) -->
-      <!-- 2. Create account with any email -->
-      <!-- 3. Create new form -->
-      <!-- 4. Enter ensuite.co.uk@gmail.com as the email -->
-      <!-- 5. Copy the new action link (looks like https://formspree.io/f/abc123xyz) -->
-      <!-- 6. Replace "YOUR_FORMSPREE_CODE_HERE" below with your code -->
-      <form id="quoteForm" action="https://formspree.io/f/YOUR_FORMSPREE_CODE_HERE" method="POST" enctype="multipart/form-data" class="space-y-8">
+      <form id="quoteForm" action="https://formspree.io/f/mvzwgdyn" method="POST" enctype="multipart/form-data" class="space-y-8">
         <input type="text" name="name" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" name="phone" id="phone" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" name="email" placeholder="Email Address" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
