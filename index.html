@@ -240,7 +240,7 @@
     </div>
   </section>
 
-  <!-- QUOTE FORM – YOUR FORMSPREE LINK IS ALREADY IN -->
+  <!-- QUOTE FORM -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-6 text-center">
       <h2 class="section-title serif text-6xl mb-12">Get Your Free Quote</h2>
@@ -560,7 +560,33 @@
         hiddenInput.value = savedPlan;
         this.appendChild(hiddenInput);
       }
+      const priceEl = document.getElementById('estimatePrice');
+      const sizeEl = document.getElementById('sizeValue');
+      if (priceEl) {
+        const priceInput = document.createElement('input');
+        priceInput.type = 'hidden';
+        priceInput.name = 'estimated_price';
+        priceInput.value = priceEl.textContent;
+        this.appendChild(priceInput);
+      }
+      if (sizeEl) {
+        const sizeInput = document.createElement('input');
+        sizeInput.type = 'hidden';
+        sizeInput.name = 'room_size';
+        sizeInput.value = sizeEl.textContent;
+        this.appendChild(sizeInput);
+      }
+      if (addedUpgrades.length > 0) {
+        const upgradesInput = document.createElement('input');
+        upgradesInput.type = 'hidden';
+        upgradesInput.name = 'upgrades';
+        upgradesInput.value = addedUpgrades.map(item => `${item.text} +£${item.price}`).join(' | ');
+        this.appendChild(upgradesInput);
+      }
     });
+    function exitPlanner() {
+      document.getElementById('plannerModal').classList.add('hidden');
+    }
     window.onload = () => {
       updateEstimate();
       if (localStorage.getItem('roomioBannerClosed') === 'true') {
