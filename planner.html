@@ -1,357 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>En-Suite 3D Planner | en-suite.co.uk</title>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#fff; color:#333; overflow:hidden; }
-    #container { display:flex; height:100vh; }
-    #left { width:340px; background:#fff; padding:20px; overflow-y:auto; border-right:4px solid #d4af37; }
-    #canvas-container { flex:1; background:#111111; position:relative; }
-    #right { width:300px; background:#fff; padding:20px; border-left:4px solid #d4af37; }
-    h1 { color:#d4af37; font-size:28px; margin:0 0 20px 0; }
-    label { display:block; margin:12px 0 4px; font-weight:bold; color:#d4af37; }
-    input[type="range"] { accent-color:#d4af37; width:100%; }
-    button, select { width:100%; padding:12px; margin:8px 0; background:#d4af37; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; }
-    button:hover { background:#b38e2e; }
-    .section { background:#f8f8f8; padding:15px; border:2px solid #d4af37; margin-top:15px; border-radius:8px; }
-  </style>
+<meta charset="UTF-8">
+<title>En-Suite 3D Planner</title>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+overflow:hidden;
+background:#111;
+}
+
+#ui{
+position:absolute;
+top:20px;
+left:20px;
+width:230px;
+background:white;
+padding:15px;
+border-radius:10px;
+border:3px solid #d4af37;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#d4af37;
+border:none;
+color:white;
+font-weight:bold;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#b3922c;
+}
+
+</style>
 </head>
+
 <body>
-  <div id="container">
-    <div id="left">
-      <h1>En-Suite 3D Planner</h1>
 
-      <div class="section">
-        <label>Main Room Size</label>
-        <input type="range" id="mainWidth" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
-        <span id="mainWVal">6.4</span>m × 
-        <input type="range" id="mainLength" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
-        <span id="mainLVal">6.4</span>m
-      </div>
+<div id="ui">
 
-      <div class="section">
-        <label>Inner En-Suite Size (drag floor to move)</label>
-        <input type="range" id="innerWidth" min="1" max="4" step="0.1" value="2.0" oninput="updateInnerRoom()">
-        <span id="innerWVal">2.0</span>m × 
-        <input type="range" id="innerLength" min="1" max="4" step="0.1" value="1.5" oninput="updateInnerRoom()">
-        <span id="innerLVal">1.5</span>m
-      </div>
+<b>Fixtures</b>
 
-      <h3 style="margin-top:25px;color:#d4af37;">Fixtures & Features</h3>
-      <select id="fixtureSelect">
-        <option value="">— Choose —</option>
-        <option value="0">🚽 Toilet</option>
-        <option value="1">🪒 Basin</option>
-        <option value="2">🚿 Shower</option>
-        <option value="3">🛁 Bath</option>
-        <option value="4">🪞 Vanity</option>
-        <option value="5">🔥 Radiator</option>
-        <option value="6">🚪 Door</option>
-        <option value="7">🪟 Window</option>
-        <option value="8">🔥 Fireplace</option>
-      </select>
-      <button onclick="addSelectedFixture()">Add Fixture / Feature</button>
+<button onclick="addFixture('toilet')">Toilet</button>
+<button onclick="addFixture('basin')">Basin</button>
+<button onclick="addFixture('shower')">Shower</button>
+<button onclick="addFixture('bath')">Bath</button>
+<button onclick="deleteSelected()">Delete Selected</button>
 
-      <h3 style="margin-top:25px;color:#d4af37;">Pipes</h3>
-      <select id="pipeSelect">
-        <option value="">— Choose pipe —</option>
-        <option value="0">🔴 Hot Water</option>
-        <option value="1">🔵 Cold Water</option>
-        <option value="2">🟠 CH Pipe</option>
-        <option value="3">🟤 Drainage</option>
-      </select>
-      <button onclick="addSelectedPipe()">Add Pipe</button>
+</div>
 
-      <label><input type="checkbox" id="xray" checked onchange="toggleXRay()"> X-Ray Walls (auto fade when close)</label>
-      <button onclick="saveDesign()" style="margin-top:20px;background:#111;">💾 Save Design</button>
-    </div>
+<script>
 
-    <div id="canvas-container"></div>
+let scene
+let camera
+let renderer
+let controls
 
-    <div id="right">
-      <div id="itemControls" style="display:none;background:#f8f8f8;padding:15px;border:2px solid #d4af37;border-radius:8px;">
-        <h3 style="color:#d4af37;">✓ SELECTED ITEM</h3>
-        Rotate Y: <span id="rotVal">0</span>°<br>
-        <input type="range" id="rotateSlider" min="-180" max="180" value="0" oninput="rotateSelected()">
-        Scale: <span id="scaleVal">1.0</span><br>
-        <input type="range" id="scaleSlider" min="0.5" max="3" step="0.1" value="1" oninput="scaleSelected()">
-        <button onclick="deleteSelected()">Delete Item</button>
-      </div>
-      <button onclick="getQuote()">Request Quote →</button>
-    </div>
-  </div>
+let floor
+let walls=[]
 
-  <script>
-    let scene, camera, renderer, controls;
-    let mainFloor, mainWalls = [], innerGroup, innerFloor, innerWalls = [];
-    let placedItems = [];
-    let selectedItem = null;
-    let xrayEnabled = true;
-    let draggingInner = false;
+let items=[]
+let selected=null
 
-    const fixturesData = [
-      {name:"Toilet", color:0x444444, size:[0.45,0.55,0.75]},
-      {name:"Basin", color:0xdddddd, size:[0.6,0.25,0.55]},
-      {name:"Shower", color:0x666666, size:[0.9,2.1,0.9]},
-      {name:"Bath", color:0xf0f0f0, size:[1.7,0.65,0.85]},
-      {name:"Vanity", color:0x333333, size:[1.0,0.85,0.55]},
-      {name:"Radiator", color:0x555555, size:[0.35,1.05,0.65]},
-      {name:"Door", color:0x8B4513, size:[0.1,2.1,0.9]},
-      {name:"Window", color:0x88ccff, size:[1.3,1.2,0.05]},
-      {name:"Fireplace", color:0x8B4513, size:[1.2,1.0,0.6]}
-    ];
+const raycaster=new THREE.Raycaster()
+const mouse=new THREE.Vector2()
 
-    function init() {
-      scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x111111);
+init()
 
-      camera = new THREE.PerspectiveCamera(60, window.innerWidth*0.62/window.innerHeight, 0.1, 1000);
-      camera.position.set(9, 9, 9);
+function init(){
 
-      renderer = new THREE.WebGLRenderer({antialias:true});
-      renderer.setSize(window.innerWidth*0.62, window.innerHeight);
-      document.getElementById('canvas-container').appendChild(renderer.domElement);
+scene=new THREE.Scene()
+scene.background=new THREE.Color(0x111111)
 
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true;
+camera=new THREE.PerspectiveCamera(
+60,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+)
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.75));
-      scene.add(new THREE.HemisphereLight(0xe8d8c8, 0x444444, 0.85));
-      const sun = new THREE.DirectionalLight(0xffffff, 0.65);
-      sun.position.set(10, 15, 10);
-      scene.add(sun);
+camera.position.set(6,4,6)
 
-      createMainRoom(6.4, 6.4);
-      createInnerRoom(2.0, 1.5);
-      animate();
-    }
+renderer=new THREE.WebGLRenderer({antialias:true})
+renderer.setSize(window.innerWidth,window.innerHeight)
+renderer.shadowMap.enabled=true
 
-    function createMainRoom(w, l) {
-      if (mainFloor) scene.remove(mainFloor);
-      mainWalls.forEach(w => scene.remove(w)); mainWalls = [];
+document.body.appendChild(renderer.domElement)
 
-      mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xcccccc}));
-      mainFloor.rotation.x = -Math.PI/2;
-      scene.add(mainFloor);
+controls=new THREE.OrbitControls(camera,renderer.domElement)
+controls.enableDamping=true
 
-      const grid = new THREE.GridHelper(w, 30, 0x666666, 0x666666);
-      grid.position.y = 0.02;
-      scene.add(grid);
+createLights()
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xdddddd, side: THREE.DoubleSide});
-      const h = 2.5;
-      const pos = [[0,h/2,l/2,0],[0,h/2,-l/2,Math.PI],[w/2,h/2,0,Math.PI/2],[-w/2,h/2,0,-Math.PI/2]];
-      pos.forEach(p => {
-        const wall = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat);
-        wall.position.set(p[0],p[1],p[2]);
-        wall.rotation.y = p[3];
-        scene.add(wall);
-        mainWalls.push(wall);
-      });
-    }
+createRoom(6,6)
 
-    function createInnerRoom(w, l) {
-      if (innerGroup) scene.remove(innerGroup);
-      innerWalls = [];
-      innerGroup = new THREE.Group();
+animate()
 
-      innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xbbbbbb}));
-      innerFloor.rotation.x = -Math.PI/2;
-      innerGroup.add(innerFloor);
+}
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xdddddd, side: THREE.DoubleSide});
-      const h = 2.5;
-      const ipos = [[0,h/2,l/2,0],[0,h/2,-l/2,Math.PI],[w/2,h/2,0,Math.PI/2],[-w/2,h/2,0,-Math.PI/2]];
-      ipos.forEach((p,i) => {
-        const wall = new THREE.Mesh(new THREE.PlaneGeometry(i===0||i===1 ? w : l, h), wallMat);
-        wall.position.set(p[0],p[1],p[2]);
-        wall.rotation.y = p[3];
-        innerGroup.add(wall);
-        innerWalls.push(wall);
-      });
+function createLights(){
 
-      innerGroup.position.set(1, 0.01, 1);
-      scene.add(innerGroup);
-    }
+const ambient=new THREE.AmbientLight(0xffffff,.6)
+scene.add(ambient)
 
-    function updateMainRoom() {
-      const w = parseFloat(document.getElementById('mainWidth').value);
-      const l = parseFloat(document.getElementById('mainLength').value);
-      document.getElementById('mainWVal').textContent = w.toFixed(1);
-      document.getElementById('mainLVal').textContent = l.toFixed(1);
-      createMainRoom(w, l);
-    }
+const sun=new THREE.DirectionalLight(0xffffff,1)
 
-    function updateInnerRoom() {
-      const w = parseFloat(document.getElementById('innerWidth').value);
-      const l = parseFloat(document.getElementById('innerLength').value);
-      document.getElementById('innerWVal').textContent = w.toFixed(1);
-      document.getElementById('innerLVal').textContent = l.toFixed(1);
-      if (innerGroup) {
-        const oldPos = innerGroup.position.clone();
-        createInnerRoom(w, l);
-        innerGroup.position.copy(oldPos);
-      }
-    }
+sun.position.set(5,10,5)
+sun.castShadow=true
+sun.shadow.mapSize.width=2048
+sun.shadow.mapSize.height=2048
 
-    function addFixture(i) {
-      const data = fixturesData[i];
-      const geo = new THREE.BoxGeometry(...data.size);
-      const mat = new THREE.MeshStandardMaterial({color: data.color});
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(0, data.name === "Window" || data.name === "Door" ? 1.2 : data.size[1]/2, 0);
-      mesh.userData = {name: data.name, originalColor: data.color};
-      scene.add(mesh);
-      placedItems.push(mesh);
-    }
+scene.add(sun)
 
-    function addPipe(type) {
-      const colors = [0xff0000, 0x00aaff, 0xff8800, 0x555555];
-      const geo = new THREE.CylinderGeometry(0.04, 0.04, 2, 16);
-      const mat = new THREE.MeshStandardMaterial({color: colors[type]});
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.rotation.x = Math.PI/2;
-      mesh.position.set(0, 0.5, 0);
-      mesh.userData = {name: "Pipe", originalColor: colors[type]};
-      scene.add(mesh);
-      placedItems.push(mesh);
-    }
+}
 
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    let selected = null;
+function createRoom(w,l){
 
-    window.addEventListener('pointerdown', e => {
-      if (e.button !== 0) return;
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
+const texLoader=new THREE.TextureLoader()
 
-      const hits = raycaster.intersectObjects(placedItems);
-      if (hits.length) {
-        if (selectedItem) {
-          selectedItem.material.emissive.setHex(0x000000);
-          selectedItem.material.emissiveIntensity = 0;
-        }
-        selected = hits[0].object;
-        selectedItem = selected;
-        selectedItem.material.emissive = new THREE.Color(0xffff00);
-        selectedItem.material.emissiveIntensity = 0.8;
-        document.getElementById('itemControls').style.display = 'block';
-        controls.enabled = false;
-        return;
-      }
+const floorTex=texLoader.load("https://threejs.org/examples/textures/uv_grid_opengl.jpg")
 
-      if (innerFloor) {
-        const innerHits = raycaster.intersectObject(innerFloor);
-        if (innerHits.length) {
-          draggingInner = true;
-          controls.enabled = false;
-          return;
-        }
-      }
+floorTex.wrapS=THREE.RepeatWrapping
+floorTex.wrapT=THREE.RepeatWrapping
+floorTex.repeat.set(4,4)
 
-      // Click empty space = deselect
-      if (selectedItem) {
-        selectedItem.material.emissive.setHex(0x000000);
-        selectedItem.material.emissiveIntensity = 0;
-        selectedItem = null;
-        document.getElementById('itemControls').style.display = 'none';
-      }
-    });
+const floorMat=new THREE.MeshStandardMaterial({
+map:floorTex,
+roughness:.5
+})
 
-    window.addEventListener('pointermove', e => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
+floor=new THREE.Mesh(
+new THREE.PlaneGeometry(w,l),
+floorMat
+)
 
-      if (selected) {
-        const hits = raycaster.intersectObject(mainFloor);
-        if (hits.length) {
-          selected.position.x = hits[0].point.x;
-          selected.position.z = hits[0].point.z;
-        }
-      }
+floor.rotation.x=-Math.PI/2
+floor.receiveShadow=true
 
-      if (draggingInner && innerGroup) {
-        const hits = raycaster.intersectObject(mainFloor);
-        if (hits.length) {
-          innerGroup.position.x = hits[0].point.x;
-          innerGroup.position.z = hits[0].point.z;
-        }
-      }
-    });
+scene.add(floor)
 
-    window.addEventListener('pointerup', () => {
-      selected = null;
-      draggingInner = false;
-      controls.enabled = true;
-    });
+const wallMat=new THREE.MeshStandardMaterial({color:0xdddddd})
 
-    function rotateSelected() {
-      if (!selectedItem) return;
-      const angle = parseFloat(document.getElementById('rotateSlider').value) * Math.PI / 180;
-      selectedItem.rotation.y = angle;
-      document.getElementById('rotVal').textContent = document.getElementById('rotateSlider').value;
-    }
+const h=2.4
+const t=.15
 
-    function scaleSelected() {
-      if (!selectedItem) return;
-      const s = parseFloat(document.getElementById('scaleSlider').value);
-      selectedItem.scale.set(s, s, s);
-      document.getElementById('scaleVal').textContent = s.toFixed(1);
-    }
+const wall1=new THREE.Mesh(new THREE.BoxGeometry(w,h,t),wallMat)
+wall1.position.set(0,h/2,l/2)
 
-    function deleteSelected() {
-      if (selectedItem) {
-        scene.remove(selectedItem);
-        placedItems = placedItems.filter(i => i !== selectedItem);
-        selectedItem = null;
-        document.getElementById('itemControls').style.display = 'none';
-      }
-    }
+const wall2=new THREE.Mesh(new THREE.BoxGeometry(w,h,t),wallMat)
+wall2.position.set(0,h/2,-l/2)
 
-    function toggleXRay() { xrayEnabled = document.getElementById('xray').checked; }
+const wall3=new THREE.Mesh(new THREE.BoxGeometry(t,h,l),wallMat)
+wall3.position.set(w/2,h/2,0)
 
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
+const wall4=new THREE.Mesh(new THREE.BoxGeometry(t,h,l),wallMat)
+wall4.position.set(-w/2,h/2,0)
 
-      if (xrayEnabled) {
-        const camPos = camera.position;
-        [...mainWalls, ...innerWalls].forEach(wall => {
-          const dist = camPos.distanceTo(wall.position);
-          wall.material.transparent = true;
-          wall.material.opacity = Math.max(0.3, dist / 8);
-        });
-      }
+wall1.receiveShadow=true
+wall2.receiveShadow=true
+wall3.receiveShadow=true
+wall4.receiveShadow=true
 
-      renderer.render(scene, camera);
-    }
+scene.add(wall1,wall2,wall3,wall4)
 
-    function addSelectedFixture() {
-      const val = document.getElementById('fixtureSelect').value;
-      if (val) addFixture(parseInt(val));
-    }
+walls=[wall1,wall2,wall3,wall4]
 
-    function addSelectedPipe() {
-      const val = document.getElementById('pipeSelect').value;
-      if (val) addPipe(parseInt(val));
-    }
+}
 
-    function saveDesign() { alert("✅ Design saved!"); }
-    function getQuote() { alert("Your design is ready – we'll call you!"); }
+function addFixture(type){
 
-    window.onload = init;
-    window.addEventListener('resize', () => {
-      camera.aspect = (window.innerWidth * 0.62) / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth * 0.62, window.innerHeight);
-    });
-  </script>
+let geo
+
+const mat=new THREE.MeshStandardMaterial({color:0xffffff})
+
+if(type==="toilet"){
+geo=new THREE.CylinderGeometry(.25,.25,.5,32)
+}
+
+if(type==="basin"){
+geo=new THREE.BoxGeometry(.6,.25,.45)
+}
+
+if(type==="shower"){
+geo=new THREE.BoxGeometry(.9,2,.9)
+}
+
+if(type==="bath"){
+geo=new THREE.CapsuleGeometry(.35,1.2,8,16)
+}
+
+const mesh=new THREE.Mesh(geo,mat)
+
+mesh.castShadow=true
+
+mesh.position.set(
+(Math.random()-.5)*3,
+.5,
+(Math.random()-.5)*3
+)
+
+scene.add(mesh)
+
+items.push(mesh)
+
+}
+
+window.addEventListener("pointerdown",e=>{
+
+mouse.x=(e.clientX/window.innerWidth)*2-1
+mouse.y=-(e.clientY/window.innerHeight)*2+1
+
+raycaster.setFromCamera(mouse,camera)
+
+const hits=raycaster.intersectObjects(items)
+
+if(hits.length){
+
+selected=hits[0].object
+controls.enabled=false
+
+}else{
+
+selected=null
+controls.enabled=true
+
+}
+
+})
+
+window.addEventListener("pointermove",e=>{
+
+if(!selected)return
+
+mouse.x=(e.clientX/window.innerWidth)*2-1
+mouse.y=-(e.clientY/window.innerHeight)*2+1
+
+raycaster.setFromCamera(mouse,camera)
+
+const hit=raycaster.intersectObject(floor)
+
+if(hit.length){
+
+selected.position.x=hit[0].point.x
+selected.position.z=hit[0].point.z
+
+}
+
+})
+
+window.addEventListener("pointerup",()=>{
+
+controls.enabled=true
+
+})
+
+function deleteSelected(){
+
+if(!selected)return
+
+scene.remove(selected)
+
+items=items.filter(i=>i!==selected)
+
+selected=null
+
+}
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+controls.update()
+
+renderer.render(scene,camera)
+
+}
+
+window.addEventListener("resize",()=>{
+
+camera.aspect=window.innerWidth/window.innerHeight
+camera.updateProjectionMatrix()
+
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+})
+
+</script>
+
 </body>
 </html>
