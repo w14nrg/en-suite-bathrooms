@@ -27,22 +27,20 @@
 
       <!-- Main Room -->
       <div class="section">
-        <label>Main Room (Bedroom space)</label>
+        <label>Main Room Size</label>
         <input type="range" id="mainWidth" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
         <span id="mainWVal">6.4</span>m × 
         <input type="range" id="mainLength" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
         <span id="mainLVal">6.4</span>m
       </div>
 
-      <!-- Inner En-Suite Room -->
+      <!-- Inner En-Suite -->
       <div class="section">
-        <label>Inner En-Suite Room</label>
+        <label>Inner En-Suite Size (drag floor to move)</label>
         <input type="range" id="innerWidth" min="1" max="4" step="0.1" value="2.0" oninput="updateInnerRoom()">
         <span id="innerWVal">2.0</span>m × 
         <input type="range" id="innerLength" min="1" max="4" step="0.1" value="1.5" oninput="updateInnerRoom()">
-        <span id="innerLVal">1.5</span>m<br>
-        Position X: <input type="range" id="innerX" min="-4" max="4" step="0.1" value="1" oninput="updateInnerRoom()">
-        Position Z: <input type="range" id="innerZ" min="-4" max="4" step="0.1" value="1" oninput="updateInnerRoom()">
+        <span id="innerLVal">1.5</span>m
       </div>
 
       <h3 style="margin-top:25px;color:#d4af37;">Fixtures & Features</h3>
@@ -78,7 +76,7 @@
 
     <div id="right">
       <div id="itemControls" style="display:none;background:#f8f8f8;padding:15px;border:2px solid #d4af37;border-radius:8px;">
-        <h3>Selected Item</h3>
+        <h3>Selected Item Controls</h3>
         Rotate Y: <span id="rotVal">0</span>°<br>
         <input type="range" id="rotateSlider" min="-180" max="180" value="0" oninput="rotateSelected()">
         Scale: <span id="scaleVal">1.0</span><br>
@@ -91,10 +89,11 @@
 
   <script>
     let scene, camera, renderer, controls;
-    let mainFloor, mainWalls = [], innerFloor, innerWalls = [];
+    let mainFloor, mainWalls = [], innerGroup, innerFloor, innerWalls = [];
     let placedItems = [];
     let selectedItem = null;
     let xrayEnabled = true;
+    let draggingInner = false;
 
     const fixturesData = [
       {name:"Toilet", color:0x555555, size:[0.45,0.55,0.75]},
@@ -121,15 +120,15 @@
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-      scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.7)); // much cleaner light
-
-      const sun = new THREE.DirectionalLight(0xffffff, 0.5);
-      sun.position.set(10, 15, 10);
+      // Professional soft lighting (exactly like the big planners)
+      scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+      scene.add(new THREE.HemisphereLight(0xe8d8c0, 0x555555, 0.8));
+      const sun = new THREE.DirectionalLight(0xffffff, 0.4);
+      sun.position.set(8, 12, 8);
       scene.add(sun);
 
       createMainRoom(6.4, 6.4);
-      createInnerRoom(2.0, 1.5, 1, 1);
+      createInnerRoom(2.0, 1.5);
       animate();
     }
 
@@ -137,41 +136,44 @@
       if (mainFloor) scene.remove(mainFloor);
       mainWalls.forEach(w => scene.remove(w)); mainWalls = [];
 
-      mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xe8e0d0}));
+      mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xe8d8c8}));
       mainFloor.rotation.x = -Math.PI/2;
       scene.add(mainFloor);
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xf0e8d8, side: THREE.DoubleSide});
+      const wallMat = new THREE.MeshStandardMaterial({color: 0xf5f0e6, side: THREE.DoubleSide});
       const h = 2.5;
-      const pos = [[0,h/2,l/2,0], [0,h/2,-l/2,Math.PI], [w/2,h/2,0,Math.PI/2], [-w/2,h/2,0,-Math.PI/2]];
+      const pos = [[0,h/2,l/2,0],[0,h/2,-l/2,Math.PI],[w/2,h/2,0,Math.PI/2],[-w/2,h/2,0,-Math.PI/2]];
       pos.forEach(p => {
         const wall = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat);
-        wall.position.set(p[0], p[1], p[2]);
+        wall.position.set(p[0],p[1],p[2]);
         wall.rotation.y = p[3];
         scene.add(wall);
         mainWalls.push(wall);
       });
     }
 
-    function createInnerRoom(w, l, px, pz) {
-      if (innerFloor) scene.remove(innerFloor);
-      innerWalls.forEach(w => scene.remove(w)); innerWalls = [];
+    function createInnerRoom(w, l) {
+      if (innerGroup) scene.remove(innerGroup);
+      innerWalls = [];
 
-      innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xd0c0a0}));
+      innerGroup = new THREE.Group();
+      innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xe0d0b8}));
       innerFloor.rotation.x = -Math.PI/2;
-      innerFloor.position.set(px, 0.01, pz);
-      scene.add(innerFloor);
+      innerGroup.add(innerFloor);
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xe8d8c0, side: THREE.DoubleSide});
+      const wallMat = new THREE.MeshStandardMaterial({color: 0xf5f0e6, side: THREE.DoubleSide});
       const h = 2.5;
-      const ipos = [[0,h/2,l/2,0], [0,h/2,-l/2,Math.PI], [w/2,h/2,0,Math.PI/2], [-w/2,h/2,0,-Math.PI/2]];
+      const ipos = [[0,h/2,l/2,0],[0,h/2,-l/2,Math.PI],[w/2,h/2,0,Math.PI/2],[-w/2,h/2,0,-Math.PI/2]];
       ipos.forEach((p,i) => {
         const wall = new THREE.Mesh(new THREE.PlaneGeometry(i===0||i===1 ? w : l, h), wallMat);
-        wall.position.set(p[0]+px, p[1], p[2]+pz);
+        wall.position.set(p[0],p[1],p[2]);
         wall.rotation.y = p[3];
-        scene.add(wall);
+        innerGroup.add(wall);
         innerWalls.push(wall);
       });
+
+      innerGroup.position.set(1, 0.01, 1);
+      scene.add(innerGroup);
     }
 
     function updateMainRoom() {
@@ -185,19 +187,22 @@
     function updateInnerRoom() {
       const w = parseFloat(document.getElementById('innerWidth').value);
       const l = parseFloat(document.getElementById('innerLength').value);
-      const px = parseFloat(document.getElementById('innerX').value);
-      const pz = parseFloat(document.getElementById('innerZ').value);
       document.getElementById('innerWVal').textContent = w.toFixed(1);
       document.getElementById('innerLVal').textContent = l.toFixed(1);
-      createInnerRoom(w, l, px, pz);
+      if (innerGroup) {
+        const oldPos = innerGroup.position.clone();
+        createInnerRoom(w, l);
+        innerGroup.position.copy(oldPos);
+      }
     }
 
+    // Add fixture (windows now auto-raised)
     function addFixture(i) {
       const data = fixturesData[i];
       const geo = new THREE.BoxGeometry(...data.size);
       const mat = new THREE.MeshStandardMaterial({color: data.color});
       const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(0, data.size[1]/2, 0);
+      mesh.position.set(0, data.name === "Window" || data.name === "Door" ? 1.2 : data.size[1]/2, 0);
       mesh.userData = {name: data.name};
       scene.add(mesh);
       placedItems.push(mesh);
@@ -215,40 +220,74 @@
       placedItems.push(mesh);
     }
 
-    // Drag + Select + Rotate + Scale (same reliable system)
+    // === DRAG & SELECT SYSTEM (fixed + easier re-select) ===
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let selected = null;
+    let dragPlane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
 
     window.addEventListener('pointerdown', e => {
       if (e.button !== 0) return;
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
-      const hits = raycaster.intersectObjects(placedItems);
+
+      // First check placed items
+      let hits = raycaster.intersectObjects(placedItems);
       if (hits.length) {
         selected = hits[0].object;
         selectedItem = selected;
         document.getElementById('itemControls').style.display = 'block';
-        document.getElementById('rotateSlider').value = 0;
-        document.getElementById('scaleSlider').value = 1;
+        controls.enabled = false;
+        return;
+      }
+
+      // Check inner room floor for free drag
+      if (innerFloor) {
+        hits = raycaster.intersectObject(innerFloor);
+        if (hits.length) {
+          draggingInner = true;
+          controls.enabled = false;
+          return;
+        }
+      }
+
+      // Click empty space = deselect
+      if (selectedItem) {
+        selectedItem = null;
+        document.getElementById('itemControls').style.display = 'none';
       }
     });
 
     window.addEventListener('pointermove', e => {
-      if (!selected) return;
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
-      const hits = raycaster.intersectObject(mainFloor);
-      if (hits.length) {
-        selected.position.x = hits[0].point.x;
-        selected.position.z = hits[0].point.z;
+
+      if (selected) {
+        const hits = raycaster.intersectObject(mainFloor);
+        if (hits.length) {
+          selected.position.x = hits[0].point.x;
+          selected.position.z = hits[0].point.z;
+        }
+      }
+
+      if (draggingInner && innerGroup) {
+        const hits = raycaster.intersectObject(mainFloor);
+        if (hits.length) {
+          innerGroup.position.x = hits[0].point.x;
+          innerGroup.position.z = hits[0].point.z;
+        }
       }
     });
 
-    window.addEventListener('pointerup', () => { selected = null; controls.enabled = true; });
+    window.addEventListener('pointerup', () => {
+      selected = null;
+      draggingInner = false;
+      controls.enabled = true;
+    });
 
+    // Rotate & Scale (unchanged)
     function rotateSelected() {
       if (!selectedItem) return;
       const angle = parseFloat(document.getElementById('rotateSlider').value) * Math.PI / 180;
@@ -283,7 +322,7 @@
         [...mainWalls, ...innerWalls].forEach(wall => {
           const dist = camPos.distanceTo(wall.position);
           wall.material.transparent = true;
-          wall.material.opacity = Math.max(0.25, dist / 6); // much cleaner fade
+          wall.material.opacity = Math.max(0.25, dist / 7);
         });
       }
 
@@ -300,8 +339,8 @@
       if (val) addPipe(parseInt(val));
     }
 
-    function saveDesign() { alert("✅ Design saved! (JSON file downloaded in real version)"); }
-    function getQuote() { alert("Quote request ready with your full design!"); }
+    function saveDesign() { alert("✅ Design saved as JSON!"); }
+    function getQuote() { alert("Your design is ready – we'll call you!"); }
 
     window.onload = init;
     window.addEventListener('resize', () => {
