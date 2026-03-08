@@ -10,7 +10,7 @@
     body { margin:0; font-family: Arial, sans-serif; background:#fff; color:#333; overflow:hidden; }
     #container { display:flex; height:100vh; }
     #left { width:340px; background:#fff; padding:20px; overflow-y:auto; border-right:4px solid #d4af37; }
-    #canvas-container { flex:1; background:#111; position:relative; }
+    #canvas-container { flex:1; background:#1a1a1a; position:relative; }
     #right { width:300px; background:#fff; padding:20px; border-left:4px solid #d4af37; }
     h1 { color:#d4af37; font-size:28px; margin:0 0 20px 0; }
     label { display:block; margin:12px 0 4px; font-weight:bold; color:#d4af37; }
@@ -109,19 +109,19 @@
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0x1a1a1a);
 
-      camera = new THREE.PerspectiveCamera(60, window.innerWidth*0.62/window.innerHeight, 0.1, 1000);
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth * 0.62 / window.innerHeight, 0.1, 1000);
       camera.position.set(9, 9, 9);
 
-      renderer = new THREE.WebGLRenderer({antialias:true});
-      renderer.setSize(window.innerWidth*0.62, window.innerHeight);
+      renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer.setSize(window.innerWidth * 0.62, window.innerHeight);
       document.getElementById('canvas-container').appendChild(renderer.domElement);
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
       scene.add(new THREE.HemisphereLight(0xe8d8c8, 0x444444, 0.9));
-      const sun = new THREE.DirectionalLight(0xffffff, 0.6);
+      const sun = new THREE.DirectionalLight(0xffffff, 0.7);
       sun.position.set(10, 15, 10);
       scene.add(sun);
 
@@ -137,6 +137,10 @@
       mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xe8d8c8}));
       mainFloor.rotation.x = -Math.PI/2;
       scene.add(mainFloor);
+
+      const grid = new THREE.GridHelper(w, 20, 0x999999, 0x999999);
+      grid.position.y = 0.01;
+      scene.add(grid);
 
       const wallMat = new THREE.MeshStandardMaterial({color: 0xf5f0e6, side: THREE.DoubleSide});
       const h = 2.5;
@@ -217,7 +221,6 @@
       placedItems.push(mesh);
     }
 
-    // Full drag & select with yellow highlight
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let selected = null;
