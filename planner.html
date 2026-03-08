@@ -12,27 +12,40 @@
     #left { width:340px; background:#fff; padding:20px; overflow-y:auto; border-right:4px solid #d4af37; }
     #canvas-container { flex:1; background:#111; position:relative; }
     #right { width:300px; background:#fff; padding:20px; border-left:4px solid #d4af37; }
-    h1 { color:#d4af37; font-size:28px; }
+    h1 { color:#d4af37; font-size:28px; margin:0 0 20px 0; }
+    label { display:block; margin:12px 0 4px; font-weight:bold; color:#d4af37; }
+    input[type="range"] { accent-color:#d4af37; width:100%; }
     button, select { width:100%; padding:12px; margin:8px 0; background:#d4af37; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; }
     button:hover { background:#b38e2e; }
-    .control-panel { background:#f8f8f8; padding:15px; border:2px solid #d4af37; margin-top:15px; border-radius:8px; }
-    input[type="range"] { accent-color:#d4af37; width:100%; }
+    .section { background:#f8f8f8; padding:15px; border:2px solid #d4af37; margin-top:15px; border-radius:8px; }
   </style>
 </head>
 <body>
   <div id="container">
     <div id="left">
       <h1>En-Suite 3D Planner</h1>
-      
-      <button onclick="addInnerRoom()">➕ Add Inner En-Suite Room (1.5×2m)</button>
-      
-      <label style="margin-top:20px;display:block;">Main Room Size</label>
-      <input type="range" id="mainWidth" min="3" max="8" step="0.1" value="5" oninput="updateMainRoom()">
-      <span id="mainWVal">5.0</span>m × 
-      <input type="range" id="mainLength" min="3" max="8" step="0.1" value="4" oninput="updateMainRoom()">
-      <span id="mainLVal">4.0</span>m
 
-      <h3 style="margin-top:25px;color:#d4af37;">Fixtures</h3>
+      <!-- Main Room -->
+      <div class="section">
+        <label>Main Room (Bedroom space)</label>
+        <input type="range" id="mainWidth" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
+        <span id="mainWVal">6.4</span>m × 
+        <input type="range" id="mainLength" min="4" max="10" step="0.1" value="6.4" oninput="updateMainRoom()">
+        <span id="mainLVal">6.4</span>m
+      </div>
+
+      <!-- Inner En-Suite Room -->
+      <div class="section">
+        <label>Inner En-Suite Room</label>
+        <input type="range" id="innerWidth" min="1" max="4" step="0.1" value="2.0" oninput="updateInnerRoom()">
+        <span id="innerWVal">2.0</span>m × 
+        <input type="range" id="innerLength" min="1" max="4" step="0.1" value="1.5" oninput="updateInnerRoom()">
+        <span id="innerLVal">1.5</span>m<br>
+        Position X: <input type="range" id="innerX" min="-4" max="4" step="0.1" value="1" oninput="updateInnerRoom()">
+        Position Z: <input type="range" id="innerZ" min="-4" max="4" step="0.1" value="1" oninput="updateInnerRoom()">
+      </div>
+
+      <h3 style="margin-top:25px;color:#d4af37;">Fixtures & Features</h3>
       <select id="fixtureSelect">
         <option value="">— Choose —</option>
         <option value="0">🚽 Toilet</option>
@@ -43,12 +56,13 @@
         <option value="5">🔥 Radiator</option>
         <option value="6">🚪 Door</option>
         <option value="7">🪟 Window</option>
+        <option value="8">🔥 Fireplace</option>
       </select>
-      <button onclick="addSelectedFixture()">Add Fixture</button>
+      <button onclick="addSelectedFixture()">Add Fixture / Feature</button>
 
       <h3 style="margin-top:25px;color:#d4af37;">Pipes</h3>
       <select id="pipeSelect">
-        <option value="">— Choose —</option>
+        <option value="">— Choose pipe —</option>
         <option value="0">🔴 Hot Water</option>
         <option value="1">🔵 Cold Water</option>
         <option value="2">🟠 CH Pipe</option>
@@ -57,17 +71,17 @@
       <button onclick="addSelectedPipe()">Add Pipe</button>
 
       <label><input type="checkbox" id="xray" checked onchange="toggleXRay()"> X-Ray Walls (auto fade when close)</label>
-      <button onclick="saveDesign()" style="margin-top:30px;background:#111;">💾 Save Design</button>
+      <button onclick="saveDesign()" style="margin-top:20px;background:#111;">💾 Save Design</button>
     </div>
 
     <div id="canvas-container"></div>
 
     <div id="right">
-      <div id="itemControls" class="control-panel" style="display:none;">
-        <h3>Selected Item Controls</h3>
-        <label>Rotate Y: <span id="rotVal">0</span>°</label>
+      <div id="itemControls" style="display:none;background:#f8f8f8;padding:15px;border:2px solid #d4af37;border-radius:8px;">
+        <h3>Selected Item</h3>
+        Rotate Y: <span id="rotVal">0</span>°<br>
         <input type="range" id="rotateSlider" min="-180" max="180" value="0" oninput="rotateSelected()">
-        <label>Scale: <span id="scaleVal">1.0</span></label>
+        Scale: <span id="scaleVal">1.0</span><br>
         <input type="range" id="scaleSlider" min="0.5" max="3" step="0.1" value="1" oninput="scaleSelected()">
         <button onclick="deleteSelected()">Delete Item</button>
       </div>
@@ -76,7 +90,6 @@
   </div>
 
   <script>
-    // === THREE.JS SETUP ===
     let scene, camera, renderer, controls;
     let mainFloor, mainWalls = [], innerFloor, innerWalls = [];
     let placedItems = [];
@@ -91,14 +104,15 @@
       {name:"Vanity", color:0x222222, size:[1.0,0.85,0.55]},
       {name:"Radiator", color:0x444444, size:[0.35,1.05,0.65]},
       {name:"Door", color:0x8B4513, size:[0.1,2.1,0.9]},
-      {name:"Window", color:0xA0D6FF, size:[1.3,1.2,0.05]}
+      {name:"Window", color:0xA0D6FF, size:[1.3,1.2,0.05]},
+      {name:"Fireplace", color:0x8B4513, size:[1.2,1.0,0.6]}
     ];
 
     function init() {
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0x111111);
       camera = new THREE.PerspectiveCamera(60, window.innerWidth*0.62/window.innerHeight, 0.1, 1000);
-      camera.position.set(7, 7, 7);
+      camera.position.set(8, 8, 8);
 
       renderer = new THREE.WebGLRenderer({antialias:true});
       renderer.setSize(window.innerWidth*0.62, window.innerHeight);
@@ -107,27 +121,30 @@
       controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.7)); // much cleaner light
+
+      const sun = new THREE.DirectionalLight(0xffffff, 0.5);
       sun.position.set(10, 15, 10);
       scene.add(sun);
 
-      createMainRoom(5, 4);
+      createMainRoom(6.4, 6.4);
+      createInnerRoom(2.0, 1.5, 1, 1);
       animate();
     }
 
-    function createMainRoom(w=5, l=4) {
+    function createMainRoom(w, l) {
       if (mainFloor) scene.remove(mainFloor);
       mainWalls.forEach(w => scene.remove(w)); mainWalls = [];
 
-      mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xcccccc}));
+      mainFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xe8e0d0}));
       mainFloor.rotation.x = -Math.PI/2;
       scene.add(mainFloor);
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xeeeeee, side: THREE.DoubleSide});
+      const wallMat = new THREE.MeshStandardMaterial({color: 0xf0e8d8, side: THREE.DoubleSide});
       const h = 2.5;
-      const positions = [[0,h/2,l/2,0], [0,h/2,-l/2,Math.PI], [w/2,h/2,0,Math.PI/2], [-w/2,h/2,0,-Math.PI/2]];
-      positions.forEach(p => {
+      const pos = [[0,h/2,l/2,0], [0,h/2,-l/2,Math.PI], [w/2,h/2,0,Math.PI/2], [-w/2,h/2,0,-Math.PI/2]];
+      pos.forEach(p => {
         const wall = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat);
         wall.position.set(p[0], p[1], p[2]);
         wall.rotation.y = p[3];
@@ -136,34 +153,52 @@
       });
     }
 
-    function addInnerRoom() {
-      if (innerFloor) return; // one inner room for now
-      innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(2, 1.5), new THREE.MeshStandardMaterial({color: 0xbbbbbb}));
+    function createInnerRoom(w, l, px, pz) {
+      if (innerFloor) scene.remove(innerFloor);
+      innerWalls.forEach(w => scene.remove(w)); innerWalls = [];
+
+      innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xd0c0a0}));
       innerFloor.rotation.x = -Math.PI/2;
-      innerFloor.position.set(1, 0.01, 1);
+      innerFloor.position.set(px, 0.01, pz);
       scene.add(innerFloor);
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xeeeeee, side: THREE.DoubleSide});
+      const wallMat = new THREE.MeshStandardMaterial({color: 0xe8d8c0, side: THREE.DoubleSide});
       const h = 2.5;
-      innerWalls = [];
-      const iw = 2, il = 1.5;
-      const ipos = [[0,h/2,il/2,0], [0,h/2,-il/2,Math.PI], [iw/2,h/2,0,Math.PI/2], [-iw/2,h/2,0,-Math.PI/2]];
+      const ipos = [[0,h/2,l/2,0], [0,h/2,-l/2,Math.PI], [w/2,h/2,0,Math.PI/2], [-w/2,h/2,0,-Math.PI/2]];
       ipos.forEach((p,i) => {
-        const wall = new THREE.Mesh(new THREE.PlaneGeometry(i===0||i===1 ? iw : il, h), wallMat);
-        wall.position.set(p[0]+1, p[1], p[2]+1);
+        const wall = new THREE.Mesh(new THREE.PlaneGeometry(i===0||i===1 ? w : l, h), wallMat);
+        wall.position.set(p[0]+px, p[1], p[2]+pz);
         wall.rotation.y = p[3];
         scene.add(wall);
         innerWalls.push(wall);
       });
     }
 
+    function updateMainRoom() {
+      const w = parseFloat(document.getElementById('mainWidth').value);
+      const l = parseFloat(document.getElementById('mainLength').value);
+      document.getElementById('mainWVal').textContent = w.toFixed(1);
+      document.getElementById('mainLVal').textContent = l.toFixed(1);
+      createMainRoom(w, l);
+    }
+
+    function updateInnerRoom() {
+      const w = parseFloat(document.getElementById('innerWidth').value);
+      const l = parseFloat(document.getElementById('innerLength').value);
+      const px = parseFloat(document.getElementById('innerX').value);
+      const pz = parseFloat(document.getElementById('innerZ').value);
+      document.getElementById('innerWVal').textContent = w.toFixed(1);
+      document.getElementById('innerLVal').textContent = l.toFixed(1);
+      createInnerRoom(w, l, px, pz);
+    }
+
     function addFixture(i) {
       const data = fixturesData[i];
-      const geo = new THREE.BoxGeometry(...data.size); // improved proportions
+      const geo = new THREE.BoxGeometry(...data.size);
       const mat = new THREE.MeshStandardMaterial({color: data.color});
       const mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(0, data.size[1]/2, 0);
-      mesh.userData = {name: data.name, scale: 1};
+      mesh.userData = {name: data.name};
       scene.add(mesh);
       placedItems.push(mesh);
     }
@@ -180,7 +215,7 @@
       placedItems.push(mesh);
     }
 
-    // Drag + Select
+    // Drag + Select + Rotate + Scale (same reliable system)
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let selected = null;
@@ -194,8 +229,9 @@
       if (hits.length) {
         selected = hits[0].object;
         selectedItem = selected;
-        controls.enabled = false;
-        showControls();
+        document.getElementById('itemControls').style.display = 'block';
+        document.getElementById('rotateSlider').value = 0;
+        document.getElementById('scaleSlider').value = 1;
       }
     });
 
@@ -204,23 +240,14 @@
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
-      const hits = raycaster.intersectObject(mainFloor || floor);
+      const hits = raycaster.intersectObject(mainFloor);
       if (hits.length) {
         selected.position.x = hits[0].point.x;
         selected.position.z = hits[0].point.z;
       }
     });
 
-    window.addEventListener('pointerup', () => { if (selected) controls.enabled = true; selected = null; });
-
-    // Controls for selected item
-    function showControls() {
-      document.getElementById('itemControls').style.display = 'block';
-      document.getElementById('rotVal').textContent = 0;
-      document.getElementById('scaleVal').textContent = selectedItem.userData.scale || 1;
-      document.getElementById('rotateSlider').value = 0;
-      document.getElementById('scaleSlider').value = selectedItem.userData.scale || 1;
-    }
+    window.addEventListener('pointerup', () => { selected = null; controls.enabled = true; });
 
     function rotateSelected() {
       if (!selectedItem) return;
@@ -233,7 +260,6 @@
       if (!selectedItem) return;
       const s = parseFloat(document.getElementById('scaleSlider').value);
       selectedItem.scale.set(s, s, s);
-      selectedItem.userData.scale = s;
       document.getElementById('scaleVal').textContent = s.toFixed(1);
     }
 
@@ -246,7 +272,6 @@
       }
     }
 
-    // X-Ray improved
     function toggleXRay() { xrayEnabled = document.getElementById('xray').checked; }
 
     function animate() {
@@ -258,19 +283,11 @@
         [...mainWalls, ...innerWalls].forEach(wall => {
           const dist = camPos.distanceTo(wall.position);
           wall.material.transparent = true;
-          wall.material.opacity = dist < 4 ? 0.1 : 1;
+          wall.material.opacity = Math.max(0.25, dist / 6); // much cleaner fade
         });
       }
 
       renderer.render(scene, camera);
-    }
-
-    function updateMainRoom() {
-      const w = parseFloat(document.getElementById('mainWidth').value);
-      const l = parseFloat(document.getElementById('mainLength').value);
-      document.getElementById('mainWVal').textContent = w.toFixed(1);
-      document.getElementById('mainLVal').textContent = l.toFixed(1);
-      createMainRoom(w, l);
     }
 
     function addSelectedFixture() {
@@ -283,9 +300,8 @@
       if (val) addPipe(parseInt(val));
     }
 
-    function saveDesign() { /* same as before */ alert("Design saved as JSON!"); }
-
-    function getQuote() { alert("Quote request sent with your design!"); }
+    function saveDesign() { alert("✅ Design saved! (JSON file downloaded in real version)"); }
+    function getQuote() { alert("Quote request ready with your full design!"); }
 
     window.onload = init;
     window.addEventListener('resize', () => {
