@@ -28,10 +28,14 @@
     .steam { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 7; }
     .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
     @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
-    #roomioBanner { animation: bannerFlash 1.6s infinite alternate ease-in-out; }
-    @keyframes bannerFlash { from { box-shadow: 0 0 25px rgba(212,175,55,0.6); } to { box-shadow: 0 0 70px rgba(212,175,55,1); } }
-    
-    /* UPDATED PLANNER – WHITE + GOLD SCHEME */
+
+    /* LOGO FIX: BATHROOMS now sits neatly and tightly UNDER EN-SUITE (no stretching/passing) */
+    .logo-wrapper .bath-text { 
+      font-size: 0.85rem; 
+      letter-spacing: 0.35em; 
+      margin-top: -6px; 
+    }
+
     #plannerModal { background: #fbf7f0; }
     #plannerModal .modal-header { background: #fbf7f0; border-bottom: 1px solid #d4af37; color: #111827; }
     #plannerControls { background: #fbf7f0; border-bottom: 1px solid #d4af37; color: #111827; }
@@ -53,7 +57,7 @@
       transition: all 0.2s; 
     }
     .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
-    
+
     .hover-card .more-box { opacity: 0; max-height: 0; overflow: hidden; transition: all 0.4s ease; }
     .hover-card .toggle-btn { transition: all 0.3s; }
     .brand-name { white-space: nowrap; }
@@ -74,25 +78,22 @@
     }
     @media (max-width: 768px) {
       .section-title { font-size: 2.8rem; line-height: 1.1; }
-      header .max-w-6xl { padding-top: 25rem !important; }
-      #estimator { padding-bottom: 160px !important; }
-      .estimator-price-box { margin-top: 3rem !important; width: 100% !important; }
-      .planner-select { max-width: 100%; overflow-x: auto; }
     }
   </style>
 </head>
 <body class="bg-[#fbf7f0] text-zinc-900 overflow-x-hidden">
+
   <!-- NAVBAR -->
   <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 logo-wrapper">
         <i class="fa-solid fa-bath text-5xl gold"></i>
         <div class="flex flex-col items-start">
           <span class="text-4xl serif tracking-widest font-light brand-name">EN-SUITE</span>
-          <span class="text-xs font-medium tracking-[2.8em] gold">BATHROOMS</span>
+          <span class="text-sm font-medium gold bath-text tracking-widest">BATHROOMS</span>
         </div>
       </div>
-      <!-- FORCED SINGLE LINE NAV -->
+      <!-- SINGLE LINE NAV -->
       <div class="hidden md:flex gap-6 text-lg font-light flex-nowrap">
         <a href="#builder" class="hover:gold transition">Ensuite Planner</a>
         <a href="#estimator" class="hover:gold transition">Instant Estimator</a>
@@ -100,12 +101,12 @@
         <a href="#areas" class="hover:gold transition">Areas</a>
         <a href="#quote" class="hover:gold transition">Contact</a>
       </div>
-      <!-- SMALLER BOOK FREE QUOTE BUTTON -->
+      <!-- SMALLER BOOK BUTTON -->
       <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-6 py-3 rounded-full transition text-lg">BOOK FREE QUOTE</a>
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO – ALL TEXT NOW FULLY VISIBLE + PROFESSIONAL REMOVED -->
   <header class="relative h-screen overflow-hidden flex items-center">
     <video autoplay loop muted playsinline class="hero-video">
       <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
@@ -126,12 +127,12 @@
       <div class="steam-particle" style="left:35px; animation-delay:0.4s"></div>
       <div class="steam-particle" style="left:60px; animation-delay:1.8s"></div>
     </div>
-    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative pt-20 md:pt-24">
-      <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">PROFESSIONAL EN-SUITE BATHROOM INSTALLATION</h1>
+    <div class="max-w-6xl mx-auto px-8 text-white text-center z-10 relative pt-32 md:pt-44">
+      <h1 class="section-title text-7xl md:text-[5.8rem] serif leading-none mb-8" data-aos="fade-up">EN-SUITE BATHROOM INSTALLATION</h1>
       <p class="text-3xl max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="300">Expert en-suite bathroom installation within the M25</p>
       <p class="text-2xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="400">Practical en-suite bathrooms added to your home – free consultation and site visit included</p>
-      <!-- GET INSTANT ESTIMATE – NOW CLEARLY VISIBLE -->
-      <a href="#estimator" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition cursor-pointer shadow-xl">GET INSTANT ESTIMATE</a>
+      <!-- GET INSTANT ESTIMATE – NOW GUARANTEED VISIBLE -->
+      <a href="#estimator" class="inline-block bg-white text-black px-16 py-7 rounded-3xl text-2xl font-medium hover:scale-105 transition cursor-pointer shadow-2xl">GET INSTANT ESTIMATE</a>
     </div>
     <div id="roomioBanner" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-black via-zinc-950 to-black py-6 z-[9999] border-t-4 border-[#d4af37]">
       <div class="max-w-7xl mx-auto px-8 flex items-center justify-between text-white w-full">
@@ -143,7 +144,7 @@
     </div>
   </header>
 
-  <!-- BUILDER / LAYOUT PLANNER SECTION -->
+  <!-- LAYOUT PLANNER SECTION -->
   <section id="builder" class="cream py-28">
     <div class="max-w-7xl mx-auto px-8 text-center">
       <span class="uppercase tracking-widest text-sm gold">LAYOUT PLANNER</span>
@@ -156,7 +157,7 @@
     </div>
   </section>
 
-  <!-- ABOUT US -->
+  <!-- ABOUT US – families text already cleaned in previous update -->
   <section id="about" class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <div class="text-center mb-16">
@@ -172,7 +173,6 @@
             <li class="flex gap-4"><span class="text-3xl gold">★</span> Increases daily comfort & property appeal</li>
             <li class="flex gap-4"><span class="text-3xl gold">★</span> Adds 5–8% to your home’s value in London</li>
           </ul>
-          <!-- UPDATED INFORMATIVE TEXT – NO PLACE NAMES -->
           <div class="more-box mt-10 pt-8 border-t border-gold/30 text-base text-zinc-600">
             Families tell us this single change transformed their mornings. No more rushed bathroom schedules, no more arguments. Recent Savills and Knight Frank reports (2025-2026) confirm en-suite bathroom additions in family homes deliver the highest satisfaction and resale uplift of any home improvement under £15k.
           </div>
@@ -205,7 +205,6 @@
         <p class="mt-4 text-zinc-600 max-w-xl mx-auto">Starts at £5,500 for a proper basic en-suite bathroom (3.5 m² minimum room)</p>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        <!-- estimator content unchanged -->
         <div class="space-y-12">
           <div>
             <label class="block text-sm gold mb-3">ROOM SIZE (m²) – Basic at 3.5 m²</label>
@@ -263,7 +262,7 @@
     </div>
   </section>
 
-  <!-- PROCESS, AREAS, QUOTE, FLOATING CTA, FOOTER (unchanged) -->
+  <!-- PROCESS -->
   <section class="py-28 bg-white">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-16">Our 6-Step Process</h2>
@@ -278,12 +277,14 @@
     </div>
   </section>
 
+  <!-- AREAS -->
   <section id="areas" class="py-28 cream">
     <div class="max-w-7xl mx-auto px-8">
       <h2 class="text-center text-5xl mb-12">Serving All Areas within the M25</h2>
     </div>
   </section>
 
+  <!-- QUOTE -->
   <section id="quote" class="py-28 cream">
     <div class="max-w-2xl mx-auto px-8 text-center">
       <form id="quoteForm" action="https://formspree.io/f/mqazrkyy" method="POST" class="space-y-8">
@@ -296,17 +297,19 @@
     </div>
   </section>
 
+  <!-- FLOATING CTA -->
   <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50 send-btn">
     <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
   </a>
 
+  <!-- FOOTER -->
   <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
     <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
     <p class="mt-6 text-zinc-500">Expert En-Suite Bathroom Installation within the M25 • © 2026</p>
     <p class="text-xs text-zinc-400 mt-12">All prices shown are for guidance only. Final quote after free site visit.</p>
   </footer>
 
-  <!-- PLANNER MODAL – NOW FULLY WHITE + GOLD -->
+  <!-- PLANNER MODAL – WHITE + GOLD -->
   <div id="plannerModal" class="hidden fixed inset-0 z-[99999] flex flex-col">
     <div class="modal-header py-5 px-8 flex items-center justify-between border-b border-[#d4af37]">
       <div class="flex items-center gap-4">
@@ -361,7 +364,7 @@
     </div>
   </div>
 
-  <!-- MOBILE POPUP (unchanged) -->
+  <!-- MOBILE POPUP -->
   <div id="mobilePopup" class="hidden fixed inset-0 bg-black/90 z-[100000] flex items-center justify-center">
     <div class="bg-[#fbf7f0] rounded-3xl max-w-md mx-6 p-10 text-center border-2 border-[#d4af37]">
       <i class="fa-solid fa-laptop text-7xl gold mb-6"></i>
@@ -496,8 +499,32 @@
       let obj;
       switch(type){
         case "toilet": obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
-        // ... (all other fixture cases remain exactly the same – omitted here for brevity but fully included in your file)
-        // (the rest of the fixture switch is identical to your original code)
+        case "wallHungToilet": obj = new fabric.Path('M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "backToWallToilet": obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "bathAlcove": obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H84C88.4183 1 92 4.58172 92 9V40C92 44.4183 88.4183 48 84 48H9C4.58172 48 1 44.4183 1 40V9Z M12 11C12 8.23858 14.2386 6 17 6H75C77.7614 6 80 8.23858 80 11V38C80 40.7614 77.7614 43 75 43H17C14.2386 43 12 40.7614 12 38V11Z M11.5 26.5C11.5 26.5 12 26 12 25C12 24 11.5 23.5 11.5 23.5L22.0074 22.6917C23.3519 22.5883 24.5 23.6514 24.5 25C24.5 26.3486 23.3519 27.4117 22.0074 27.3083L11.5 26.5Z M8 21.5C9.933 21.5 11.5 23.067 11.5 25C11.5 26.933 9.933 28.5 8 28.5C6.067 28.5 4.5 26.933 4.5 25C4.5 23.067 6.067 21.5 8 21.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(180); break;
+        case "bathFree": obj = new fabric.Path('M1 24.5C1 11.5213 11.5213 1 24.5 1H68.5C81.4787 1 92 11.5213 92 24.5C92 37.4787 81.4787 48 68.5 48H24.5C11.5213 48 1 37.4787 1 24.5Z M9 24.5C9 14.7042 17.6278 7.15038 27.3377 8.44503L43.262 10.5683C45.4112 10.8548 47.5888 10.8548 49.738 10.5683L65.6623 8.44503C75.3722 7.15038 84 14.7042 84 24.5C84 34.2958 75.3722 41.8496 65.6623 40.555L49.738 38.4317C47.5888 38.1452 45.4112 38.1452 43.262 38.4317L27.3377 40.555C17.6278 41.8496 9 34.2958 9 24.5Z M18 24.5C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 24.5C73 30.299 68.299 35 62.5 35H28.5C22.701 35 18 30.299 18 24.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(175); break;
+        case "shower": obj = new fabric.Path('M6.70817 7.37289L45.3371 42.6307M44.3387 7.36777L6.33874 42.3678M23.3536 22.8447L28.3536 27.8447M44.3641 22.5409L23.3641 27.8532M1 1L45 1.19812V7.19812H6.17647V42.1981H45V49H1V1ZM32 25.1982C32 28.512 29.3137 31.1982 26 31.1982C22.6863 31.1982 20 28.512 20 25.1982C20 21.8845 22.6863 19.1982 26 19.1982C29.3137 19.1982 32 21.8845 32 25.1982ZM29.75 25.1982C29.75 27.2693 28.0711 28.9482 26 28.9482C23.9289 28.9482 22.25 27.2693 22.25 25.1982C22.25 23.1272 23.9289 21.4482 26 21.4482C28.0711 21.4482 29.75 23.1272 29.75 25.1982ZM27.5 25.1982C27.5 26.0267 26.8284 26.6982 26 26.6982C25.1716 26.6982 24.5 26.0267 24.5 25.1982C24.5 24.3698 25.1716 23.6982 26 23.6982C26.8284 23.6982 27.5 24.3698 27.5 25.1982Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(95); break;
+        case "basinWall": obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H57C61.4183 1 65 4.58172 65 9V41C65 45.4183 61.4183 49 57 49H9C4.58172 49 1 45.4183 1 41V9Z M7 13C7 10.7909 8.79086 9 11 9H55C57.2091 9 59 10.7909 59 13V37C59 39.2091 57.2091 41 55 41H11C8.79086 41 7 39.2091 7 37V13Z M35 25.5C35 26.8807 33.8807 28 32.5 28C31.1193 28 30 26.8807 30 25.5C30 24.1193 31.1193 23 32.5 23C33.8807 23 35 24.1193 35 25.5Z M31.7433 9.05588C31.7433 9.05588 32.3556 9.40943 33.3216 9.15061C34.2875 8.89179 34.641 8.27942 34.641 8.27942L38.1413 18.2196C38.5892 19.4916 37.8594 20.8757 36.5568 21.2247C35.2542 21.5737 33.9302 20.7399 33.6821 19.4144L31.7433 9.05588Z M35.6673 4.38071C36.1676 6.24784 35.0596 8.16702 33.1925 8.66732C31.3253 9.16762 29.4062 8.05958 28.9059 6.19245C28.4056 4.32532 29.5136 2.40614 31.3807 1.90584C33.2479 1.40554 35.1671 2.51358 35.6673 4.38071Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(80); break;
+        case "basinPedestal": obj = new fabric.Path('M1 4C1 2.34315 2.34315 1 4 1H62C63.6569 1 65 2.34315 65 4V25C65 38.2548 54.2548 49 41 49H25C11.7452 49 1 38.2548 1 25V4Z M57 25C57 34.2958 48.3722 41.8496 38.6623 40.555L22.738 38.4317C20.5888 38.1452 18.4112 38.1452 16.262 38.4317L0.3377 40.555C-9.3722 41.8496 -18 34.2958 -18 25C-18 15.7042 -9.3722 8.15038 0.3377 9.44503L16.262 11.5683C18.4112 11.8548 20.5888 11.8548 22.738 11.5683L38.6623 9.44503C48.3722 8.15038 57 15.7042 57 25Z M18 25C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 25C73 31.299 68.299 35 62.5 35H28.5C22.701 35 18 31.299 18 25Z M31 10.5C31 10.5 31.5 11 32.5 11C33.5 11 34 10.5 34 10.5L34 20.5074C34 21.8519 32.8519 23 31.5 23C30.1481 23 29 21.8519 29 20.5074L29 10.5Z M36 6.5C36 8.433 34.433 10 32.5 10C30.567 10 29 8.433 29 6.5C29 4.567 30.567 3 32.5 3C34.433 3 36 4.567 36 6.5Z M35 28.5C35 29.8807 33.8807 31 32.5 31C31.1193 31 30 29.8807 30 28.5C30 27.1193 31.1193 26 32.5 26C33.8807 26 35 27.1193 35 28.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(80); break;
+        case "bidet": obj = new fabric.Path('M46.989 33.0731C46.989 53.4671 37.3818 69.9996 25.5307 69.9996C13.6795 69.9996 4.07227 53.4671 4.07227 33.0731C4.07227 19.1497 4 18 4 18C4.17549 18.0144 15.9306 18.2553 26.5002 17.9993C36.1582 17.7654 46.989 17.9999 46.989 17.9999C46.989 17.9999 46.989 21.6119 46.989 33.0731Z M41 44.5C41 54.7173 34.0604 63 25.5 63C16.9396 63 10 54.7173 10 44.5C10 34.2827 16.9396 26 25.5 26C34.0604 26 41 34.2827 41 44.5Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 38.4183 28.3137 42 25 42C21.6863 42 19 38.4183 19 33C19 27.5817 21.6863 24 25 24C28.3137 24 31 27.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "towelRad":
+          obj = new fabric.Group([
+            new fabric.Rect({ width: 22, height: 85, fill: fillColor, stroke: strokeColor, strokeWidth }),
+            new fabric.Line([2,12,20,12], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,28,20,28], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,44,20,44], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,60,20,60], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,76,20,76], { stroke: strokeColor, strokeWidth: 3 })
+          ]);
+          break;
+        case "ledMirror": obj = new fabric.Rect({ width: 68, height: 68, fill: '#1e2937', stroke: strokeColor, strokeWidth: 4 }); break;
+        case "door": obj = new fabric.Group([new fabric.Rect({width:18,height:78,fill:fillColor,stroke:strokeColor,strokeWidth}), new fabric.Path('M0 0 Q18 0 18 18', {fill:'',stroke:strokeColor,strokeWidth:3})]); break;
+        case "window": obj = new fabric.Group([new fabric.Rect({width:72,height:48,fill:'#bae6fd',stroke:strokeColor,strokeWidth:4}), new fabric.Line([36,0,36,48],{stroke:strokeColor,strokeWidth:2}), new fabric.Line([0,24,72,24],{stroke:strokeColor,strokeWidth:2})]); break;
+        case "manhole": obj = new fabric.Circle({ radius: 32, fill: '#1e2937', stroke: '#64748b', strokeWidth: 6 }); break;
+        case "grass": obj = new fabric.Rect({ width: 95, height: 48, fill: '#4ade80', stroke: '#166534', strokeWidth: 3 }); break;
+        case "socket": obj = new fabric.Rect({ width: 18, height: 22, fill: fillColor, stroke: strokeColor, strokeWidth: 3 }); break;
+        case "light": obj = new fabric.Circle({ radius: 15, fill: '#fef08c', stroke: strokeColor, strokeWidth: 3 }); break;
+        case "switch": obj = new fabric.Rect({ width: 14, height: 26, fill: fillColor, stroke: strokeColor, strokeWidth: 3 }); break;
       }
       if (obj) {
         obj.set({ left: fabricCanvas.width/2 - 80, top: fabricCanvas.height/2 - 80, hasRotatingPoint: true, cornerSize: 14, transparentCorners: false });
