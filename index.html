@@ -245,7 +245,7 @@
     <div class="max-w-2xl mx-auto px-6 text-center">
       <h2 class="section-title serif text-6xl mb-12">Get Your Free Quote</h2>
       
-      <form id="quoteForm" action="https://formspree.io/f/mvzwgdyn" method="POST" enctype="multipart/form-data" class="space-y-8">
+      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-8">
         <input type="text" name="name" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="tel" name="phone" id="phone" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
         <input type="email" name="email" placeholder="Email Address" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
@@ -254,11 +254,12 @@
         <div>
           <label class="block text-left text-sm gold mb-3">Upload Your Layout Plan (PNG)</label>
           <input type="file" name="plan" accept="image/png,image/jpeg" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
-          <p class="text-xs text-zinc-500 mt-2 text-left">✅ How to attach your plan:<br>
-          1. Open Layout Planner<br>
-          2. Click “Export PNG”<br>
-          3. Attach the downloaded file here</p>
+          <p class="text-xs text-zinc-500 mt-2 text-left">✅ How to attach your plan:<br>1. Open Layout Planner<br>2. Click “Export PNG” (downloads instantly)<br>3. Attach the file here</p>
         </div>
+
+        <input type="hidden" name="_subject" value="New Quote Request + Layout Plan">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://ensuite.co.uk/thank-you.html">
 
         <button type="submit" class="w-full send-btn">SEND REQUEST WITH PLAN</button>
       </form>
