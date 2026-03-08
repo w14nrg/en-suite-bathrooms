@@ -7,84 +7,93 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#111; color:#fff; overflow:hidden; }
+    body { margin:0; font-family: Arial, sans-serif; background:#ffffff; color:#333; overflow:hidden; }
     #container { display:flex; height:100vh; }
-    #left { width:320px; background:#1a1a1a; padding:20px; overflow-y:auto; }
-    #canvas-container { flex:1; position:relative; background:#000; }
-    #right { width:300px; background:#1a1a1a; padding:20px; }
-    h1 { font-size:24px; margin:0 0 20px 0; color:#e67e22; }
-    .input-row { display:flex; align-items:center; gap:10px; margin-bottom:15px; }
-    input { background:#333; color:white; border:none; padding:10px; border-radius:6px; width:90px; }
-    button { width:100%; padding:14px; background:#e67e22; color:white; border:none; font-weight:bold; border-radius:8px; cursor:pointer; margin:10px 0; }
-    button:hover { background:#d35400; }
-    .fixture { display:flex; align-items:center; gap:12px; background:#2a2a2a; padding:14px; margin:8px 0; border-radius:8px; cursor:pointer; transition:0.2s; }
-    .fixture:hover { background:#e67e22; transform:scale(1.02); }
-    .fixture span { font-size:28px; }
-    #total { font-size:48px; font-weight:bold; margin:10px 0; color:#e67e22; }
+    #left { width:340px; background:#ffffff; padding:20px; overflow-y:auto; border-right:3px solid #d4af37; }
+    #canvas-container { flex:1; position:relative; background:#111; }
+    #right { width:280px; background:#ffffff; padding:20px; border-left:3px solid #d4af37; }
+    h1 { color:#d4af37; font-size:28px; margin:0 0 20px 0; }
+    label { display:block; margin:15px 0 5px; font-weight:bold; color:#d4af37; }
+    input[type="range"] { width:100%; accent-color:#d4af37; }
+    select, button { width:100%; padding:12px; margin:8px 0; border-radius:8px; border:2px solid #d4af37; background:#fff; font-size:16px; }
+    button { background:#d4af37; color:white; font-weight:bold; cursor:pointer; }
+    button:hover { background:#b38e2e; }
+    .save-btn { background:#111; color:#d4af37; border:2px solid #d4af37; }
+    #total { font-size:48px; font-weight:bold; color:#d4af37; }
   </style>
 </head>
 <body>
   <div id="container">
     <div id="left">
       <h1>En-Suite 3D Planner</h1>
-      <p>Room size (metres):</p>
-      <div class="input-row">
-        <input type="number" id="width" value="4" step="0.1"> Width × 
-        <input type="number" id="length" value="3" step="0.1"> Length
-      </div>
+      
+      <label>Room Width (metres)</label>
+      <input type="range" id="width" min="2" max="8" step="0.1" value="4" oninput="updateRoomLive()">
+      <span id="widthVal">4.0</span>m
+      
+      <label>Room Length (metres)</label>
+      <input type="range" id="length" min="2" max="8" step="0.1" value="3" oninput="updateRoomLive()">
+      <span id="lengthVal">3.0</span>m
+
       <button onclick="updateRoom()">Update Room</button>
 
-      <h3 style="margin-top:30px">Fixtures & Fittings</h3>
-      <div class="fixture" onclick="addFixture(0)"><span>🚽</span> Toilet — £285</div>
-      <div class="fixture" onclick="addFixture(1)"><span>🪒</span> Basin — £195</div>
-      <div class="fixture" onclick="addFixture(2)"><span>🚿</span> Shower — £895</div>
-      <div class="fixture" onclick="addFixture(3)"><span>🛁</span> Bath — £1,295</div>
-      <div class="fixture" onclick="addFixture(4)"><span>🪞</span> Vanity Unit — £650</div>
-      <div class="fixture" onclick="addFixture(5)"><span>🔥</span> Radiator — £245</div>
-      <div class="fixture" onclick="addFixture(6)"><span>🚪</span> Door — £350</div>
-      <div class="fixture" onclick="addFixture(7)"><span>🪟</span> Window — £420</div>
+      <h3 style="margin-top:25px; color:#d4af37;">Fixtures & Fittings</h3>
+      <select id="fixtureSelect">
+        <option value="">— Choose fixture —</option>
+        <option value="0">🚽 Toilet</option>
+        <option value="1">🪒 Basin</option>
+        <option value="2">🚿 Shower</option>
+        <option value="3">🛁 Bath</option>
+        <option value="4">🪞 Vanity Unit</option>
+        <option value="5">🔥 Radiator</option>
+        <option value="6">🚪 Door</option>
+        <option value="7">🪟 Window</option>
+      </select>
+      <button onclick="addSelectedFixture()">Add Selected Fixture</button>
 
-      <h3 style="margin-top:30px">Pipes (drag to route)</h3>
-      <div class="fixture" onclick="addPipe(0)"><span>🔴</span> Hot Pipe — £45</div>
-      <div class="fixture" onclick="addPipe(1)"><span>🔵</span> Cold Pipe — £45</div>
+      <h3 style="margin-top:25px; color:#d4af37;">Pipes</h3>
+      <select id="pipeSelect">
+        <option value="">— Choose pipe —</option>
+        <option value="0">🔴 Hot Water Pipe</option>
+        <option value="1">🔵 Cold Water Pipe</option>
+        <option value="2">🟠 CH (Central Heating) Pipe</option>
+        <option value="3">🟤 Drainage Pipe</option>
+      </select>
+      <button onclick="addSelectedPipe()">Add Pipe Segment</button>
+
+      <label style="margin-top:20px;">
+        <input type="checkbox" id="xray" checked onchange="toggleXRay()"> X-Ray Walls (auto fade when close)
+      </label>
+
+      <button class="save-btn" onclick="saveDesign()" style="margin-top:30px;">💾 Save My Design</button>
     </div>
 
     <div id="canvas-container"></div>
 
     <div id="right">
-      <h3>Total Estimated Cost</h3>
-      <div id="total">£0</div>
-      <button onclick="getQuote()">Get Instant Quote →</button>
-      <p style="font-size:13px; opacity:0.7; margin-top:20px;">• Click to add • Drag to move • Scroll to zoom • Right-click to pan</p>
+      <h3 style="color:#d4af37;">Your Design</h3>
+      <button onclick="getQuote()">Request Quote →</button>
+      <p style="font-size:13px; margin-top:20px; opacity:0.8;">
+        • Click dropdowns to add<br>
+        • Drag items to move<br>
+        • Scroll to zoom • Right-click to pan
+      </p>
     </div>
   </div>
 
   <script>
-    let scene, camera, renderer, controls;
-    let floor, walls = [];
-    let placedFixtures = [];
-    let totalPrice = 0;
-
-    const fixturesData = [
-      {name:"Toilet", price:285, color:0x444444, size:[0.4,0.5,0.7]},
-      {name:"Basin", price:195, color:0xeeeeee, size:[0.6,0.2,0.5]},
-      {name:"Shower", price:895, color:0x666666, size:[0.9,2.0,0.9]},
-      {name:"Bath", price:1295, color:0xffffff, size:[1.7,0.6,0.8]},
-      {name:"Vanity", price:650, color:0x222222, size:[1.0,0.8,0.5]},
-      {name:"Radiator", price:245, color:0x555555, size:[0.3,1.0,0.6]},
-      {name:"Door", price:350, color:0x8B4513, size:[0.1,2.1,0.9]},
-      {name:"Window", price:420, color:0xA0D6FF, size:[1.2,1.2,0.05]}
-    ];
+    // === THREE.JS SETUP (same reliable version) ===
+    let scene, camera, renderer, controls, floor, walls = [], placedItems = [];
+    let xrayEnabled = true;
 
     function init() {
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0x111111);
-      camera = new THREE.PerspectiveCamera(60, window.innerWidth * 0.6 / window.innerHeight, 0.1, 1000);
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth * 0.62 / window.innerHeight, 0.1, 1000);
       camera.position.set(6, 6, 6);
 
       renderer = new THREE.WebGLRenderer({antialias:true});
-      renderer.setSize(window.innerWidth * 0.6, window.innerHeight);
-      renderer.shadowMap.enabled = true;
+      renderer.setSize(window.innerWidth * 0.62, window.innerHeight);
       document.getElementById('canvas-container').appendChild(renderer.domElement);
 
       controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -105,16 +114,36 @@
 
       floor = new THREE.Mesh(new THREE.PlaneGeometry(w, l), new THREE.MeshStandardMaterial({color: 0xaaaaaa}));
       floor.rotation.x = -Math.PI/2;
-      floor.receiveShadow = true;
       scene.add(floor);
 
-      const wallMat = new THREE.MeshStandardMaterial({color: 0xdddddd});
+      const wallMat = new THREE.MeshStandardMaterial({color: 0xdddddd, side: THREE.DoubleSide});
       const h = 2.5;
-      walls.push(new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat)); walls[0].position.set(0, h/2, l/2); scene.add(walls[0]);
-      walls.push(new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat)); walls[1].position.set(0, h/2, -l/2); walls[1].rotation.y = Math.PI; scene.add(walls[1]);
-      walls.push(new THREE.Mesh(new THREE.PlaneGeometry(l, h), wallMat)); walls[2].position.set(w/2, h/2, 0); walls[2].rotation.y = Math.PI/2; scene.add(walls[2]);
-      walls.push(new THREE.Mesh(new THREE.PlaneGeometry(l, h), wallMat)); walls[3].position.set(-w/2, h/2, 0); walls[3].rotation.y = -Math.PI/2; scene.add(walls[3]);
+      const wallPositions = [
+        {pos: [0, h/2, l/2], rot: 0},
+        {pos: [0, h/2, -l/2], rot: Math.PI},
+        {pos: [w/2, h/2, 0], rot: Math.PI/2},
+        {pos: [-w/2, h/2, 0], rot: -Math.PI/2}
+      ];
+      wallPositions.forEach(p => {
+        const wall = new THREE.Mesh(new THREE.PlaneGeometry(w === p.pos[0]*2 ? l : w, h), wallMat);
+        wall.position.set(...p.pos);
+        wall.rotation.y = p.rot;
+        scene.add(wall);
+        walls.push(wall);
+      });
     }
+
+    // Add fixtures (same shapes as before)
+    const fixturesData = [
+      {name:"Toilet", color:0x444444, size:[0.4,0.5,0.7]},
+      {name:"Basin", color:0xeeeeee, size:[0.6,0.2,0.5]},
+      {name:"Shower", color:0x666666, size:[0.9,2.0,0.9]},
+      {name:"Bath", color:0xffffff, size:[1.7,0.6,0.8]},
+      {name:"Vanity", color:0x222222, size:[1.0,0.8,0.5]},
+      {name:"Radiator", color:0x555555, size:[0.3,1.0,0.6]},
+      {name:"Door", color:0x8B4513, size:[0.1,2.1,0.9]},
+      {name:"Window", color:0xA0D6FF, size:[1.2,1.2,0.05]}
+    ];
 
     function addFixture(i) {
       const data = fixturesData[i];
@@ -122,31 +151,25 @@
       const mat = new THREE.MeshStandardMaterial({color: data.color});
       const mesh = new THREE.Mesh(geo, mat);
       mesh.position.set(0, data.size[1]/2, 0);
-      mesh.castShadow = true; mesh.receiveShadow = true;
-      mesh.userData = {price: data.price, name: data.name};
+      mesh.userData = {name: data.name};
       scene.add(mesh);
-      placedFixtures.push(mesh);
-      totalPrice += data.price;
-      document.getElementById('total').textContent = '£' + totalPrice;
+      placedItems.push(mesh);
     }
 
-    function addPipe(isHot) {
-      const name = isHot ? "Hot Pipe" : "Cold Pipe";
-      const color = isHot ? 0xff0000 : 0x00aaff;
+    function addPipe(type) {
+      const colors = [0xff0000, 0x00aaff, 0xff8800, 0x555555];
+      const names = ["Hot Pipe", "Cold Pipe", "CH Pipe", "Drainage Pipe"];
       const geo = new THREE.CylinderGeometry(0.04, 0.04, 2, 16);
-      const mat = new THREE.MeshStandardMaterial({color});
+      const mat = new THREE.MeshStandardMaterial({color: colors[type]});
       const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.set(0, 0.5, 0);
       mesh.rotation.x = Math.PI / 2;
-      mesh.castShadow = true; mesh.receiveShadow = true;
-      mesh.userData = {price: 45, name: name};
+      mesh.position.set(0, 0.5, 0);
+      mesh.userData = {name: names[type]};
       scene.add(mesh);
-      placedFixtures.push(mesh);
-      totalPrice += 45;
-      document.getElementById('total').textContent = '£' + totalPrice;
+      placedItems.push(mesh);
     }
 
-    // Drag system
+    // Drag system (unchanged)
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     let selected = null;
@@ -156,11 +179,8 @@
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       raycaster.setFromCamera(mouse, camera);
-      const hits = raycaster.intersectObjects(placedFixtures);
-      if (hits.length) {
-        selected = hits[0].object;
-        controls.enabled = false;
-      }
+      const hits = raycaster.intersectObjects(placedItems);
+      if (hits.length) { selected = hits[0].object; controls.enabled = false; }
     });
 
     window.addEventListener('pointermove', e => {
@@ -177,31 +197,73 @@
 
     window.addEventListener('pointerup', () => { selected = null; controls.enabled = true; });
 
-    function getQuote() {
-      let msg = "Your 3D En-Suite Design:\n\n";
-      placedFixtures.forEach(f => msg += `• ${f.userData.name} — £${f.userData.price}\n`);
-      msg += `\nTOTAL: £${totalPrice}\n\nWe'll call you within 1 hour with full quote + installation date!`;
-      alert(msg);
-    }
-
-    function updateRoom() {
-      const w = parseFloat(document.getElementById('width').value) || 4;
-      const l = parseFloat(document.getElementById('length').value) || 3;
-      createRoom(w, l);
+    // X-Ray walls
+    function toggleXRay() {
+      xrayEnabled = document.getElementById('xray').checked;
     }
 
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
+
+      if (xrayEnabled && walls.length) {
+        const camPos = camera.position;
+        walls.forEach(wall => {
+          const dist = camPos.distanceTo(wall.position);
+          wall.material.transparent = true;
+          wall.material.opacity = dist < 3 ? 0.15 : 1;
+        });
+      }
+
       renderer.render(scene, camera);
     }
 
-    window.onload = init;
+    function updateRoomLive() {
+      document.getElementById('widthVal').textContent = parseFloat(document.getElementById('width').value).toFixed(1);
+      document.getElementById('lengthVal').textContent = parseFloat(document.getElementById('length').value).toFixed(1);
+    }
 
+    function updateRoom() {
+      const w = parseFloat(document.getElementById('width').value);
+      const l = parseFloat(document.getElementById('length').value);
+      createRoom(w, l);
+    }
+
+    function addSelectedFixture() {
+      const val = document.getElementById('fixtureSelect').value;
+      if (val) addFixture(parseInt(val));
+    }
+
+    function addSelectedPipe() {
+      const val = document.getElementById('pipeSelect').value;
+      if (val) addPipe(parseInt(val));
+    }
+
+    function saveDesign() {
+      const design = {
+        room: {width: document.getElementById('width').value, length: document.getElementById('length').value},
+        items: placedItems.map(item => ({
+          name: item.userData.name,
+          position: {x: item.position.x, y: item.position.y, z: item.position.z}
+        }))
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(design, null, 2));
+      const dl = document.createElement('a');
+      dl.setAttribute("href", dataStr);
+      dl.setAttribute("download", "en-suite-design.json");
+      dl.click();
+      alert("✅ Design saved! You can email this file to us or load it later.");
+    }
+
+    function getQuote() {
+      alert("Your design is saved and ready! We'll call you within 1 hour with a full quote and installation options.");
+    }
+
+    window.onload = init;
     window.addEventListener('resize', () => {
-      camera.aspect = (window.innerWidth * 0.6) / window.innerHeight;
+      camera.aspect = (window.innerWidth * 0.62) / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth * 0.6, window.innerHeight);
+      renderer.setSize(window.innerWidth * 0.62, window.innerHeight);
     });
   </script>
 </body>
