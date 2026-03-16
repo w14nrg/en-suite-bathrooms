@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Expert en suite bathroom installation London M25. Basic package from only £5,500 complete (bath/toilet/basin + full fit-out). Free site visit & 3D planner. 10-year guarantee. Add an en suite to your bedroom in London today.">
+  <title>En Suite Bathroom Installation London M25 | From £5,500 | Expert Fitters</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&family=Inter:wght@300;400;500&display=swap');
+    html, body { overflow-x: hidden; }
+    body { font-family: 'Inter', sans-serif; }
+    .serif { font-family: 'Playfair Display', serif; }
+    .nav { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); }
+    .gold { color: #d4af37; }
+    .cream { background-color: #fbf7f0; }
+    .section-title { font-size: 3.8rem; line-height: 1.05; font-weight: 300; letter-spacing: -3px; }
+    .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.5)); z-index: 1; }
+    .water-stream { position: absolute; top: 38%; left: 48%; width: 4px; height: 180px; background: linear-gradient(transparent, #a5f3fc, #67e8f9); animation: waterFlow 0.8s linear infinite; opacity: 0.85; z-index: 5; }
+    .bubbles { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; overflow: hidden; pointer-events: none; z-index: 6; }
+    .bubble { position: absolute; bottom: -50px; background: rgba(255,255,255,0.75); border-radius: 50%; animation: bubbleRise linear infinite; }
+    @keyframes bubbleRise { to { transform: translateY(-800px); opacity: 0; } }
+    .steam { position: absolute; bottom: 25%; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 7; }
+    .steam-particle { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.8); border-radius: 50%; animation: steamRise 4s infinite linear; }
+    @keyframes steamRise { 0% { transform: translateY(0) scale(1); opacity: 0.9; } 100% { transform: translateY(-280px) scale(0.2); opacity: 0; } }
+    .logo-wrapper { display: flex; align-items: center; gap: 16px; }
+    .logo-text .en-suite { font-size: 2.25rem; line-height: 1; font-weight: 300; letter-spacing: -1px; }
+    .logo-text .bathrooms { font-size: 0.95rem; letter-spacing: 0.45em; font-weight: 500; color: #d4af37; margin-top: -4px; }
+    #plannerModal { background: #fbf7f0; }
+    #plannerModal .modal-header { background: #fbf7f0; border-bottom: 1px solid #d4af37; color: #111827; }
+    #plannerControls { background: #fbf7f0; border-bottom: 1px solid #d4af37; color: #111827; }
+    #canvasContainer { background: #fbf7f0; }
+    .planner-select { background: white; border: 2px solid #d4af37; color: #111827; padding: 10px 16px; border-radius: 9999px; font-size: 15px; }
+    .planner-btn { background: #d4af37; color: black; padding: 10px 24px; border-radius: 9999px; font-weight: 600; transition: all 0.2s; }
+    .planner-btn:hover { background: #f5d576; transform: translateY(-2px); }
+    .send-btn { background: #d4af37; color: black; font-weight: 700; padding: 1.8rem 2.5rem; border-radius: 9999px; font-size: 1.6rem; box-shadow: 0 10px 25px rgba(212,175,55,0.4); transition: all 0.3s ease; }
+    .send-btn:hover { background: #e6c45a; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(212,175,55,0.5); }
+    @media (max-width: 768px) {
+      .section-title { font-size: 2.6rem !important; }
+      .logo-text .en-suite { font-size: 1.85rem; }
+      header .max-w-6xl { padding-top: 7rem !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#fbf7f0] text-zinc-900 overflow-x-hidden">
+  <!-- NAVBAR (exact same as your homepage) -->
+  <nav class="nav fixed top-0 w-full z-50 border-b border-[#d4af37]/30 py-6">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div class="logo-wrapper">
+        <i class="fa-solid fa-bath text-5xl gold"></i>
+        <div class="logo-text">
+          <span class="en-suite serif tracking-widest font-light">EN-SUITE</span>
+          <span class="bathrooms">BATHROOMS</span>
+        </div>
+      </div>
+      <div class="hidden md:flex gap-8 text-lg font-light">
+        <a href="#builder" class="hover:gold transition">Ensuite Planner</a>
+        <a href="#about" class="hover:gold transition">About Us</a>
+        <a href="#quote" class="hover:gold transition">Contact</a>
+      </div>
+      <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black font-medium px-6 py-3 rounded-full transition text-lg">BOOK FREE QUOTE</a>
+    </div>
+  </nav>
+
+  <!-- HERO – KEYWORD OPTIMIZED FOR GOOGLE -->
+  <header class="relative h-screen overflow-hidden flex items-center">
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="water-stream"></div>
+    <div class="bubbles">
+      <div class="bubble" style="left:22%; width:18px; height:18px; animation-duration:4.8s; animation-delay:0s"></div>
+      <div class="bubble" style="left:35%; width:12px; height:12px; animation-duration:6.2s; animation-delay:0.5s"></div>
+      <div class="bubble" style="left:48%; width:25px; height:25px; animation-duration:5.1s; animation-delay:1.2s"></div>
+      <div class="bubble" style="left:61%; width:15px; height:15px; animation-duration:7s; animation-delay:0.3s"></div>
+      <div class="bubble" style="left:74%; width:20px; height:20px; animation-duration:4.5s; animation-delay:1.8s"></div>
+    </div>
+    <div class="steam">
+      <div class="steam-particle" style="left:-40px; animation-delay:0s"></div>
+      <div class="steam-particle" style="left:-20px; animation-delay:0.6s"></div>
+      <div class="steam-particle" style="left:10px; animation-delay:1.2s"></div>
+      <div class="steam-particle" style="left:35px; animation-delay:0.4s"></div>
+      <div class="steam-particle" style="left:60px; animation-delay:1.8s"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 text-white text-center z-10 relative pt-32 md:pt-40">
+      <h1 class="section-title serif text-7xl md:text-[5.8rem] leading-none mb-8" data-aos="fade-up">EN SUITE BATHROOM INSTALLATION LONDON M25</h1>
+      <p class="text-3xl max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="300">From Only £5,500 Complete • Expert En Suite Fitters Within the M25</p>
+      <p class="text-2xl max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="400">Add a private en suite to your bedroom in London today. Free site visit, instant planner & 10-year guarantee.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#quote" class="bg-[#d4af37] hover:bg-amber-400 text-black px-12 py-6 rounded-full text-2xl font-medium transition">GET FREE QUOTE NOW</a>
+        <a href="#builder" class="border-2 border-white hover:bg-white hover:text-black px-12 py-6 rounded-full text-2xl font-medium transition">LAUNCH PLANNER</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- LAYOUT PLANNER -->
+  <section id="builder" class="cream py-28">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <span class="uppercase tracking-widest text-sm gold">LAYOUT PLANNER</span>
+      <h2 class="section-title serif text-6xl mt-6">Design Your Perfect En Suite Bathroom Installation London</h2>
+      <div class="mt-16 bg-white rounded-3xl p-16 max-w-3xl mx-auto border border-gold/30">
+        <button onclick="launchPlanner()" class="mt-8 bg-[#d4af37] hover:bg-amber-400 text-black px-20 py-8 rounded-3xl text-3xl font-medium transition-all active:scale-95">
+          LAUNCH LAYOUT PLANNER →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about" class="py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="uppercase tracking-widest text-sm gold">WHY AN ENSUITE?</span>
+        <h2 class="section-title serif text-6xl mt-6">Private Comfort or Smart Investment</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-16">
+        <div class="hover-card bg-cream p-10 rounded-3xl cursor-pointer" onclick="toggleMore(this)">
+          <h3 class="text-3xl serif mb-6">For Your Family Home</h3>
+          <p class="text-xl text-zinc-600 leading-relaxed">Enjoy hotel-style every morning. No more queuing for the bathroom. A private en suite bathroom gives you and your family privacy, convenience and a real sense of home.</p>
+          <ul class="mt-8 space-y-4 text-lg">
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Complete privacy for the main bedroom</li>
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Increases daily comfort & property appeal</li>
+            <li class="flex gap-4"><span class="text-3xl gold">★</span> Adds 5–8% to your home’s value in London</li>
+          </ul>
+          <div class="more-box mt-10 pt-8 border-t border-gold/30 text-base text-zinc-600">
+            Families tell us this single change transformed their mornings. No more rushed bathroom schedules, no more arguments. Recent Savills and Knight Frank reports (2025-2026) confirm en-suite bathroom additions in family homes deliver the highest satisfaction and resale uplift of any home improvement under £15k.
+          </div>
+          <button onclick="event.stopImmediatePropagation(); toggleMore(this.closest('.hover-card'))" class="toggle-btn mt-6 text-gold font-medium flex items-center gap-2">Read more →</button>
+        </div>
+        <div class="hover-card bg-[#fbf7f0] p-10 rounded-3xl border-2 border-gold cursor-pointer" onclick="toggleMore(this)">
+          <h3 class="text-3xl serif mb-6 text-gold">For Landlords & Investors</h3>
+          <p class="text-xl leading-relaxed">Turn a spare room into a high-yield asset.</p>
+          <div class="mt-8 space-y-6 text-lg">
+            <div class="flex justify-between border-b pb-4"><span>Average London room rent (shared bathroom)</span><span class="font-medium">£950 – £1,080 pcm</span></div>
+            <div class="flex justify-between border-b pb-4"><span>Room with private en suite bathroom</span><span class="font-medium text-gold">£1,280 – £1,650 pcm</span></div>
+            <div class="text-sm text-emerald-600 font-medium">+£250 – £450 extra per month per room • Recoup in 18–28 months</div>
+            <p class="text-sm text-zinc-500">En-suite bathrooms command 25–35% rental premium in London HMOs & flatshares (SpareRoom Q4 2025 + Rightmove data).</p>
+          </div>
+          <div class="more-box mt-10 pt-8 border-t border-gold/30 text-base text-zinc-600">
+            Adding an en-suite bathroom is currently the highest-ROI upgrade in the London rental market. Real 2026 listings show ensuite rooms letting 2–3 weeks faster with almost zero void periods. A typical 5-bed HMO jumps from £5,000–£5,800/month to £6,800–£8,000+/month once all rooms have private bathrooms. Payback is usually under 2 years and you also gain a 4–7% uplift in property valuation. Tenants happily pay the premium for the privacy and modern finish.
+          </div>
+          <button onclick="event.stopImmediatePropagation(); toggleMore(this.closest('.hover-card'))" class="toggle-btn mt-6 text-gold font-medium flex items-center gap-2">Read more →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTANT ESTIMATOR -->
+  <section id="estimator" class="py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="uppercase tracking-widest text-sm gold">CALCULATE LIVE</span>
+        <h2 class="section-title serif text-6xl">Instant En Suite Bathroom Installation London Cost Estimator</h2>
+        <p class="mt-4 text-zinc-600 max-w-xl mx-auto">Starts at £5,500 for a proper basic en-suite bathroom (3.5 m² minimum room)</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div class="space-y-12">
+          <div>
+            <label class="block text-sm gold mb-3">ROOM SIZE (m²) – Basic at 3.5 m²</label>
+            <input type="range" id="sizeSlider" min="3.5" max="15" step="0.5" value="3.5" oninput="updateEstimate()" class="w-full accent-gold">
+            <div class="flex justify-between text-sm"><span>3.5 m²</span><span id="sizeValue" class="font-medium">3.5 m²</span><span>15 m²</span></div>
+          </div>
+          <div class="p-8 bg-[#fbf7f0] rounded-3xl border border-gold/30">
+            <h4 class="gold text-sm uppercase tracking-widest mb-4">Your £5,500 Basic En-Suite Bathroom Includes</h4>
+            <ul class="space-y-3 text-sm text-zinc-600">
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Small 1500-1600mm bath + toilet + wall-hung basin</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> 150×150mm tile splashback only</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Lino/vinyl flooring</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Basic electrics, lighting & extractor</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> 3×2 timber stud walls where needed</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> All water/electrics/drainage within easy reach</li>
+              <li class="flex items-start gap-3"><span class="text-gold mt-1">✓</span> Full professional installation + 10-year guarantee</li>
+            </ul>
+          </div>
+          <div>
+            <label class="block text-sm gold mb-3">Add Upgrades (labour only – multiple allowed)</label>
+            <div class="flex gap-3">
+              <select id="upgradeSelect" class="flex-1 planner-select">
+                <option value="">Choose upgrade...</option>
+                <option value="1750">Plumbing & Drainage Upgrade (new runs) +£1,750</option>
+                <option value="1000">Electrics Upgrade (new circuits) +£1,000</option>
+                <option value="500">Macerator Unit +£500</option>
+                <option value="750">Full Wall Tiling Upgrade +£750</option>
+                <option value="500">Porcelain Floor Tiling Upgrade +£500</option>
+                <option value="350">Electric Heated Towel Radiator +£350</option>
+                <option value="2400">Freestanding Bath Upgrade +£2,400</option>
+                <option value="1950">Rainfall Shower System +£1,950</option>
+                <option value="1800">Underfloor Heating +£1,800</option>
+                <option value="1200">LED Mirror + Smart Lighting +£1,200</option>
+                <option value="1450">Built-in Vanity Storage +£1,450</option>
+                <option value="650">Bluetooth Speakers +£650</option>
+                <option value="950">Marble-Effect Premium Splashback +£950</option>
+                <option value="1200">Frameless Glass Shower Enclosure +£1,200</option>
+                <option value="650">Recessed LED Downlights (6x) +£650</option>
+                <option value="350">Premium Silent Extractor Fan +£350</option>
+              </select>
+              <button onclick="addUpgrade()" class="planner-btn px-8">Add</button>
+            </div>
+            <div id="addedUpgrades" class="mt-6 space-y-3"></div>
+            <p class="text-xs text-zinc-500 mt-4">* Plumbing & drainage or electrics upgrades only required if existing services are not easily accessible and new runs will be needed.</p>
+          </div>
+        </div>
+        <div class="estimator-price-box bg-cream p-12 rounded-3xl border border-gold/30 h-fit">
+          <p class="uppercase text-sm gold tracking-widest">YOUR ESTIMATED PRICE</p>
+          <p id="estimatePrice" class="text-7xl font-light text-gold mt-4">£5,500</p>
+          <p class="text-sm text-zinc-500 mt-2">Basic 3.5–4 m² en-suite bathroom • Full installation • 10-year guarantee</p>
+          <button onclick="saveEstimate()" class="mt-16 w-full send-btn text-2xl">SAVE THIS ESTIMATE & GET FREE DESIGN</button>
+          <p class="text-xs text-zinc-400 mt-6 text-center">All prices shown are for guidance only. Final quote after free site visit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-center text-5xl mb-16">Our 6-Step Process</h2>
+      <div class="grid md:grid-cols-6 gap-8 text-center">
+        <div class="flex flex-col items-center"><i class="fa-solid fa-phone-volume text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">01</div><p class="font-medium">Free phone consultation</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-ruler-combined text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">02</div><p class="font-medium">Free site visit & measurements</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-drafting-compass text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">03</div><p class="font-medium">Discuss design & materials</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-file-invoice text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">04</div><p class="font-medium">Detailed quote</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-screwdriver-wrench text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">05</div><p class="font-medium">En-suite bathroom installation</p></div>
+        <div class="flex flex-col items-center"><i class="fa-solid fa-handshake text-6xl gold mb-4"></i><div class="text-6xl gold mb-4">06</div><p class="font-medium">Final inspection & handover</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section id="quote" class="py-28 cream">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <h2 class="section-title serif text-6xl mb-12">Get Your Free Quote</h2>
+      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-8">
+        <input type="text" name="name" placeholder="Full Name" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
+        <input type="tel" name="phone" id="phone" placeholder="Phone Number" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
+        <input type="email" name="email" placeholder="Email Address" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
+        <textarea name="message" placeholder="Tell us about your project" class="w-full bg-white border border-gold/30 p-7 rounded-3xl h-40" required></textarea>
+        <div>
+          <label class="block text-left text-sm gold mb-3">Upload Your Layout Plan (PNG)</label>
+          <input type="file" name="plan" accept="image/png,image/jpeg" class="w-full bg-white border border-gold/30 p-7 rounded-3xl text-lg" required>
+          <p class="text-xs text-zinc-500 mt-2 text-left">✅ How to attach your plan:<br>1. Open Layout Planner<br>2. Click “Export PNG” (downloads instantly)<br>3. Attach the file here</p>
+        </div>
+        <input type="hidden" name="_subject" value="New Quote Request + Layout Plan">
+        <input type="hidden" name="_captcha" value="false">
+        <button type="submit" class="w-full send-btn">SEND REQUEST WITH PLAN</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FLOATING CTA -->
+  <a href="#quote" class="fixed bottom-8 right-8 bg-[#d4af37] hover:bg-amber-400 text-black px-10 py-5 rounded-3xl shadow-2xl flex items-center gap-3 text-xl font-medium z-50 send-btn">
+    <i class="fa-solid fa-phone-volume"></i> FREE QUOTE
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="py-20 bg-[#fbf7f0] text-center border-t border-gold/30">
+    <p class="text-4xl serif tracking-widest gold">EN-SUITE BATHROOMS</p>
+    <p class="mt-6 text-zinc-500">Expert En-Suite Bathroom Installation within the M25 • © 2026</p>
+    <p class="text-xs text-zinc-400 mt-12">All prices shown are for guidance only. Final quote after free site visit.</p>
+  </footer>
+
+  <!-- PLANNER MODAL -->
+  <div id="plannerModal" class="hidden fixed inset-0 z-[99999] flex flex-col">
+    <div class="modal-header py-5 px-8 flex items-center justify-between border-b border-[#d4af37]">
+      <div class="flex items-center gap-4">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <span class="serif text-3xl tracking-wider">LAYOUT PLANNER</span>
+      </div>
+      <button onclick="exitPlanner()" class="text-4xl hover:text-gold transition">✕</button>
+    </div>
+    <div id="plannerControls" class="py-4 px-8 flex items-center gap-3 border-b border-[#d4af37]/50 text-sm overflow-x-auto">
+      <select id="toolSelect" class="planner-select">
+        <option value="select">Select / Move</option>
+        <option value="wall">🧱 Draw Wall</option>
+        <option value="hotPipe">🔴 Hot Pipe</option>
+        <option value="coldPipe">🔵 Cold Pipe</option>
+        <option value="chPipe">🟠 CH Pipe</option>
+        <option value="drain">⚫ Drain</option>
+        <option value="erase">Erase</option>
+      </select>
+      <select id="fixtureSelect" class="planner-select">
+        <option value="">Add Fixture...</option>
+        <optgroup label="Sanitary">
+          <option value="toilet">Toilet</option>
+          <option value="wallHungToilet">Wall Hung Toilet</option>
+          <option value="backToWallToilet">Back to Wall Toilet</option>
+          <option value="bathAlcove">Alcove Bath</option>
+          <option value="bathFree">Freestanding Bath</option>
+          <option value="shower">Shower</option>
+          <option value="basinWall">Wall Hung Basin</option>
+          <option value="basinPedestal">Pedestal Basin</option>
+          <option value="bidet">Bidet</option>
+        </optgroup>
+        <optgroup label="Heating & Furniture">
+          <option value="towelRad">Towel Radiator</option>
+          <option value="ledMirror">LED Mirror</option>
+        </optgroup>
+        <optgroup label="External / Others">
+          <option value="door">Door</option>
+          <option value="window">Window</option>
+          <option value="manhole">Manhole</option>
+          <option value="grass">Grass</option>
+          <option value="socket">Socket</option>
+          <option value="light">Light</option>
+          <option value="switch">Switch</option>
+        </optgroup>
+      </select>
+      <button onclick="rotateSelected()" class="planner-btn flex items-center gap-2">↻ Rotate 90°</button>
+      <button onclick="deleteSelected()" class="planner-btn flex items-center gap-2">🗑 Delete</button>
+      <button onclick="exportPNG()" class="planner-btn">📥 Export PNG</button>
+    </div>
+    <div class="flex-1 relative bg-[#fbf7f0] overflow-hidden" id="canvasContainer">
+      <canvas id="c" class="absolute inset-0"></canvas>
+    </div>
+  </div>
+
+  <!-- MOBILE POPUP -->
+  <div id="mobilePopup" class="hidden fixed inset-0 bg-black/90 z-[100000] flex items-center justify-center">
+    <div class="bg-[#fbf7f0] rounded-3xl max-w-md mx-6 p-10 text-center border-2 border-[#d4af37]">
+      <i class="fa-solid fa-laptop text-7xl gold mb-6"></i>
+      <h3 class="serif text-4xl mb-4 text-zinc-900">Desktop Only</h3>
+      <p class="text-zinc-600 text-lg leading-relaxed">The Layout Planner is built for mouse precision and large screens.<br><br>Please open on a laptop or desktop computer.</p>
+      <button onclick="closeMobilePopup()" class="mt-8 w-full bg-[#d4af37] hover:bg-amber-400 text-black py-6 rounded-3xl text-xl font-medium">OK, GOT IT</button>
+    </div>
+  </div>
+
+  <script>
+    AOS.init({ duration: 1200, once: true });
+    function closeRoomioBanner() {
+      const b = document.getElementById('roomioBanner');
+      if (!b) return;
+      b.style.transition = 'opacity 0.4s ease';
+      b.style.opacity = '0';
+      setTimeout(() => { b.style.display = 'none'; }, 500);
+      localStorage.setItem('roomioBannerClosed', 'true');
+    }
+    function toggleMore(card) {
+      const box = card.querySelector('.more-box');
+      const btn = card.querySelector('.toggle-btn');
+      if (box.style.maxHeight === '420px') {
+        box.style.maxHeight = '0';
+        box.style.opacity = '0';
+        btn.textContent = 'Read more →';
+      } else {
+        box.style.maxHeight = '420px';
+        box.style.opacity = '1';
+        btn.textContent = 'Read less ×';
+      }
+    }
+    let fabricCanvas;
+    let tool = "select";
+    let drawing = false;
+    let currentLine;
+    function launchPlanner() {
+      if (window.innerWidth < 1024 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.getElementById('mobilePopup').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('plannerModal').classList.remove('hidden');
+      setTimeout(initFabricPlanner, 80);
+    }
+    function closeMobilePopup() {
+      document.getElementById('mobilePopup').classList.add('hidden');
+    }
+    function initFabricPlanner() {
+      const container = document.getElementById('canvasContainer');
+      fabricCanvas = new fabric.Canvas('c', { selection: true });
+      function resize() {
+        fabricCanvas.setWidth(container.clientWidth);
+        fabricCanvas.setHeight(container.clientHeight);
+        fabricCanvas.renderAll();
+      }
+      resize();
+      window.addEventListener('resize', resize);
+      const GRID = 50;
+      for (let i = -100; i < 3000; i += GRID) {
+        fabricCanvas.add(new fabric.Line([i, -2000, i, 5000], { stroke: '#e5d9c8', selectable: false, evented: false }));
+        fabricCanvas.add(new fabric.Line([-2000, i, 5000, i], { stroke: '#e5d9c8', selectable: false, evented: false }));
+      }
+      document.getElementById("toolSelect").onchange = function() { tool = this.value; };
+      document.getElementById("fixtureSelect").onchange = function() {
+        if (this.value) { addFixture(this.value); this.value = ""; }
+      };
+      fabricCanvas.on("mouse:down", function(opt) {
+        if (["wall","hotPipe","coldPipe","chPipe","drain"].includes(tool)) {
+          drawing = true;
+          const p = fabricCanvas.getPointer(opt.e);
+          let color = "#4b5563", width = 8, dash = null;
+          switch(tool) {
+            case "wall": color = "#3f2a1e"; width = 9; break;
+            case "hotPipe": color = "#ef4444"; width = 6; break;
+            case "coldPipe": color = "#3b82f6"; width = 6; break;
+            case "chPipe": color = "#f59e0b"; width = 6; break;
+            case "drain": color = "#111827"; width = 6; dash = [18,12]; break;
+          }
+          currentLine = new fabric.Line([p.x, p.y, p.x, p.y], {
+            stroke: color, strokeWidth: width, strokeDashArray: dash, selectable: true
+          });
+          fabricCanvas.add(currentLine);
+        } else if (tool === "erase") {
+          const obj = fabricCanvas.findTarget(opt.e);
+          if (obj) fabricCanvas.remove(obj);
+        }
+      });
+      fabricCanvas.on("mouse:move", function(opt) {
+        if (drawing && currentLine) {
+          const p = fabricCanvas.getPointer(opt.e);
+          currentLine.set({ x2: p.x, y2: p.y });
+          fabricCanvas.renderAll();
+        }
+      });
+      fabricCanvas.on("mouse:up", function() {
+        drawing = false;
+        if (["wall","hotPipe","coldPipe","chPipe","drain"].includes(tool)) {
+          tool = "select";
+          document.getElementById("toolSelect").value = "select";
+        }
+      });
+      fabricCanvas.on("mouse:wheel", function(opt) {
+        let zoom = fabricCanvas.getZoom();
+        zoom *= opt.e.deltaY < 0 ? 1.08 : 0.93;
+        zoom = Math.min(Math.max(0.2, zoom), 5);
+        fabricCanvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+        opt.e.preventDefault();
+      });
+    }
+    function rotateSelected() {
+      if (!fabricCanvas) return;
+      const obj = fabricCanvas.getActiveObject();
+      if (obj) { obj.rotate((obj.angle || 0) + 90); fabricCanvas.renderAll(); }
+    }
+    function deleteSelected() {
+      if (!fabricCanvas) return;
+      const obj = fabricCanvas.getActiveObject();
+      if (obj) fabricCanvas.remove(obj);
+    }
+    function exportPNG() {
+      if (!fabricCanvas) return;
+      const link = document.createElement("a");
+      link.download = "ensuite-plan.png";
+      link.href = fabricCanvas.toDataURL({ format: 'png', quality: 1 });
+      link.click();
+    }
+    function addFixture(type) {
+      if (!fabricCanvas) return;
+      const fillColor = '#f1f5f9';
+      const strokeColor = '#1e2937';
+      const strokeWidth = 3;
+      let obj;
+      switch(type){
+        case "toilet": obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "wallHungToilet": obj = new fabric.Path('M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "backToWallToilet": obj = new fabric.Path('M46.4065 37.9425C46.4065 55.0951 36.823 69.0002 25.0011 69.0002C13.1792 69.0002 3.5957 55.0951 3.5957 37.9425C3.5957 30.1141 5.2059 23.4623 8.5 18C8.61402 18 25 18 25 18H41.2425C44.5366 23.4623 46.4065 30.1141 46.4065 37.9425Z M41.2161 43.5006C41.2161 53.9728 33.9559 62.4621 24.9999 62.4621C16.0439 62.4621 8.78369 53.9728 8.78369 43.5006C8.78369 33.0284 16.0439 24.5391 24.9999 24.5391C33.9559 24.5391 41.2161 33.0284 41.2161 43.5006Z M31 33C31 37.4183 28.3137 41 25 41C21.6863 41 19 37.4183 19 33C19 28.5817 21.6863 25 25 25C28.3137 25 31 28.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "bathAlcove": obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H84C88.4183 1 92 4.58172 92 9V40C92 44.4183 88.4183 48 84 48H9C4.58172 48 1 44.4183 1 40V9Z M12 11C12 8.23858 14.2386 6 17 6H75C77.7614 6 80 8.23858 80 11V38C80 40.7614 77.7614 43 75 43H17C14.2386 43 12 40.7614 12 38V11Z M11.5 26.5C11.5 26.5 12 26 12 25C12 24 11.5 23.5 11.5 23.5L22.0074 22.6917C23.3519 22.5883 24.5 23.6514 24.5 25C24.5 26.3486 23.3519 27.4117 22.0074 27.3083L11.5 26.5Z M8 21.5C9.933 21.5 11.5 23.067 11.5 25C11.5 26.933 9.933 28.5 8 28.5C6.067 28.5 4.5 26.933 4.5 25C4.5 23.067 6.067 21.5 8 21.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(180); break;
+        case "bathFree": obj = new fabric.Path('M1 24.5C1 11.5213 11.5213 1 24.5 1H68.5C81.4787 1 92 11.5213 92 24.5C92 37.4787 81.4787 48 68.5 48H24.5C11.5213 48 1 37.4787 1 24.5Z M9 24.5C9 14.7042 17.6278 7.15038 27.3377 8.44503L43.262 10.5683C45.4112 10.8548 47.5888 10.8548 49.738 10.5683L65.6623 8.44503C75.3722 7.15038 84 14.7042 84 24.5C84 34.2958 75.3722 41.8496 65.6623 40.555L49.738 38.4317C47.5888 38.1452 45.4112 38.1452 43.262 38.4317L27.3377 40.555C17.6278 41.8496 9 34.2958 9 24.5C9 34.2958 75.3722 41.8496 65.6623 40.555L49.738 38.4317C47.5888 38.1452 45.4112 38.1452 43.262 38.4317L27.3377 40.555C17.6278 41.8496 9 34.2958 9 24.5Z M18 24.5C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 24.5C73 30.299 68.299 35 62.5 35H28.5C22.701 35 18 30.299 18 24.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(175); break;
+        case "shower": obj = new fabric.Path('M6.70817 7.37289L45.3371 42.6307M44.3387 7.36777L6.33874 42.3678M23.3536 22.8447L28.3536 27.8447M44.3641 22.5409L23.3641 27.8532M1 1L45 1.19812V7.19812H6.17647V42.1981H45V49H1V1ZM32 25.1982C32 28.512 29.3137 31.1982 26 31.1982C22.6863 31.1982 20 28.512 20 25.1982C20 21.8845 22.6863 19.1982 26 19.1982C29.3137 19.1982 32 21.8845 32 25.1982ZM29.75 25.1982C29.75 27.2693 28.0711 28.9482 26 28.9482C23.9289 28.9482 22.25 27.2693 22.25 25.1982C22.25 23.1272 23.9289 21.4482 26 21.4482C28.0711 21.4482 29.75 23.1272 29.75 25.1982ZM27.5 25.1982C27.5 26.0267 26.8284 26.6982 26 26.6982C25.1716 26.6982 24.5 26.0267 24.5 25.1982C24.5 24.3698 25.1716 23.6982 26 23.6982C26.8284 23.6982 27.5 24.3698 27.5 25.1982Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(95); break;
+        case "basinWall": obj = new fabric.Path('M1 9C1 4.58172 4.58172 1 9 1H57C61.4183 1 65 4.58172 65 9V41C65 45.4183 61.4183 49 57 49H9C4.58172 49 1 45.4183 1 41V9Z M7 13C7 10.7909 8.79086 9 11 9H55C57.2091 9 59 10.7909 59 13V37C59 39.2091 57.2091 41 55 41H11C8.79086 41 7 39.2091 7 37V13Z M35 25.5C35 26.8807 33.8807 28 32.5 28C31.1193 28 30 26.8807 30 25.5C30 24.1193 31.1193 23 32.5 23C33.8807 23 35 24.1193 35 25.5Z M31.7433 9.05588C31.7433 9.05588 32.3556 9.40943 33.3216 9.15061C34.2875 8.89179 34.641 8.27942 34.641 8.27942L38.1413 18.2196C38.5892 19.4916 37.8594 20.8757 36.5568 21.2247C35.2542 21.5737 33.9302 20.7399 33.6821 19.4144L31.7433 9.05588Z M35.6673 4.38071C36.1676 6.24784 35.0596 8.16702 33.1925 8.66732C31.3253 9.16762 29.4062 8.05958 28.9059 6.19245C28.4056 4.32532 29.5136 2.40614 31.3807 1.90584C33.2479 1.40554 35.1671 2.51358 35.6673 4.38071Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(80); break;
+        case "basinPedestal": obj = new fabric.Path('M1 4C1 2.34315 2.34315 1 4 1H62C63.6569 1 65 2.34315 65 4V25C65 38.2548 54.2548 49 41 49H25C11.7452 49 1 38.2548 1 25V4Z M57 25C57 34.2958 48.3722 41.8496 38.6623 40.555L22.738 38.4317C20.5888 38.1452 18.4112 38.1452 16.262 38.4317L0.3377 40.555C-9.3722 41.8496 -18 34.2958 -18 25C-18 15.7042 -9.3722 8.15038 0.3377 9.44503L16.262 11.5683C18.4112 11.8548 20.5888 11.8548 22.738 11.5683L38.6623 9.44503C48.3722 8.15038 57 15.7042 57 25Z M18 25C18 18.701 22.701 14 28.5 14H62.5C68.299 14 73 18.701 73 25C73 31.299 68.299 35 62.5 35H28.5C22.701 35 18 30.299 18 25Z M31 10.5C31 10.5 31.5 11 32.5 11C33.5 11 34 10.5 34 10.5L34 20.5074C34 21.8519 32.8519 23 31.5 23C30.1481 23 29 21.8519 29 20.5074L29 10.5Z M36 6.5C36 8.433 34.433 10 32.5 10C30.567 10 29 8.433 29 6.5C29 4.567 30.567 3 32.5 3C34.433 3 36 4.567 36 6.5Z M35 28.5C35 29.8807 33.8807 31 32.5 31C31.1193 31 30 29.8807 30 28.5C30 27.1193 31.1193 26 32.5 26C33.8807 26 35 27.1193 35 28.5Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(80); break;
+        case "bidet": obj = new fabric.Path('M46.989 33.0731C46.989 53.4671 37.3818 69.9996 25.5307 69.9996C13.6795 69.9996 4.07227 53.4671 4.07227 33.0731C4.07227 19.1497 4 18 4 18C4.17549 18.0144 15.9306 18.2553 26.5002 17.9993C36.1582 17.7654 46.989 17.9999 46.989 17.9999C46.989 17.9999 46.989 21.6119 46.989 33.0731Z M41 44.5C41 54.7173 34.0604 63 25.5 63C16.9396 63 10 54.7173 10 44.5C10 34.2827 16.9396 26 25.5 26C34.0604 26 41 34.2827 41 44.5Z M1 3.61538C1 2.17095 2.17095 1 3.61538 1H46.3846C47.8291 1 49 2.17095 49 3.61538V15.3846C49 16.8291 47.8291 18 46.3846 18H3.61538C2.17095 18 1 16.8291 1 15.3846V3.61538Z M26.9995 9C26.9995 10.1046 26.1041 11 24.9995 11C23.8949 11 22.9995 10.1046 22.9995 9C22.9995 7.89543 23.8949 7 24.9995 7C26.1041 7 26.9995 7.89543 26.9995 9Z M31 33C31 38.4183 28.3137 42 25 42C21.6863 42 19 38.4183 19 33C19 27.5817 21.6863 24 25 24C28.3137 24 31 27.5817 31 33Z', { fill: fillColor, stroke: strokeColor, strokeWidth }); obj.scaleToWidth(70); break;
+        case "towelRad":
+          obj = new fabric.Group([
+            new fabric.Rect({ width: 22, height: 85, fill: fillColor, stroke: strokeColor, strokeWidth }),
+            new fabric.Line([2,12,20,12], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,28,20,28], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,44,20,44], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,60,20,60], { stroke: strokeColor, strokeWidth: 3 }),
+            new fabric.Line([2,76,20,76], { stroke: strokeColor, strokeWidth: 3 })
+          ]);
+          break;
+        case "ledMirror": obj = new fabric.Rect({ width: 68, height: 68, fill: '#1e2937', stroke: strokeColor, strokeWidth: 4 }); break;
+        case "door": obj = new fabric.Group([new fabric.Rect({width:18,height:78,fill:fillColor,stroke:strokeColor,strokeWidth}), new fabric.Path('M0 0 Q18 0 18 18', {fill:'',stroke:strokeColor,strokeWidth:3})]); break;
+        case "window": obj = new fabric.Group([new fabric.Rect({width:72,height:48,fill:'#bae6fd',stroke:strokeColor,strokeWidth:4}), new fabric.Line([36,0,36,48],{stroke:strokeColor,strokeWidth:2}), new fabric.Line([0,24,72,24],{stroke:strokeColor,strokeWidth:2})]); break;
+        case "manhole": obj = new fabric.Circle({ radius: 32, fill: '#1e2937', stroke: '#64748b', strokeWidth: 6 }); break;
+        case "grass": obj = new fabric.Rect({ width: 95, height: 48, fill: '#4ade80', stroke: '#166534', strokeWidth: 3 }); break;
+        case "socket": obj = new fabric.Rect({ width: 18, height: 22, fill: fillColor, stroke: strokeColor, strokeWidth: 3 }); break;
+        case "light": obj = new fabric.Circle({ radius: 15, fill: '#fef08c', stroke: strokeColor, strokeWidth: 3 }); break;
+        case "switch": obj = new fabric.Rect({ width: 14, height: 26, fill: fillColor, stroke: strokeColor, strokeWidth: 3 }); break;
+      }
+      if (obj) {
+        obj.set({ left: fabricCanvas.width/2 - 80, top: fabricCanvas.height/2 - 80, hasRotatingPoint: true, cornerSize: 14, transparentCorners: false });
+        fabricCanvas.add(obj);
+        fabricCanvas.setActiveObject(obj);
+        fabricCanvas.renderAll();
+      }
+    }
+    function exitPlanner() {
+      document.getElementById('plannerModal').classList.add('hidden');
+    }
+    let basePrice = 5500;
+    let addedUpgrades = [];
+    function addUpgrade() {
+      const select = document.getElementById('upgradeSelect');
+      if (!select.value) return;
+      const price = parseInt(select.value);
+      const text = select.options[select.selectedIndex].text.split(' +£')[0];
+      addedUpgrades.push({text, price});
+      renderAddedUpgrades();
+      updateEstimate();
+      select.value = '';
+    }
+    function removeUpgrade(i) {
+      addedUpgrades.splice(i, 1);
+      renderAddedUpgrades();
+      updateEstimate();
+    }
+    function renderAddedUpgrades() {
+      const container = document.getElementById('addedUpgrades');
+      container.innerHTML = addedUpgrades.map((item, i) => `
+        <div class="flex justify-between items-center bg-white border border-gold/30 rounded-2xl px-6 py-4">
+          <span>${item.text}</span>
+          <div class="flex items-center gap-4">
+            <span class="font-medium text-gold">+£${item.price}</span>
+            <button onclick="removeUpgrade(${i})" class="text-red-500 hover:text-red-700 text-xl">×</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    function updateEstimate() {
+      const size = parseFloat(document.getElementById('sizeSlider').value);
+      let price = basePrice + Math.max(0, (size - 3.5) * 950);
+      addedUpgrades.forEach(item => price += item.price);
+      document.getElementById('estimatePrice').textContent = '£' + Math.round(price).toLocaleString();
+      document.getElementById('sizeValue').textContent = size + ' m²';
+    }
+    function saveEstimate() { alert("Estimate saved! Our team will contact you shortly."); }
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      const phone = document.getElementById('phone').value.replace(/\D/g, '');
+      if (phone.length < 10 || phone.length > 15) {
+        alert("Please enter a valid phone number (10-15 digits)");
+        e.preventDefault();
+        return;
+      }
+      const priceEl = document.getElementById('estimatePrice');
+      const sizeEl = document.getElementById('sizeValue');
+      if (priceEl) {
+        const priceInput = document.createElement('input');
+        priceInput.type = 'hidden';
+        priceInput.name = 'estimated_price';
+        priceInput.value = priceEl.textContent;
+        this.appendChild(priceInput);
+      }
+      if (sizeEl) {
+        const sizeInput = document.createElement('input');
+        sizeInput.type = 'hidden';
+        sizeInput.name = 'room_size';
+        sizeInput.value = sizeEl.textContent;
+        this.appendChild(sizeInput);
+      }
+      if (addedUpgrades.length > 0) {
+        const upgradesInput = document.createElement('input');
+        upgradesInput.type = 'hidden';
+        upgradesInput.name = 'upgrades';
+        upgradesInput.value = addedUpgrades.map(item => `${item.text} +£${item.price}`).join(' | ');
+        this.appendChild(upgradesInput);
+      }
+    });
+    window.onload = () => {
+      updateEstimate();
+      if (localStorage.getItem('roomioBannerClosed') === 'true') {
+        const b = document.getElementById('roomioBanner');
+        if (b) b.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
