@@ -46,14 +46,6 @@
       color: var(--gold);
     }
 
-    .bg-gold {
-      background: var(--gold);
-    }
-
-    .border-gold {
-      border-color: var(--gold);
-    }
-
     .nav {
       background: rgba(251, 247, 240, 0.96);
       backdrop-filter: blur(20px);
@@ -79,8 +71,8 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(to bottom, rgba(255,255,255,0.20), rgba(20,20,20,0.62)),
-        radial-gradient(circle at center, rgba(212,175,55,0.16), rgba(0,0,0,0.30));
+        linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0.45)),
+        linear-gradient(to right, rgba(0,0,0,0.35), rgba(0,0,0,0.10));
       z-index: 1;
     }
 
@@ -89,23 +81,15 @@
       z-index: 2;
     }
 
-    .hero-panel {
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(212,175,55,0.35);
-      box-shadow: 0 28px 80px rgba(0,0,0,0.18);
-    }
-
     .section-title {
-      font-size: clamp(3rem, 7vw, 6.8rem);
+      font-size: clamp(3rem, 7vw, 6.6rem);
       line-height: 0.95;
       letter-spacing: -0.055em;
       font-weight: 300;
     }
 
     .sub-title {
-      font-size: clamp(2.35rem, 5vw, 5rem);
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
       line-height: 1;
       letter-spacing: -0.045em;
       font-weight: 300;
@@ -128,7 +112,7 @@
     }
 
     .button-light {
-      background: #ffffff;
+      background: rgba(255,255,255,0.95);
       color: #1f1f1f;
       border: 1px solid rgba(212,175,55,0.45);
       transition: all 0.25s ease;
@@ -138,7 +122,7 @@
       border-color: var(--gold);
       color: var(--goldDark);
       transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.08);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.10);
     }
 
     .service-card {
@@ -192,10 +176,68 @@
       box-shadow: 0 18px 50px rgba(0,0,0,0.055);
     }
 
-    .image-tile {
-      background-size: cover;
-      background-position: center;
-      min-height: 320px;
+    .hero-copy {
+      text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .map-wrap {
+      position: relative;
+      min-height: 520px;
+      background: #eee;
+    }
+
+    .map-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .map-marker-ring {
+      position: absolute;
+      left: 50%;
+      top: 49%;
+      width: 92px;
+      height: 92px;
+      transform: translate(-50%, -50%);
+      border: 6px solid rgba(212,175,55,0.95);
+      border-radius: 9999px;
+      box-shadow: 0 0 0 10px rgba(212,175,55,0.18);
+      pointer-events: none;
+      z-index: 5;
+      animation: pulseRing 1.8s infinite ease-out;
+    }
+
+    .map-marker-label {
+      position: absolute;
+      left: 50%;
+      top: calc(49% - 72px);
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.96);
+      color: #111;
+      border: 1px solid rgba(212,175,55,0.45);
+      border-radius: 9999px;
+      padding: 0.7rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      z-index: 6;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @keyframes pulseRing {
+      0% {
+        box-shadow: 0 0 0 0 rgba(212,175,55,0.28);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(212,175,55,0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(212,175,55,0);
+      }
     }
 
     @media (max-width: 768px) {
@@ -209,8 +251,18 @@
         letter-spacing: -0.04em;
       }
 
-      .hero-panel {
-        background: rgba(255,255,255,0.92);
+      .map-wrap {
+        min-height: 380px;
+      }
+
+      .map-marker-ring {
+        width: 74px;
+        height: 74px;
+      }
+
+      .map-marker-label {
+        font-size: 0.72rem;
+        top: calc(49% - 58px);
       }
     }
   </style>
@@ -295,21 +347,20 @@
     <div class="hero-overlay"></div>
 
     <div class="hero-content max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
-
-      <div class="hero-panel rounded-[2.5rem] p-8 md:p-14 max-w-5xl">
-        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6">
+      <div class="max-w-4xl">
+        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
           Bathroom design & installation across London
         </p>
 
-        <h1 class="section-title serif mobile-tight mb-8 text-zinc-900">
+        <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
           En-Suites & Bathrooms
         </h1>
 
-        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-zinc-900">
+        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
           New en-suites, full bathroom renovations and design-led installations within the M25.
         </p>
 
-        <p class="text-lg md:text-xl text-zinc-700 leading-relaxed max-w-4xl mb-11">
+        <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
           From creating a private en-suite in an existing bedroom to transforming an old bathroom into a modern shower room, we design, plan and install high-quality bathrooms with realistic visual presentations before work begins.
         </p>
 
@@ -322,7 +373,6 @@
           </a>
         </div>
       </div>
-
     </div>
   </header>
 
@@ -497,7 +547,7 @@
           <p class="text-6xl serif gold mb-4">8%</p>
           <h3 class="text-2xl serif mb-4">Buy-to-let value potential</h3>
           <p class="text-zinc-600 leading-relaxed">
-            The Mortgage Works / Nationwide research suggests adding a second bathroom to a buy-to-let property can add around 8% to its value.
+            Research suggests adding a second bathroom to a buy-to-let property can add around 8% to its value.
           </p>
         </div>
 
@@ -505,7 +555,7 @@
           <p class="text-6xl serif gold mb-4">6%</p>
           <h3 class="text-2xl serif mb-4">Rental premium</h3>
           <p class="text-zinc-600 leading-relaxed">
-            The Mortgage Works also reports that a second bathroom can attract around a 6% rental premium in the buy-to-let market.
+            A second bathroom can also help attract a rental premium in the buy-to-let market.
           </p>
         </div>
 
@@ -557,7 +607,6 @@
         </div>
 
         <div class="grid sm:grid-cols-2 gap-5">
-
           <div class="premium-card p-7">
             <i class="fa-solid fa-image text-4xl gold mb-5"></i>
             <h3 class="serif text-2xl mb-3">Realistic Visuals</h3>
@@ -581,7 +630,6 @@
             <h3 class="serif text-2xl mb-3">Clear Quotation</h3>
             <p class="text-zinc-600 leading-relaxed">A written proposal setting out the work, inclusions, exclusions and next steps.</p>
           </div>
-
         </div>
 
       </div>
@@ -647,64 +695,8 @@
     </div>
   </section>
 
-  <!-- GALLERY TEASER -->
-  <section class="py-24 md:py-32 bg-[#fbf7f0]">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Gallery
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          Design ideas coming to life
-        </h2>
-
-        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          Explore bathroom and en-suite ideas for London homes, from compact shower rooms to full bathroom renovations and new en-suites created from unused space.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-
-        <div class="premium-card overflow-hidden">
-          <div class="image-tile" style="background-image: url('https://images.unsplash.com/photo-1600566752229-450f6b0c0b35?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="p-7">
-            <h3 class="serif text-2xl mb-3">New En-Suites</h3>
-            <p class="text-zinc-600 leading-relaxed">Ideas for private shower rooms created from bedrooms, loft rooms and unused space.</p>
-          </div>
-        </div>
-
-        <div class="premium-card overflow-hidden">
-          <div class="image-tile" style="background-image: url('https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="p-7">
-            <h3 class="serif text-2xl mb-3">Bathroom Renovations</h3>
-            <p class="text-zinc-600 leading-relaxed">Modern bathroom upgrade ideas for tired existing bathrooms and awkward layouts.</p>
-          </div>
-        </div>
-
-        <div class="premium-card overflow-hidden">
-          <div class="image-tile" style="background-image: url('https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&w=1200&q=80');"></div>
-          <div class="p-7">
-            <h3 class="serif text-2xl mb-3">Landlord & HMO Ideas</h3>
-            <p class="text-zinc-600 leading-relaxed">Practical, attractive en-suite and shower room ideas for rental properties.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="text-center mt-12">
-        <a href="gallery.html" class="button-gold px-8 py-4 rounded-full text-lg font-semibold inline-flex items-center gap-3">
-          View Gallery
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
-
-    </div>
-  </section>
-
   <!-- WHY US -->
-  <section class="py-24 md:py-32 bg-white">
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="grid lg:grid-cols-2 gap-16 items-center">
@@ -729,25 +721,25 @@
 
         <div class="grid sm:grid-cols-2 gap-5">
 
-          <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
+          <div class="bg-white p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-location-dot text-4xl gold mb-6"></i>
             <h3 class="serif text-2xl mb-3">Fulham Office</h3>
             <p class="text-zinc-600 leading-relaxed">Based at 287 Munster Road, Fulham, with projects across London and within the M25.</p>
           </div>
 
-          <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
+          <div class="bg-white p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-ruler-combined text-4xl gold mb-6"></i>
             <h3 class="serif text-2xl mb-3">Measured Properly</h3>
             <p class="text-zinc-600 leading-relaxed">We look at layout, pipe routes, drainage, ventilation, electrics and practical installation before quoting.</p>
           </div>
 
-          <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
+          <div class="bg-white p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-pen-ruler text-4xl gold mb-6"></i>
             <h3 class="serif text-2xl mb-3">Design Led</h3>
             <p class="text-zinc-600 leading-relaxed">Clear ideas, product guidance and realistic design visuals so you understand what your finished room could look like.</p>
           </div>
 
-          <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
+          <div class="bg-white p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-screwdriver-wrench text-4xl gold mb-6"></i>
             <h3 class="serif text-2xl mb-3">Built Properly</h3>
             <p class="text-zinc-600 leading-relaxed">Practical bathroom installation experience, with attention to the hidden work behind the final finish.</p>
@@ -761,7 +753,7 @@
   </section>
 
   <!-- PROCESS -->
-  <section id="process" class="py-24 md:py-32 bg-[#fbf7f0]">
+  <section id="process" class="py-24 md:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="text-center max-w-4xl mx-auto mb-16">
@@ -821,11 +813,11 @@
     </div>
   </section>
 
-  <!-- LOCAL SECTION -->
-  <section class="py-24 md:py-32 bg-white">
+  <!-- LOCAL SECTION WITH MAP -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
     <div class="max-w-7xl mx-auto px-6">
 
-      <div class="bg-[#fbf7f0] rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
         <div class="grid lg:grid-cols-2">
 
           <div class="p-8 md:p-14">
@@ -868,7 +860,17 @@
             </div>
           </div>
 
-          <div class="min-h-[360px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="map-wrap">
+            <iframe
+              src="https://www.google.com/maps?q=287%20Munster%20Road%2C%20Fulham%2C%20London%20SW6%206BW&z=16&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Map showing 287 Munster Road, Fulham, London SW6 6BW">
+            </iframe>
+
+            <div class="map-marker-label">WE'RE HERE</div>
+            <div class="map-marker-ring"></div>
+          </div>
 
         </div>
       </div>
@@ -877,7 +879,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="py-24 md:py-32 bg-[#fbf7f0]">
+  <section id="contact" class="py-24 md:py-32 bg-white">
     <div class="max-w-5xl mx-auto px-6">
 
       <div class="text-center max-w-3xl mx-auto mb-14">
@@ -894,7 +896,7 @@
         </p>
       </div>
 
-      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" class="bg-white rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
+      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" class="bg-[#fbf7f0] rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
 
         <div class="grid md:grid-cols-2 gap-5 mb-5">
           <input type="text" name="name" placeholder="Full name" class="form-input" required>
@@ -939,7 +941,7 @@
   </a>
 
   <!-- FOOTER -->
-  <footer class="bg-white border-t border-[#d4af37]/25 pt-16 pb-8">
+  <footer class="bg-[#fbf7f0] border-t border-[#d4af37]/25 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="grid md:grid-cols-4 gap-10">
