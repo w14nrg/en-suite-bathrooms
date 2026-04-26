@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description" content="En-Suites & Bathrooms. Bathroom renovations and new en-suite design and installation in Fulham, Chelsea, Hammersmith and West London. Based on Munster Road, Fulham." />
+  <meta name="description" content="En-Suites & Bathrooms Ltd. New en-suite design, bathroom renovations and bathroom installation across London and within the M25. Based on Munster Road, Fulham." />
 
-  <title>En-Suites & Bathrooms | Bathroom Renovations & New En-Suites in Fulham</title>
+  <title>En-Suites & Bathrooms Ltd | Bathroom Renovations & New En-Suites Across London</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -58,11 +58,31 @@
 
     .hero {
       min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
       background:
-        linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
-        url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2400&q=80');
-      background-size: cover;
-      background-position: center;
+        linear-gradient(to bottom, rgba(0,0,0,0.32), rgba(0,0,0,0.72)),
+        radial-gradient(circle at center, rgba(212,175,55,0.10), rgba(0,0,0,0.45));
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
     }
 
     .section-title {
@@ -96,6 +116,17 @@
 
     .button-gold:hover {
       background: #e5c65c;
+      transform: translateY(-2px);
+    }
+
+    .button-dark {
+      background: #111111;
+      color: #ffffff;
+      transition: all 0.25s ease;
+    }
+
+    .button-dark:hover {
+      background: #2a2a2a;
       transform: translateY(-2px);
     }
 
@@ -142,10 +173,17 @@
       box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
     }
 
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      padding: 2rem;
+    }
+
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
-        padding-top: 9rem;
+        padding-top: 8rem;
         padding-bottom: 4rem;
       }
 
@@ -167,11 +205,13 @@
       </div>
 
       <div class="flex items-center gap-8">
-        <span>Bathroom renovations</span>
+        <span>Design & installation across London</span>
         <span class="text-white/30">|</span>
-        <span>New en-suite design & installation</span>
+        <span>Covering London & within the M25</span>
         <span class="text-white/30">|</span>
-        <span>Fulham & West London</span>
+        <a href="tel:02073713333" class="gold font-semibold hover:text-amber-300 transition">
+          0207 371 3333
+        </a>
       </div>
     </div>
   </div>
@@ -195,28 +235,47 @@
       <div class="hidden lg:flex items-center gap-9 text-sm font-medium text-zinc-700">
         <a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a>
         <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a>
-        <a href="#process" class="hover:text-[#d4af37] transition">How It Works</a>
+        <a href="#design" class="hover:text-[#d4af37] transition">Design Visuals</a>
         <a href="#contact" class="hover:text-[#d4af37] transition">Contact</a>
       </div>
 
-      <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
-        Book a Consultation
-      </a>
+      <div class="flex items-center gap-3">
+        <a href="tel:02073713333" class="hidden md:inline-flex button-dark px-5 py-3 rounded-full text-sm font-semibold items-center gap-2">
+          <i class="fa-solid fa-phone"></i>
+          0207 371 3333
+        </a>
+
+        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+          Enquire
+        </a>
+      </div>
     </div>
 
-    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center gap-2">
-      <i class="fa-solid fa-location-dot gold"></i>
-      <span>Munster Road, Fulham SW6</span>
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
+      <span class="flex items-center gap-2">
+        <i class="fa-solid fa-location-dot gold"></i>
+        Munster Road, Fulham SW6
+      </span>
+
+      <a href="tel:02073713333" class="font-semibold gold">
+        0207 371 3333
+      </a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <header class="hero relative flex items-center">
-    <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full text-white">
+  <header class="hero flex items-center">
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="https://videos.pexels.com/video-files/6702578/6702578-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content max-w-7xl mx-auto px-6 py-28 md:py-36 w-full text-white">
 
       <div class="max-w-4xl">
         <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6">
-          Fulham bathroom design & installation
+          Bathroom design & installation across London
         </p>
 
         <h1 class="section-title serif mobile-tight mb-8">
@@ -224,19 +283,19 @@
         </h1>
 
         <p class="text-2xl md:text-4xl font-light leading-tight max-w-3xl mb-8">
-          Two different projects. Two different routes. One specialist local team.
+          New en-suites, full bathroom renovations and design-led installations within the M25.
         </p>
 
-        <p class="text-lg md:text-xl text-white/82 leading-relaxed max-w-3xl mb-11">
-          Whether you want to create a brand-new en-suite from unused bedroom space or renovate an existing bathroom, we design and install practical, high-quality bathrooms for Fulham and West London homes.
+        <p class="text-lg md:text-xl text-white/84 leading-relaxed max-w-3xl mb-11">
+          From creating a private en-suite in an existing bedroom to transforming an old bathroom into a modern shower room, we design, plan and install high-quality bathrooms with realistic visual presentations before work begins.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="#choose" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
-            Choose Your Project
+            What Are You Planning?
           </a>
-          <a href="#contact" class="button-outline px-8 py-4 rounded-full text-lg font-semibold text-center">
-            Speak to Us
+          <a href="tel:02073713333" class="button-outline px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Call 0207 371 3333
           </a>
         </div>
       </div>
@@ -250,15 +309,15 @@
 
       <div class="text-center max-w-4xl mx-auto mb-16">
         <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          What do you need?
+          Start here
         </p>
 
         <h2 class="sub-title serif mb-7">
-          Choose the right route
+          What are you planning?
         </h2>
 
         <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          A new en-suite and a bathroom renovation are completely different projects. The cost, structure, survey, drainage, timescale and design process are not the same. Start with the option that matches what you want to do.
+          A new en-suite and a bathroom renovation need different planning. One may involve creating a new room, new drainage routes, ventilation and partition walls. The other usually starts with an existing bathroom layout, rip-out, redesign and replacement.
         </p>
       </div>
 
@@ -266,7 +325,7 @@
 
         <!-- EN-SUITE CARD -->
         <a href="en-suites.html" class="service-card bg-white rounded-[2rem] overflow-hidden soft-shadow border border-[#d4af37]/20 block">
-          <div class="h-72 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.28)), url('https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="h-72 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.32)), url('https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1600&q=80');"></div>
 
           <div class="p-8 md:p-12">
             <div class="flex items-center gap-4 mb-6">
@@ -274,14 +333,26 @@
                 <i class="fa-solid fa-door-open text-2xl gold"></i>
               </div>
               <div>
-                <p class="uppercase top-line text-xs gold font-semibold">Route one</p>
-                <h3 class="serif text-4xl md:text-5xl font-light">New En-Suite</h3>
+                <p class="uppercase top-line text-xs gold font-semibold">Private bathroom space</p>
+                <h3 class="serif text-4xl md:text-5xl font-light">Create a New En-Suite</h3>
               </div>
             </div>
 
             <p class="text-xl text-zinc-700 leading-relaxed mb-8">
-              For homeowners who want to create a private shower room, WC or en-suite inside an existing bedroom or unused space.
+              For homeowners, landlords and HMO properties looking to add private bathroom facilities to bedrooms, loft rooms or unused space.
             </p>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-8">
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Homeowners</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Add privacy, comfort and buyer appeal with a well-designed master en-suite or guest shower room.</p>
+              </div>
+
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Landlords & HMOs</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Improve rental appeal with private shower rooms and better facilities for tenants.</p>
+              </div>
+            </div>
 
             <div class="space-y-4 text-zinc-700 mb-10">
               <div class="flex gap-3">
@@ -290,7 +361,7 @@
               </div>
               <div class="flex gap-3">
                 <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Compact layouts for Victorian terraces</span>
+                <span>Compact layouts for London homes</span>
               </div>
               <div class="flex gap-3">
                 <i class="fa-solid fa-check gold mt-1"></i>
@@ -298,12 +369,12 @@
               </div>
               <div class="flex gap-3">
                 <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Ideal for adding privacy and value</span>
+                <span>Photorealistic design visuals before work begins</span>
               </div>
             </div>
 
             <div class="inline-flex items-center gap-3 button-gold px-7 py-4 rounded-full font-semibold">
-              I want a new en-suite
+              Explore New En-Suites
               <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
@@ -311,7 +382,7 @@
 
         <!-- BATHROOM CARD -->
         <a href="bathrooms.html" class="service-card bg-white rounded-[2rem] overflow-hidden soft-shadow border border-[#d4af37]/20 block">
-          <div class="h-72 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.28)), url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="h-72 bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.32)), url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80');"></div>
 
           <div class="p-8 md:p-12">
             <div class="flex items-center gap-4 mb-6">
@@ -319,14 +390,26 @@
                 <i class="fa-solid fa-shower text-2xl gold"></i>
               </div>
               <div>
-                <p class="uppercase top-line text-xs gold font-semibold">Route two</p>
-                <h3 class="serif text-4xl md:text-5xl font-light">Bathroom Renovation</h3>
+                <p class="uppercase top-line text-xs gold font-semibold">Existing bathroom upgrade</p>
+                <h3 class="serif text-4xl md:text-5xl font-light">Renovate Your Bathroom</h3>
               </div>
             </div>
 
             <p class="text-xl text-zinc-700 leading-relaxed mb-8">
-              For homeowners who already have a bathroom and want it redesigned, modernised, replaced or fully renovated.
+              For existing bathrooms that need a full rip-out, redesign, modern shower conversion or complete upgrade.
             </p>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-8">
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Old to modern</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Transform tired bathrooms with new layouts, finishes, fittings and practical improvements.</p>
+              </div>
+
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Designed properly</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">See realistic visuals and product ideas before committing to the final design.</p>
+              </div>
+            </div>
 
             <div class="space-y-4 text-zinc-700 mb-10">
               <div class="flex gap-3">
@@ -343,16 +426,127 @@
               </div>
               <div class="flex gap-3">
                 <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Practical upgrades for tired London bathrooms</span>
+                <span>Modern bathroom design for London properties</span>
               </div>
             </div>
 
             <div class="inline-flex items-center gap-3 button-gold px-7 py-4 rounded-full font-semibold">
-              I want my bathroom renovated
+              Explore Bathroom Renovations
               <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
         </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REAL WORLD VALUE STATS -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Why it matters
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Extra bathrooms can make a real difference
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A well-planned en-suite or additional bathroom is not just about luxury. For many London homes, it can improve daily comfort, buyer appeal and rental potential.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">6%</p>
+          <h3 class="text-2xl serif mb-4">Average home value uplift</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Nationwide research states that an additional bathroom can add around 6% to the value of the average house.
+          </p>
+        </div>
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">5.1%</p>
+          <h3 class="text-2xl serif mb-4">En-suite value potential</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Direct Line research, reported by OnTheMarket, suggested an en-suite bathroom could add around 5.1% to the value of an average property.
+          </p>
+        </div>
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">6%</p>
+          <h3 class="text-2xl serif mb-4">Rental income rise</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Research reported by MoneyWeek found that a buy-to-let property with a second bathroom can attract around a 6% rental rise.
+          </p>
+        </div>
+
+      </div>
+
+      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
+        Figures vary by property, location, layout, finish and market conditions. These statistics are included as general market guidance only and are not a valuation or rental guarantee.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- DESIGN VISUALS -->
+  <section id="design" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Design before you decide
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            See the bathroom before it is built
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            A bathroom is too expensive to guess. We can provide realistic design visuals so you can see how your new bathroom or en-suite could look before work begins.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            This is especially useful for awkward London bathrooms, small en-suites, landlord/HMO upgrades and homes where space needs to be used properly.
+          </p>
+
+          <div class="space-y-4 text-zinc-700">
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Photorealistic bathroom visuals</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Layout and product ideas before committing</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Presentation-style quote packs available</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Clearer decisions on tiles, fittings and layout</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[420px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">A better way to quote</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Instead of just handing over a number, the aim is to help you understand the finished space — layout, look, fittings and practical details — before you make a decision.
+            </p>
+          </div>
+        </div>
 
       </div>
 
@@ -367,7 +561,7 @@
 
         <div>
           <p class="top-line uppercase text-sm gold font-semibold mb-5">
-            Local, practical, experienced
+            Local base, London coverage
           </p>
 
           <h2 class="sub-title serif mb-8">
@@ -387,8 +581,8 @@
 
           <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-location-dot text-4xl gold mb-6"></i>
-            <h3 class="serif text-2xl mb-3">Fulham Based</h3>
-            <p class="text-zinc-600 leading-relaxed">Based on Munster Road and focused on Fulham, Chelsea, Hammersmith and West London homes.</p>
+            <h3 class="serif text-2xl mb-3">Fulham Office</h3>
+            <p class="text-zinc-600 leading-relaxed">Based on Munster Road, Fulham, with projects across London and within the M25.</p>
           </div>
 
           <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
@@ -400,7 +594,7 @@
           <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
             <i class="fa-solid fa-pen-ruler text-4xl gold mb-6"></i>
             <h3 class="serif text-2xl mb-3">Design Led</h3>
-            <p class="text-zinc-600 leading-relaxed">Clear ideas, product guidance and visual planning so you understand what your finished room could look like.</p>
+            <p class="text-zinc-600 leading-relaxed">Clear ideas, product guidance and realistic design visuals so you understand what your finished room could look like.</p>
           </div>
 
           <div class="bg-[#fbf7f0] p-8 rounded-[1.8rem] border border-[#d4af37]/20">
@@ -426,7 +620,7 @@
         </p>
 
         <h2 class="sub-title serif mb-7">
-          A clear process from first chat to final finish
+          From first idea to finished bathroom
         </h2>
 
         <p class="text-lg md:text-xl text-white/70 leading-relaxed">
@@ -450,8 +644,8 @@
 
         <div class="border border-white/12 rounded-[1.6rem] p-7 bg-white/5">
           <div class="text-5xl serif gold mb-5">03</div>
-          <h3 class="font-semibold text-lg mb-3">Design direction</h3>
-          <p class="text-white/65 text-sm leading-relaxed">We discuss layout, finish, tiles, fixtures and the best use of the space.</p>
+          <h3 class="font-semibold text-lg mb-3">Design ideas</h3>
+          <p class="text-white/65 text-sm leading-relaxed">We discuss layout, finish, tiles, fixtures and how the space could look.</p>
         </div>
 
         <div class="border border-white/12 rounded-[1.6rem] p-7 bg-white/5">
@@ -486,15 +680,15 @@
 
           <div class="p-8 md:p-14">
             <p class="top-line uppercase text-sm gold font-semibold mb-5">
-              Visit / enquire locally
+              Office / consultation base
             </p>
 
             <h2 class="sub-title serif mb-7">
-              Based on Munster Road, Fulham
+              Munster Road, Fulham
             </h2>
 
             <p class="text-lg text-zinc-600 leading-relaxed mb-8">
-              We are positioning En-Suites & Bathrooms as a proper local design and installation business for Fulham and surrounding West London areas.
+              En-Suites & Bathrooms Ltd is based in Fulham and works across London and within the M25. The aim is to offer a more considered, design-led way to plan and install bathrooms.
             </p>
 
             <div class="space-y-5 text-zinc-700">
@@ -502,15 +696,23 @@
                 <i class="fa-solid fa-location-dot gold mt-1"></i>
                 <div>
                   <p class="font-semibold">Munster Road, Fulham, London SW6</p>
-                  <p class="text-zinc-500 text-sm">Local office / consultation base</p>
+                  <p class="text-zinc-500 text-sm">Office / consultation base</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <i class="fa-solid fa-phone gold mt-1"></i>
+                <div>
+                  <p class="font-semibold"><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
+                  <p class="text-zinc-500 text-sm">Call to discuss your bathroom or en-suite project</p>
                 </div>
               </div>
 
               <div class="flex gap-4">
                 <i class="fa-solid fa-map-location-dot gold mt-1"></i>
                 <div>
-                  <p class="font-semibold">Serving Fulham, Chelsea, Hammersmith, Putney, Kensington and West London</p>
-                  <p class="text-zinc-500 text-sm">Focused on real London homes, not generic showroom installs</p>
+                  <p class="font-semibold">Serving London and within the M25</p>
+                  <p class="text-zinc-500 text-sm">Including Fulham, Chelsea, Hammersmith, Kensington, Putney, Battersea, Clapham, Chiswick and surrounding areas</p>
                 </div>
               </div>
             </div>
@@ -538,7 +740,7 @@
         </h2>
 
         <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          Choose whether you are looking for a new en-suite or a bathroom renovation, then send us a few details. We will come back to you to discuss the next step.
+          Choose whether you are looking for a new en-suite or a bathroom renovation, then send a few details. You can also call us directly on <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">0207 371 3333</a>.
         </p>
       </div>
 
@@ -556,6 +758,7 @@
             <option value="">What do you need?</option>
             <option value="New en-suite">New en-suite</option>
             <option value="Bathroom renovation">Bathroom renovation</option>
+            <option value="Landlord / HMO en-suite project">Landlord / HMO en-suite project</option>
             <option value="Not sure yet">Not sure yet</option>
           </select>
         </div>
@@ -580,18 +783,18 @@
   </section>
 
   <!-- FLOATING CTA -->
-  <a href="#contact" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
-    <i class="fa-solid fa-message"></i>
-    Enquire
+  <a href="tel:02073713333" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+    <i class="fa-solid fa-phone"></i>
+    0207 371 3333
   </a>
 
   <!-- FOOTER -->
-  <footer class="bg-[#111111] text-white py-16">
+  <footer class="bg-[#111111] text-white pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-6">
 
-      <div class="grid md:grid-cols-3 gap-10">
+      <div class="grid md:grid-cols-4 gap-10">
 
-        <div>
+        <div class="md:col-span-1">
           <div class="flex items-center gap-4 mb-5">
             <i class="fa-solid fa-bath text-4xl gold"></i>
             <div>
@@ -605,7 +808,7 @@
           </div>
 
           <p class="text-white/60 leading-relaxed">
-            Bathroom renovations and new en-suite design and installation for Fulham and West London homes.
+            Bathroom renovations and new en-suite design and installation across London and within the M25.
           </p>
         </div>
 
@@ -614,26 +817,38 @@
           <div class="space-y-3 text-white/65">
             <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a></p>
             <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a></p>
-            <p><a href="#process" class="hover:text-[#d4af37] transition">How It Works</a></p>
+            <p><a href="#design" class="hover:text-[#d4af37] transition">Design Visuals</a></p>
             <p><a href="#contact" class="hover:text-[#d4af37] transition">Contact</a></p>
           </div>
         </div>
 
         <div>
-          <h4 class="font-semibold mb-5 gold">Local Office</h4>
+          <h4 class="font-semibold mb-5 gold">Contact</h4>
           <div class="space-y-3 text-white/65">
+            <p><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
+            <p><a href="mailto:ensuite.co.uk@gmail.com" class="hover:text-[#d4af37] transition">ensuite.co.uk@gmail.com</a></p>
             <p>Munster Road</p>
-            <p>Fulham</p>
-            <p>London SW6</p>
-            <p class="pt-3">Serving Fulham, Chelsea, Hammersmith, Putney, Kensington and West London.</p>
+            <p>Fulham, London SW6</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Company</h4>
+          <div class="space-y-3 text-white/65">
+            <p>En-Suites & Bathrooms Ltd</p>
+            <p>Company No: INSERT COMPANY NUMBER</p>
+            <p>Office / consultation by appointment</p>
+            <p>Serving London & within the M25</p>
           </div>
         </div>
 
       </div>
 
-      <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between gap-4 text-sm text-white/45">
-        <p>© 2026 En-Suites & Bathrooms. All rights reserved.</p>
-        <p>Design & installation enquiries by appointment.</p>
+      <div class="border-t border-white/10 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-white/45">
+        <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
+        <p class="md:text-right">
+          Market statistics are general guidance only. Property value and rental results vary by location, design, specification and market conditions.
+        </p>
       </div>
 
     </div>
