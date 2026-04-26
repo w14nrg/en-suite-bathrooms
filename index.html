@@ -184,14 +184,16 @@
       position: relative;
       min-height: 520px;
       background: #eee;
+      overflow: hidden;
     }
 
-    .map-wrap iframe {
+    .map-wrap img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      border: 0;
+      object-fit: cover;
+      display: block;
     }
 
     .map-marker-ring {
@@ -813,7 +815,7 @@
     </div>
   </section>
 
-  <!-- LOCAL SECTION WITH MAP -->
+  <!-- LOCAL SECTION WITH STATIC MAP -->
   <section class="py-24 md:py-32 bg-[#fbf7f0]">
     <div class="max-w-7xl mx-auto px-6">
 
@@ -861,13 +863,7 @@
           </div>
 
           <div class="map-wrap">
-            <iframe
-              src="https://www.google.com/maps?q=287%20Munster%20Road%2C%20Fulham%2C%20London%20SW6%206BW&z=16&output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Map showing 287 Munster Road, Fulham, London SW6 6BW">
-            </iframe>
-
+            <img src="munster-road-map.jpg" alt="Map showing 287 Munster Road, Fulham, London SW6 6BW">
             <div class="map-marker-label">WE'RE HERE</div>
             <div class="map-marker-ring"></div>
           </div>
