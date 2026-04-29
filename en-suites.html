@@ -1,1 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <meta name="description" content="New en-suite design and installation by En-Suites & Bathrooms Ltd. Homeowner en-suites, compact shower en-suites, HMO en-suites, drainage, ventilation, building regulations, office consultations and proposal packs. Based at 287 Munster Road, Fulham, London SW6 6BW." />
+
+  <title>New En-Suites | En-Suites & Bathrooms Ltd</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --cream: #fbf7f0;
+      --softCream: #fffaf2;
+      --white: #ffffff;
+      --charcoal: #1f1f1f;
+      --muted: #696969;
+      --gold: #d4af37;
+      --goldDark: #b89121;
+      --softGold: rgba(212, 175, 55, 0.22);
+      --line: rgba(212, 175, 55, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .nav {
+      background: rgba(251, 247, 240, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.68), rgba(0,0,0,0.20)),
+        url('ensuite-hero.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-title {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      font-weight: 300;
+    }
+
+    .sub-title {
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      font-weight: 300;
+    }
+
+    .top-line {
+      letter-spacing: 0.22em;
+    }
+
+    .button-gold {
+      background: var(--gold);
+      color: #111111;
+      transition: all 0.25s ease;
+    }
+
+    .button-gold:hover {
+      background: #e5c65c;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(212,175,55,0.25);
+    }
+
+    .button-light {
+      background: rgba(255,255,255,0.95);
+      color: #1f1f1f;
+      border: 1px solid rgba(212,175,55,0.45);
+      transition: all 0.25s ease;
+    }
+
+    .button-light:hover {
+      border-color: var(--gold);
+      color: var(--goldDark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+    }
+
+    .soft-shadow {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.07);
+    }
+
+    .premium-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.055);
+    }
+
+    .service-card {
+      transition: all 0.35s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+    }
+
+    .logo-main {
+      letter-spacing: 0.08em;
+    }
+
+    .logo-small {
+      letter-spacing: 0.34em;
+    }
+
+    .hero-copy {
+      text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .form-input {
+      background: #fff;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 1.4rem;
+      padding: 1.25rem 1.35rem;
+      width: 100%;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      padding: 2rem;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.045);
+    }
+
+    .image-label {
+      position: absolute;
+      left: 1.25rem;
+      top: 1.25rem;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(212,175,55,0.38);
+      border-radius: 9999px;
+      padding: 0.6rem 0.95rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1f1f1f;
+      z-index: 3;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 1.15rem;
+      top: 3.4rem;
+      bottom: -1rem;
+      width: 1px;
+      background: rgba(212,175,55,0.35);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding-top: 8rem;
+        padding-bottom: 4rem;
+      }
+
+      .mobile-tight {
+        letter-spacing: -0.04em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="hidden lg:block bg-white border-b border-[#d4af37]/25 text-sm">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-zinc-700">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <span>New en-suite design, planning and installation</span>
+        <span class="text-zinc-300">|</span>
+        <span>Office consultations by appointment</span>
+        <span class="text-zinc-300">|</span>
+        <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">
+          0207 371 3333
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav fixed lg:sticky top-0 w-full z-50 border-b border-[#d4af37]/25">
+    <div class="max-w-7xl mx-auto px-5 md:px-6 py-5 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-4">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <div>
+          <div class="serif logo-main text-2xl md:text-3xl font-light leading-none">
+            EN-SUITES
+          </div>
+          <div class="logo-small text-[0.65rem] md:text-xs gold font-semibold mt-1">
+            & BATHROOMS
+          </div>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
+        <a href="en-suites.html" class="gold font-semibold">New En-Suites</a>
+        <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a>
+        <a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a>
+        <a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a>
+        <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+          Enquire
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
+      <span class="flex items-center gap-2">
+        <i class="fa-solid fa-location-dot gold"></i>
+        287 Munster Road SW6
+      </span>
+
+      <a href="#contact" class="font-semibold gold">
+        Enquire
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero flex items-center">
+    <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
+      <div class="max-w-4xl">
+        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
+          New en-suite design & installation
+        </p>
+
+        <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
+          New En-Suites Designed Around the Property
+        </h1>
+
+        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
+          Private bathrooms for bedrooms, loft rooms, guest rooms, rental properties and HMOs.
+        </p>
+
+        <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
+          An en-suite is not just a small bathroom. It needs proper planning around space, drainage, ventilation, electrics, building regulations, budget and whether the room will still work properly afterwards.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#suitable" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Can I Add an En-Suite?
+          </a>
+          <a href="#hmo" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+            HMO & Landlord En-Suites
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTRO DECISION SECTION -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            The big question
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Can your room take an en-suite?
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            In many homes, adding an internal en-suite does not need planning permission if the work is kept inside the existing property. But that does not mean it is simple, and it does not mean every bedroom is automatically suitable.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            The important questions are practical: can the toilet connect to drainage properly, can the shower and basin wastes run correctly, can the room be ventilated to outside, will the electrics be safe, and will the bedroom still feel like a proper bedroom afterwards?
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            We help you work out what is realistic before money is wasted on the wrong design.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-toilet text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Drainage first</h3>
+            <p class="text-zinc-600 leading-relaxed">The soil pipe and waste routes often decide where an en-suite can sensibly go.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-wind text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Ventilation matters</h3>
+            <p class="text-zinc-600 leading-relaxed">A new shower room needs a proper extract route to control moisture and odours.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-ruler-combined text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Space must work</h3>
+            <p class="text-zinc-600 leading-relaxed">The remaining bedroom space, door position and furniture layout all need checking.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-file-shield text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Rules still apply</h3>
+            <p class="text-zinc-600 leading-relaxed">Building regulations, HMO standards and electrical safety need to be considered properly.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHO IT IS FOR -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Different property, different en-suite
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          What type of en-suite do you need?
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A master bedroom en-suite, a compact guest en-suite and an HMO en-suite should not all be designed the same way. The right finish depends on the property, the users, the budget and the reason for adding it.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-bed text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Master bedroom en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">A private bathroom for daily comfort, better privacy and a more complete main bedroom suite.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-shower text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Compact shower en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">A smaller shower, basin and WC layout designed for tight rooms, guest bedrooms or awkward spaces.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-house-chimney-user text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Landlord en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">A practical rental upgrade focused on durability, easy cleaning, tenant appeal and sensible specification.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-building-user text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">HMO en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">A compact, cost-controlled en-suite designed around rental yield, room standards, maintenance and licensing considerations.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-stairs text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Loft room en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">Often depends on head height, drainage routes, water pressure, ventilation and whether the room is part of wider conversion works.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-person-walking-luggage text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Guest bedroom en-suite</h3>
+          <p class="text-zinc-600 leading-relaxed">A useful extra bathroom for family, guests, older relatives or grown-up children who need more privacy.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SUITABILITY CHECKLIST -->
+  <section id="suitable" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[560px] bg-cover bg-center" style="background-image: url('ensuite-bedroom-layout.jpg');"></div>
+        </div>
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Suitability check
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Before saying yes, we check the important things
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            A badly planned en-suite can make a bedroom feel cramped, create drainage problems, cause damp issues or become awkward to maintain. The design has to work on paper and in the real property.
+          </p>
+
+          <div class="space-y-4 text-zinc-700">
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Is there enough space left for the bedroom to still work properly?</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Can the WC connect to a suitable soil pipe or drainage route?</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Can the shower and basin wastes achieve the correct fall?</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Can the en-suite be ventilated properly to outside?</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Where will the door, shower screen, basin and toilet actually sit?</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>For HMOs, will the remaining room still satisfy relevant space and licensing standards?</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PLANNING AND BUILDING REGS -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Planning, building regulations and practical rules
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          The hidden work behind a good en-suite
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Most people think first about tiles and fittings. We think first about the things that make the room possible: drainage, ventilation, electrics, waterproofing and whether the design makes sense for the property.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-scale-balanced text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-4">Planning permission</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Internal en-suites often do not need planning permission, but listed buildings, extensions, loft conversions and major alterations may need separate checks.
+          </p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-file-signature text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-4">Building regulations</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            A new en-suite can involve drainage, ventilation, structure, fire safety and electrics, so the work must be planned with building regulations in mind.
+          </p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-plug-circle-bolt text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-4">Bathroom electrics</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Lighting, extractor fans, mirrors, shaver sockets and electric showers need safe positioning and appropriate electrical installation.
+          </p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-droplet text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-4">Moisture control</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Good extraction, waterproofing, sealing and preparation help reduce damp problems and protect the finished room.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DRAINAGE AND VENTILATION DETAIL -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+        <div class="lg:sticky lg:top-32">
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Technical planning
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Drainage and ventilation usually decide the layout
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            A compact en-suite can look simple, but the toilet, shower and basin all need to connect correctly. The route of the waste pipes, the soil pipe position and the extract fan route can decide where the room should go.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            This is why we prefer to assess the property properly before promising a layout.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Toilet waste route</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              The WC usually has the biggest impact on the layout. We look at whether there is a sensible route to the soil pipe, whether boxing-in is needed and how future access can be handled.
+            </p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Shower and basin wastes</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Shower and basin wastes need proper falls and practical routing. In tight rooms, the tray height, floor build-up and waste direction all matter.
+            </p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Extractor fan route</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A new shower room needs proper extract ventilation. We consider whether the fan can go through an external wall, ceiling void, roof route or duct run.
+            </p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Access for maintenance</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              En-suites should not be designed so tightly that future maintenance becomes impossible. Valves, traps, boxing and removable panels are worth thinking about early.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HMO SECTION -->
+  <section id="hmo" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            HMO & landlord en-suites
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            HMO en-suites should be practical, durable and cost controlled
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            For HMO and rental properties, the best en-suite is usually not the most expensive one. It is the one that is compact, compliant, easy to clean, simple to maintain and durable enough for daily tenant use.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            The aim is to improve room appeal and tenant convenience without wasting money on finishes that do not improve rent, reduce voids or help the property perform better.
+          </p>
+
+          <div class="space-y-4 text-zinc-700">
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Compact shower, WC and basin layouts for rental rooms</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Budget-smart product choices that are easy to replace</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Durable finishes, simple maintenance and sensible access panels</span>
+            </div>
+
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Consideration of room size, amenity standards and licensing requirements</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[#fbf7f0] rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[520px] bg-cover bg-center" style="background-image: url('hmo-ensuite.jpg');"></div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Better rooms, smarter spend</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              For landlords, the design should be judged by rental appeal, durability, maintenance and whether the extra en-suite makes financial sense.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VALUE STATS -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Value, rent and property appeal
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          An en-suite can be more than a bathroom
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A well-planned extra bathroom can improve how a property is used, how a room is marketed and how attractive the home feels to buyers or tenants.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">6%</p>
+          <h3 class="text-2xl serif mb-4">Average home value uplift</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Market research has reported that an additional bathroom can add around 6% to the value of the average house.
+          </p>
+        </div>
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">8%</p>
+          <h3 class="text-2xl serif mb-4">Buy-to-let value potential</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Buy-to-let research has suggested that adding a second bathroom can add around 8% to a rental property's value.
+          </p>
+        </div>
+
+        <div class="stat-card">
+          <p class="text-6xl serif gold mb-4">6%</p>
+          <h3 class="text-2xl serif mb-4">Rental premium</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            A second bathroom can help improve rental appeal and has been linked with a rental premium in buy-to-let research.
+          </p>
+        </div>
+
+      </div>
+
+      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
+        These figures are general market guidance only, not a valuation or rental guarantee. Results depend on property type, room size, location, layout, specification, market conditions and whether the en-suite improves the property without damaging the bedroom.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- OFFICE CONSULTATION -->
+  <section id="consultation" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-[#fbf7f0] rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+        <div class="grid lg:grid-cols-2 items-stretch">
+
+          <div class="p-8 md:p-14">
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              Office consultations
+            </p>
+
+            <h2 class="sub-title serif mb-7">
+              Come in, look through options and talk honestly about budget
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+              You can visit our Fulham consultation office by appointment to discuss your en-suite idea, look through catalogues, compare product levels and understand what is realistic for your property.
+            </p>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+              We talk about budget from the start. For a private master en-suite, that may mean a more premium finish. For an HMO or rental room, it may mean a simple, durable and easy-maintenance specification that gives the best return.
+            </p>
+
+            <div class="space-y-4 text-zinc-700 mb-10">
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Discuss whether the bedroom, loft room or rental room is suitable</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Look at shower trays, compact basins, toilets, screens and finishes</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Talk through drainage, ventilation and layout before spending money</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Shape the design around the budget and the purpose of the room</span>
+              </div>
+            </div>
+
+            <a href="#contact" class="button-gold inline-flex px-8 py-4 rounded-full text-lg font-semibold">
+              Book a Consultation
+            </a>
+          </div>
+
+          <div class="min-h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.18)), url('ensuite-consultation-office.jpg');"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Our process
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          From idea to finished en-suite
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A clear process helps establish whether the en-suite is possible, what it should cost, what regulations matter and what design route makes sense.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">1</div>
+            <h3 class="serif text-3xl mb-3">Initial enquiry</h3>
+            <p class="text-zinc-600 leading-relaxed">Tell us where you want the en-suite, what the room is used for and whether it is for a private home, rental property or HMO.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">2</div>
+            <h3 class="serif text-3xl mb-3">Office consultation or site visit</h3>
+            <p class="text-zinc-600 leading-relaxed">We can meet at the office to discuss options and budget, or arrange a site visit to assess the room, drainage and ventilation properly.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">3</div>
+            <h3 class="serif text-3xl mb-3">Feasibility and layout</h3>
+            <p class="text-zinc-600 leading-relaxed">We look at soil pipe routes, waste falls, fan routes, bedroom space, door positions and practical clearances.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">4</div>
+            <h3 class="serif text-3xl mb-3">Design direction</h3>
+            <p class="text-zinc-600 leading-relaxed">We shape the specification around the property: premium private en-suite, compact shower en-suite, or budget-smart HMO/rental en-suite.</p>
+          </div>
+
+        </div>
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">5</div>
+            <h3 class="serif text-3xl mb-3">Proposal and quotation</h3>
+            <p class="text-zinc-600 leading-relaxed">You receive a clear proposal or quotation setting out the intended work, products, inclusions, exclusions and next steps.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">6</div>
+            <h3 class="serif text-3xl mb-3">Build and installation</h3>
+            <p class="text-zinc-600 leading-relaxed">Partitioning, pipework, electrics, ventilation, waterproofing, tiling, fittings and finishing are managed in the correct order.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">7</div>
+            <h3 class="serif text-3xl mb-3">Final checks and handover</h3>
+            <p class="text-zinc-600 leading-relaxed">We check the finish, operation, access points and practical details before handing over the completed en-suite.</p>
+          </div>
+
+          <div class="premium-card p-8 bg-white">
+            <h3 class="serif text-3xl mb-4">The right specification for the right property</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Homeowners may want comfort and premium finishes. Landlords may want durability, easy maintenance and return on spend. We help match the design to the reason for building the en-suite.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VISUAL EXAMPLES -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Design examples
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          From compact to premium
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          The right en-suite should look good, but it also has to fit the space, suit the property and make financial sense.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('premium-ensuite.jpg');">
+            <div class="image-label">Private home</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Premium bedroom en-suite</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A more refined finish for a main bedroom, with carefully chosen tiles, lighting, storage and fittings.
+            </p>
+          </div>
+        </div>
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('compact-ensuite.jpg');">
+            <div class="image-label">Compact layout</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Compact shower en-suite</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A tight but practical layout using careful product choices and sensible clearances.
+            </p>
+          </div>
+        </div>
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('rental-ensuite.jpg');">
+            <div class="image-label">Rental / HMO</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Budget-smart rental en-suite</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A durable, simple, easy-clean finish designed for tenant use and sensible maintenance.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
+        Replace these image filenames with your own generated or project images later: ensuite-hero.jpg, ensuite-bedroom-layout.jpg, hmo-ensuite.jpg, ensuite-consultation-office.jpg, premium-ensuite.jpg, compact-ensuite.jpg and rental-ensuite.jpg.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Questions
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          New en-suite FAQs
+        </h2>
+      </div>
+
+      <div class="space-y-5">
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Do I need planning permission for an en-suite?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Many internal en-suites do not need planning permission if they are created within the existing property. However, listed buildings, extensions, loft conversions, structural alterations and HMO properties may need further checks.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Does a new en-suite need building regulations?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            A new en-suite can involve drainage, ventilation, electrics, structure, fire safety and waterproofing, so building regulations must be considered properly. The exact route depends on the property and scope.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            What is the hardest part of adding an en-suite?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Usually drainage and space. The WC needs a sensible route to the soil pipe, shower and basin wastes need proper falls, and the bedroom must still work after the enclosure is built.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you add an en-suite to an HMO room?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Sometimes, but it needs careful checking. The room must still satisfy relevant size and amenity standards, and the design needs to consider licensing, ventilation, drainage, maintenance and tenant use.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Should an HMO en-suite be luxury or budget?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Usually budget-smart rather than luxury. For an HMO, the priority is often durability, easy cleaning, reliable fittings, simple maintenance and a finish that improves room appeal without unnecessary overspend.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can I come into the office to discuss my en-suite?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes, office consultations are available by appointment at 287 Munster Road. You can discuss the room, budget, design ideas, catalogues, product levels and whether the project is realistic.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you provide a proposal pack?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. For suitable projects, we can provide a proposal-style pack showing the design direction, layout thinking, product ideas, scope of work and quotation details.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 md:py-32 bg-white">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Start your en-suite project
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Tell us about the room
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Tell us where you want the en-suite, what the room is used for, whether it is a private home or rental property, and whether you already have a budget in mind. You can also call us directly on <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">0207 371 3333</a>.
+        </p>
+      </div>
+
+      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" class="bg-[#fbf7f0] rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="text" name="name" placeholder="Full name" class="form-input" required>
+          <input type="tel" name="phone" id="phone" placeholder="Phone number" class="form-input" required>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="email" name="email" placeholder="Email address" class="form-input" required>
+
+          <select name="project_type" class="form-input" required>
+            <option value="">What type of en-suite?</option>
+            <option value="Master bedroom en-suite">Master bedroom en-suite</option>
+            <option value="Compact shower en-suite">Compact shower en-suite</option>
+            <option value="HMO en-suite">HMO en-suite</option>
+            <option value="Landlord / rental en-suite">Landlord / rental en-suite</option>
+            <option value="Loft room en-suite">Loft room en-suite</option>
+            <option value="Office consultation">Office consultation</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+
+        <textarea name="message" placeholder="Tell us about the bedroom or room, whether it is for your own home or rental/HMO, what you want to add, your rough budget if known, and whether you would like an office consultation." class="form-input h-44 resize-none mb-6" required></textarea>
+
+        <input type="hidden" name="_subject" value="New En-Suite Website Enquiry">
+        <input type="hidden" name="_captcha" value="false">
+
+        <button type="submit" class="button-gold w-full md:w-auto px-10 py-5 rounded-full text-lg font-semibold">
+          Send Enquiry
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+
+        <p class="text-sm text-zinc-500 mt-6">
+          This form is for initial enquiries only. A proper quotation can only be given after discussing the project and, where needed, viewing the property.
+        </p>
+
+      </form>
+
+    </div>
+  </section>
+
+  <!-- FLOATING CTA -->
+  <a href="tel:02073713333" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+    <i class="fa-solid fa-phone"></i>
+    0207 371 3333
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#fbf7f0] border-t border-[#d4af37]/25 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-4 mb-5">
+            <i class="fa-solid fa-bath text-4xl gold"></i>
+            <div>
+              <div class="serif logo-main text-3xl font-light leading-none">
+                EN-SUITES
+              </div>
+              <div class="logo-small text-xs gold font-semibold mt-1">
+                & BATHROOMS
+              </div>
+            </div>
+          </div>
+
+          <p class="text-zinc-600 leading-relaxed">
+            Bathroom renovations, new en-suite design, downstairs toilets and bathroom installation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Services</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a></p>
+            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a></p>
+            <p><a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a></p>
+            <p><a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a></p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Contact</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
+            <p><a href="mailto:ensuite.co.uk@gmail.com" class="hover:text-[#d4af37] transition">ensuite.co.uk@gmail.com</a></p>
+            <p>287 Munster Road</p>
+            <p>Fulham, London SW6 6BW</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Company</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p>En-Suites & Bathrooms Ltd</p>
+            <p>Company No: 17170498</p>
+            <p>Office / consultation by appointment</p>
+            <p><a href="about.html" class="hover:text-[#d4af37] transition">About Us</a></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-[#d4af37]/20 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-zinc-500">
+        <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
+        <p class="md:text-right">
+          Planning, building regulations, HMO licensing, value and rental outcomes depend on property type, local requirements, survey, specification and final agreed scope.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      const phoneInput = document.getElementById('phone');
+      const phone = phoneInput.value.replace(/\D/g, '');
+
+      if (phone.length < 10 || phone.length > 15) {
+        alert('Please enter a valid phone number.');
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
