@@ -1,1 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <meta name="description" content="Bathroom renovations by En-Suites & Bathrooms Ltd. Full bathroom renovations, shower room conversions, design consultations, proposal packs and installation. Based at 287 Munster Road, Fulham, London SW6 6BW." />
+
+  <title>Bathroom Renovations | En-Suites & Bathrooms Ltd</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --cream: #fbf7f0;
+      --softCream: #fffaf2;
+      --white: #ffffff;
+      --charcoal: #1f1f1f;
+      --muted: #696969;
+      --gold: #d4af37;
+      --goldDark: #b89121;
+      --softGold: rgba(212, 175, 55, 0.22);
+      --line: rgba(212, 175, 55, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .nav {
+      background: rgba(251, 247, 240, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.62), rgba(0,0,0,0.18)),
+        url('bathroom-renovation-hero.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-title {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      font-weight: 300;
+    }
+
+    .sub-title {
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      font-weight: 300;
+    }
+
+    .top-line {
+      letter-spacing: 0.22em;
+    }
+
+    .button-gold {
+      background: var(--gold);
+      color: #111111;
+      transition: all 0.25s ease;
+    }
+
+    .button-gold:hover {
+      background: #e5c65c;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(212,175,55,0.25);
+    }
+
+    .button-light {
+      background: rgba(255,255,255,0.95);
+      color: #1f1f1f;
+      border: 1px solid rgba(212,175,55,0.45);
+      transition: all 0.25s ease;
+    }
+
+    .button-light:hover {
+      border-color: var(--gold);
+      color: var(--goldDark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+    }
+
+    .soft-shadow {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.07);
+    }
+
+    .premium-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.055);
+    }
+
+    .service-card {
+      transition: all 0.35s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+    }
+
+    .logo-main {
+      letter-spacing: 0.08em;
+    }
+
+    .logo-small {
+      letter-spacing: 0.34em;
+    }
+
+    .hero-copy {
+      text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .form-input {
+      background: #fff;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 1.4rem;
+      padding: 1.25rem 1.35rem;
+      width: 100%;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+    }
+
+    .image-label {
+      position: absolute;
+      left: 1.25rem;
+      top: 1.25rem;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(212,175,55,0.38);
+      border-radius: 9999px;
+      padding: 0.6rem 0.95rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1f1f1f;
+      z-index: 3;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 1.15rem;
+      top: 3.4rem;
+      bottom: -1rem;
+      width: 1px;
+      background: rgba(212,175,55,0.35);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding-top: 8rem;
+        padding-bottom: 4rem;
+      }
+
+      .mobile-tight {
+        letter-spacing: -0.04em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="hidden lg:block bg-white border-b border-[#d4af37]/25 text-sm">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-zinc-700">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <span>Bathroom design, planning and installation</span>
+        <span class="text-zinc-300">|</span>
+        <span>Office consultations by appointment</span>
+        <span class="text-zinc-300">|</span>
+        <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">
+          0207 371 3333
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav fixed lg:sticky top-0 w-full z-50 border-b border-[#d4af37]/25">
+    <div class="max-w-7xl mx-auto px-5 md:px-6 py-5 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-4">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <div>
+          <div class="serif logo-main text-2xl md:text-3xl font-light leading-none">
+            EN-SUITES
+          </div>
+          <div class="logo-small text-[0.65rem] md:text-xs gold font-semibold mt-1">
+            & BATHROOMS
+          </div>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
+        <a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a>
+        <a href="bathrooms.html" class="gold font-semibold">Bathroom Renovations</a>
+        <a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a>
+        <a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a>
+        <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+          Enquire
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
+      <span class="flex items-center gap-2">
+        <i class="fa-solid fa-location-dot gold"></i>
+        287 Munster Road SW6
+      </span>
+
+      <a href="#contact" class="font-semibold gold">
+        Enquire
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero flex items-center">
+    <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
+      <div class="max-w-4xl">
+        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
+          Bathroom renovations
+        </p>
+
+        <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
+          Bathroom Renovations Designed Properly
+        </h1>
+
+        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
+          From tired, outdated bathrooms to modern shower rooms and fully redesigned spaces.
+        </p>
+
+        <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
+          We help you plan the layout, choose the right products, understand the budget and see the direction of the finished bathroom before work begins.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#process" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+            View Renovation Process
+          </a>
+          <a href="#consultation" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Office Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            More than replacing a suite
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            A proper renovation starts before the rip-out
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            A bathroom renovation is not just choosing tiles and fitting a new toilet. The best results come from understanding the room properly — the layout, drainage, ventilation, pipework, lighting, storage, access and how the space is actually used.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            Whether you want a full bathroom renovation, a modern shower room, a bath-to-shower conversion or a smarter use of a small room, we focus on practical design and a clear installation plan from the start.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-ruler-combined text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Measured properly</h3>
+            <p class="text-zinc-600 leading-relaxed">We look at the existing room, pipe routes, layout restrictions and practical installation details.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-pen-ruler text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Designed properly</h3>
+            <p class="text-zinc-600 leading-relaxed">We help shape the layout, products and finish around the way you want the room to work.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-wallet text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Budget aware</h3>
+            <p class="text-zinc-600 leading-relaxed">We talk openly about budget so the design, product choices and scope are realistic.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-screwdriver-wrench text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Installed properly</h3>
+            <p class="text-zinc-600 leading-relaxed">The hidden work behind the finish matters: preparation, plumbing, ventilation and waterproofing.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BEFORE AND AFTER -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          From tired to transformed
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Real bathrooms need real planning
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Many bathrooms start with awkward layouts, old fittings, boxed-in pipework, poor lighting and tired finishes. The aim is not just to make the room look better, but to make it work better.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 md:gap-10">
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('bathroom-before-1.jpg');">
+            <div class="image-label">Before</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Old, tired bathroom</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Dated tiles, worn fittings, poor storage and a layout that no longer suits the way the home is used. This is where proper planning starts.
+            </p>
+          </div>
+        </div>
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('bathroom-after-1.jpg');">
+            <div class="image-label">After</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Modern bathroom renovation</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A cleaner, calmer space with better finishes, improved storage, considered lighting and a layout that feels more comfortable day to day.
+            </p>
+          </div>
+        </div>
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('shower-room-before-1.jpg');">
+            <div class="image-label">Before</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Compact shower room before</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Small shower rooms often suffer from poor layout, tired enclosures, weak ventilation and wasted corners. The details matter in a compact room.
+            </p>
+          </div>
+        </div>
+
+        <div class="premium-card overflow-hidden">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('shower-room-after-1.jpg');">
+            <div class="image-label">After</div>
+          </div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">Walk-in shower room finish</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              A modern shower room can feel larger, cleaner and easier to use when the tray, screen, basin, WC, storage and lighting are properly planned.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
+        Replace these image filenames with your own generated or project images later: bathroom-before-1.jpg, bathroom-after-1.jpg, shower-room-before-1.jpg and shower-room-after-1.jpg.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- OFFICE CONSULTATION -->
+  <section id="consultation" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+        <div class="grid lg:grid-cols-2 items-stretch">
+
+          <div class="p-8 md:p-14">
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              Office consultations
+            </p>
+
+            <h2 class="sub-title serif mb-7">
+              Come in, look through ideas and talk honestly about budget
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+              You can visit our Fulham consultation office by appointment to go through bathroom catalogues, layout ideas, product options, finishes and the kind of room you want to create.
+            </p>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+              We also talk about budget from the start. That means we can shape the design around what is realistic, where to spend, where to save and what level of renovation makes sense for the property.
+            </p>
+
+            <div class="space-y-4 text-zinc-700 mb-10">
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Review catalogues, products, tiles, fittings and finishes</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Talk through what you like, dislike and want to avoid</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Discuss budget properly before the design goes too far</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Work out whether the room needs a full renovation, shower conversion or simpler refresh</span>
+              </div>
+            </div>
+
+            <a href="#contact" class="button-gold inline-flex px-8 py-4 rounded-full text-lg font-semibold">
+              Book a Consultation
+            </a>
+          </div>
+
+          <div class="min-h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.18)), url('bathroom-consultation-office.jpg');"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHAT IS INVOLVED -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+        <div class="lg:sticky lg:top-32">
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            What is involved?
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            A bathroom renovation has a lot behind the finished look
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            The finished tiles and fittings are only what you see at the end. A proper renovation needs the hidden work planned properly first.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            We look at what can stay, what should move, what needs upgrading and what will make the finished room easier to live with.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Survey and layout planning</h3>
+            <p class="text-zinc-600 leading-relaxed">We start by understanding the existing bathroom, measuring properly and looking at whether the layout should stay the same or be improved.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Rip-out and preparation</h3>
+            <p class="text-zinc-600 leading-relaxed">Old sanitaryware, tiles, flooring and unwanted boxing are removed so the room can be checked and prepared properly before the new installation begins.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Plumbing, drainage and ventilation</h3>
+            <p class="text-zinc-600 leading-relaxed">Bathrooms need practical planning around hot and cold supplies, wastes, soil pipes, extract ventilation and access for future maintenance.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Electrics and lighting</h3>
+            <p class="text-zinc-600 leading-relaxed">Lighting, mirrors, shaver points, fans and electric showers need to be thought about safely and positioned properly for bathroom use.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <h3 class="serif text-3xl mb-4">Waterproofing, tiling and finishes</h3>
+            <p class="text-zinc-600 leading-relaxed">Preparation is everything. The walls, floors, shower areas, tile layout, trims, seals and finishing details all affect how the bathroom looks and lasts.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OPTIONS -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Renovation options
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          The right level of work for the room
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Not every bathroom needs the same approach. Some need a full redesign, while others need a more focused upgrade.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-bath text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Full bathroom renovation</h3>
+          <p class="text-zinc-600 leading-relaxed">A complete rip-out and replacement, with new layout thinking, sanitaryware, tiling, flooring, lighting and finishing.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-shower text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Shower room renovation</h3>
+          <p class="text-zinc-600 leading-relaxed">Ideal for compact rooms, en-suites or spaces where a clean walk-in shower layout would work better than the existing setup.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-arrow-right-arrow-left text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Bath-to-shower conversion</h3>
+          <p class="text-zinc-600 leading-relaxed">Replacing an unused bath with a practical shower area can make the room feel easier, cleaner and more suitable for everyday use.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-maximize text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Small bathroom redesign</h3>
+          <p class="text-zinc-600 leading-relaxed">For tight rooms where every inch matters, we look carefully at doors, basins, toilets, storage, shower screens and clearances.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-house-chimney-user text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Rental property refresh</h3>
+          <p class="text-zinc-600 leading-relaxed">A practical bathroom upgrade for landlords who need a clean, hard-wearing and attractive finish without unnecessary overspend.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-image text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Design-led proposal</h3>
+          <p class="text-zinc-600 leading-relaxed">For customers who want to see the direction first, we can provide design ideas, product guidance and proposal-style presentation packs.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Our process
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          From first idea to finished bathroom
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A clear process helps avoid confusion, unrealistic expectations and rushed decisions.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">1</div>
+            <h3 class="serif text-3xl mb-3">Initial enquiry</h3>
+            <p class="text-zinc-600 leading-relaxed">Tell us about the existing bathroom, what is not working and what you would like to change.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">2</div>
+            <h3 class="serif text-3xl mb-3">Office consultation or site visit</h3>
+            <p class="text-zinc-600 leading-relaxed">We can meet at the office to talk through ideas, catalogues and budget, or arrange a site visit where the room needs measuring properly.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">3</div>
+            <h3 class="serif text-3xl mb-3">Layout and design direction</h3>
+            <p class="text-zinc-600 leading-relaxed">We look at what can move, what should stay, and how to improve the room without wasting budget.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">4</div>
+            <h3 class="serif text-3xl mb-3">Clear proposal and quotation</h3>
+            <p class="text-zinc-600 leading-relaxed">You receive a written quotation or proposal pack setting out the direction, inclusions, exclusions and next steps.</p>
+          </div>
+
+        </div>
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">5</div>
+            <h3 class="serif text-3xl mb-3">Product and finish choices</h3>
+            <p class="text-zinc-600 leading-relaxed">We help with practical choices around tiles, sanitaryware, brassware, screens, vanity units, mirrors, fans and lighting.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">6</div>
+            <h3 class="serif text-3xl mb-3">Installation</h3>
+            <p class="text-zinc-600 leading-relaxed">The room is stripped out, prepared, plumbed, tiled, fitted and finished with attention to the hidden work as well as the final look.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">7</div>
+            <h3 class="serif text-3xl mb-3">Final checks and handover</h3>
+            <p class="text-zinc-600 leading-relaxed">We check the details, talk through the finished room and make sure the important practical items have been completed properly.</p>
+          </div>
+
+          <div class="premium-card p-8 bg-[#fbf7f0]">
+            <h3 class="serif text-3xl mb-4">We work with your budget, not against it</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Some customers want premium finishes throughout. Others want the best result possible without overcomplicating the job. We help prioritise where the money makes the biggest difference.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REAL PROPERTY THINKING -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[520px] bg-cover bg-center" style="background-image: url('awkward-bathroom-layout.jpg');"></div>
+        </div>
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Designed for real homes
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Not every bathroom starts as a showroom
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Older bathrooms often come with problems that are hidden until someone looks properly: poor falls on waste pipes, boxed-in pipework, uneven walls, low water pressure, weak ventilation, awkward doors, small windows and layouts that waste space.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            This is why we do not treat every bathroom as a simple swap. We look at the property, the existing services and the way the room needs to work before deciding the best route forward.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Awkward layouts</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">We look for better ways to position baths, showers, toilets, basins and storage.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Old services</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Pipework, wastes, electrics and ventilation need checking before the final design is agreed.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Small spaces</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Compact rooms need careful decisions on screen sizes, door swings, basin depths and storage.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Better decisions</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">The goal is a bathroom that looks good, works properly and suits the budget.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Why choose us
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Design thinking with practical installation experience
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          We are not trying to be a giant showroom. We are a design and installation company focused on properly planned bathrooms, clear conversations and realistic results.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-comments text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Proper conversations</h3>
+          <p class="text-zinc-600 leading-relaxed">We take time to understand what you want, what you do not want and what level of renovation makes sense.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-book-open text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Catalogue guidance</h3>
+          <p class="text-zinc-600 leading-relaxed">Visit the office, look through catalogues and discuss products, finishes and design direction before deciding.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-image text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Visual planning</h3>
+          <p class="text-zinc-600 leading-relaxed">Where useful, we can create realistic visuals and proposal packs so the finished direction is easier to understand.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-sterling-sign text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Budget awareness</h3>
+          <p class="text-zinc-600 leading-relaxed">We help shape the scope around your priorities rather than pushing products that do not suit the project.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Questions
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Bathroom renovation FAQs
+        </h2>
+      </div>
+
+      <div class="space-y-5">
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            How long does a bathroom renovation take?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            It depends on the size of the room, the amount of preparation, whether the layout is changing and what products are being installed. A proper timescale is best discussed after seeing the bathroom and understanding the scope.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you help if I do not know what I want yet?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. That is exactly what the consultation process is for. We can talk through layouts, products, finishes, storage, budget and what is realistic before you commit to a direction.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can I come into the office to discuss my bathroom?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes, office consultations are available by appointment at 287 Munster Road. You can come in, look through catalogues, discuss design ideas and talk honestly about budget.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you convert a bath into a shower?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes, bath-to-shower conversions can be a good option where a bath is no longer needed or the room would work better with a walk-in shower. The drainage, screen position, tray size and waterproofing all need planning properly.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Do you work with a set budget?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. We prefer to discuss budget early so the design and product choices are realistic. That helps avoid wasted time, unrealistic specifications and surprises later.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you provide a proposal pack?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. For suitable projects, we can provide a proposal-style pack showing the design direction, layout thinking, product ideas, scope of work and quotation details.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 md:py-32 bg-white">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Start your renovation
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Tell us about your bathroom
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Tell us what you have now, what is not working and what you would like the finished bathroom to feel like. You can also call us directly on <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">0207 371 3333</a>.
+        </p>
+      </div>
+
+      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" class="bg-[#fbf7f0] rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="text" name="name" placeholder="Full name" class="form-input" required>
+          <input type="tel" name="phone" id="phone" placeholder="Phone number" class="form-input" required>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="email" name="email" placeholder="Email address" class="form-input" required>
+
+          <select name="project_type" class="form-input" required>
+            <option value="">What do you need?</option>
+            <option value="Full bathroom renovation">Full bathroom renovation</option>
+            <option value="Shower room renovation">Shower room renovation</option>
+            <option value="Bath-to-shower conversion">Bath-to-shower conversion</option>
+            <option value="Small bathroom redesign">Small bathroom redesign</option>
+            <option value="Office consultation">Office consultation</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+
+        <textarea name="message" placeholder="Tell us about the existing bathroom, what you want changed, your rough budget if known, and whether you would like an office consultation." class="form-input h-44 resize-none mb-6" required></textarea>
+
+        <input type="hidden" name="_subject" value="New Bathroom Renovation Enquiry">
+        <input type="hidden" name="_captcha" value="false">
+
+        <button type="submit" class="button-gold w-full md:w-auto px-10 py-5 rounded-full text-lg font-semibold">
+          Send Enquiry
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+
+        <p class="text-sm text-zinc-500 mt-6">
+          This form is for initial enquiries only. A proper quotation can only be given after discussing the project and, where needed, viewing the property.
+        </p>
+
+      </form>
+
+    </div>
+  </section>
+
+  <!-- FLOATING CTA -->
+  <a href="tel:02073713333" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+    <i class="fa-solid fa-phone"></i>
+    0207 371 3333
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#fbf7f0] border-t border-[#d4af37]/25 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-4 mb-5">
+            <i class="fa-solid fa-bath text-4xl gold"></i>
+            <div>
+              <div class="serif logo-main text-3xl font-light leading-none">
+                EN-SUITES
+              </div>
+              <div class="logo-small text-xs gold font-semibold mt-1">
+                & BATHROOMS
+              </div>
+            </div>
+          </div>
+
+          <p class="text-zinc-600 leading-relaxed">
+            Bathroom renovations, new en-suite design, downstairs toilets and bathroom installation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Services</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a></p>
+            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a></p>
+            <p><a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a></p>
+            <p><a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a></p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Contact</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
+            <p><a href="mailto:ensuite.co.uk@gmail.com" class="hover:text-[#d4af37] transition">ensuite.co.uk@gmail.com</a></p>
+            <p>287 Munster Road</p>
+            <p>Fulham, London SW6 6BW</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Company</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p>En-Suites & Bathrooms Ltd</p>
+            <p>Company No: 17170498</p>
+            <p>Office / consultation by appointment</p>
+            <p><a href="about.html" class="hover:text-[#d4af37] transition">About Us</a></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-[#d4af37]/20 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-zinc-500">
+        <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
+        <p class="md:text-right">
+          Project costs, timescales and suitability depend on survey, specification, access, existing services and final agreed scope.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      const phoneInput = document.getElementById('phone');
+      const phone = phoneInput.value.replace(/\D/g, '');
+
+      if (phone.length < 10 || phone.length > 15) {
+        alert('Please enter a valid phone number.');
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
