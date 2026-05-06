@@ -230,6 +230,14 @@
       pointer-events: none;
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
     @keyframes pulseRing {
       0% {
         box-shadow: 0 0 0 0 rgba(212,175,55,0.28);
@@ -245,7 +253,7 @@
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
-        padding-top: 8rem;
+        padding-top: 10.5rem;
         padding-bottom: 4rem;
       }
 
@@ -318,21 +326,61 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+        <a href="#contact" class="hidden sm:inline-flex button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
           Enquire
         </a>
+
+        <button id="mobileMenuButton" class="lg:hidden w-12 h-12 rounded-full border border-[#d4af37]/35 bg-white flex items-center justify-center text-zinc-800" aria-label="Open menu">
+          <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+        </button>
       </div>
     </div>
 
-    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
-      <span class="flex items-center gap-2">
+    <!-- MOBILE FULL ADDRESS BAR -->
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 text-center bg-white/70">
+      <span class="inline-flex items-center justify-center gap-2">
         <i class="fa-solid fa-location-dot gold"></i>
-        287 Munster Road SW6
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
       </span>
+    </div>
 
-      <a href="#contact" class="font-semibold gold">
-        Enquire
-      </a>
+    <!-- MOBILE DROPDOWN MENU -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
+      <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+        <a href="en-suites.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          New En-Suites
+        </a>
+
+        <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Bathroom Renovations
+        </a>
+
+        <a href="other-services.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Other Services
+        </a>
+
+        <a href="gallery.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Gallery
+        </a>
+
+        <a href="#proposal" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Sample Proposal
+        </a>
+
+        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          About Us
+        </a>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <a href="tel:02073713333" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+            Call
+          </a>
+
+          <a href="#contact" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            Enquire
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -1064,6 +1112,32 @@
   </footer>
 
   <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+    mobileMenuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      });
+    });
+
     document.getElementById('quoteForm').addEventListener('submit', function(e) {
       const phoneInput = document.getElementById('phone');
       const phone = phoneInput.value.replace(/\D/g, '');
