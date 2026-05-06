@@ -57,8 +57,8 @@
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(to right, rgba(0,0,0,0.68), rgba(0,0,0,0.20)),
-        url('ensuite-hero.jpg');
+        linear-gradient(to right, rgba(0,0,0,0.70), rgba(0,0,0,0.22)),
+        url('https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1800&q=80');
       background-size: cover;
       background-position: center;
     }
@@ -187,10 +187,18 @@
       background: rgba(212,175,55,0.35);
     }
 
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
-        padding-top: 8rem;
+        padding-top: 10.5rem;
         padding-bottom: 4rem;
       }
 
@@ -212,9 +220,9 @@
       </div>
 
       <div class="flex items-center gap-8">
-        <span>New en-suite design, planning and installation</span>
+        <span>Bathroom design, planning and installation</span>
         <span class="text-zinc-300">|</span>
-        <span>Office consultations by appointment</span>
+        <span>New en-suites, renovations and downstairs toilets</span>
         <span class="text-zinc-300">|</span>
         <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">
           0207 371 3333
@@ -248,21 +256,57 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+        <a href="#contact" class="hidden sm:inline-flex button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
           Enquire
         </a>
+
+        <button id="mobileMenuButton" class="lg:hidden w-12 h-12 rounded-full border border-[#d4af37]/35 bg-white flex items-center justify-center text-zinc-800" aria-label="Open menu">
+          <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+        </button>
       </div>
     </div>
 
-    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
-      <span class="flex items-center gap-2">
+    <!-- MOBILE FULL ADDRESS BAR -->
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 text-center bg-white/70">
+      <span class="inline-flex items-center justify-center gap-2 flex-wrap">
         <i class="fa-solid fa-location-dot gold"></i>
-        287 Munster Road SW6
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
       </span>
+    </div>
 
-      <a href="#contact" class="font-semibold gold">
-        Enquire
-      </a>
+    <!-- MOBILE DROPDOWN MENU -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
+      <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+        <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Bathroom Renovations
+        </a>
+
+        <a href="en-suites.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 text-[#d4af37] font-semibold">
+          New En-Suites
+        </a>
+
+        <a href="other-services.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Other Services
+        </a>
+
+        <a href="index.html#proposal" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Sample Proposal
+        </a>
+
+        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          About Us
+        </a>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <a href="tel:02073713333" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+            Call
+          </a>
+
+          <a href="#contact" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            Enquire
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -425,7 +469,7 @@
       <div class="grid lg:grid-cols-2 gap-16 items-center">
 
         <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <div class="h-[560px] bg-cover bg-center" style="background-image: url('ensuite-bedroom-layout.jpg');"></div>
+          <div class="h-[560px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=80');"></div>
         </div>
 
         <div>
@@ -644,7 +688,7 @@
         </div>
 
         <div class="bg-[#fbf7f0] rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <div class="h-[520px] bg-cover bg-center" style="background-image: url('hmo-ensuite.jpg');"></div>
+          <div class="h-[520px] bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/5502257/pexels-photo-5502257.jpeg?auto=compress&cs=tinysrgb&w=1600');"></div>
           <div class="p-8">
             <h3 class="serif text-3xl mb-4">Better rooms, smarter spend</h3>
             <p class="text-zinc-600 leading-relaxed">
@@ -762,7 +806,7 @@
             </a>
           </div>
 
-          <div class="min-h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.18)), url('ensuite-consultation-office.jpg');"></div>
+          <div class="min-h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.18)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80');"></div>
 
         </div>
       </div>
@@ -878,7 +922,7 @@
       <div class="grid lg:grid-cols-3 gap-8">
 
         <div class="premium-card overflow-hidden">
-          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('premium-ensuite.jpg');">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1600&q=80');">
             <div class="image-label">Private home</div>
           </div>
           <div class="p-8">
@@ -890,7 +934,7 @@
         </div>
 
         <div class="premium-card overflow-hidden">
-          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('compact-ensuite.jpg');">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=80');">
             <div class="image-label">Compact layout</div>
           </div>
           <div class="p-8">
@@ -902,7 +946,7 @@
         </div>
 
         <div class="premium-card overflow-hidden">
-          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('rental-ensuite.jpg');">
+          <div class="relative h-[390px] bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/5502257/pexels-photo-5502257.jpeg?auto=compress&cs=tinysrgb&w=1600');">
             <div class="image-label">Rental / HMO</div>
           </div>
           <div class="p-8">
@@ -914,10 +958,6 @@
         </div>
 
       </div>
-
-      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
-        Replace these image filenames with your own generated or project images later: ensuite-hero.jpg, ensuite-bedroom-layout.jpg, hmo-ensuite.jpg, ensuite-consultation-office.jpg, premium-ensuite.jpg, compact-ensuite.jpg and rental-ensuite.jpg.
-      </p>
 
     </div>
   </section>
@@ -1145,6 +1185,32 @@
   </footer>
 
   <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+    mobileMenuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      });
+    });
+
     document.getElementById('quoteForm').addEventListener('submit', function(e) {
       const phoneInput = document.getElementById('phone');
       const phone = phoneInput.value.replace(/\D/g, '');
