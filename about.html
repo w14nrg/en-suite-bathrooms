@@ -1,1 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <meta name="description" content="About En-Suites & Bathrooms Ltd. Builder-led bathroom and en-suite design from a Fulham trade background. Founded by Nicholas Griffith, with over 25 years of hands-on building, plumbing and bathroom experience." />
+
+  <title>About Us | En-Suites & Bathrooms Ltd</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --cream: #fbf7f0;
+      --softCream: #fffaf2;
+      --white: #ffffff;
+      --charcoal: #1f1f1f;
+      --muted: #696969;
+      --gold: #d4af37;
+      --goldDark: #b89121;
+      --softGold: rgba(212, 175, 55, 0.22);
+      --line: rgba(212, 175, 55, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .nav {
+      background: rgba(251, 247, 240, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.72), rgba(0,0,0,0.24)),
+        url('./about-you-plastering-with-dad.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-title {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      font-weight: 300;
+    }
+
+    .sub-title {
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      font-weight: 300;
+    }
+
+    .top-line {
+      letter-spacing: 0.22em;
+    }
+
+    .button-gold {
+      background: var(--gold);
+      color: #111111;
+      transition: all 0.25s ease;
+    }
+
+    .button-gold:hover {
+      background: #e5c65c;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(212,175,55,0.25);
+    }
+
+    .button-light {
+      background: rgba(255,255,255,0.95);
+      color: #1f1f1f;
+      border: 1px solid rgba(212,175,55,0.45);
+      transition: all 0.25s ease;
+    }
+
+    .button-light:hover {
+      border-color: var(--gold);
+      color: var(--goldDark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+    }
+
+    .soft-shadow {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.07);
+    }
+
+    .premium-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.055);
+    }
+
+    .service-card {
+      transition: all 0.35s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+    }
+
+    .logo-main {
+      letter-spacing: 0.08em;
+    }
+
+    .logo-small {
+      letter-spacing: 0.34em;
+    }
+
+    .hero-copy {
+      text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .form-input {
+      background: #fff;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 1.4rem;
+      padding: 1.25rem 1.35rem;
+      width: 100%;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+    }
+
+    .image-label {
+      position: absolute;
+      left: 1.25rem;
+      top: 1.25rem;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(212,175,55,0.38);
+      border-radius: 9999px;
+      padding: 0.6rem 0.95rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1f1f1f;
+      z-index: 3;
+    }
+
+    .photo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.8rem;
+      border: 1px solid rgba(212,175,55,0.24);
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.055);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding-top: 10.5rem;
+        padding-bottom: 4rem;
+      }
+
+      .mobile-tight {
+        letter-spacing: -0.04em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="hidden lg:block bg-white border-b border-[#d4af37]/25 text-sm">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-zinc-700">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <span>En-suites, bathrooms and cloakrooms</span>
+        <span class="text-zinc-300">|</span>
+        <span>Designed, planned and installed</span>
+        <span class="text-zinc-300">|</span>
+        <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">
+          0207 371 3333
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav fixed lg:sticky top-0 w-full z-50 border-b border-[#d4af37]/25">
+    <div class="max-w-7xl mx-auto px-5 md:px-6 py-5 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-4">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <div>
+          <div class="serif logo-main text-2xl md:text-3xl font-light leading-none">
+            EN-SUITES
+          </div>
+          <div class="logo-small text-[0.65rem] md:text-xs gold font-semibold mt-1">
+            & BATHROOMS
+          </div>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
+        <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a>
+        <a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a>
+        <a href="other-services.html" class="hover:text-[#d4af37] transition">Cloakrooms</a>
+        <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
+        <a href="about.html" class="gold font-semibold">About Us</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-flex button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+          Enquire
+        </a>
+
+        <button id="mobileMenuButton" class="lg:hidden w-12 h-12 rounded-full border border-[#d4af37]/35 bg-white flex items-center justify-center text-zinc-800" aria-label="Open menu">
+          <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- MOBILE FULL ADDRESS BAR -->
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 text-center bg-white/70">
+      <span class="inline-flex items-center justify-center gap-2 flex-wrap">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </span>
+    </div>
+
+    <!-- MOBILE DROPDOWN MENU -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
+      <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+        <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Bathrooms
+        </a>
+
+        <a href="en-suites.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          En-Suites
+        </a>
+
+        <a href="other-services.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Cloakrooms
+        </a>
+
+        <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          How It Works
+        </a>
+
+        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 gold font-semibold">
+          About Us
+        </a>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <a href="tel:02073713333" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+            Call
+          </a>
+
+          <a href="#contact" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            Enquire
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero flex items-center">
+    <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
+      <div class="max-w-4xl">
+        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
+          About En-Suites & Bathrooms
+        </p>
+
+        <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
+          Builder-led bathroom design from a Fulham trade background
+        </h1>
+
+        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
+          Born and raised in Fulham. Trained in real West London houses.
+        </p>
+
+        <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
+          En-Suites & Bathrooms was founded by Nicholas Griffith, who grew up around the building trade and started working in his father’s building business at 16. The business brings together hands-on building experience, bathroom installation knowledge and modern design presentation for customers planning bathrooms and new en-suites.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#story" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Our Story
+          </a>
+          <a href="#contact" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Book a Site Visit
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <section id="story" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Local roots
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            A lifetime around building, plumbing and bathrooms
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Nicholas Griffith was born and raised in Fulham and has worked in the building trade since the age of 16. Long before En-Suites & Bathrooms existed, he was working in real Fulham houses with his father’s building company, learning the trade on site rather than from a desk.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            That background matters. Older West London properties often come with awkward pipe routes, uneven floors, tired bathrooms, hidden services, poor ventilation and rooms that need practical thinking before the design is finalised.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            En-Suites & Bathrooms is built from that experience: design that looks good, but only after the room, the plumbing and the build have been properly understood.
+          </p>
+        </div>
+
+        <div class="photo-card h-[620px]">
+          <img src="./about-you-plastering-with-dad.png" alt="Nicholas learning the trade on site with his father">
+          <div class="image-label">Learning the trade early</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAMILY TRADE BACKGROUND -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Family building background
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          From family building work to modern bathroom design
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          The story behind En-Suites & Bathrooms is not a showroom story. It comes from a family trade background, working on London properties, renovations and the practical building work that sits behind every finished room.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-city text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">London building roots</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Nicholas’s father Joe and his brothers Stan and Bob came to London from Bradford in 1962. Joe was a bricklayer, Stan was a plasterer and Bob had an engineering background.
+          </p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-building text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Real site experience</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            Their early work included major London projects and later property renovation through the family building business, Armour Trading Building Co.
+          </p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-house-chimney text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Fulham houses</h3>
+          <p class="text-zinc-600 leading-relaxed">
+            The family story also runs through Fulham, including renovation work on real local houses, where Nicholas learned how old properties actually behave.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PHOTO STORY GRID -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center mb-16">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Real houses, real problems
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Learned on site, not just on drawings
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Bathrooms and en-suites are small rooms with a lot going on. Pipework, water pressure, drainage, ventilation, floor levels, waterproofing, electrics and access all affect whether the finished room works properly.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            Years spent renovating houses teaches you to look past the surface. Before a bathroom or en-suite is designed, Nicholas is thinking about the hidden work that makes the finished room possible.
+          </p>
+        </div>
+
+        <div class="photo-card h-[520px]">
+          <img src="./about-fulham-house-ladders.png" alt="Family building work on a Fulham house">
+          <div class="image-label">Fulham house renovation</div>
+        </div>
+
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="photo-card h-[360px]">
+          <img src="./about-site-cement-mixer.png" alt="Building work with cement mixer on site">
+          <div class="image-label">Site work</div>
+        </div>
+
+        <div class="photo-card h-[360px]">
+          <img src="./about-old-bathroom-renovation.png" alt="Old bathroom before renovation">
+          <div class="image-label">Old bathrooms</div>
+        </div>
+
+        <div class="photo-card h-[360px]">
+          <img src="./about-brickwork-opening.png" alt="Brickwork opening during building work">
+          <div class="image-label">Real building work</div>
+        </div>
+
+        <div class="photo-card h-[360px]">
+          <img src="./about-joe-site.png" alt="Nicholas's father on site during renovation work">
+          <div class="image-label">Family trade</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div class="photo-card h-[620px]">
+          <img src="./about-ladder-photo.png" alt="Family building work on ladders outside a Fulham property">
+          <div class="image-label">West London property work</div>
+        </div>
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Why it matters
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            The design is only right if it can be built properly
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            A bathroom can look perfect on a screen but fail on site if the drainage is wrong, the water pressure is poor, the floor levels do not work, the ventilation is missed or the chosen products do not suit the room.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            This is why En-Suites & Bathrooms takes a builder-led approach. The design is shaped around the look you want, but also around the practical installation route that makes the room work in the real property.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Drainage</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Soil pipe positions, waste falls, pipe routes and access points need thinking through early.</p>
+            </div>
+
+            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Water pressure</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Showers and valves need to suit the property’s hot and cold water supply.</p>
+            </div>
+
+            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Preparation</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Walls, floors, waterproofing, tiling and fixing strength affect how the room lasts.</p>
+            </div>
+
+            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Real homes</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">Older Fulham and West London homes often need practical thinking before design decisions are made.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PERSONALLY OVERSEEN -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+        <div class="grid lg:grid-cols-2 items-center">
+
+          <div class="p-8 md:p-14">
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              Personally overseen
+            </p>
+
+            <h2 class="sub-title serif mb-8">
+              You deal directly with the person responsible
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+              Nicholas personally surveys projects, helps shape the design, checks the practical installation route and remains involved throughout the work. The aim is simple: one clear route from first conversation to finished room.
+            </p>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+              You are not passed from salesperson to surveyor to installer with no continuity. Nicholas oversees the important decisions and regularly checks progress during the project.
+            </p>
+
+            <div class="space-y-4 text-zinc-700">
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Direct involvement from survey to handover</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Regular site visits during the work</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Trusted, experienced tradespeople used for the right parts of the job</span>
+              </div>
+
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>WhatsApp communication available so updates, photos and decisions stay in one place</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="photo-card h-[620px] rounded-none border-0 shadow-none">
+            <img src="./about-you-and-dad.png" alt="Nicholas and his father">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BRAND TODAY -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            En-Suites & Bathrooms today
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            A family trade background brought forward into a modern design studio
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            En-Suites & Bathrooms is the modern version of that background: a bathroom and en-suite design and installation studio where practical building knowledge comes first, supported by design visuals, proposal packs and clear communication.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Nicholas’s son Brandon supports the office and customer-facing side of the business, helping with enquiries, appointments and the presentation side of the studio.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            The goal is to give customers the confidence of dealing with people who understand not only how the finished room should look, but how it should actually be built.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-house-chimney-window text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Local knowledge</h3>
+            <p class="text-zinc-600 leading-relaxed">Born and raised in Fulham, with years of experience around West London homes.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-toolbox text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Trade background</h3>
+            <p class="text-zinc-600 leading-relaxed">Over 25 years of hands-on building, plumbing and bathroom experience.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-tablet-screen-button text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Modern presentation</h3>
+            <p class="text-zinc-600 leading-relaxed">Design ideas, visuals and proposal packs help customers understand the direction before work begins.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-clipboard-check text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Practical checks</h3>
+            <p class="text-zinc-600 leading-relaxed">Bathrooms and en-suites are planned around drainage, pressure, ventilation, floors, walls and access.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="contact" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+
+      <p class="top-line uppercase text-sm gold font-semibold mb-5">
+        Start your project
+      </p>
+
+      <h2 class="sub-title serif mb-7">
+        Talk to us about your bathroom or en-suite
+      </h2>
+
+      <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-10 max-w-3xl mx-auto">
+        Tell us what you are planning and we can talk through the room, your ideas, the practical checks and the best next step. You can also call us directly on <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">0207 371 3333</a>.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="tel:02073713333" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+          Call 0207 371 3333
+        </a>
+
+        <a href="index.html#contact" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+          Send an Enquiry
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FLOATING CTA -->
+  <a href="tel:02073713333" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+    <i class="fa-solid fa-phone"></i>
+    0207 371 3333
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-[#d4af37]/25 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-4 mb-5">
+            <i class="fa-solid fa-bath text-4xl gold"></i>
+            <div>
+              <div class="serif logo-main text-3xl font-light leading-none">
+                EN-SUITES
+              </div>
+              <div class="logo-small text-xs gold font-semibold mt-1">
+                & BATHROOMS
+              </div>
+            </div>
+          </div>
+
+          <p class="text-zinc-600 leading-relaxed">
+            Bathroom, en-suite and cloakroom design, planning and installation.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Services</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a></p>
+            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a></p>
+            <p><a href="other-services.html" class="hover:text-[#d4af37] transition">Cloakrooms</a></p>
+            <p><a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a></p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Contact</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
+            <p><a href="mailto:ensuite.co.uk@gmail.com" class="hover:text-[#d4af37] transition">ensuite.co.uk@gmail.com</a></p>
+            <p>287 Munster Road</p>
+            <p>Fulham, London SW6 6BW</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Company</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p>En-Suites & Bathrooms Ltd</p>
+            <p>Company No: 17170498</p>
+            <p>Office / consultation by appointment</p>
+            <p><a href="about.html" class="hover:text-[#d4af37] transition">About Us</a></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-[#d4af37]/20 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-zinc-500">
+        <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
+        <p class="md:text-right">
+          Builder-led bathroom, en-suite and cloakroom design, planning and installation.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+    mobileMenuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      });
+    });
+  </script>
+
+</body>
+</html>
