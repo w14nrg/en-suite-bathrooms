@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description" content="Downstairs toilets, cloakrooms, macerator toilets and smaller bathroom upgrades by En-Suites & Bathrooms Ltd. Based at 287 Munster Road, Fulham, London SW6 6BW." />
+  <meta name="description" content="Other Services by En-Suites & Bathrooms Ltd. Cloakrooms, downstairs toilets, bathroom upgrades, toilet and basin installation, tiling, ventilation, plumbing and electrical works connected to bathrooms and en-suites. Based at 287 Munster Road, Fulham, London SW6 6BW." />
 
-  <title>Downstairs Toilets & Other Services | En-Suites & Bathrooms Ltd</title>
+  <title>Other Services | En-Suites & Bathrooms Ltd</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -57,8 +57,8 @@
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(to right, rgba(0,0,0,0.68), rgba(0,0,0,0.20)),
-        url('downstairs-toilet-hero.jpg');
+        linear-gradient(to right, rgba(0,0,0,0.70), rgba(0,0,0,0.22)),
+        url('./downstairs-toilet.png');
       background-size: cover;
       background-position: center;
     }
@@ -154,43 +154,18 @@
       box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
     }
 
-    .stat-card {
-      background: #ffffff;
-      border: 1px solid rgba(212,175,55,0.24);
-      border-radius: 1.8rem;
-      padding: 2rem;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.045);
+    .mobile-menu {
+      display: none;
     }
 
-    .image-label {
-      position: absolute;
-      left: 1.25rem;
-      top: 1.25rem;
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(212,175,55,0.38);
-      border-radius: 9999px;
-      padding: 0.6rem 0.95rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #1f1f1f;
-      z-index: 3;
-    }
-
-    .timeline-line {
-      position: absolute;
-      left: 1.15rem;
-      top: 3.4rem;
-      bottom: -1rem;
-      width: 1px;
-      background: rgba(212,175,55,0.35);
+    .mobile-menu.open {
+      display: block;
     }
 
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
-        padding-top: 8rem;
+        padding-top: 10.5rem;
         padding-bottom: 4rem;
       }
 
@@ -211,13 +186,15 @@
         <span>287 Munster Road, Fulham, London SW6 6BW</span>
       </div>
 
-      <div class="flex items-center gap-8">
-        <span>Downstairs toilets, cloakrooms and smaller bathroom upgrades</span>
+      <div class="flex items-center gap-5">
+        <span>Designed, planned and installed</span>
         <span class="text-zinc-300">|</span>
-        <span>Office consultations by appointment</span>
-        <span class="text-zinc-300">|</span>
-        <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">
-          0207 371 3333
+        <a href="tel:02073810000" class="gold font-semibold hover:text-amber-600 transition">
+          0207 381 0000
+        </a>
+        <a href="https://wa.me/442073810000" class="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition" aria-label="WhatsApp En-Suites & Bathrooms">
+          <i class="fa-brands fa-whatsapp"></i>
+          WhatsApp
         </a>
       </div>
     </div>
@@ -240,29 +217,69 @@
       </a>
 
       <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
-        <a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a>
-        <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a>
+        <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a>
+        <a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a>
         <a href="other-services.html" class="gold font-semibold">Other Services</a>
-        <a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a>
+        <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
         <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="#contact" class="button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+        <a href="#contact" class="hidden sm:inline-flex button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
           Enquire
         </a>
+
+        <button id="mobileMenuButton" class="lg:hidden w-12 h-12 rounded-full border border-[#d4af37]/35 bg-white flex items-center justify-center text-zinc-800" aria-label="Open menu">
+          <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+        </button>
       </div>
     </div>
 
-    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 flex items-center justify-between gap-3">
-      <span class="flex items-center gap-2">
+    <!-- MOBILE FULL ADDRESS BAR -->
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 text-center bg-white/70">
+      <span class="inline-flex items-center justify-center gap-2 flex-wrap">
         <i class="fa-solid fa-location-dot gold"></i>
-        287 Munster Road SW6
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
       </span>
+    </div>
 
-      <a href="#contact" class="font-semibold gold">
-        Enquire
-      </a>
+    <!-- MOBILE DROPDOWN MENU -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
+      <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+        <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Bathrooms
+        </a>
+
+        <a href="en-suites.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          En-Suites
+        </a>
+
+        <a href="other-services.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 gold font-semibold">
+          Other Services
+        </a>
+
+        <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          How It Works
+        </a>
+
+        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          About Us
+        </a>
+
+        <div class="grid grid-cols-3 gap-3 pt-2">
+          <a href="tel:02073810000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+            Call
+          </a>
+
+          <a href="https://wa.me/442073810000" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            WhatsApp
+          </a>
+
+          <a href="#contact" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            Enquire
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -271,266 +288,67 @@
     <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
       <div class="max-w-4xl">
         <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
-          Other bathroom services
+          Other services
         </p>
 
         <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
-          Downstairs Toilets & Smaller Bathroom Upgrades
+          Cloakrooms and bathroom-related works
         </h1>
 
         <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
-          Practical cloakrooms, compact WCs, macerator toilets and focused bathroom improvements.
+          Downstairs toilets, smaller upgrades and the practical work around bathrooms.
         </p>
 
         <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
-          Not every project needs a full bathroom renovation. Sometimes the best improvement is a well-planned downstairs toilet, a new basin, a replacement bath, a better shower screen or a smarter upgrade to what you already have.
+          Our main work is still bathrooms and en-suites, but many customers need a smaller piece of bathroom-related work before or after a full renovation. This page starts with cloakrooms and downstairs toilets, then covers the related fitting, tiling, plumbing, electrical, ventilation and making-good work we may be able to help with.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#downstairs" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
-            Downstairs Toilets
+          <a href="#cloakrooms" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Cloakrooms
           </a>
-          <a href="#small-jobs" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
-            Smaller Bathroom Jobs
+          <a href="#additional" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Additional Services
           </a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- DOWNSTAIRS TOILETS INTRO -->
-  <section id="downstairs" class="py-24 md:py-32 bg-[#fbf7f0]">
+  <!-- CLOAKROOM LEAD -->
+  <section id="cloakrooms" class="py-24 md:py-32 bg-[#fbf7f0]">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="grid lg:grid-cols-2 gap-16 items-center">
 
         <div>
           <p class="top-line uppercase text-sm gold font-semibold mb-5">
-            Main service
+            Cloakrooms and downstairs toilets
           </p>
 
           <h2 class="sub-title serif mb-8">
-            A downstairs toilet can make the whole home work better
+            A small room that can make a big difference
           </h2>
 
           <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
-            A downstairs toilet, cloakroom or compact WC can be one of the most useful upgrades in a home. It can make daily life easier, reduce pressure on the main bathroom and give guests a convenient toilet without going upstairs.
+            A cloakroom or downstairs toilet is one of the most practical additions you can make to a home. It can reduce pressure on the main bathroom, make the property easier for guests and family, and add everyday convenience where the only bathroom is upstairs.
           </p>
 
           <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
-            It is especially useful for busy family homes, homes with visitors, people who struggle with stairs, landlords improving tenant convenience, and properties where the only bathroom is upstairs.
+            It can also improve how a property feels to future buyers or tenants. A well-planned downstairs WC is not just a small convenience feature — in the right property, it can make the whole layout feel more complete and easier to live with.
           </p>
 
           <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-            The key is planning it properly. A small room still needs sensible drainage, ventilation, water supply, door position, basin choice and access for future maintenance.
+            The room may be compact, but the planning still matters. Drainage, water supply, ventilation, door position, basin size, boxing, tiling, lighting and flooring all need to be thought through properly before work starts.
           </p>
         </div>
 
-        <div class="grid sm:grid-cols-2 gap-5">
-          <div class="premium-card p-7">
-            <i class="fa-solid fa-toilet text-4xl gold mb-5"></i>
-            <h3 class="serif text-2xl mb-3">Extra convenience</h3>
-            <p class="text-zinc-600 leading-relaxed">An extra WC downstairs can make the home more practical for everyday use.</p>
-          </div>
-
-          <div class="premium-card p-7">
-            <i class="fa-solid fa-person-cane text-4xl gold mb-5"></i>
-            <h3 class="serif text-2xl mb-3">Easier access</h3>
-            <p class="text-zinc-600 leading-relaxed">Useful for guests, children, older relatives or anyone who finds stairs inconvenient.</p>
-          </div>
-
-          <div class="premium-card p-7">
-            <i class="fa-solid fa-house-chimney text-4xl gold mb-5"></i>
-            <h3 class="serif text-2xl mb-3">Better home appeal</h3>
-            <p class="text-zinc-600 leading-relaxed">Extra bathroom facilities can make a property feel more complete and easier to live in.</p>
-          </div>
-
-          <div class="premium-card p-7">
-            <i class="fa-solid fa-ruler-combined text-4xl gold mb-5"></i>
-            <h3 class="serif text-2xl mb-3">Small-space planning</h3>
-            <p class="text-zinc-600 leading-relaxed">Cloakrooms need careful choices around basins, doors, toilets, boxing and finishes.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CAN IT BE DONE -->
-  <section class="py-24 md:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-        <div class="bg-[#fbf7f0] rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <div class="relative h-[560px] bg-cover bg-center" style="background-image: url('under-stairs-toilet.jpg');">
-            <div class="image-label">Compact WC</div>
-          </div>
-        </div>
-
-        <div>
-          <p class="top-line uppercase text-sm gold font-semibold mb-5">
-            Can it be done?
-          </p>
-
-          <h2 class="sub-title serif mb-8">
-            Many homes have space for a downstairs toilet — but the route matters
-          </h2>
-
-          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
-            A downstairs toilet can often be created under the stairs, in a hallway cupboard, utility area, rear lobby, part of a larger hallway, or within an existing ground-floor room. The main question is not only whether the toilet fits — it is whether the services can be connected properly.
-          </p>
-
-          <div class="space-y-4 text-zinc-700">
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Is there enough usable space for a toilet and hand basin?</span>
-            </div>
-
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Can the toilet connect to a soil pipe or suitable drain?</span>
-            </div>
-
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Can the basin waste run with a proper fall?</span>
-            </div>
-
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Can the room be ventilated properly to outside?</span>
-            </div>
-
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Will the door position, privacy and access work day to day?</span>
-            </div>
-
-            <div class="flex gap-3">
-              <i class="fa-solid fa-check gold mt-1"></i>
-              <span>Would a macerator make the location possible if gravity drainage is difficult?</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PLANNING BUILDING REGS -->
-  <section class="py-24 md:py-32 bg-[#fbf7f0]">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Practical rules
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          Small room, important details
-        </h2>
-
-        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          A downstairs toilet may be compact, but it still needs proper thinking around drainage, ventilation, water supply, electrics and future maintenance.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <div class="premium-card p-8">
-          <i class="fa-solid fa-scale-balanced text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Planning position</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            Internal downstairs toilets often do not need planning permission, but listed buildings, extensions and wider alterations may need additional checks.
-          </p>
-        </div>
-
-        <div class="premium-card p-8">
-          <i class="fa-solid fa-water text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Drainage route</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            The toilet and basin need a sensible route to waste drainage. The pipe route often decides the best location.
-          </p>
-        </div>
-
-        <div class="premium-card p-8">
-          <i class="fa-solid fa-wind text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Ventilation</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            A WC needs ventilation to help control odours and moisture. The fan or ventilation route should be planned properly.
-          </p>
-        </div>
-
-        <div class="premium-card p-8">
-          <i class="fa-solid fa-sink text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Hand washing</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            A compact basin, corner basin or small vanity can make even a tight WC feel more finished and usable.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- MACERATORS -->
-  <section class="py-24 md:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-        <div>
-          <p class="top-line uppercase text-sm gold font-semibold mb-5">
-            Macerator toilets
-          </p>
-
-          <h2 class="sub-title serif mb-8">
-            When normal drainage is difficult, a macerator can open up options
-          </h2>
-
-          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
-            A macerator toilet can be a useful option where a standard gravity soil pipe route is difficult. It breaks down waste and pumps it through smaller pipework to a suitable drain or soil connection.
-          </p>
-
-          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
-            It is not always the first choice. If a normal gravity waste connection is practical, that is usually simpler. But in the right property, a macerator can make a downstairs toilet possible where the layout would otherwise be difficult.
-          </p>
-
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
-              <p class="font-semibold mb-2">Useful for awkward locations</p>
-              <p class="text-sm text-zinc-600 leading-relaxed">Can help where the toilet is too far from the main soil pipe or below a suitable drain level.</p>
-            </div>
-
-            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
-              <p class="font-semibold mb-2">Needs proper access</p>
-              <p class="text-sm text-zinc-600 leading-relaxed">A macerator should be accessible for servicing, maintenance and future replacement.</p>
-            </div>
-
-            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
-              <p class="font-semibold mb-2">Correct use matters</p>
-              <p class="text-sm text-zinc-600 leading-relaxed">Only toilet paper and normal waste should be flushed. Wipes and unsuitable items can cause blockages.</p>
-            </div>
-
-            <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
-              <p class="font-semibold mb-2">Not for every job</p>
-              <p class="text-sm text-zinc-600 leading-relaxed">We look at the property first and advise whether gravity drainage or a macerator is the better route.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-[#fbf7f0] rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <div class="relative h-[520px] bg-cover bg-center" style="background-image: url('macerator-toilet.jpg');">
-            <div class="image-label">Macerator option</div>
-          </div>
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.18)), url('./downstairs-toilet.png');"></div>
           <div class="p-8">
-            <h3 class="serif text-3xl mb-4">A useful solution when specified properly</h3>
+            <h3 class="serif text-3xl mb-4">Convenience, value and proper planning</h3>
             <p class="text-zinc-600 leading-relaxed">
-              The decision should be based on the drainage route, access, noise consideration, electrical supply and how the toilet will be used.
+              A downstairs toilet needs the same practical thinking as a bathroom: drainage, ventilation, fittings, finishes and a layout that works in the real property.
             </p>
           </div>
         </div>
@@ -540,429 +358,335 @@
     </div>
   </section>
 
-  <!-- WHERE CAN IT GO -->
-  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+  <!-- CLOAKROOM BENEFITS -->
+  <section class="py-24 md:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="text-center max-w-4xl mx-auto mb-16">
         <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Possible locations
+          Why add a cloakroom?
         </p>
 
         <h2 class="sub-title serif mb-7">
-          Where can a downstairs toilet go?
+          Useful every day, noticed when selling or renting
         </h2>
 
         <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          The best location is usually the one that gives enough usable space while keeping drainage, water supply and ventilation sensible.
+          A downstairs toilet is often one of those features people only realise they need when they do not have one. In busy homes, rental properties, family houses and homes with upstairs bathrooms, it can make the property work better.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-people-roof text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Everyday convenience</h3>
+          <p class="text-zinc-600 leading-relaxed">Useful for families, guests, older relatives, children and homes where the main bathroom is upstairs.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-chart-line text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Property appeal</h3>
+          <p class="text-zinc-600 leading-relaxed">A well-finished extra WC can make a property feel more complete and attractive to buyers or tenants.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-maximize text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Better use of space</h3>
+          <p class="text-zinc-600 leading-relaxed">Under-stairs areas, hallways, utility spaces and unused corners can sometimes become useful WC spaces.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-screwdriver-wrench text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Planned properly</h3>
+          <p class="text-zinc-600 leading-relaxed">Small rooms still need drainage, water supply, ventilation, electrical planning and quality finishing.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLOAKROOM PLANNING -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+        <div class="grid lg:grid-cols-2 items-center">
+
+          <div class="p-8 md:p-14">
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              What we check
+            </p>
+
+            <h2 class="sub-title serif mb-8">
+              The details behind a successful downstairs WC
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+              A cloakroom is not just a toilet and basin squeezed into a cupboard. The best results come from checking the practical route first and then choosing products and finishes that suit the actual space.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Drainage route</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Soil pipe position, waste falls, boxing and whether the layout is realistic.</p>
+              </div>
+
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Ventilation</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Extractor options, duct route and moisture control for compact WC spaces.</p>
+              </div>
+
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Product choice</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Compact toilets, cloakroom basins, wall-hung options, storage and taps.</p>
+              </div>
+
+              <div class="bg-[#fbf7f0] rounded-2xl p-5 border border-[#d4af37]/20">
+                <p class="font-semibold mb-2">Finish</p>
+                <p class="text-sm text-zinc-600 leading-relaxed">Tiling, flooring, lighting, mirrors, trims, decorating and making good.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8 md:p-14 bg-[#fbf7f0]">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-toilet text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">New WC spaces</h3>
+                <p class="text-zinc-600 leading-relaxed">New cloakrooms, downstairs toilets and compact WC layouts.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-sink text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Basins & storage</h3>
+                <p class="text-zinc-600 leading-relaxed">Small basins, vanities, taps, wastes and storage that suit the room.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-grip text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Tiling & flooring</h3>
+                <p class="text-zinc-600 leading-relaxed">Wall tiles, splashbacks, floor finishes and clean detailing.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-lightbulb text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Lighting & mirrors</h3>
+                <p class="text-zinc-600 leading-relaxed">Lighting, mirrors, fans and electrical items planned correctly.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ADDITIONAL SERVICES -->
+  <section id="additional" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Additional bathroom and building works
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Related works handled with the same practical approach
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Alongside full bathrooms, en-suites and cloakrooms, we can often help with smaller bathroom-related works. These are not the main focus of the business, but they sit naturally around what we already do and can be useful for local customers who want the work handled properly.
         </p>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-stairs text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">Under the stairs</h3>
-          <p class="text-zinc-600 leading-relaxed">A popular option where head height, door position and pipe routes allow a compact WC and basin layout.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-box-open text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">Hallway cupboard</h3>
-          <p class="text-zinc-600 leading-relaxed">A storage cupboard can sometimes be converted if there is enough width, ventilation and a sensible waste route.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-shirt text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">Utility room</h3>
-          <p class="text-zinc-600 leading-relaxed">Utility rooms can work well because water and waste services may already be nearby.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-door-open text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">Part of a hallway</h3>
-          <p class="text-zinc-600 leading-relaxed">A larger hallway or lobby may allow a small cloakroom to be formed with partitioning and a new door.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-house-chimney-window text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">Rear addition or side area</h3>
-          <p class="text-zinc-600 leading-relaxed">Some properties have ground-floor side or rear spaces that can be better used as a practical WC.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-person-digging text-4xl gold mb-6"></i>
-          <h3 class="serif text-3xl mb-4">As part of other works</h3>
-          <p class="text-zinc-600 leading-relaxed">A downstairs toilet can also be planned as part of a wider renovation, utility upgrade or layout change.</p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- VALUE SECTION -->
-  <section class="py-24 md:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Value and convenience
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          Extra bathroom facilities can improve how a home feels
-        </h2>
-
-        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          A downstairs toilet is not always the same as adding a full bathroom, but it can make a property feel more practical, convenient and complete.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-
-        <div class="stat-card">
-          <p class="text-6xl serif gold mb-4">6%</p>
-          <h3 class="text-2xl serif mb-4">Additional bathroom guidance</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            Market research has reported that an additional bathroom can add around 6% to the value of the average house.
-          </p>
-        </div>
-
-        <div class="stat-card">
-          <p class="text-6xl serif gold mb-4">1</p>
-          <h3 class="text-2xl serif mb-4">Extra WC downstairs</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            Even a compact cloakroom can make the ground floor more convenient for daily use and guests.
-          </p>
-        </div>
-
-        <div class="stat-card">
-          <p class="text-6xl serif gold mb-4">+</p>
-          <h3 class="text-2xl serif mb-4">Better buyer appeal</h3>
-          <p class="text-zinc-600 leading-relaxed">
-            Practical improvements can help a property feel easier to live in, especially where the main bathroom is upstairs.
-          </p>
-        </div>
-
-      </div>
-
-      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
-        Value depends on property type, layout, location, finish, market conditions and whether the new WC improves the home without harming the existing space. These figures are general guidance only and are not a valuation guarantee.
-      </p>
-
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section id="process" class="py-24 md:py-32 bg-[#fbf7f0]">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          How it works
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          From idea to finished cloakroom
-        </h2>
-
-        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          A downstairs toilet starts with understanding where it can go and how the services can be connected.
-        </p>
-      </div>
-
-      <div class="grid lg:grid-cols-2 gap-12">
-
-        <div class="space-y-8">
-
-          <div class="relative pl-14">
-            <div class="timeline-line"></div>
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">1</div>
-            <h3 class="serif text-3xl mb-3">Initial enquiry</h3>
-            <p class="text-zinc-600 leading-relaxed">Tell us where you are thinking of adding the toilet and whether there are nearby drains, water supply or existing services.</p>
-          </div>
-
-          <div class="relative pl-14">
-            <div class="timeline-line"></div>
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">2</div>
-            <h3 class="serif text-3xl mb-3">Office consultation or site visit</h3>
-            <p class="text-zinc-600 leading-relaxed">We can discuss ideas, product choices and budget at the office, or inspect the property where the route needs checking.</p>
-          </div>
-
-          <div class="relative pl-14">
-            <div class="timeline-line"></div>
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">3</div>
-            <h3 class="serif text-3xl mb-3">Drainage and ventilation check</h3>
-            <p class="text-zinc-600 leading-relaxed">We look at whether a normal gravity waste route is possible, or whether a macerator may be worth considering.</p>
-          </div>
-
-          <div class="relative pl-14">
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">4</div>
-            <h3 class="serif text-3xl mb-3">Layout and product choice</h3>
-            <p class="text-zinc-600 leading-relaxed">We choose a toilet, basin, door position, ventilation route and finish that suit the size of the room.</p>
-          </div>
-
-        </div>
-
-        <div class="space-y-8">
-
-          <div class="relative pl-14">
-            <div class="timeline-line"></div>
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">5</div>
-            <h3 class="serif text-3xl mb-3">Clear quotation</h3>
-            <p class="text-zinc-600 leading-relaxed">You receive a written quotation setting out the intended works, products, inclusions, exclusions and next steps.</p>
-          </div>
-
-          <div class="relative pl-14">
-            <div class="timeline-line"></div>
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">6</div>
-            <h3 class="serif text-3xl mb-3">Installation</h3>
-            <p class="text-zinc-600 leading-relaxed">Pipework, ventilation, boxing, sanitaryware, tiling or wall finishes and final fittings are installed in the right order.</p>
-          </div>
-
-          <div class="relative pl-14">
-            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">7</div>
-            <h3 class="serif text-3xl mb-3">Final checks and handover</h3>
-            <p class="text-zinc-600 leading-relaxed">We check operation, seals, ventilation, access panels, finish and leave the space ready to use.</p>
-          </div>
-
-          <div class="premium-card p-8 bg-white">
-            <h3 class="serif text-3xl mb-4">Designed around the space</h3>
-            <p class="text-zinc-600 leading-relaxed">
-              A downstairs toilet does not need to be large to feel well designed. The right basin, toilet, lighting, mirror and finishes can make a compact cloakroom feel smart and considered.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- SMALLER BATHROOM JOBS -->
-  <section id="small-jobs" class="py-24 md:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Smaller bathroom upgrades
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          Focused improvements without a full renovation
-        </h2>
-
-        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          We also help with smaller bathroom jobs where you do not need a full rip-out, but still want the work planned and finished properly.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-bath text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Replacement bath</h3>
-          <p class="text-zinc-600 leading-relaxed">Remove an old bath and replace it with a new bath, panel, taps, waste and sealing where suitable.</p>
+          <i class="fa-solid fa-toilet text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Toilet installation</h3>
+          <p class="text-zinc-600 leading-relaxed">Replacement toilets, back-to-wall toilets, concealed cisterns and WC upgrades where the existing soil connection, boxing and floor finish need to be considered.</p>
         </div>
 
         <div class="service-card premium-card p-8">
           <i class="fa-solid fa-sink text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">New basin or vanity</h3>
-          <p class="text-zinc-600 leading-relaxed">Upgrade a tired basin to a smarter vanity unit with better storage, tap and waste.</p>
-        </div>
-
-        <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-toilet text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">New toilet</h3>
-          <p class="text-zinc-600 leading-relaxed">Replace an old WC with a new close-coupled, back-to-wall or compact toilet where the pipework allows.</p>
+          <h3 class="serif text-3xl mb-4">Basins and vanities</h3>
+          <p class="text-zinc-600 leading-relaxed">Basin replacement, vanity units, taps, wastes, traps, splashbacks and small storage improvements for bathrooms, en-suites and cloakrooms.</p>
         </div>
 
         <div class="service-card premium-card p-8">
           <i class="fa-solid fa-shower text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Shower screen or valve</h3>
-          <p class="text-zinc-600 leading-relaxed">Replace a tired bath screen, shower screen or shower valve to improve use and appearance.</p>
+          <h3 class="serif text-3xl mb-4">Showers and screens</h3>
+          <p class="text-zinc-600 leading-relaxed">Shower screen upgrades, bath screens, shower valves, riser rails, panels, trays, sealing and practical improvements to tired shower areas.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-grip text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Tiling and finishes</h3>
+          <p class="text-zinc-600 leading-relaxed">Bathroom wall tiling, floor tiling, splashbacks, trims, grout, silicone, repairs and finishing details where the final look matters.</p>
         </div>
 
         <div class="service-card premium-card p-8">
           <i class="fa-solid fa-faucet-drip text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Taps and wastes</h3>
-          <p class="text-zinc-600 leading-relaxed">Change old taps, wastes and fittings for cleaner, more modern replacements.</p>
+          <h3 class="serif text-3xl mb-4">Bathroom pipework</h3>
+          <p class="text-zinc-600 leading-relaxed">Pipework alterations connected to toilets, basins, showers, baths, vanities, wastes and small layout changes within bathroom spaces.</p>
         </div>
 
         <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-temperature-arrow-up text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Towel rails</h3>
-          <p class="text-zinc-600 leading-relaxed">Replace or upgrade a bathroom radiator or heated towel rail where pipework and heating setup allow.</p>
+          <i class="fa-solid fa-bolt text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Electrical items</h3>
+          <p class="text-zinc-600 leading-relaxed">Lighting, LED mirrors, shaver sockets, extractor fans, underfloor heating routes and other electrical items connected to bathroom works.</p>
         </div>
 
         <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-wind text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Extractor fans</h3>
-          <p class="text-zinc-600 leading-relaxed">Improve ventilation with a replacement extractor fan or better fan option where the route is suitable.</p>
+          <i class="fa-solid fa-fan text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Ventilation</h3>
+          <p class="text-zinc-600 leading-relaxed">Extractor fan upgrades, ducting routes and ventilation improvements for bathrooms, en-suites, cloakrooms and shower rooms.</p>
         </div>
 
         <div class="service-card premium-card p-8">
-          <i class="fa-solid fa-border-top-left text-4xl gold mb-6"></i>
-          <h3 class="serif text-2xl mb-4">Finishing improvements</h3>
-          <p class="text-zinc-600 leading-relaxed">Silicone, bath panels, mirrors, cabinets, accessories and small finishing details that improve the room.</p>
+          <i class="fa-solid fa-hammer text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Making good</h3>
+          <p class="text-zinc-600 leading-relaxed">Boxing-in, access panels, studwork, floor preparation, wall repairs, plastering, carpentry and finishing connected to bathroom projects.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-house-chimney-window text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Local bathroom support</h3>
+          <p class="text-zinc-600 leading-relaxed">If the work is connected to a bathroom, en-suite, cloakroom or shower room, send details or visit the studio and we can let you know whether we can help.</p>
         </div>
 
       </div>
 
-      <p class="text-sm text-zinc-500 leading-relaxed mt-8 max-w-4xl mx-auto text-center">
-        Smaller works are subject to availability and suitability. Some jobs may be better handled as part of a larger bathroom renovation if existing pipework, tiling or hidden defects make a simple replacement impractical.
-      </p>
+    </div>
+  </section>
+
+  <!-- LOCAL TRADE NETWORK -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            Local experience and trusted trades
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Bathroom work often needs more than one trade
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Having worked locally for many years, we understand how often bathroom-related work crosses over between trades. A simple-looking job can involve plumbing, tiling, electrics, ventilation, carpentry, plastering or decorating at the right stage.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            Where suitable, we can bring in trusted tradespeople so the work is approached properly rather than leaving the customer to coordinate separate people for each small part of the job.
+          </p>
+
+          <div class="space-y-4 text-zinc-700">
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Bathroom and cloakroom works planned around the real property</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Trusted trades used where the work requires the right specialist</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Practical advice before products or finishes are chosen</span>
+            </div>
+            <div class="flex gap-3">
+              <i class="fa-solid fa-check gold mt-1"></i>
+              <span>Clear quotation and agreed scope before work begins</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-toolbox text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Building knowledge</h3>
+            <p class="text-zinc-600 leading-relaxed">Older Fulham and West London properties often need practical thinking before the work starts.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-clipboard-check text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Checked first</h3>
+            <p class="text-zinc-600 leading-relaxed">Access, pipe routes, floors, walls, ventilation and finish are considered before quoting properly.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-people-carry-box text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Right trades</h3>
+            <p class="text-zinc-600 leading-relaxed">Plumbing, tiling, electrical and finishing work can be handled by suitable trades where required.</p>
+          </div>
+
+          <div class="premium-card p-7">
+            <i class="fa-solid fa-comments text-4xl gold mb-5"></i>
+            <h3 class="serif text-2xl mb-3">Ask us first</h3>
+            <p class="text-zinc-600 leading-relaxed">If the work is connected to bathrooms or en-suites, it is worth asking whether we can help.</p>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </section>
 
-  <!-- OFFICE CONSULTATION -->
-  <section id="consultation" class="py-24 md:py-32 bg-[#fbf7f0]">
+  <!-- NOT LISTED -->
+  <section class="py-24 md:py-32 bg-white">
     <div class="max-w-7xl mx-auto px-6">
 
-      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
-        <div class="grid lg:grid-cols-2 items-stretch">
-
-          <div class="p-8 md:p-14">
+      <div class="bg-[#fbf7f0] rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 p-8 md:p-14">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div>
             <p class="top-line uppercase text-sm gold font-semibold mb-5">
-              Office consultations
+              Not listed here?
             </p>
 
-            <h2 class="sub-title serif mb-7">
-              Come in and talk through the idea before committing
+            <h2 class="sub-title serif mb-8">
+              Pop in, call or WhatsApp and ask
             </h2>
 
             <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
-              You can visit our Fulham consultation office by appointment to discuss a downstairs toilet, cloakroom, macerator option or smaller bathroom improvement.
+              The list above does not cover every possible bathroom-related job. If you are local and the work connects to a bathroom, en-suite, cloakroom, WC, shower room, tiling, ventilation, fitting or related building work, please ask.
             </p>
 
-            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
-              We can look through compact toilets, basins, vanity units, wall finishes, tiles, taps and practical options, then talk honestly about what is realistic for the space and budget.
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+              We may be able to visit, quote properly, bring in the right trade, or explain the best route before you spend money on the wrong product or approach.
             </p>
-
-            <div class="space-y-4 text-zinc-700 mb-10">
-              <div class="flex gap-3">
-                <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Discuss where a downstairs toilet could go</span>
-              </div>
-
-              <div class="flex gap-3">
-                <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Compare standard drainage and macerator options</span>
-              </div>
-
-              <div class="flex gap-3">
-                <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Look through compact basins, toilets, tiles and finishes</span>
-              </div>
-
-              <div class="flex gap-3">
-                <i class="fa-solid fa-check gold mt-1"></i>
-                <span>Work out whether it is a small job or part of a bigger renovation</span>
-              </div>
-            </div>
-
-            <a href="#contact" class="button-gold inline-flex px-8 py-4 rounded-full text-lg font-semibold">
-              Book a Consultation
-            </a>
           </div>
 
-          <div class="min-h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.18)), url('cloakroom-design.jpg');"></div>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="premium-card p-7 bg-white">
+              <i class="fa-solid fa-camera text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Send photos</h3>
+              <p class="text-zinc-600 leading-relaxed">Photos of the room, existing pipework, products or problem can help us understand the job.</p>
+            </div>
 
+            <div class="premium-card p-7 bg-white">
+              <i class="fa-solid fa-location-dot text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Visit the studio</h3>
+              <p class="text-zinc-600 leading-relaxed">For local customers, the Munster Road studio gives you somewhere real to call in and ask.</p>
+            </div>
+
+            <div class="premium-card p-7 bg-white">
+              <i class="fa-brands fa-whatsapp text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">WhatsApp details</h3>
+              <p class="text-zinc-600 leading-relaxed">Send photos, links or a short description so we can understand what you need.</p>
+            </div>
+
+            <div class="premium-card p-7 bg-white">
+              <i class="fa-solid fa-clipboard-list text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Clear next step</h3>
+              <p class="text-zinc-600 leading-relaxed">We can tell you whether a visit, a quote or a larger bathroom plan makes sense.</p>
+            </div>
+          </div>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="py-24 md:py-32 bg-white">
-    <div class="max-w-5xl mx-auto px-6">
-
-      <div class="text-center max-w-4xl mx-auto mb-16">
-        <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Questions
-        </p>
-
-        <h2 class="sub-title serif mb-7">
-          Downstairs toilet FAQs
-        </h2>
-      </div>
-
-      <div class="space-y-5">
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Do I need planning permission for a downstairs toilet?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            In many cases, an internal downstairs toilet does not need planning permission if it is created inside the existing property. However, listed buildings, extensions and wider alterations may need additional checks.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Does a downstairs toilet need building regulations?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            Drainage, ventilation, water supply, electrics and structural changes may all bring building regulations into consideration. The exact requirement depends on the property and the work being carried out.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Can a toilet go under the stairs?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            Sometimes, yes. It depends on head height, width, door position, drainage, ventilation and whether there is space for a toilet and hand basin.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            What if there is no soil pipe nearby?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            If a normal gravity connection is difficult, a macerator may be considered. It is not the answer for every property, but it can make certain downstairs toilet locations possible.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Will a macerator smell or be noisy?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            A correctly specified and installed macerator should not smell when used properly and maintained. It will make some noise when operating, so location, access and product choice should be considered before deciding.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Does a downstairs toilet need a window?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            A window is not always necessary, but the room still needs suitable ventilation. In many compact WCs, a properly routed extractor fan is the practical solution.
-          </p>
-        </details>
-
-        <details class="premium-card p-7 group">
-          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
-            Do you only do full renovations?
-            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
-          </summary>
-          <p class="text-zinc-600 leading-relaxed mt-5">
-            No. We also help with smaller bathroom improvements such as replacement toilets, basins, baths, shower screens, taps, extractor fans and finishing upgrades, subject to availability and suitability.
-          </p>
-        </details>
-
       </div>
 
     </div>
@@ -974,7 +698,7 @@
 
       <div class="text-center max-w-3xl mx-auto mb-14">
         <p class="top-line uppercase text-sm gold font-semibold mb-5">
-          Start your project
+          Ask about other services
         </p>
 
         <h2 class="sub-title serif mb-7">
@@ -982,11 +706,11 @@
         </h2>
 
         <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          Tell us whether you are thinking about a downstairs toilet, macerator toilet, compact cloakroom or a smaller bathroom upgrade. You can also call us directly on <a href="tel:02073713333" class="gold font-semibold hover:text-amber-600 transition">0207 371 3333</a>.
+          Tell us about the room, the job, any products you already have and whether it is a cloakroom, toilet installation, tiling, fitting, ventilation or related bathroom work. You can also call us directly on <a href="tel:02073810000" class="gold font-semibold hover:text-amber-600 transition">0207 381 0000</a>.
         </p>
       </div>
 
-      <form id="quoteForm" action="https://formsubmit.co/ensuite.co.uk@gmail.com" method="POST" class="bg-white rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
+      <form id="quoteForm" action="https://formsubmit.co/info@en-suite.co.uk" method="POST" class="bg-white rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
 
         <div class="grid md:grid-cols-2 gap-5 mb-5">
           <input type="text" name="name" placeholder="Full name" class="form-input" required>
@@ -998,18 +722,20 @@
 
           <select name="project_type" class="form-input" required>
             <option value="">What do you need?</option>
-            <option value="Downstairs toilet / cloakroom">Downstairs toilet / cloakroom</option>
-            <option value="Macerator toilet">Macerator toilet</option>
-            <option value="Replacement bath">Replacement bath</option>
-            <option value="New basin or vanity">New basin or vanity</option>
-            <option value="New toilet">New toilet</option>
-            <option value="Shower screen or shower valve">Shower screen or shower valve</option>
-            <option value="Extractor fan / towel rail / smaller upgrade">Extractor fan / towel rail / smaller upgrade</option>
-            <option value="Not sure yet">Not sure yet</option>
+            <option value="Cloakroom / downstairs toilet">Cloakroom / downstairs toilet</option>
+            <option value="Toilet installation">Toilet installation</option>
+            <option value="Basin / vanity installation">Basin / vanity installation</option>
+            <option value="Shower upgrade">Shower upgrade</option>
+            <option value="Bathroom tiling">Bathroom tiling</option>
+            <option value="Bathroom pipework alteration">Bathroom pipework alteration</option>
+            <option value="Bathroom electrical item">Bathroom electrical item</option>
+            <option value="Ventilation / extractor fan">Ventilation / extractor fan</option>
+            <option value="Making good / related building work">Making good / related building work</option>
+            <option value="Something else">Something else</option>
           </select>
         </div>
 
-        <textarea name="message" placeholder="Tell us what you are thinking of doing, where it is in the property, whether there is existing drainage nearby, and whether you would like an office consultation." class="form-input h-44 resize-none mb-6" required></textarea>
+        <textarea name="message" placeholder="Tell us what needs doing, where the property is, whether you have photos or products already, and what you would like help with." class="form-input h-44 resize-none mb-6" required></textarea>
 
         <input type="hidden" name="_subject" value="New Other Services Enquiry">
         <input type="hidden" name="_captcha" value="false">
@@ -1020,7 +746,7 @@
         </button>
 
         <p class="text-sm text-zinc-500 mt-6">
-          This form is for initial enquiries only. A proper quotation can only be given after discussing the project and, where needed, viewing the property.
+          This form is for initial enquiries only. A proper quotation can only be given after discussing the work and, where needed, viewing the property.
         </p>
 
       </form>
@@ -1029,13 +755,13 @@
   </section>
 
   <!-- FLOATING CTA -->
-  <a href="tel:02073713333" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+  <a href="tel:02073810000" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
     <i class="fa-solid fa-phone"></i>
-    0207 371 3333
+    0207 381 0000
   </a>
 
   <!-- FOOTER -->
-  <footer class="bg-[#fbf7f0] border-t border-[#d4af37]/25 pt-16 pb-8">
+  <footer class="bg-white border-t border-[#d4af37]/25 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="grid md:grid-cols-4 gap-10">
@@ -1054,25 +780,25 @@
           </div>
 
           <p class="text-zinc-600 leading-relaxed">
-            Bathroom renovations, new en-suite design, downstairs toilets and bathroom installation.
+            Bathroom, en-suite and cloakroom design, planning and installation.
           </p>
         </div>
 
         <div>
           <h4 class="font-semibold mb-5 gold">Services</h4>
           <div class="space-y-3 text-zinc-600">
-            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">New En-Suites</a></p>
-            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathroom Renovations</a></p>
+            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a></p>
+            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a></p>
             <p><a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a></p>
-            <p><a href="index.html#proposal" class="hover:text-[#d4af37] transition">Sample Proposal</a></p>
+            <p><a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a></p>
           </div>
         </div>
 
         <div>
           <h4 class="font-semibold mb-5 gold">Contact</h4>
           <div class="space-y-3 text-zinc-600">
-            <p><a href="tel:02073713333" class="hover:text-[#d4af37] transition">0207 371 3333</a></p>
-            <p><a href="mailto:ensuite.co.uk@gmail.com" class="hover:text-[#d4af37] transition">ensuite.co.uk@gmail.com</a></p>
+            <p><a href="tel:02073810000" class="hover:text-[#d4af37] transition">0207 381 0000</a></p>
+            <p><a href="mailto:info@en-suite.co.uk" class="hover:text-[#d4af37] transition">info@en-suite.co.uk</a></p>
             <p>287 Munster Road</p>
             <p>Fulham, London SW6 6BW</p>
           </div>
@@ -1093,7 +819,7 @@
       <div class="border-t border-[#d4af37]/20 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-zinc-500">
         <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
         <p class="md:text-right">
-          Suitability, cost, drainage options, ventilation and value impact depend on survey, specification, property type and final agreed scope.
+          Builder-led bathroom, en-suite and cloakroom design, planning and installation.
         </p>
       </div>
 
@@ -1101,6 +827,32 @@
   </footer>
 
   <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      }
+    });
+
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+    mobileMenuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+      });
+    });
+
     document.getElementById('quoteForm').addEventListener('submit', function(e) {
       const phoneInput = document.getElementById('phone');
       const phone = phoneInput.value.replace(/\D/g, '');
