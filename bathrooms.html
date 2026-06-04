@@ -204,11 +204,11 @@
       display: block;
     }
 
-    .dropdown {
+    .desktop-services {
       position: relative;
     }
 
-    .dropdown-button {
+    .desktop-services-button {
       background: transparent;
       border: 0;
       padding: 0;
@@ -218,7 +218,7 @@
       cursor: pointer;
     }
 
-    .dropdown-menu {
+    .desktop-services-menu {
       position: absolute;
       top: 100%;
       left: 50%;
@@ -236,15 +236,15 @@
       z-index: 80;
     }
 
-    .dropdown:hover .dropdown-menu,
-    .dropdown:focus-within .dropdown-menu {
+    .desktop-services:hover .desktop-services-menu,
+    .desktop-services:focus-within .desktop-services-menu {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
       transform: translateX(-50%) translateY(0);
     }
 
-    .dropdown-menu a {
+    .desktop-services-menu a {
       display: block;
       padding: 0.85rem 1rem;
       border-radius: 0.9rem;
@@ -253,23 +253,12 @@
       transition: all 0.2s ease;
     }
 
-    .dropdown-menu a:hover {
+    .desktop-services-menu a:hover {
       background: #fbf7f0;
       color: var(--goldDark);
     }
 
-    .mobile-submenu {
-      display: none;
-      margin-left: 0.75rem;
-      padding-left: 0.75rem;
-      border-left: 1px solid rgba(212, 175, 55, 0.28);
-    }
-
-    .mobile-submenu.open {
-      display: block;
-    }
-
-    .mobile-submenu-toggle {
+    .mobile-services-toggle {
       width: 100%;
       background: transparent;
       border: 0;
@@ -279,6 +268,16 @@
       color: inherit;
       cursor: pointer;
       text-align: left;
+    }
+
+    .mobile-services-panel {
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
+    .mobile-services-panel[hidden] {
+      display: none !important;
     }
 
     @media (max-width: 768px) {
@@ -343,13 +342,13 @@
         <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a>
         <a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a>
 
-        <div class="dropdown">
-          <button type="button" class="dropdown-button inline-flex items-center gap-2 hover:text-[#d4af37] transition" aria-haspopup="true" aria-label="Open Other Services menu">
+        <div class="desktop-services">
+          <button type="button" class="desktop-services-button inline-flex items-center gap-2 hover:text-[#d4af37] transition" aria-haspopup="true" aria-label="Other Services menu">
             Other Services
             <i class="fa-solid fa-chevron-down text-xs"></i>
           </button>
 
-          <div class="dropdown-menu" aria-label="Other Services submenu">
+          <div class="desktop-services-menu" aria-label="Other Services submenu">
             <a href="cloakrooms.html">Cloakrooms</a>
             <a href="kitchens.html">Kitchens</a>
             <a href="general-building-work.html">General Building Work</a>
@@ -379,9 +378,10 @@
       </span>
     </div>
 
-    <!-- MOBILE DROPDOWN MENU -->
+    <!-- MOBILE HAMBURGER MENU -->
     <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
       <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+
         <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
           Bathrooms
         </a>
@@ -391,12 +391,12 @@
         </a>
 
         <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
-          <button id="mobileOtherServicesButton" type="button" class="mobile-submenu-toggle flex items-center justify-between hover:text-[#d4af37] transition" aria-expanded="false" aria-label="Open Other Services menu">
+          <button id="mobileServicesToggle" type="button" class="mobile-services-toggle flex items-center justify-between hover:text-[#d4af37] transition" aria-expanded="false" aria-controls="mobileServicesPanel">
             <span>Other Services</span>
-            <i id="mobileOtherServicesIcon" class="fa-solid fa-chevron-down text-sm"></i>
+            <i id="mobileServicesIcon" class="fa-solid fa-chevron-down text-sm"></i>
           </button>
 
-          <div id="mobileOtherServicesMenu" class="mobile-submenu mt-3 space-y-2 text-sm">
+          <div id="mobileServicesPanel" class="mobile-services-panel mt-3 space-y-2 text-sm" hidden>
             <a href="cloakrooms.html" class="block py-2 hover:text-[#d4af37] transition">
               Cloakrooms
             </a>
@@ -1189,9 +1189,23 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuIcon = document.getElementById('mobileMenuIcon');
 
-    const mobileOtherServicesButton = document.getElementById('mobileOtherServicesButton');
-    const mobileOtherServicesMenu = document.getElementById('mobileOtherServicesMenu');
-    const mobileOtherServicesIcon = document.getElementById('mobileOtherServicesIcon');
+    const mobileServicesToggle = document.getElementById('mobileServicesToggle');
+    const mobileServicesPanel = document.getElementById('mobileServicesPanel');
+    const mobileServicesIcon = document.getElementById('mobileServicesIcon');
+
+    function closeMobileServices() {
+      mobileServicesPanel.hidden = true;
+      mobileServicesToggle.setAttribute('aria-expanded', 'false');
+      mobileServicesIcon.classList.remove('fa-chevron-up');
+      mobileServicesIcon.classList.add('fa-chevron-down');
+    }
+
+    function openMobileServices() {
+      mobileServicesPanel.hidden = false;
+      mobileServicesToggle.setAttribute('aria-expanded', 'true');
+      mobileServicesIcon.classList.remove('fa-chevron-down');
+      mobileServicesIcon.classList.add('fa-chevron-up');
+    }
 
     mobileMenuButton.addEventListener('click', function() {
       mobileMenu.classList.toggle('open');
@@ -1202,25 +1216,18 @@
       } else {
         mobileMenuIcon.classList.remove('fa-xmark');
         mobileMenuIcon.classList.add('fa-bars');
-
-        mobileOtherServicesMenu.classList.remove('open');
-        mobileOtherServicesButton.setAttribute('aria-expanded', 'false');
-        mobileOtherServicesIcon.classList.remove('fa-chevron-up');
-        mobileOtherServicesIcon.classList.add('fa-chevron-down');
+        closeMobileServices();
       }
     });
 
-    mobileOtherServicesButton.addEventListener('click', function() {
-      mobileOtherServicesMenu.classList.toggle('open');
+    mobileServicesToggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
 
-      if (mobileOtherServicesMenu.classList.contains('open')) {
-        mobileOtherServicesButton.setAttribute('aria-expanded', 'true');
-        mobileOtherServicesIcon.classList.remove('fa-chevron-down');
-        mobileOtherServicesIcon.classList.add('fa-chevron-up');
+      if (mobileServicesPanel.hidden) {
+        openMobileServices();
       } else {
-        mobileOtherServicesButton.setAttribute('aria-expanded', 'false');
-        mobileOtherServicesIcon.classList.remove('fa-chevron-up');
-        mobileOtherServicesIcon.classList.add('fa-chevron-down');
+        closeMobileServices();
       }
     });
 
@@ -1231,11 +1238,7 @@
         mobileMenu.classList.remove('open');
         mobileMenuIcon.classList.remove('fa-xmark');
         mobileMenuIcon.classList.add('fa-bars');
-
-        mobileOtherServicesMenu.classList.remove('open');
-        mobileOtherServicesButton.setAttribute('aria-expanded', 'false');
-        mobileOtherServicesIcon.classList.remove('fa-chevron-up');
-        mobileOtherServicesIcon.classList.add('fa-chevron-down');
+        closeMobileServices();
       });
     });
 
