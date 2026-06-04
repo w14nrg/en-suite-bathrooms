@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="General building work and smaller home improvement jobs by En-Suites & Bathrooms Ltd. Painting, decorating, tiling, toilet, tap and basin changes, electrical works, plumbing, making good and managed trades. Based at 287 Munster Road, Fulham, London SW6 6BW." />
+
+  <title>General Building Work | En-Suites & Bathrooms Ltd</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --cream: #fbf7f0;
+      --softCream: #fffaf2;
+      --white: #ffffff;
+      --charcoal: #1f1f1f;
+      --muted: #696969;
+      --gold: #d4af37;
+      --goldDark: #b89121;
+      --softGold: rgba(212, 175, 55, 0.22);
+      --line: rgba(212, 175, 55, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .gold {
+      color: var(--gold);
+    }
+
+    .nav {
+      background: rgba(251, 247, 240, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.74), rgba(0,0,0,0.24)),
+        url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-title {
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+      font-weight: 300;
+    }
+
+    .sub-title {
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      font-weight: 300;
+    }
+
+    .top-line {
+      letter-spacing: 0.22em;
+    }
+
+    .button-gold {
+      background: var(--gold);
+      color: #111111;
+      transition: all 0.25s ease;
+    }
+
+    .button-gold:hover {
+      background: #e5c65c;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(212,175,55,0.25);
+    }
+
+    .button-light {
+      background: rgba(255,255,255,0.95);
+      color: #1f1f1f;
+      border: 1px solid rgba(212,175,55,0.45);
+      transition: all 0.25s ease;
+    }
+
+    .button-light:hover {
+      border-color: var(--gold);
+      color: var(--goldDark);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+    }
+
+    .soft-shadow {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.07);
+    }
+
+    .premium-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.24);
+      border-radius: 1.8rem;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.055);
+    }
+
+    .service-card {
+      transition: all 0.35s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.12);
+    }
+
+    .logo-main {
+      letter-spacing: 0.08em;
+    }
+
+    .logo-small {
+      letter-spacing: 0.34em;
+    }
+
+    .hero-copy {
+      text-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .form-input {
+      background: #fff;
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 1.4rem;
+      padding: 1.25rem 1.35rem;
+      width: 100%;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .desktop-services {
+      position: relative;
+    }
+
+    .desktop-services-button {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .desktop-services-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 260px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 1.2rem;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.10);
+      padding: 0.7rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 80;
+    }
+
+    .desktop-services:hover .desktop-services-menu,
+    .desktop-services:focus-within .desktop-services-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .desktop-services-menu a {
+      display: block;
+      padding: 0.85rem 1rem;
+      border-radius: 0.9rem;
+      color: #3f3f46;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .desktop-services-menu a:hover,
+    .desktop-services-menu a.active {
+      background: #fbf7f0;
+      color: var(--goldDark);
+    }
+
+    .mobile-services-toggle {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .mobile-services-panel {
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
+    .mobile-services-panel[hidden] {
+      display: none !important;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 1.15rem;
+      top: 3.4rem;
+      bottom: -1rem;
+      width: 1px;
+      background: rgba(212,175,55,0.35);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding-top: 10.5rem;
+        padding-bottom: 4rem;
+      }
+
+      .mobile-tight {
+        letter-spacing: -0.04em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="hidden lg:block bg-white border-b border-[#d4af37]/25 text-sm">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center text-zinc-700">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </div>
+
+      <div class="flex items-center gap-8">
+        <span>design | install</span>
+        <span class="text-zinc-300">|</span>
+        <a href="tel:02073860000" class="gold font-semibold hover:text-amber-600 transition">
+          0207 386 0000
+        </a>
+        <a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition" aria-label="WhatsApp En-Suites & Bathrooms">
+          <i class="fa-brands fa-whatsapp"></i>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav fixed lg:sticky top-0 w-full z-50 border-b border-[#d4af37]/25">
+    <div class="max-w-7xl mx-auto px-5 md:px-6 py-5 flex justify-between items-center">
+
+      <a href="index.html" class="flex items-center gap-4">
+        <i class="fa-solid fa-bath text-4xl gold"></i>
+        <div>
+          <div class="serif logo-main text-2xl md:text-3xl font-light leading-none">
+            EN-SUITES
+          </div>
+          <div class="logo-small text-[0.65rem] md:text-xs gold font-semibold mt-1">
+            & BATHROOMS
+          </div>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
+        <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a>
+        <a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a>
+
+        <div class="desktop-services">
+          <button type="button" class="desktop-services-button inline-flex items-center gap-2 gold font-semibold transition" aria-haspopup="true" aria-label="Other Services menu">
+            Other Services
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </button>
+
+          <div class="desktop-services-menu" aria-label="Other Services submenu">
+            <a href="cloakrooms.html">Cloakrooms</a>
+            <a href="kitchens.html">Kitchens</a>
+            <a href="general-building-work.html" class="active">General Building Work</a>
+          </div>
+        </div>
+
+        <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
+        <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="hidden sm:inline-flex button-gold px-5 md:px-7 py-3 rounded-full text-sm md:text-base font-semibold">
+          Enquire
+        </a>
+
+        <button id="mobileMenuButton" class="lg:hidden w-12 h-12 rounded-full border border-[#d4af37]/35 bg-white flex items-center justify-center text-zinc-800" aria-label="Open menu">
+          <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- MOBILE FULL ADDRESS BAR -->
+    <div class="lg:hidden border-t border-[#d4af37]/20 px-5 py-3 text-sm text-zinc-700 text-center bg-white/70">
+      <span class="inline-flex items-center justify-center gap-2 flex-wrap">
+        <i class="fa-solid fa-location-dot gold"></i>
+        <span>287 Munster Road, Fulham, London SW6 6BW</span>
+      </span>
+    </div>
+
+    <!-- MOBILE HAMBURGER MENU -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-[#d4af37]/20">
+      <div class="px-5 py-5 space-y-3 text-zinc-700 font-medium">
+
+        <a href="bathrooms.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          Bathrooms
+        </a>
+
+        <a href="en-suites.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          En-Suites
+        </a>
+
+        <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
+          <button id="mobileServicesToggle" type="button" class="mobile-services-toggle flex items-center justify-between gold font-semibold transition" aria-expanded="false" aria-controls="mobileServicesPanel">
+            <span>Other Services</span>
+            <i id="mobileServicesIcon" class="fa-solid fa-chevron-down text-sm"></i>
+          </button>
+
+          <div id="mobileServicesPanel" class="mobile-services-panel mt-3 space-y-2 text-sm" hidden>
+            <a href="cloakrooms.html" class="block py-2 hover:text-[#d4af37] transition">
+              Cloakrooms
+            </a>
+
+            <a href="kitchens.html" class="block py-2 hover:text-[#d4af37] transition">
+              Kitchens
+            </a>
+
+            <a href="general-building-work.html" class="block py-2 gold font-semibold transition">
+              General Building Work
+            </a>
+          </div>
+        </div>
+
+        <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          How It Works
+        </a>
+
+        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
+          About Us
+        </a>
+
+        <div class="grid grid-cols-3 gap-3 pt-2">
+          <a href="tel:02073860000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+            Call
+          </a>
+
+          <a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="bg-[#25D366] text-white text-center px-4 py-4 rounded-full font-semibold">
+            WhatsApp
+          </a>
+
+          <a href="#contact" class="button-light text-center px-4 py-4 rounded-full font-semibold">
+            Enquire
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero flex items-center">
+    <div class="max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
+      <div class="max-w-4xl">
+        <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
+          General building work and smaller jobs
+        </p>
+
+        <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
+          Trusted trades for the jobs that still need doing properly
+        </h1>
+
+        <p class="text-2xl md:text-4xl font-light leading-tight max-w-4xl mb-8 text-white hero-copy">
+          Decorating, tiling, plumbing, electrical work, repairs, upgrades and finishing work — quoted clearly and handled by the right people.
+        </p>
+
+        <p class="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mb-11 hero-copy">
+          Not every job is a full bathroom, en-suite or kitchen renovation. Sometimes you need a room painted, tiles replaced, a basin changed, a tap fitted, a toilet upgraded, electrical items installed or a collection of smaller jobs brought together properly. With years in the trade and a trusted network of quality tradesmen and craftsmen, we can help with the small jobs, the awkward jobs and the more involved home improvement work.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#services" class="button-gold px-8 py-4 rounded-full text-lg font-semibold text-center">
+            What We Can Help With
+          </a>
+          <a href="#contact" class="button-light px-8 py-4 rounded-full text-lg font-semibold text-center">
+            Ask About a Job
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            A practical route for local home improvements
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Simple job or more complex work — come in and talk it through
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Many homeowners do not know who to call for smaller building jobs. A decorator may not want to deal with tiling. A plumber may not want to make good. An electrician may only do the wiring. A small-looking job can quickly involve more than one trade.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            That is where our trade background helps. We can look at what needs doing, explain the sensible route, quote clearly and bring in the right trades where needed. If it is a straightforward job, we keep it simple. If it needs proper coordination, we manage it properly.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+            Pop into the Munster Road studio, call, WhatsApp photos or send a short description. We will tell you whether it is something we can help with, whether a visit is needed and what the next step should be.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.18)), url('https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="p-8">
+            <h3 class="serif text-3xl mb-4">One conversation, the right trade</h3>
+            <p class="text-zinc-600 leading-relaxed">
+              Instead of guessing who to call, speak to us first. We can advise whether the job needs a plumber, decorator, tiler, electrician, carpenter, plasterer or a combination of trades.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          What we can help with
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Smaller jobs, finishing work and general improvements
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          These are the kinds of jobs where good trades matter. The work may be small compared with a full renovation, but it still needs to be clean, safe, practical and finished properly.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-paint-roller text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Painting and decorating</h3>
+          <p class="text-zinc-600 leading-relaxed">Internal painting, feature walls, freshening up tired rooms, preparation, filling, sanding, finishing and making rooms feel clean and finished again.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-grip text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Tiling and repairs</h3>
+          <p class="text-zinc-600 leading-relaxed">Wall tiling, floor tiling, splashbacks, grout repairs, silicone, trims and neat finish details for bathrooms, kitchens, cloakrooms and utility areas.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-toilet text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Toilet changes</h3>
+          <p class="text-zinc-600 leading-relaxed">Toilet replacement, WC upgrades, close-coupled toilets, back-to-wall units, concealed cistern access, boxing and making good around the new fitting.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-sink text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Basins and vanities</h3>
+          <p class="text-zinc-600 leading-relaxed">Basin exchange, vanity units, taps, wastes, traps, splashbacks, small storage improvements and clean finishing around bathroom or cloakroom fittings.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-faucet-drip text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Taps and plumbing</h3>
+          <p class="text-zinc-600 leading-relaxed">Tap changes, leaks, pipe alterations, wastes, traps, isolation valves and small plumbing improvements connected to kitchens, bathrooms and utility spaces.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-bolt text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Electrical work</h3>
+          <p class="text-zinc-600 leading-relaxed">Lighting, mirrors, extractor fans, sockets, switches and small electrical upgrades carried out or signed off by the right qualified people where required.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-hammer text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Making good</h3>
+          <p class="text-zinc-600 leading-relaxed">Boxing-in, plaster repairs, access panels, small carpentry, filling holes, repairing walls and finishing the areas that often get left after trade work.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-door-open text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Carpentry and fittings</h3>
+          <p class="text-zinc-600 leading-relaxed">Shelves, skirting, architraves, doors, panels, trims, boxing, small fitted details and the timber work that helps a job look complete.</p>
+        </div>
+
+        <div class="service-card premium-card p-8">
+          <i class="fa-solid fa-house-chimney-window text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">General improvements</h3>
+          <p class="text-zinc-600 leading-relaxed">If the job improves the home and needs a proper trade approach, speak to us. We can advise, quote or point you towards the right route.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NETWORK -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
+          <div class="h-[560px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&w=1600&q=80');"></div>
+        </div>
+
+        <div>
+          <p class="top-line uppercase text-sm gold font-semibold mb-5">
+            A trusted trade network
+          </p>
+
+          <h2 class="sub-title serif mb-8">
+            Years in the trade means knowing who is good
+          </h2>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+            Good tradespeople are hard to find. After decades around building, plumbing, bathrooms, kitchens and local property work, we have built a trusted network of tradesmen and craftsmen who care about the finish, not just getting in and out.
+          </p>
+
+          <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+            That means we can help with jobs that need more than one person. A toilet change might need boxing and flooring. A basin change might need tiling and decorating. Electrical work might need making good. A simple job is often only simple when the right person sees the whole picture first.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Plumbers</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">For taps, toilets, basins, wastes, pipework and small bathroom or kitchen alterations.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Electricians</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">For lighting, sockets, fans, mirrors and notifiable work where proper certification matters.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Tilers and decorators</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">For the finish that makes the room feel complete, clean and properly done.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 border border-[#d4af37]/20">
+              <p class="font-semibold mb-2">Craftsmen</p>
+              <p class="text-sm text-zinc-600 leading-relaxed">For carpentry, making good, small building work and finishing details.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SMALL JOBS MATTER -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Why use us for smaller jobs?
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Small work still affects how your home feels
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          A badly finished small job stands out every day. A neat one disappears into the room and makes the home feel looked after. We approach smaller work with the same practical thinking we bring to larger bathroom, en-suite and kitchen projects.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-magnifying-glass text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Look at the whole job</h3>
+          <p class="text-zinc-600 leading-relaxed">We consider what happens before and after the main task, including access, making good and finish.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-people-carry-box text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Use the right trade</h3>
+          <p class="text-zinc-600 leading-relaxed">Where the job needs a specialist, we involve the right person rather than forcing the wrong trade to do everything.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-file-invoice text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Quote clearly</h3>
+          <p class="text-zinc-600 leading-relaxed">You know what is included, what is not included and whether the job needs a visit before a price is sensible.</p>
+        </div>
+
+        <div class="premium-card p-8">
+          <i class="fa-solid fa-comments text-4xl gold mb-6"></i>
+          <h3 class="serif text-2xl mb-3">Easy to discuss</h3>
+          <p class="text-zinc-600 leading-relaxed">Pop in, call or WhatsApp photos. We can quickly understand whether we can help and what the next step should be.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SAFETY AND COMPLIANCE -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 overflow-hidden">
+        <div class="grid lg:grid-cols-2 items-center">
+
+          <div class="p-8 md:p-14">
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              The right person for the right work
+            </p>
+
+            <h2 class="sub-title serif mb-8">
+              Electrical and gas work must be handled properly
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+              Some general building jobs are straightforward. Others touch electrical work, gas work, ventilation or building regulations. When that happens, the right qualified trade needs to be involved.
+            </p>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8">
+              For electrical work, a registered competent person can self-certify certain types of building work instead of the homeowner applying separately for building regulations approval. For gas work, the engineer must be on the Gas Safe Register. We keep this clear from the start so the work is approached safely and properly.
+            </p>
+
+            <div class="space-y-4 text-zinc-700">
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Registered electricians used where required</span>
+              </div>
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Gas Safe engineers used for gas work</span>
+              </div>
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Building regulation considerations discussed where relevant</span>
+              </div>
+              <div class="flex gap-3">
+                <i class="fa-solid fa-check gold mt-1"></i>
+                <span>Certificates and compliance routes considered before work starts</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-[#fbf7f0] p-8 md:p-14 flex items-center">
+            <div class="grid sm:grid-cols-2 gap-5 w-full">
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-bolt text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Electrical</h3>
+                <p class="text-zinc-600 leading-relaxed">Lighting, sockets, fans, mirrors and electrical changes need the right route, especially in kitchens and bathrooms.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-fire-flame-simple text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Gas</h3>
+                <p class="text-zinc-600 leading-relaxed">Any gas appliance or gas fitting work must be carried out by a Gas Safe registered engineer.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-fan text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Ventilation</h3>
+                <p class="text-zinc-600 leading-relaxed">Extractor fans, ducting and ventilation routes need proper planning in bathrooms, cloakrooms and kitchens.</p>
+              </div>
+
+              <div class="premium-card p-7">
+                <i class="fa-solid fa-clipboard-check text-4xl gold mb-5"></i>
+                <h3 class="serif text-2xl mb-3">Paperwork</h3>
+                <p class="text-zinc-600 leading-relaxed">Where certification is needed, it should be thought about before the work starts, not chased afterwards.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          How it works
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          From a quick chat to a clear route
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          We keep the process simple. The job may only need a quick look and a clear price, or it may need a visit and more than one trade. Either way, you get a sensible route before work begins.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">1</div>
+            <h3 class="serif text-3xl mb-3">Tell us what needs doing</h3>
+            <p class="text-zinc-600 leading-relaxed">Send photos, call, WhatsApp, email or pop into the studio. Tell us what the job is and what you want to achieve.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">2</div>
+            <h3 class="serif text-3xl mb-3">We assess the route</h3>
+            <p class="text-zinc-600 leading-relaxed">We decide whether it can be quoted from photos, needs a visit, needs a specialist trade or needs a more detailed scope.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">3</div>
+            <h3 class="serif text-3xl mb-3">Clear price or site visit</h3>
+            <p class="text-zinc-600 leading-relaxed">Straightforward jobs can often be priced clearly. More involved jobs are viewed properly so the quote makes sense.</p>
+          </div>
+
+        </div>
+
+        <div class="space-y-8">
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">4</div>
+            <h3 class="serif text-3xl mb-3">The right trade attends</h3>
+            <p class="text-zinc-600 leading-relaxed">We send or arrange the right person for the job, whether that is a plumber, tiler, electrician, decorator, carpenter or combination of trades.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="timeline-line"></div>
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">5</div>
+            <h3 class="serif text-3xl mb-3">Work completed properly</h3>
+            <p class="text-zinc-600 leading-relaxed">The aim is a clean finish, not a half-done job that leaves you looking for another trade to tidy up afterwards.</p>
+          </div>
+
+          <div class="relative pl-14">
+            <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-[#d4af37] text-black flex items-center justify-center font-bold">6</div>
+            <h3 class="serif text-3xl mb-3">Future work if needed</h3>
+            <p class="text-zinc-600 leading-relaxed">If the job uncovers something bigger, we can explain the options and quote the next stage properly before anything extra is agreed.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- POP IN -->
+  <section class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="bg-white rounded-[2.4rem] soft-shadow border border-[#d4af37]/20 p-8 md:p-14">
+        <div class="grid lg:grid-cols-2 gap-14 items-center">
+          <div>
+            <p class="top-line uppercase text-sm gold font-semibold mb-5">
+              Local and easy to ask
+            </p>
+
+            <h2 class="sub-title serif mb-8">
+              Pop in, call or WhatsApp photos
+            </h2>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed mb-7">
+              If you are local and unsure who to call, come into the Munster Road studio and have a chat. A five-minute conversation can often save you buying the wrong product, booking the wrong trade or starting a job in the wrong order.
+            </p>
+
+            <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+              You do not need to know the technical answer before contacting us. Just tell us what you want done, what the problem is or what you are trying to improve. We will help you work out the sensible next step.
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div class="premium-card p-7 bg-[#fbf7f0]">
+              <i class="fa-solid fa-camera text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Send photos</h3>
+              <p class="text-zinc-600 leading-relaxed">Photos of the room, fitting, pipework, wall, floor or problem can help us understand the job quickly.</p>
+            </div>
+
+            <div class="premium-card p-7 bg-[#fbf7f0]">
+              <i class="fa-solid fa-location-dot text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Visit the studio</h3>
+              <p class="text-zinc-600 leading-relaxed">The Munster Road studio gives local customers somewhere real to visit and talk through the job.</p>
+            </div>
+
+            <div class="premium-card p-7 bg-[#fbf7f0]">
+              <i class="fa-brands fa-whatsapp text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">WhatsApp details</h3>
+              <p class="text-zinc-600 leading-relaxed">Send a short description, product link, video or photos and we can tell you what information we need next.</p>
+            </div>
+
+            <div class="premium-card p-7 bg-[#fbf7f0]">
+              <i class="fa-solid fa-clipboard-list text-4xl gold mb-5"></i>
+              <h3 class="serif text-2xl mb-3">Clear next step</h3>
+              <p class="text-zinc-600 leading-relaxed">We can tell you whether it needs a quote, visit, specialist trade or larger plan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Questions
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          General building work FAQs
+        </h2>
+      </div>
+
+      <div class="space-y-5">
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Do you only take on big jobs?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            No. We can help with smaller jobs as well as more involved work. If it is connected to improving, repairing or finishing the home, it is worth asking.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can I send photos first?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. Photos, videos and product links are often the quickest way to start. Some jobs can be understood from photos, while others will need a site visit.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Do you use qualified electricians and Gas Safe engineers?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. Where the work requires a qualified or registered specialist, the correct trade is used. Electrical and gas work must be handled properly and safely.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can you coordinate more than one trade?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. That is often where we are most useful. A job may need plumbing, tiling, decorating and making good in the right order. We can help bring that together.
+          </p>
+        </details>
+
+        <details class="premium-card p-7 group">
+          <summary class="cursor-pointer font-semibold text-xl flex justify-between items-center gap-4">
+            Can I pop into the shop and ask?
+            <i class="fa-solid fa-chevron-down gold group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-zinc-600 leading-relaxed mt-5">
+            Yes. The Munster Road studio is there so local customers can speak to someone properly, show photos, ask questions and work out the next step.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 md:py-32 bg-[#fbf7f0]">
+    <div class="max-w-5xl mx-auto px-6">
+
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          Ask about a job
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Tell us what needs doing
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          Tell us about the room, the job, any photos or products you already have and whether it is a simple job or something more involved. You can also call us directly on <a href="tel:02073860000" class="gold font-semibold hover:text-amber-600 transition">0207 386 0000</a>.
+        </p>
+      </div>
+
+      <form id="quoteForm" action="https://formsubmit.co/info@en-suite.co.uk" method="POST" class="bg-white rounded-[2.2rem] p-6 md:p-10 border border-[#d4af37]/25 soft-shadow">
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="text" name="name" placeholder="Full name" class="form-input" required>
+          <input type="tel" name="phone" id="phone" placeholder="Phone number" class="form-input" required>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <input type="email" name="email" placeholder="Email address" class="form-input" required>
+
+          <select name="project_type" class="form-input" required>
+            <option value="">What do you need?</option>
+            <option value="Painting / decorating">Painting / decorating</option>
+            <option value="Tiling / grout / silicone">Tiling / grout / silicone</option>
+            <option value="Toilet replacement">Toilet replacement</option>
+            <option value="Tap change / plumbing">Tap change / plumbing</option>
+            <option value="Basin / vanity exchange">Basin / vanity exchange</option>
+            <option value="Electrical work">Electrical work</option>
+            <option value="Making good / small building work">Making good / small building work</option>
+            <option value="Several smaller jobs">Several smaller jobs</option>
+            <option value="More complex general building work">More complex general building work</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+
+        <textarea name="message" placeholder="Tell us what needs doing, where the property is, whether you have photos or product links, and whether you would like a quick quote, a visit or to pop into the studio." class="form-input h-44 resize-none mb-6" required></textarea>
+
+        <input type="hidden" name="_subject" value="New General Building Work Enquiry">
+        <input type="hidden" name="_captcha" value="false">
+
+        <button type="submit" class="button-gold w-full md:w-auto px-10 py-5 rounded-full text-lg font-semibold">
+          Send Enquiry
+          <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
+
+        <p class="text-sm text-zinc-500 mt-6">
+          This form is for initial enquiries only. A proper quotation can only be given after discussing the work and, where needed, viewing the property.
+        </p>
+
+      </form>
+
+    </div>
+  </section>
+
+  <!-- FLOATING CTA -->
+  <a href="tel:02073860000" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+    <i class="fa-solid fa-phone"></i>
+    0207 386 0000
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-[#d4af37]/25 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-4 mb-5">
+            <i class="fa-solid fa-bath text-4xl gold"></i>
+            <div>
+              <div class="serif logo-main text-3xl font-light leading-none">
+                EN-SUITES
+              </div>
+              <div class="logo-small text-xs gold font-semibold mt-1">
+                & BATHROOMS
+              </div>
+            </div>
+          </div>
+
+          <p class="text-zinc-600 leading-relaxed">
+            Bathroom, en-suite, kitchen and general building work, planned and handled properly.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Services</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a></p>
+            <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a></p>
+            <p><a href="cloakrooms.html" class="hover:text-[#d4af37] transition">Cloakrooms</a></p>
+            <p><a href="kitchens.html" class="hover:text-[#d4af37] transition">Kitchens</a></p>
+            <p><a href="general-building-work.html" class="hover:text-[#d4af37] transition">General Building Work</a></p>
+            <p><a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a></p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Contact</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p><a href="tel:02073860000" class="hover:text-[#d4af37] transition">0207 386 0000</a></p>
+            <p><a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="hover:text-[#d4af37] transition">WhatsApp</a></p>
+            <p><a href="mailto:info@en-suite.co.uk" class="hover:text-[#d4af37] transition">info@en-suite.co.uk</a></p>
+            <p>287 Munster Road</p>
+            <p>Fulham, London SW6 6BW</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold mb-5 gold">Company</h4>
+          <div class="space-y-3 text-zinc-600">
+            <p>En-Suites & Bathrooms Ltd</p>
+            <p>Company No: 17170498</p>
+            <p>Office / consultation by appointment</p>
+            <p><a href="about.html" class="hover:text-[#d4af37] transition">About Us</a></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-[#d4af37]/20 mt-12 pt-8 grid md:grid-cols-2 gap-4 text-sm text-zinc-500">
+        <p>© 2026 En-Suites & Bathrooms Ltd. All rights reserved.</p>
+        <p class="md:text-right">
+          Trusted trades, clear quotes and practical building knowledge for Fulham and surrounding areas.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+    const mobileServicesToggle = document.getElementById('mobileServicesToggle');
+    const mobileServicesPanel = document.getElementById('mobileServicesPanel');
+    const mobileServicesIcon = document.getElementById('mobileServicesIcon');
+
+    function closeMobileServices() {
+      mobileServicesPanel.hidden = true;
+      mobileServicesToggle.setAttribute('aria-expanded', 'false');
+      mobileServicesIcon.classList.remove('fa-chevron-up');
+      mobileServicesIcon.classList.add('fa-chevron-down');
+    }
+
+    function openMobileServices() {
+      mobileServicesPanel.hidden = false;
+      mobileServicesToggle.setAttribute('aria-expanded', 'true');
+      mobileServicesIcon.classList.remove('fa-chevron-down');
+      mobileServicesIcon.classList.add('fa-chevron-up');
+    }
+
+    mobileMenuButton.addEventListener('click', function() {
+      mobileMenu.classList.toggle('open');
+
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+        closeMobileServices();
+      }
+    });
+
+    mobileServicesToggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (mobileServicesPanel.hidden) {
+        openMobileServices();
+      } else {
+        closeMobileServices();
+      }
+    });
+
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+    mobileMenuLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+        closeMobileServices();
+      });
+    });
+
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+      const phoneInput = document.getElementById('phone');
+      const phone = phoneInput.value.replace(/\D/g, '');
+
+      if (phone.length < 10 || phone.length > 15) {
+        alert('Please enter a valid phone number.');
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
