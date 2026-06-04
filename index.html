@@ -204,6 +204,56 @@
       display: block;
     }
 
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 1.2rem;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.10);
+      padding: 0.7rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 80;
+    }
+
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.85rem 1rem;
+      border-radius: 0.9rem;
+      color: #3f3f46;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-menu a:hover {
+      background: #fbf7f0;
+      color: var(--goldDark);
+    }
+
+    .mobile-submenu {
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
     @media (max-width: 768px) {
       .hero {
         min-height: auto;
@@ -233,12 +283,12 @@
       </div>
 
       <div class="flex items-center gap-8">
-        <span>Designed, planned and installed</span>
+        <span>design | install</span>
         <span class="text-zinc-300">|</span>
-        <a href="tel:02073810000" class="gold font-semibold hover:text-amber-600 transition">
-          0207 381 0000
+        <a href="tel:02073860000" class="gold font-semibold hover:text-amber-600 transition">
+          0207 386 0000
         </a>
-        <a href="https://wa.me/442073810000" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition" aria-label="WhatsApp En-Suites & Bathrooms">
+        <a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition" aria-label="WhatsApp En-Suites & Bathrooms">
           <i class="fa-brands fa-whatsapp"></i>
           WhatsApp
         </a>
@@ -265,7 +315,19 @@
       <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-zinc-700">
         <a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a>
         <a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a>
-        <a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a>
+
+        <div class="dropdown">
+          <a href="other-services.html" class="inline-flex items-center gap-2 hover:text-[#d4af37] transition">
+            Other Services
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </a>
+          <div class="dropdown-menu" aria-label="Other Services submenu">
+            <a href="other-services.html#cloakrooms">Cloakrooms</a>
+            <a href="other-services.html#kitchens">Kitchens</a>
+            <a href="other-services.html#general-building-work">General Building Work</a>
+          </div>
+        </div>
+
         <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
         <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
       </div>
@@ -300,9 +362,25 @@
           En-Suites
         </a>
 
-        <a href="other-services.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
-          Other Services
-        </a>
+        <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
+          <a href="other-services.html" class="block hover:text-[#d4af37] transition mb-3">
+            Other Services
+          </a>
+
+          <div class="mobile-submenu space-y-2 text-sm">
+            <a href="other-services.html#cloakrooms" class="block py-2 hover:text-[#d4af37] transition">
+              Cloakrooms
+            </a>
+
+            <a href="other-services.html#kitchens" class="block py-2 hover:text-[#d4af37] transition">
+              Kitchens
+            </a>
+
+            <a href="other-services.html#general-building-work" class="block py-2 hover:text-[#d4af37] transition">
+              General Building Work
+            </a>
+          </div>
+        </div>
 
         <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
           How It Works
@@ -313,11 +391,11 @@
         </a>
 
         <div class="grid grid-cols-3 gap-3 pt-2">
-          <a href="tel:02073810000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
+          <a href="tel:02073860000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
             Call
           </a>
 
-          <a href="https://wa.me/442073810000" target="_blank" rel="noopener" class="bg-[#25D366] text-white text-center px-4 py-4 rounded-full font-semibold">
+          <a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="bg-[#25D366] text-white text-center px-4 py-4 rounded-full font-semibold">
             WhatsApp
           </a>
 
@@ -340,7 +418,7 @@
     <div class="hero-content max-w-7xl mx-auto px-6 py-28 md:py-36 w-full">
       <div class="max-w-4xl">
         <p class="top-line uppercase text-sm md:text-base gold font-semibold mb-6 hero-copy">
-          Designed, planned and installed
+          design | install
         </p>
 
         <h1 class="section-title serif mobile-tight mb-8 text-white hero-copy">
@@ -561,7 +639,7 @@
               </div>
             </div>
 
-            <a href="other-services.html" class="inline-flex items-center gap-3 button-gold px-7 py-4 rounded-full font-semibold">
+            <a href="other-services.html#cloakrooms" class="inline-flex items-center gap-3 button-gold px-7 py-4 rounded-full font-semibold">
               Explore Cloakrooms
               <i class="fa-solid fa-arrow-right"></i>
             </a>
@@ -918,7 +996,7 @@
               <div class="flex gap-4">
                 <i class="fa-solid fa-phone gold mt-1"></i>
                 <div>
-                  <p class="font-semibold"><a href="tel:02073810000" class="hover:text-[#d4af37] transition">0207 381 0000</a></p>
+                  <p class="font-semibold"><a href="tel:02073860000" class="hover:text-[#d4af37] transition">0207 386 0000</a></p>
                   <p class="text-zinc-500 text-sm">Call to discuss your bathroom, en-suite or cloakroom project</p>
                 </div>
               </div>
@@ -957,7 +1035,7 @@
         </h2>
 
         <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
-          Choose whether you are looking for a bathroom, en-suite or cloakroom, then send a few details. You can also call us directly on <a href="tel:02073810000" class="gold font-semibold hover:text-amber-600 transition">0207 381 0000</a>.
+          Choose whether you are looking for a bathroom, en-suite or cloakroom, then send a few details. You can also call us directly on <a href="tel:02073860000" class="gold font-semibold hover:text-amber-600 transition">0207 386 0000</a>.
         </p>
       </div>
 
@@ -1001,9 +1079,9 @@
   </section>
 
   <!-- FLOATING CTA -->
-  <a href="tel:02073810000" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
+  <a href="tel:02073860000" class="fixed bottom-6 right-6 bg-[#d4af37] hover:bg-amber-400 text-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 text-base md:text-lg font-semibold z-50 transition">
     <i class="fa-solid fa-phone"></i>
-    0207 381 0000
+    0207 386 0000
   </a>
 
   <!-- FOOTER -->
@@ -1035,7 +1113,9 @@
           <div class="space-y-3 text-zinc-600">
             <p><a href="bathrooms.html" class="hover:text-[#d4af37] transition">Bathrooms</a></p>
             <p><a href="en-suites.html" class="hover:text-[#d4af37] transition">En-Suites</a></p>
-            <p><a href="other-services.html" class="hover:text-[#d4af37] transition">Other Services</a></p>
+            <p><a href="other-services.html#cloakrooms" class="hover:text-[#d4af37] transition">Cloakrooms</a></p>
+            <p><a href="other-services.html#kitchens" class="hover:text-[#d4af37] transition">Kitchens</a></p>
+            <p><a href="other-services.html#general-building-work" class="hover:text-[#d4af37] transition">General Building Work</a></p>
             <p><a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a></p>
           </div>
         </div>
@@ -1043,7 +1123,8 @@
         <div>
           <h4 class="font-semibold mb-5 gold">Contact</h4>
           <div class="space-y-3 text-zinc-600">
-            <p><a href="tel:02073810000" class="hover:text-[#d4af37] transition">0207 381 0000</a></p>
+            <p><a href="tel:02073860000" class="hover:text-[#d4af37] transition">0207 386 0000</a></p>
+            <p><a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="hover:text-[#d4af37] transition">WhatsApp</a></p>
             <p><a href="mailto:info@en-suite.co.uk" class="hover:text-[#d4af37] transition">info@en-suite.co.uk</a></p>
             <p>287 Munster Road</p>
             <p>Fulham, London SW6 6BW</p>
