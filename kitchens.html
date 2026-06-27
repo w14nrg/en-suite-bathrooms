@@ -351,8 +351,19 @@
           </div>
         </div>
 
-        <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
-        <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
+        <div class="desktop-services">
+          <button type="button" class="desktop-services-button inline-flex items-center gap-2 hover:text-[#d4af37] transition" aria-haspopup="true" aria-label="More menu">
+            More
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </button>
+
+          <div class="desktop-services-menu" aria-label="More submenu">
+            <a href="about.html">About Us</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="price-guide.html">Price Guide</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
       </div>
 
       <div class="flex items-center gap-3">
@@ -407,13 +418,19 @@
           </div>
         </div>
 
-        <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
-          How It Works
-        </a>
+        <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
+          <button id="mobileMoreToggle" type="button" class="mobile-services-toggle flex items-center justify-between hover:text-[#d4af37] transition" aria-expanded="false" aria-controls="mobileMorePanel">
+            <span>More</span>
+            <i id="mobileMoreIcon" class="fa-solid fa-chevron-down text-sm"></i>
+          </button>
 
-        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
-          About Us
-        </a>
+          <div id="mobileMorePanel" class="mobile-services-panel mt-3 space-y-2 text-sm" hidden>
+            <a href="about.html" class="block py-2 hover:text-[#d4af37] transition">About Us</a>
+            <a href="how-it-works.html" class="block py-2 hover:text-[#d4af37] transition">How It Works</a>
+            <a href="price-guide.html" class="block py-2 hover:text-[#d4af37] transition">Price Guide</a>
+            <a href="faq.html" class="block py-2 hover:text-[#d4af37] transition">FAQ</a>
+          </div>
+        </div>
 
         <div class="grid grid-cols-3 gap-3 pt-2">
           <a href="tel:02073860000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">
@@ -493,7 +510,7 @@
         </div>
 
         <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <div class="h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.18)), url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="h-[520px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.18)), url('./kitchen-project-planning.png');"></div>
           <div class="p-8">
             <h3 class="serif text-3xl mb-4">A kitchen project needs more than units</h3>
             <p class="text-zinc-600 leading-relaxed">
@@ -682,7 +699,7 @@
             </div>
           </div>
 
-          <div class="min-h-[640px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.20)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80');"></div>
+          <div class="min-h-[640px] bg-cover bg-center" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.04), rgba(0,0,0,0.20)), url('./kitchen-project-management.png');"></div>
 
         </div>
       </div>
@@ -1159,6 +1176,10 @@
     const mobileServicesPanel = document.getElementById('mobileServicesPanel');
     const mobileServicesIcon = document.getElementById('mobileServicesIcon');
 
+    const mobileMoreToggle = document.getElementById('mobileMoreToggle');
+    const mobileMorePanel = document.getElementById('mobileMorePanel');
+    const mobileMoreIcon = document.getElementById('mobileMoreIcon');
+
     function closeMobileServices() {
       mobileServicesPanel.hidden = true;
       mobileServicesToggle.setAttribute('aria-expanded', 'false');
@@ -1171,6 +1192,22 @@
       mobileServicesToggle.setAttribute('aria-expanded', 'true');
       mobileServicesIcon.classList.remove('fa-chevron-down');
       mobileServicesIcon.classList.add('fa-chevron-up');
+      closeMobileMore();
+    }
+
+    function closeMobileMore() {
+      mobileMorePanel.hidden = true;
+      mobileMoreToggle.setAttribute('aria-expanded', 'false');
+      mobileMoreIcon.classList.remove('fa-chevron-up');
+      mobileMoreIcon.classList.add('fa-chevron-down');
+    }
+
+    function openMobileMore() {
+      mobileMorePanel.hidden = false;
+      mobileMoreToggle.setAttribute('aria-expanded', 'true');
+      mobileMoreIcon.classList.remove('fa-chevron-down');
+      mobileMoreIcon.classList.add('fa-chevron-up');
+      closeMobileServices();
     }
 
     mobileMenuButton.addEventListener('click', function() {
@@ -1183,6 +1220,7 @@
         mobileMenuIcon.classList.remove('fa-xmark');
         mobileMenuIcon.classList.add('fa-bars');
         closeMobileServices();
+        closeMobileMore();
       }
     });
 
@@ -1197,6 +1235,17 @@
       }
     });
 
+    mobileMoreToggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (mobileMorePanel.hidden) {
+        openMobileMore();
+      } else {
+        closeMobileMore();
+      }
+    });
+
     const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 
     mobileMenuLinks.forEach(function(link) {
@@ -1205,6 +1254,7 @@
         mobileMenuIcon.classList.remove('fa-xmark');
         mobileMenuIcon.classList.add('fa-bars');
         closeMobileServices();
+        closeMobileMore();
       });
     });
 
