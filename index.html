@@ -295,10 +295,171 @@
         min-height: 380px;
       }
     }
+
+    /* SUMMER OFFER POP-UP */
+    .summer-offer-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(0, 0, 0, 0.58);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .summer-offer-popup.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .summer-offer-card {
+      position: relative;
+      width: min(92vw, 560px);
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      border-radius: 2rem;
+      background: linear-gradient(145deg, #fffdf8, #f7edd7);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.38);
+      text-align: center;
+      animation: offerFlash 1.15s ease-in-out infinite alternate;
+    }
+
+    @keyframes offerFlash {
+      0% {
+        border-color: #d4af37;
+        box-shadow: 0 0 0 0 rgba(212,175,55,0.15), 0 30px 90px rgba(0,0,0,0.38);
+      }
+      100% {
+        border-color: #fff2a8;
+        box-shadow: 0 0 34px 10px rgba(212,175,55,0.58), 0 30px 90px rgba(0,0,0,0.38);
+      }
+    }
+
+    .summer-offer-top {
+      padding: 1rem 4rem 0.9rem;
+      background: var(--gold);
+      color: #111;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .summer-offer-body {
+      padding: 2rem 2rem 2.2rem;
+    }
+
+    .summer-offer-close {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.8rem;
+      z-index: 2;
+      width: 2.45rem;
+      height: 2.45rem;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.18);
+    }
+
+    .summer-offer-price {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4.5rem, 14vw, 7.5rem);
+      line-height: 0.9;
+      font-weight: 600;
+      color: var(--goldDark);
+      margin: 0.5rem 0 0.75rem;
+    }
+
+    .summer-offer-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .summer-offer-dismiss {
+      border: 1px solid rgba(31,31,31,0.2);
+      background: #fff;
+      color: #333;
+      padding: 0.9rem 1.3rem;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .summer-offer-card {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .summer-offer-top {
+        padding-left: 3.2rem;
+        padding-right: 3.2rem;
+        font-size: 0.78rem;
+      }
+
+      .summer-offer-body {
+        padding: 1.6rem 1.2rem 1.8rem;
+      }
+    }
+
   </style>
 </head>
 
 <body>
+
+  <!-- SUMMER OFFER POP-UP -->
+  <div id="summerOfferPopup" class="summer-offer-popup" role="dialog" aria-modal="true" aria-labelledby="summerOfferTitle" aria-describedby="summerOfferDescription">
+    <div class="summer-offer-card">
+      <button id="summerOfferClose" class="summer-offer-close" type="button" aria-label="Close summer offer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="summer-offer-top">Summer Offer</div>
+
+      <div class="summer-offer-body">
+        <p class="top-line uppercase text-xs gold font-semibold mb-3">Limited seasonal package</p>
+
+        <h2 id="summerOfferTitle" class="serif text-4xl md:text-5xl font-light">
+          Bathroom Refresh
+        </h2>
+
+        <div class="summer-offer-price">£3,000</div>
+
+        <p id="summerOfferDescription" class="text-lg md:text-xl font-semibold text-zinc-800">
+          Free home survey
+        </p>
+
+        <p class="text-sm text-zinc-600 mt-3">
+          Selected products and finishes. Subject to survey and terms.
+        </p>
+
+        <div class="summer-offer-actions">
+          <a href="bathroom-refresh-offer.html" class="button-gold px-7 py-4 rounded-full font-semibold">
+            View Offer
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+
+          <button id="summerOfferDismiss" type="button" class="summer-offer-dismiss">
+            Not now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- TOP BAR -->
   <div class="hidden lg:block bg-white border-b border-[#d4af37]/25 text-sm">
@@ -1302,6 +1463,43 @@
       }
     });
   </script>
+
+  <script>
+    (function () {
+      const popup = document.getElementById('summerOfferPopup');
+      const closeButton = document.getElementById('summerOfferClose');
+      const dismissButton = document.getElementById('summerOfferDismiss');
+
+      if (!popup) return;
+
+      const closePopup = function () {
+        popup.classList.remove('show');
+        document.body.style.overflow = '';
+        sessionStorage.setItem('summerOfferClosed', 'true');
+      };
+
+      if (sessionStorage.getItem('summerOfferClosed') !== 'true') {
+        window.setTimeout(function () {
+          popup.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }, 900);
+      }
+
+      closeButton.addEventListener('click', closePopup);
+      dismissButton.addEventListener('click', closePopup);
+
+      popup.addEventListener('click', function (event) {
+        if (event.target === popup) closePopup();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && popup.classList.contains('show')) {
+          closePopup();
+        }
+      });
+    })();
+  </script>
+
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
