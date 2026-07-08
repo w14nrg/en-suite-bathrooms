@@ -4,9 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description" content="General building work by En-Suites & Bathrooms Ltd, including property improvements, refurbishments, internal alterations, plastering, decorating, carpentry, flooring, tiling, plumbing, electrical work and smaller repairs." />
+  <meta name="description" content="General building work, property refurbishment, internal alterations, plastering, decorating, carpentry, flooring, tiling, plumbing, electrical and smaller repair work across London. Builder-led property improvements from En-Suites & Bathrooms Ltd, based in Fulham." />
 
-  <title>General Building Work | En-Suites & Bathrooms Ltd</title>
+  <title>General Building Work London | Property Refurbishment & Repairs | En-Suites & Bathrooms Ltd</title>
+  <link rel="canonical" href="https://www.en-suite.co.uk/general-building-work.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="General Building Work London | En-Suites & Bathrooms Ltd" />
+  <meta property="og:description" content="General building work, property improvements, refurbishments, internal alterations and smaller trade work across London, managed from Fulham." />
+  <meta property="og:url" content="https://www.en-suite.co.uk/general-building-work.html" />
+  <meta property="og:image" content="https://www.en-suite.co.uk/homepage-planning-terrazzo.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="General Building Work London | En-Suites & Bathrooms Ltd" />
+  <meta name="twitter:description" content="Property improvements, refurbishments, internal alterations, tiling, plastering, decorating, carpentry and smaller repair work across London." />
+  <meta name="twitter:image" content="https://www.en-suite.co.uk/homepage-planning-terrazzo.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "En-Suites & Bathrooms Ltd",
+    "url": "https://www.en-suite.co.uk/general-building-work.html",
+    "telephone": "0207 386 0000",
+    "email": "info@en-suite.co.uk",
+    "image": "https://www.en-suite.co.uk/homepage-planning-terrazzo.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "287 Munster Road",
+      "addressLocality": "Fulham",
+      "addressRegion": "London",
+      "postalCode": "SW6 6BW",
+      "addressCountry": "GB"
+    },
+    "areaServed": [
+      "London",
+      "Fulham",
+      "West Kensington",
+      "Hammersmith",
+      "Kensington",
+      "Chelsea",
+      "Barons Court",
+      "Parsons Green",
+      "Earl's Court",
+      "Kent",
+      "Surrey",
+      "Hampshire"
+    ],
+    "makesOffer": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "General building work"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Property refurbishment"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Internal alterations"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Plastering and decorating"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Carpentry and flooring"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Tiling work"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smaller plumbing and repair work"}}
+    ]
+  }
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -58,7 +113,7 @@
       overflow: hidden;
       background:
         linear-gradient(to right, rgba(0,0,0,0.74), rgba(0,0,0,0.24)),
-        url('./general-building-hero.jpg');
+        url('./homepage-planning-terrazzo.jpg');
       background-size: cover;
       background-position: center;
     }
@@ -297,11 +352,23 @@
             <a href="cloakrooms.html">Cloakrooms</a>
             <a href="kitchens.html">Kitchens</a>
             <a href="general-building-work.html" class="active font-semibold">General Building Work</a>
+            <a href="smaller-bathroom-works.html">Smaller Bathroom Works</a>
           </div>
         </div>
 
-        <a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a>
-        <a href="about.html" class="hover:text-[#d4af37] transition">About Us</a>
+        <div class="desktop-services">
+          <button type="button" class="desktop-services-button inline-flex items-center gap-2 hover:text-[#d4af37] transition" aria-haspopup="true" aria-label="More menu">
+            More
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </button>
+          <div class="desktop-services-menu" aria-label="More submenu">
+            <a href="about.html">About Us</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="price-guide.html">Price Guide</a>
+            <a href="areas-we-cover.html">Areas We Cover</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
       </div>
 
       <div class="flex items-center gap-3">
@@ -335,25 +402,33 @@
         </a>
 
         <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
-          <button id="mobileServicesToggle" type="button" class="mobile-services-toggle flex items-center justify-between gold font-semibold" aria-expanded="true" aria-controls="mobileServicesPanel">
+          <button id="mobileServicesToggle" type="button" class="mobile-services-toggle flex items-center justify-between gold font-semibold" aria-expanded="false" aria-controls="mobileServicesPanel">
             <span>Other Services</span>
-            <i id="mobileServicesIcon" class="fa-solid fa-chevron-up text-sm"></i>
+            <i id="mobileServicesIcon" class="fa-solid fa-chevron-down text-sm"></i>
           </button>
 
-          <div id="mobileServicesPanel" class="mobile-services-panel mt-3 space-y-2 text-sm">
+          <div id="mobileServicesPanel" class="mobile-services-panel mt-3 space-y-2 text-sm" hidden>
             <a href="cloakrooms.html" class="block py-2 hover:text-[#d4af37] transition">Cloakrooms</a>
             <a href="kitchens.html" class="block py-2 hover:text-[#d4af37] transition">Kitchens</a>
             <a href="general-building-work.html" class="block py-2 gold font-semibold">General Building Work</a>
+            <a href="smaller-bathroom-works.html" class="block py-2 hover:text-[#d4af37] transition">Smaller Bathroom Works</a>
           </div>
         </div>
 
-        <a href="how-it-works.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
-          How It Works
-        </a>
+        <div class="rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20">
+          <button id="mobileMoreToggle" type="button" class="mobile-services-toggle flex items-center justify-between hover:text-[#d4af37] transition" aria-expanded="false" aria-controls="mobileMorePanel">
+            <span>More</span>
+            <i id="mobileMoreIcon" class="fa-solid fa-chevron-down text-sm"></i>
+          </button>
 
-        <a href="about.html" class="block rounded-2xl px-4 py-3 bg-[#fbf7f0] border border-[#d4af37]/20 hover:text-[#d4af37] transition">
-          About Us
-        </a>
+          <div id="mobileMorePanel" class="mobile-services-panel mt-3 space-y-2 text-sm" hidden>
+            <a href="about.html" class="block py-2 hover:text-[#d4af37] transition">About Us</a>
+            <a href="how-it-works.html" class="block py-2 hover:text-[#d4af37] transition">How It Works</a>
+            <a href="price-guide.html" class="block py-2 hover:text-[#d4af37] transition">Price Guide</a>
+            <a href="areas-we-cover.html" class="block py-2 hover:text-[#d4af37] transition">Areas We Cover</a>
+            <a href="faq.html" class="block py-2 hover:text-[#d4af37] transition">FAQ</a>
+          </div>
+        </div>
 
         <div class="grid grid-cols-3 gap-3 pt-2">
           <a href="tel:02073860000" class="button-gold text-center px-4 py-4 rounded-full font-semibold">Call</a>
@@ -442,7 +517,7 @@
         </div>
 
         <div class="bg-white rounded-[2.4rem] overflow-hidden soft-shadow border border-[#d4af37]/20">
-          <img src="./property-renovation.jpg" alt="Property renovation and general building work in progress" class="w-full h-[520px] object-cover">
+          <img src="./homepage-bathrooms.png" alt="Bathroom and property renovation work by En-Suites and Bathrooms Ltd" class="w-full h-[520px] object-cover">
         </div>
 
       </div>
@@ -475,6 +550,55 @@
           </a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- AREAS AND RELATED WORK -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <p class="top-line uppercase text-sm gold font-semibold mb-5">
+          General building work across London
+        </p>
+
+        <h2 class="sub-title serif mb-7">
+          Property improvements, trade work and joined-up refurbishments
+        </h2>
+
+        <p class="text-lg md:text-xl text-zinc-600 leading-relaxed">
+          From our Fulham consultation base, we take on suitable general building work, property improvements and smaller trade jobs across London. This can sit alongside a bathroom, en-suite, cloakroom or kitchen renovation, or be arranged as a separate project where the scope is clear.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <a href="areas-we-cover.html" class="service-card premium-card p-8 block">
+          <i class="fa-solid fa-map-location-dot text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Areas we cover</h3>
+          <p class="text-zinc-600 leading-relaxed">See the London areas we regularly work in, including Fulham, West Kensington, Hammersmith, Kensington and Chelsea.</p>
+        </a>
+
+        <a href="smaller-bathroom-works.html" class="service-card premium-card p-8 block">
+          <i class="fa-solid fa-screwdriver-wrench text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Smaller works</h3>
+          <p class="text-zinc-600 leading-relaxed">Selected smaller plumbing, tiling, repair, replacement and finishing work when a full renovation is not needed.</p>
+        </a>
+
+        <a href="bathrooms.html" class="service-card premium-card p-8 block">
+          <i class="fa-solid fa-bath text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Bathroom projects</h3>
+          <p class="text-zinc-600 leading-relaxed">Bathroom renovations, shower rooms and practical upgrades planned with the building work around them.</p>
+        </a>
+
+        <a href="kitchens.html" class="service-card premium-card p-8 block">
+          <i class="fa-solid fa-kitchen-set text-4xl gold mb-6"></i>
+          <h3 class="serif text-3xl mb-4">Kitchen works</h3>
+          <p class="text-zinc-600 leading-relaxed">Kitchen renovation management where plumbing, electrics, gas, tiling, flooring and finishing need coordinating.</p>
+        </a>
+
+      </div>
+
     </div>
   </section>
 
@@ -514,6 +638,8 @@
             <option value="Plastering or decorating">Plastering / decorating</option>
             <option value="Carpentry or flooring">Carpentry / flooring</option>
             <option value="Tiling work">Tiling work</option>
+            <option value="Bathroom or kitchen related building work">Bathroom or kitchen related building work</option>
+            <option value="Smaller repair or maintenance work">Smaller repair or maintenance work</option>
             <option value="Small plumbing job">Small plumbing job</option>
             <option value="Electrical work">Electrical work</option>
             <option value="Repair or making good">Repair / making good</option>
@@ -578,7 +704,11 @@
             <p><a href="cloakrooms.html" class="hover:text-[#d4af37] transition">Cloakrooms</a></p>
             <p><a href="kitchens.html" class="hover:text-[#d4af37] transition">Kitchens</a></p>
             <p><a href="general-building-work.html" class="gold font-semibold">General Building Work</a></p>
+            <p><a href="smaller-bathroom-works.html" class="hover:text-[#d4af37] transition">Smaller Bathroom Works</a></p>
+            <p><a href="areas-we-cover.html" class="hover:text-[#d4af37] transition">Areas We Cover</a></p>
             <p><a href="how-it-works.html" class="hover:text-[#d4af37] transition">How It Works</a></p>
+            <p><a href="price-guide.html" class="hover:text-[#d4af37] transition">Price Guide</a></p>
+            <p><a href="faq.html" class="hover:text-[#d4af37] transition">FAQ</a></p>
           </div>
         </div>
 
@@ -586,6 +716,7 @@
           <h4 class="font-semibold mb-5 gold">Contact</h4>
           <div class="space-y-3 text-zinc-600">
             <p><a href="tel:02073860000" class="hover:text-[#d4af37] transition">0207 386 0000</a></p>
+            <p><a href="https://wa.me/442073860000" target="_blank" rel="noopener" class="hover:text-[#d4af37] transition">WhatsApp</a></p>
             <p><a href="mailto:info@en-suite.co.uk" class="hover:text-[#d4af37] transition">info@en-suite.co.uk</a></p>
             <p>287 Munster Road</p>
             <p>Fulham, London SW6 6BW</p>
@@ -618,34 +749,93 @@
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
     const mobileServicesToggle = document.getElementById('mobileServicesToggle');
     const mobileServicesPanel = document.getElementById('mobileServicesPanel');
     const mobileServicesIcon = document.getElementById('mobileServicesIcon');
 
+    const mobileMoreToggle = document.getElementById('mobileMoreToggle');
+    const mobileMorePanel = document.getElementById('mobileMorePanel');
+    const mobileMoreIcon = document.getElementById('mobileMoreIcon');
+
+    function closeMobileServices() {
+      mobileServicesPanel.hidden = true;
+      mobileServicesToggle.setAttribute('aria-expanded', 'false');
+      mobileServicesIcon.classList.remove('fa-chevron-up');
+      mobileServicesIcon.classList.add('fa-chevron-down');
+    }
+
+    function openMobileServices() {
+      mobileServicesPanel.hidden = false;
+      mobileServicesToggle.setAttribute('aria-expanded', 'true');
+      mobileServicesIcon.classList.remove('fa-chevron-down');
+      mobileServicesIcon.classList.add('fa-chevron-up');
+      closeMobileMore();
+    }
+
+    function closeMobileMore() {
+      mobileMorePanel.hidden = true;
+      mobileMoreToggle.setAttribute('aria-expanded', 'false');
+      mobileMoreIcon.classList.remove('fa-chevron-up');
+      mobileMoreIcon.classList.add('fa-chevron-down');
+    }
+
+    function openMobileMore() {
+      mobileMorePanel.hidden = false;
+      mobileMoreToggle.setAttribute('aria-expanded', 'true');
+      mobileMoreIcon.classList.remove('fa-chevron-down');
+      mobileMoreIcon.classList.add('fa-chevron-up');
+      closeMobileServices();
+    }
+
     mobileMenuButton.addEventListener('click', function() {
       mobileMenu.classList.toggle('open');
-      const isOpen = mobileMenu.classList.contains('open');
 
-      mobileMenuIcon.classList.toggle('fa-bars', !isOpen);
-      mobileMenuIcon.classList.toggle('fa-xmark', isOpen);
-      mobileMenuButton.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenuIcon.classList.remove('fa-bars');
+        mobileMenuIcon.classList.add('fa-xmark');
+        mobileMenuButton.setAttribute('aria-label', 'Close menu');
+      } else {
+        mobileMenuIcon.classList.remove('fa-xmark');
+        mobileMenuIcon.classList.add('fa-bars');
+        mobileMenuButton.setAttribute('aria-label', 'Open menu');
+        closeMobileServices();
+        closeMobileMore();
+      }
     });
 
-    mobileServicesToggle.addEventListener('click', function() {
-      const isExpanded = mobileServicesToggle.getAttribute('aria-expanded') === 'true';
-      mobileServicesToggle.setAttribute('aria-expanded', String(!isExpanded));
-      mobileServicesPanel.hidden = isExpanded;
-      mobileServicesIcon.classList.toggle('fa-chevron-down', !isExpanded);
-      mobileServicesIcon.classList.toggle('fa-chevron-up', isExpanded);
+    mobileServicesToggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (mobileServicesPanel.hidden) {
+        openMobileServices();
+      } else {
+        closeMobileServices();
+      }
+    });
+
+    mobileMoreToggle.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (mobileMorePanel.hidden) {
+        openMobileMore();
+      } else {
+        closeMobileMore();
+      }
     });
 
     const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
     mobileMenuLinks.forEach(function(link) {
       link.addEventListener('click', function() {
         mobileMenu.classList.remove('open');
         mobileMenuIcon.classList.remove('fa-xmark');
         mobileMenuIcon.classList.add('fa-bars');
         mobileMenuButton.setAttribute('aria-label', 'Open menu');
+        closeMobileServices();
+        closeMobileMore();
       });
     });
 
