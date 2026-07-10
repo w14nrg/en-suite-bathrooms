@@ -466,6 +466,123 @@
       }
     }
 
+    /* FULL-SCREEN BROCHURE VIEWER */
+    .brochure-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      flex-direction: column;
+      background: #181818;
+    }
+
+    .brochure-viewer.open {
+      display: flex;
+    }
+
+    .brochure-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      border-bottom: 2px solid var(--gold);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.28);
+    }
+
+    .brochure-toolbar strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+    }
+
+    .brochure-toolbar span {
+      display: block;
+      margin-top: 0.1rem;
+      font-size: 0.75rem;
+      color: #696969;
+    }
+
+    .brochure-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.8rem 1.1rem;
+      background: var(--gold);
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .brochure-scroll {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem 0.75rem 3rem;
+    }
+
+    .brochure-pages {
+      width: min(100%, 980px);
+      margin: 0 auto;
+    }
+
+    .brochure-page {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 1rem;
+      background: #fff;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    }
+
+    .brochure-status {
+      width: min(92%, 700px);
+      margin: 3rem auto;
+      padding: 1.5rem;
+      border-radius: 1.25rem;
+      background: #fff;
+      text-align: center;
+    }
+
+    .brochure-status i {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-size: 2rem;
+      color: var(--goldDark);
+    }
+
+    @media (max-width: 640px) {
+      .brochure-toolbar {
+        padding: 0.7rem;
+      }
+
+      .brochure-toolbar strong {
+        font-size: 1rem;
+      }
+
+      .brochure-close {
+        width: 2.75rem;
+        height: 2.75rem;
+        padding: 0;
+      }
+
+      .brochure-close .close-text {
+        display: none;
+      }
+
+      .brochure-scroll {
+        padding: 0.5rem 0.35rem 2rem;
+      }
+
+      .brochure-page {
+        margin-bottom: 0.55rem;
+      }
+    }
+
   </style>
 </head>
 
@@ -498,16 +615,41 @@
         </p>
 
         <div class="summer-offer-actions">
-          <a href="./en_suites_5_page_offer_booklet_WEB_v2.pdf" target="_blank" rel="noopener" class="button-gold px-7 py-4 rounded-full font-semibold">
+          <button id="openBrochureButton" type="button" class="button-gold px-7 py-4 rounded-full font-semibold">
             View Summer Offers
-            <i class="fa-solid fa-arrow-right ml-2"></i>
-          </a>
+            <i class="fa-solid fa-book-open ml-2"></i>
+          </button>
 
           <button id="summerOfferDismiss" type="button" class="summer-offer-dismiss">
             Not now
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- FULL-SCREEN SUMMER BROCHURE VIEWER -->
+  <div id="brochureViewer" class="brochure-viewer" role="dialog" aria-modal="true" aria-labelledby="brochureViewerTitle" aria-hidden="true">
+    <div class="brochure-toolbar">
+      <div>
+        <strong id="brochureViewerTitle">Summer Bathroom &amp; Kitchen Offers</strong>
+        <span>Scroll down to view the full brochure</span>
+      </div>
+
+      <button id="closeBrochureButton" class="brochure-close" type="button" aria-label="Close summer offers brochure">
+        <i class="fa-solid fa-xmark"></i>
+        <span class="close-text">Close</span>
+      </button>
+    </div>
+
+    <div id="brochureScroll" class="brochure-scroll">
+      <div id="brochureStatus" class="brochure-status">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Loading summer offers brochure…
+      </div>
+
+      <div id="brochurePages" class="brochure-pages" aria-live="polite"></div>
     </div>
   </div>
 
@@ -1545,6 +1687,8 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
   <script>
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -1678,6 +1822,100 @@
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && popup.classList.contains('show')) {
           closePopup();
+        }
+      });
+    })();
+  </script>
+
+
+  <script>
+    (function () {
+      const openButton = document.getElementById('openBrochureButton');
+      const viewer = document.getElementById('brochureViewer');
+      const closeButton = document.getElementById('closeBrochureButton');
+      const scrollArea = document.getElementById('brochureScroll');
+      const pages = document.getElementById('brochurePages');
+      const status = document.getElementById('brochureStatus');
+
+      if (!openButton || !viewer || !closeButton || !scrollArea || !pages || !status) return;
+
+      let loaded = false;
+      let loading = false;
+
+      function openViewer() {
+        const popup = document.getElementById('summerOfferPopup');
+
+        if (popup) {
+          popup.classList.remove('show');
+          sessionStorage.setItem('summerOfferClosed', 'true');
+        }
+
+        viewer.classList.add('open');
+        viewer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        scrollArea.scrollTop = 0;
+
+        if (!loaded && !loading) loadBrochure();
+      }
+
+      function closeViewer() {
+        viewer.classList.remove('open');
+        viewer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      async function loadBrochure() {
+        loading = true;
+
+        try {
+          pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+          const pdf = await pdfjsLib.getDocument('./summer-offers.pdf').promise;
+          const availableWidth = Math.min(Math.max(scrollArea.clientWidth - 20, 280), 980);
+          const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+          for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const page = await pdf.getPage(pageNumber);
+            const baseViewport = page.getViewport({ scale: 1 });
+            const scale = (availableWidth / baseViewport.width) * pixelRatio;
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement('canvas');
+            canvas.className = 'brochure-page';
+            canvas.width = Math.floor(viewport.width);
+            canvas.height = Math.floor(viewport.height);
+            canvas.style.width = availableWidth + 'px';
+            canvas.style.maxWidth = '100%';
+
+            pages.appendChild(canvas);
+
+            await page.render({
+              canvasContext: canvas.getContext('2d', { alpha: false }),
+              viewport,
+              background: '#ffffff'
+            }).promise;
+          }
+
+          status.style.display = 'none';
+          loaded = true;
+        } catch (error) {
+          console.error(error);
+          status.innerHTML =
+            '<i class="fa-solid fa-triangle-exclamation"></i>' +
+            '<strong>The brochure could not be displayed.</strong><br>' +
+            'Please refresh the page and try again.';
+        } finally {
+          loading = false;
+        }
+      }
+
+      openButton.addEventListener('click', openViewer);
+      closeButton.addEventListener('click', closeViewer);
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && viewer.classList.contains('open')) {
+          closeViewer();
         }
       });
     })();
