@@ -1,0 +1,8 @@
+EN-SUITES & BATHROOMS - COMPLETE SEO WEBSITE
+
+This is a complete normal website folder, not an updater.
+It includes the existing design language, site images, core pages, local pages, regional pages, new high-intent SEO pages, sitemap, robots, CNAME, summer offers booklet and the exact En-Suites Tawk.to widget on every HTML page.
+
+Upload method: replace the contents of the cloned en-suite-bathrooms repository with the contents of this folder, commit to main, then push origin.
+
+The site keeps the business at 287 Munster Road, Fulham, uses the En-Suites & Bathrooms Google profile, and does not use Kensington Plumbing Services reviews or branding.
