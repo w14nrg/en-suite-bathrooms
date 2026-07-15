@@ -466,7 +466,26 @@
     function getAIProject(){
       const p=getProject();
       const ai={...p};
-      if(!(p.projectType && p.roomFloorArea && p.desiredItems.length)) delete ai.estimate;
+
+      // The customer-facing assistant only receives the published range and
+      // plain-English cost drivers. Internal calculator totals, baselines,
+      // labour splits and provisional product allowances are deliberately hidden.
+      if(p.estimate && p.projectType && p.roomFloorArea && p.desiredItems.length){
+        ai.estimate={
+          status:'Indicative early planning range — not a quotation',
+          low:p.estimate.low,
+          high:p.estimate.high,
+          daysLow:p.estimate.daysLow,
+          daysHigh:p.estimate.daysHigh,
+          confidence:p.estimate.confidence,
+          pricingRoute:p.estimate.pricingRoute,
+          mainDrivers:(p.estimate.reasons||[]).map(r=>r[0]),
+          customerFacingRule:'Treat the displayed low-to-high range as authoritative. Explain the main drivers without revealing or auditing internal baseline figures, individual calculator additions, labour splits or provisional product allowances. A zero linked-product total only means no priced product links were entered.'
+        };
+      }else{
+        delete ai.estimate;
+      }
+
       Object.keys(ai).forEach(key=>{
         const val=ai[key];
         if(val===null || val==='' || (Array.isArray(val) && val.length===0)) delete ai[key];
@@ -632,8 +651,8 @@
       const unknownValues=['Unknown','Not sure'].filter(Boolean);
       const routeValues=[p.existingSpace,p.bathroomRelationship,p.waterNearby,p.soilRoute,p.ventilationRoute,p.roomConstruction,p.electricsNearby,p.floorStructure,p.access,p.parking];
       const unknowns=routeValues.filter(v=>!v||unknownValues.includes(v)||String(v).startsWith('Not sure')).length;
-      const low=Math.round(total/100)*100;
-      const high=Math.round((total*(1.12+Math.min(unknowns,4)*.025))/100)*100;
+      const low=Math.floor(total/100)*100;
+      const high=Math.ceil((total*(1.12+Math.min(unknowns,4)*.025))/100)*100;
       let daysLow=9;
       daysLow+=Math.round(Math.max(0,total-7000)/2300);
       if(p.ensuiteLocation==='Loft or attic'||p.existingSpace==='Unconverted loft area') daysLow+=2;
@@ -688,8 +707,8 @@
 
       const routeValues=[p.floorStructure,p.layoutChange,p.drainageKnown,p.propertyType,p.bathroomFloor,p.access,p.parking];
       const unknowns=routeValues.filter(v=>!v||v==='Unknown'||v==='Not sure'||String(v).startsWith('Not sure')).length;
-      const low=Math.round(total/100)*100;
-      const high=Math.round((total*(1.10+Math.min(unknowns,4)*.02))/100)*100;
+      const low=Math.floor(total/100)*100;
+      const high=Math.ceil((total*(1.10+Math.min(unknowns,4)*.02))/100)*100;
       const baseDays={'Full bathroom renovation':10,'Existing en-suite renovation':8,'Shower room':8,'Cloakroom':5,'Bathroom refresh':3}[p.projectType]||9;
       let daysLow=baseDays+Math.round(Math.max(0,total-base)/3000);
       if(p.layoutChange==='Complete layout change'||p.desiredItems.includes('Tiled wet-room floor')) daysLow+=1;
