@@ -176,36 +176,77 @@
                 <div class="choice-grid">
                   <div class="choice"><input type="radio" id="projectBathroom" name="projectType" value="Full bathroom renovation"><label for="projectBathroom"><strong>Full bathroom renovation</strong><span>Complete strip-out and new bathroom.</span></label></div>
                   <div class="choice"><input type="radio" id="projectEnsuite" name="projectType" value="Existing en-suite renovation"><label for="projectEnsuite"><strong>Existing en-suite renovation</strong><span>Replace or redesign an existing en-suite.</span></label></div>
-                  <div class="choice"><input type="radio" id="projectNewEnsuite" name="projectType" value="New en-suite"><label for="projectNewEnsuite"><strong>New en-suite</strong><span>Create a new room inside the property.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectNewEnsuite" name="projectType" value="New en-suite"><label for="projectNewEnsuite"><strong>New en-suite</strong><span>Create a new en-suite inside a bedroom, loft or another room.</span></label></div>
                   <div class="choice"><input type="radio" id="projectShower" name="projectType" value="Shower room"><label for="projectShower"><strong>Shower room</strong><span>Shower-led renovation without a bath.</span></label></div>
                   <div class="choice"><input type="radio" id="projectCloak" name="projectType" value="Cloakroom"><label for="projectCloak"><strong>Cloakroom</strong><span>Compact WC and basin project.</span></label></div>
                   <div class="choice"><input type="radio" id="projectRefresh" name="projectType" value="Bathroom refresh"><label for="projectRefresh"><strong>Bathroom refresh</strong><span>Targeted upgrades with key items retained.</span></label></div>
                 </div>
                 <div class="grid3">
-                  <div class="field"><label for="roomLength">Room length (metres)</label><input class="input" id="roomLength" name="roomLength" type="number" min="1" max="10" step="0.1" placeholder="e.g. 2.5"></div>
-                  <div class="field"><label for="roomWidth">Room width (metres)</label><input class="input" id="roomWidth" name="roomWidth" type="number" min=".8" max="10" step="0.1" placeholder="e.g. 1.7"></div>
-                  <div class="field"><label for="ceilingHeight">Ceiling height (metres)</label><input class="input" id="ceilingHeight" name="ceilingHeight" type="number" min="1.8" max="5" step="0.1" placeholder="e.g. 2.5"></div>
+                  <div class="field"><label id="roomLengthLabel" for="roomLength">Room length (metres)</label><input class="input" id="roomLength" name="roomLength" type="number" min="1" max="10" step="0.1" placeholder="e.g. 2.5"></div>
+                  <div class="field"><label id="roomWidthLabel" for="roomWidth">Room width (metres)</label><input class="input" id="roomWidth" name="roomWidth" type="number" min=".8" max="10" step="0.1" placeholder="e.g. 1.7"></div>
+                  <div class="field"><label id="ceilingHeightLabel" for="ceilingHeight">Ceiling height (metres)</label><input class="input" id="ceilingHeight" name="ceilingHeight" type="number" min="1.8" max="5" step="0.1" placeholder="e.g. 2.5"></div>
                 </div>
                 <div class="field"><label for="projectDescription">Describe the room or what you want</label><textarea class="input" id="projectDescription" name="projectDescription" placeholder="Example: Remove the bath and create a tiled walk-in shower. I want warm stone tiles and a wall-hung toilet."></textarea><small>Not sure? Type it here and press “Ask AI about my description” below.</small></div>
                 <button type="button" class="btn btn-dark ask-description"><i class="fa-solid fa-comment-dots"></i> Ask AI about my description</button>
                 <div class="step-actions"><span></span><button type="button" class="btn btn-gold next-step">Next: current layout <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
-
               <section class="step" data-step="1">
-                <h3>What is there now?</h3><p class="step-intro">Select everything currently in the room, then tell us how much the layout may change.</p>
-                <div class="check-grid">
-                  <div class="check"><input type="checkbox" id="currentBath" name="currentItems" value="Bath"><label for="currentBath">Bath</label></div>
-                  <div class="check"><input type="checkbox" id="currentOverBath" name="currentItems" value="Shower over bath"><label for="currentOverBath">Shower over bath</label></div>
-                  <div class="check"><input type="checkbox" id="currentShower" name="currentItems" value="Separate shower"><label for="currentShower">Separate shower</label></div>
-                  <div class="check"><input type="checkbox" id="currentToilet" name="currentItems" value="Toilet"><label for="currentToilet">Toilet</label></div>
-                  <div class="check"><input type="checkbox" id="currentBasin" name="currentItems" value="Basin"><label for="currentBasin">Basin</label></div>
-                  <div class="check"><input type="checkbox" id="currentVanity" name="currentItems" value="Vanity unit"><label for="currentVanity">Vanity unit</label></div>
-                  <div class="check"><input type="checkbox" id="currentRadiator" name="currentItems" value="Radiator"><label for="currentRadiator">Radiator</label></div>
-                  <div class="check"><input type="checkbox" id="currentExtractor" name="currentItems" value="Extractor fan"><label for="currentExtractor">Extractor fan</label></div>
-                  <div class="check"><input type="checkbox" id="currentUnknown" name="currentItems" value="Not sure"><label for="currentUnknown">Not sure</label></div>
+                <h3 id="stepTwoHeading">What is there now?</h3>
+                <p class="step-intro" id="stepTwoIntro">Select everything currently in the room, then tell us how much the layout may change.</p>
+
+                <div id="existingProjectQuestions">
+                  <div class="check-grid">
+                    <div class="check"><input type="checkbox" id="currentBath" name="currentItems" value="Bath"><label for="currentBath">Bath</label></div>
+                    <div class="check"><input type="checkbox" id="currentOverBath" name="currentItems" value="Shower over bath"><label for="currentOverBath">Shower over bath</label></div>
+                    <div class="check"><input type="checkbox" id="currentShower" name="currentItems" value="Separate shower"><label for="currentShower">Separate shower</label></div>
+                    <div class="check"><input type="checkbox" id="currentToilet" name="currentItems" value="Toilet"><label for="currentToilet">Toilet</label></div>
+                    <div class="check"><input type="checkbox" id="currentBasin" name="currentItems" value="Basin"><label for="currentBasin">Basin</label></div>
+                    <div class="check"><input type="checkbox" id="currentVanity" name="currentItems" value="Vanity unit"><label for="currentVanity">Vanity unit</label></div>
+                    <div class="check"><input type="checkbox" id="currentRadiator" name="currentItems" value="Radiator"><label for="currentRadiator">Radiator</label></div>
+                    <div class="check"><input type="checkbox" id="currentExtractor" name="currentItems" value="Extractor fan"><label for="currentExtractor">Extractor fan</label></div>
+                    <div class="check"><input type="checkbox" id="currentEmpty" name="currentItems" value="Room is empty"><label for="currentEmpty">Room is empty</label></div>
+                    <div class="check"><input type="checkbox" id="currentUnknown" name="currentItems" value="Not sure"><label for="currentUnknown">Not sure</label></div>
+                  </div>
+                  <div class="field"><label for="layoutChange">Proposed layout</label><select class="input" id="layoutChange" name="layoutChange"><option value="">Choose when ready</option><option value="Keep layout similar">Keep the layout broadly similar</option><option value="Move one item">Move one main item</option><option value="Complete layout change">Completely redesign the layout</option><option value="Not sure">Not sure — recommend a route</option></select></div>
+                  <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
                 </div>
-                <div class="field"><label for="layoutChange">Proposed layout</label><select class="input" id="layoutChange" name="layoutChange"><option value="">Choose when ready</option><option value="Keep layout similar">Keep the layout broadly similar</option><option value="Move one item">Move one main item</option><option value="Complete layout change">Completely redesign the layout</option><option value="Not sure">Not sure — recommend a route</option></select></div>
-                <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
+
+                <div id="newEnsuiteQuestions" hidden>
+                  <div class="notice"><strong>This is a new room:</strong> instead of asking which bathroom fittings are already there, the planner needs to understand where the en-suite will be built and how close it is to water, drainage, electrics and ventilation. Draft 2 uses a £7,000 starting benchmark for a compact budget HMO en-suite beside existing services, then adjusts for the real construction and service route.</div>
+
+                  <h4 style="margin:24px 0 12px">Where will the new en-suite go?</h4>
+                  <div class="choice-grid">
+                    <div class="choice"><input type="radio" id="ensuiteBedroom" name="ensuiteLocation" value="Inside an existing bedroom"><label for="ensuiteBedroom"><strong>Inside a bedroom</strong><span>Use part of an existing bedroom.</span></label></div>
+                    <div class="choice"><input type="radio" id="ensuiteLoft" name="ensuiteLocation" value="Loft or attic"><label for="ensuiteLoft"><strong>Loft or attic</strong><span>New en-suite within a loft area or conversion.</span></label></div>
+                    <div class="choice"><input type="radio" id="ensuiteSpare" name="ensuiteLocation" value="Spare room or box room"><label for="ensuiteSpare"><strong>Spare / box room</strong><span>Convert an existing small room.</span></label></div>
+                    <div class="choice"><input type="radio" id="ensuiteCupboard" name="ensuiteLocation" value="Dressing room, wardrobe or cupboard"><label for="ensuiteCupboard"><strong>Wardrobe / cupboard</strong><span>Convert an enclosed storage area.</span></label></div>
+                    <div class="choice"><input type="radio" id="ensuiteExtension" name="ensuiteLocation" value="Extension or newly built area"><label for="ensuiteExtension"><strong>Extension / new area</strong><span>Install within a new or unfinished space.</span></label></div>
+                    <div class="choice"><input type="radio" id="ensuiteOther" name="ensuiteLocation" value="Another existing room"><label for="ensuiteOther"><strong>Another room</strong><span>Convert a different part of the property.</span></label></div>
+                  </div>
+
+                  <div class="grid2">
+                    <div class="field"><label for="ensuiteUse">How will it be used?</label><select class="input" id="ensuiteUse" name="ensuiteUse"><option value="">Choose when ready</option><option value="Main bedroom en-suite">Main bedroom / everyday use</option><option value="Guest or family en-suite">Guest or family use</option><option value="Airbnb or short-let en-suite">Airbnb / short-let</option><option value="Rental or HMO en-suite">Rental / HMO</option><option value="Not sure">Not sure yet</option></select></div>
+                    <div class="field"><label for="existingSpace">What is the space now?</label><select class="input" id="existingSpace" name="existingSpace"><option value="">Choose when ready</option><option value="Open area within an occupied bedroom">Open area within a bedroom</option><option value="Existing separate finished room">Existing separate finished room</option><option value="Existing cupboard or wardrobe">Cupboard / wardrobe</option><option value="Unconverted loft area">Unconverted loft area</option><option value="New shell or unfinished area">New shell / unfinished area</option><option value="Not sure">Not sure</option></select></div>
+                  </div>
+
+                  <div class="grid2">
+                    <div class="field"><label for="bathroomRelationship">Position compared with an existing bathroom</label><select class="input" id="bathroomRelationship" name="bathroomRelationship"><option value="">Choose when ready</option><option value="Directly beside an existing bathroom">Directly beside an existing bathroom</option><option value="Directly above or below an existing bathroom">Directly above or below an existing bathroom</option><option value="Same floor and close to an existing bathroom">Same floor and fairly close</option><option value="Remote from existing bathrooms and plumbing">Far from existing bathrooms / plumbing</option><option value="No existing bathroom nearby">No bathroom nearby</option><option value="Unknown">Not sure</option></select></div>
+                    <div class="field"><label for="waterNearby">Known water supplies nearby</label><select class="input" id="waterNearby" name="waterNearby"><option value="">Choose when ready</option><option value="Hot and cold supplies nearby">Hot and cold supplies nearby</option><option value="Cold supply only nearby">Cold supply only nearby</option><option value="No known water supplies nearby">No known supplies nearby</option><option value="Unknown">Not sure</option></select></div>
+                  </div>
+
+                  <div class="grid2">
+                    <div class="field"><label for="soilRoute">Likely toilet / soil-pipe route</label><select class="input" id="soilRoute" name="soilRoute"><option value="">Choose when ready</option><option value="Existing soil pipe on the same or adjoining wall">Existing soil pipe on same / adjoining wall</option><option value="Existing soil pipe nearby but route needs checking">Soil pipe nearby, route needs checking</option><option value="External wall available for a new soil connection">External wall available for new connection</option><option value="Long or difficult gravity drainage route">Long / difficult gravity route</option><option value="Pumped waste may be required">Pumped waste may be required</option><option value="Unknown">Not sure</option></select></div>
+                    <div class="field"><label for="ventilationRoute">Possible extractor route</label><select class="input" id="ventilationRoute" name="ventilationRoute"><option value="">Choose when ready</option><option value="Directly through an external wall">Directly through external wall</option><option value="Through ceiling, loft or roof">Through ceiling / loft / roof</option><option value="Longer duct route required">Longer duct route</option><option value="No obvious external route">No obvious route</option><option value="Unknown">Not sure</option></select></div>
+                  </div>
+
+                  <div class="grid2">
+                    <div class="field"><label for="roomConstruction">Walls and doorway</label><select class="input" id="roomConstruction" name="roomConstruction"><option value="">Choose when ready</option><option value="New stud walls and doorway required">New stud walls and doorway required</option><option value="Some enclosing walls already exist">Some walls already exist</option><option value="Existing enclosed room with a doorway">Existing enclosed room / doorway</option><option value="Loft construction and enclosure required">Loft construction / enclosure required</option><option value="Unknown">Not sure</option></select></div>
+                    <div class="field"><label for="electricsNearby">Electrical supply and lighting</label><select class="input" id="electricsNearby" name="electricsNearby"><option value="">Choose when ready</option><option value="Existing bedroom electrics nearby">Existing room electrics nearby</option><option value="New bathroom circuit or substantial electrical work expected">New circuit / substantial work expected</option><option value="Unknown">Not sure</option></select></div>
+                  </div>
+
+                  <div class="field"><label for="ensuitePositionNotes">Anything else about the proposed position?</label><textarea class="input" id="ensuitePositionNotes" name="ensuitePositionNotes" placeholder="Example: small corner of a rear bedroom, directly beside the main bathroom, external wall on one side."></textarea></div>
+                </div>
+
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Next: new fittings <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
 
@@ -214,6 +255,7 @@
                 <div class="check-grid">
                   <div class="check"><input type="checkbox" id="wantBath" name="desiredItems" value="Bath"><label for="wantBath">Bath</label></div>
                   <div class="check"><input type="checkbox" id="wantOverBath" name="desiredItems" value="Shower over bath"><label for="wantOverBath">Shower over bath</label></div>
+                  <div class="check"><input type="checkbox" id="wantStandardShower" name="desiredItems" value="Standard shower tray and enclosure"><label for="wantStandardShower">Standard shower tray / enclosure</label></div>
                   <div class="check"><input type="checkbox" id="wantWalkin" name="desiredItems" value="Walk-in shower"><label for="wantWalkin">Walk-in shower</label></div>
                   <div class="check"><input type="checkbox" id="wantWetroom" name="desiredItems" value="Tiled wet-room floor"><label for="wantWetroom">Tiled wet-room floor</label></div>
                   <div class="check"><input type="checkbox" id="wantStandardWC" name="desiredItems" value="Standard toilet"><label for="wantStandardWC">Standard toilet</label></div>
@@ -251,7 +293,7 @@
                 <h3>Property, access and products</h3><p class="step-intro">Add the practical details and any product links already found.</p>
                 <div class="grid3"><div class="field"><label for="propertyType">Property type</label><select class="input" id="propertyType" name="propertyType"><option value="">Choose when ready</option><option value="House">House</option><option value="Ground-floor flat">Ground-floor flat</option><option value="Upper-floor flat with lift">Upper-floor flat with lift</option><option value="Upper-floor flat without lift">Upper-floor flat without lift</option></select></div><div class="field"><label for="bathroomFloor">Bathroom floor</label><select class="input" id="bathroomFloor" name="bathroomFloor"><option value="">Choose when ready</option><option value="Ground floor">Ground floor</option><option value="First floor">First floor</option><option value="Second floor or higher">Second floor or higher</option><option value="Loft conversion">Loft conversion</option></select></div><div class="field"><label for="access">Access</label><select class="input" id="access" name="access"><option value="">Choose when ready</option><option value="Straightforward">Straightforward</option><option value="Narrow stairs or hallway">Narrow stairs or hallway</option><option value="Difficult access">Difficult access</option><option value="Not sure">Not sure</option></select></div></div>
                 <div class="grid3"><div class="field"><label for="floorStructure">Floor structure</label><select class="input" id="floorStructure" name="floorStructure"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Timber floorboards or joists">Timber floorboards / joists</option><option value="Concrete">Concrete</option><option value="Existing tiled floor">Existing tiled floor</option></select></div><div class="field"><label for="postcode">Postcode</label><input class="input" id="postcode" name="postcode" placeholder="e.g. SW6 6BW"></div><div class="field"><label for="parking">Parking</label><select class="input" id="parking" name="parking"><option value="">Choose when ready</option><option value="Free driveway">Free driveway</option><option value="Free street parking">Free street parking</option><option value="Visitor permit">Visitor permit</option><option value="Paid parking">Paid parking</option><option value="Difficult or unknown">Difficult / unknown</option></select></div></div>
-                <div class="notice"><strong>Product links:</strong> the first draft stores the link and displayed price. The AI can discuss the item, but may ask for dimensions, a screenshot or specification because retailer pages are not always readable automatically.</div>
+                <div class="notice"><strong>Product links:</strong> Draft 2 stores the link and displayed price. Baseline estimates already contain a provisional product allowance; entered links only increase the estimate where their combined price exceeds that allowance. The AI may still ask for dimensions, screenshots or specifications.</div>
                 <div id="productList" class="product-list"></div>
                 <button type="button" id="addProduct" class="btn btn-light"><i class="fa-solid fa-plus"></i> Add a product</button>
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Calculate my estimate <i class="fa-solid fa-calculator"></i></button></div>
@@ -307,10 +349,12 @@
     const steps = [...document.querySelectorAll('.step')];
     const titles = ['1. Project & room','2. Current layout','3. New fittings','4. Style & finish','5. Property & products','6. Estimate & concept'];
     let currentStep = 0;
-    const STATE_KEY = 'ensuitesBathroomPlannerDraftV3';
-    const RESPONSE_KEY = 'bathroomPlannerResponseIdV3';
+    const STATE_KEY = 'ensuitesBathroomPlannerDraftV5';
+    const RESPONSE_KEY = 'bathroomPlannerResponseIdV5';
     localStorage.removeItem('ensuitesBathroomPlannerDraftV2');
+    localStorage.removeItem('ensuitesBathroomPlannerDraftV3');
     sessionStorage.removeItem('bathroomPlannerResponseIdV2');
+    sessionStorage.removeItem('bathroomPlannerResponseIdV3');
     let responseId = sessionStorage.getItem(RESPONSE_KEY) || '';
     let photoDataUrl = '';
     let products = [];
@@ -320,6 +364,35 @@
     const money = n => new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.round(n));
     const selected = name => [...form.querySelectorAll(`[name="${name}"]:checked`)].map(x=>x.value);
     const value = name => form.elements[name]?.value || '';
+
+    function isNewEnsuite(){ return value('projectType') === 'New en-suite'; }
+
+    function updateProjectRoute(){
+      const newEnsuite = isNewEnsuite();
+      const existingBlock = document.getElementById('existingProjectQuestions');
+      const newBlock = document.getElementById('newEnsuiteQuestions');
+      existingBlock.hidden = newEnsuite;
+      newBlock.hidden = !newEnsuite;
+
+      document.getElementById('stepTwoHeading').textContent = newEnsuite ? 'Where will the new en-suite be created?' : 'What is there now?';
+      document.getElementById('stepTwoIntro').textContent = newEnsuite
+        ? 'A brand-new en-suite needs a different route. Tell us about the proposed space and how close it is to water, drainage, electrics and ventilation.'
+        : 'Select everything currently in the room, then tell us how much the layout may change.';
+
+      document.getElementById('roomLengthLabel').textContent = newEnsuite ? 'Planned en-suite length (metres)' : 'Room length (metres)';
+      document.getElementById('roomWidthLabel').textContent = newEnsuite ? 'Planned en-suite width (metres)' : 'Room width (metres)';
+      document.getElementById('ceilingHeightLabel').textContent = newEnsuite ? 'Height in the proposed area (metres)' : 'Ceiling height (metres)';
+      titles[1] = newEnsuite ? '2. New en-suite position & services' : '2. Current layout';
+      if(currentStep === 1) document.getElementById('stepTitle').textContent = titles[1];
+    }
+
+    document.querySelectorAll('[name="projectType"]').forEach(input => input.addEventListener('change', () => {
+      updateProjectRoute();
+      responseId = '';
+      sessionStorage.removeItem(RESPONSE_KEY);
+      lastEstimate = null;
+      saveState();
+    }));
 
     function showStep(index){
       currentStep = Math.max(0,Math.min(steps.length-1,index));
@@ -356,14 +429,38 @@
 
     function getProject(){
       const L=Number(value('roomLength'))||0,W=Number(value('roomWidth'))||0,H=Number(value('ceilingHeight'))||0;
-      return {
+      const newEnsuite = isNewEnsuite();
+      const project = {
         projectType:value('projectType'),roomLength:L||null,roomWidth:W||null,ceilingHeight:H||null,
         roomFloorArea:L&&W?Number((L*W).toFixed(2)):null,
-        projectDescription:value('projectDescription'),currentItems:selected('currentItems'),layoutChange:value('layoutChange'),doorWindow:value('doorWindow'),drainageKnown:value('drainageKnown'),
+        projectDescription:value('projectDescription'),
         desiredItems:selected('desiredItems'),showerType:value('showerType'),heating:value('heating'),style:value('style'),tileCoverage:value('tileCoverage'),productLevel:value('productLevel'),wallTileSize:value('wallTileSize'),floorTileSize:value('floorTileSize'),
         propertyType:value('propertyType'),bathroomFloor:value('bathroomFloor'),access:value('access'),floorStructure:value('floorStructure'),postcode:value('postcode').toUpperCase(),parking:value('parking'),products,
         estimate:lastEstimate
       };
+
+      if(newEnsuite){
+        Object.assign(project, {
+          projectRoute:'Brand-new en-suite installation',
+          existingBathroomFixtures:'None — this is not currently a bathroom',
+          ensuiteLocation:value('ensuiteLocation'),
+          ensuiteUse:value('ensuiteUse'),
+          existingSpace:value('existingSpace'),
+          bathroomRelationship:value('bathroomRelationship'),
+          waterNearby:value('waterNearby'),
+          soilRoute:value('soilRoute'),
+          ventilationRoute:value('ventilationRoute'),
+          roomConstruction:value('roomConstruction'),
+          electricsNearby:value('electricsNearby'),
+          ensuitePositionNotes:value('ensuitePositionNotes')
+        });
+      }else{
+        Object.assign(project, {
+          projectRoute:'Existing bathroom or room refurbishment',
+          currentItems:selected('currentItems'),layoutChange:value('layoutChange'),doorWindow:value('doorWindow'),drainageKnown:value('drainageKnown')
+        });
+      }
+      return project;
     }
 
     function getAIProject(){
@@ -378,7 +475,10 @@
     }
 
     function hasEstimateInputs(p){
-      return Boolean(p.projectType && p.roomFloorArea && p.desiredItems.length && p.productLevel);
+      const common=Boolean(p.projectType && p.roomFloorArea && p.desiredItems.length && p.productLevel);
+      if(!common) return false;
+      if(p.projectType!=='New en-suite') return true;
+      return Boolean(p.ensuiteLocation && p.ensuiteUse && p.bathroomRelationship && p.waterNearby && p.soilRoute && p.ventilationRoute && p.roomConstruction && p.electricsNearby);
     }
 
     function showIncompleteEstimate(p){
@@ -388,68 +488,232 @@
       document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
       document.getElementById('productTotalText').textContent='Not calculated';
       document.getElementById('confidenceText').textContent='More details needed';
-      document.getElementById('estimateDescription').textContent='Choose the project type, enter the room dimensions, select the main fittings and choose a product level before calculating a budget range.';
-      document.getElementById('breakdown').innerHTML='<div class="notice"><strong>No estimate has been created.</strong> The planner will not invent a project or use automatic bathroom assumptions.</div>';
+      document.getElementById('estimateDescription').textContent=p.projectType==='New en-suite'
+        ?'Complete the new en-suite route: planned size, use, position relative to an existing bathroom, water, soil route, ventilation, walls/doorway, electrics, fittings and product level.'
+        :'Choose the project type, enter the room dimensions, select the main fittings and choose a product level before calculating a budget range.';
+      document.getElementById('breakdown').innerHTML=p.projectType==='New en-suite'
+        ?'<div class="notice"><strong>No guessed en-suite price.</strong> A new en-suite estimate only appears after the service and construction questions have been answered, including “Not sure” where necessary.</div>'
+        :'<div class="notice"><strong>No estimate has been created.</strong> The planner will not invent a project or use automatic bathroom assumptions.</div>';
       const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected';
-      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}`:'Dimensions incomplete'],['Layout',p.layoutChange||'Not selected'],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
+      const routeDetail=p.projectType==='New en-suite'?[p.ensuiteLocation,p.bathroomRelationship,p.ensuiteUse].filter(Boolean).join(' · ')||'Position details incomplete':p.layoutChange||'Not selected';
+      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}`:'Dimensions incomplete'],[p.projectType==='New en-suite'?'Position & route':'Layout',routeDetail],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
       document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
       return null;
+    }
+
+    function addEstimateReason(reasons,label,amount){
+      if(!amount) return;
+      reasons.push([label,Math.round(amount)]);
+    }
+
+    function newEnsuiteEstimate(p){
+      const area=p.roomFloorArea;
+      let total=7000;
+      const reasons=[['Compact new en-suite baseline (complete)',7000]];
+
+      const useUplift={
+        'Rental or HMO en-suite':0,
+        'Airbnb or short-let en-suite':600,
+        'Guest or family en-suite':1000,
+        'Main bedroom en-suite':2000,
+        'Not sure':800
+      }[p.ensuiteUse]||0;
+      total+=useUplift; addEstimateReason(reasons,'Use and finish expectation',useUplift);
+
+      const locationUplift={
+        'Inside an existing bedroom':0,
+        'Loft or attic':2500,
+        'Spare room or box room':-500,
+        'Dressing room, wardrobe or cupboard':200,
+        'Extension or newly built area':1500,
+        'Another existing room':500
+      }[p.ensuiteLocation]||0;
+      total+=locationUplift; addEstimateReason(reasons,'Proposed location',locationUplift);
+
+      const spaceUplift={
+        'Open area within an occupied bedroom':0,
+        'Existing separate finished room':-600,
+        'Existing cupboard or wardrobe':-200,
+        'Unconverted loft area':2500,
+        'New shell or unfinished area':500,
+        'Not sure':300
+      }[p.existingSpace]||0;
+      total+=spaceUplift; addEstimateReason(reasons,'Existing space condition',spaceUplift);
+
+      const relationshipUplift={
+        'Directly beside an existing bathroom':0,
+        'Directly above or below an existing bathroom':500,
+        'Same floor and close to an existing bathroom':700,
+        'Remote from existing bathrooms and plumbing':1800,
+        'No existing bathroom nearby':2300,
+        'Unknown':500
+      }[p.bathroomRelationship]||0;
+      total+=relationshipUplift; addEstimateReason(reasons,'Distance from existing bathroom',relationshipUplift);
+
+      const waterUplift={
+        'Hot and cold supplies nearby':0,
+        'Cold supply only nearby':500,
+        'No known water supplies nearby':1200,
+        'Unknown':300
+      }[p.waterNearby]||0;
+      total+=waterUplift; addEstimateReason(reasons,'Water supplies',waterUplift);
+
+      const soilUplift={
+        'Existing soil pipe on the same or adjoining wall':0,
+        'Existing soil pipe nearby but route needs checking':600,
+        'External wall available for a new soil connection':1200,
+        'Long or difficult gravity drainage route':1800,
+        'Pumped waste may be required':1500,
+        'Unknown':500
+      }[p.soilRoute]||0;
+      total+=soilUplift; addEstimateReason(reasons,'Toilet and soil route',soilUplift);
+
+      const ventUplift={
+        'Directly through an external wall':0,
+        'Through ceiling, loft or roof':400,
+        'Longer duct route required':700,
+        'No obvious external route':1200,
+        'Unknown':300
+      }[p.ventilationRoute]||0;
+      total+=ventUplift; addEstimateReason(reasons,'Extractor route',ventUplift);
+
+      const constructionUplift={
+        'New stud walls and doorway required':0,
+        'Some enclosing walls already exist':-300,
+        'Existing enclosed room with a doorway':-700,
+        'Loft construction and enclosure required':1200,
+        'Unknown':300
+      }[p.roomConstruction]||0;
+      total+=constructionUplift; addEstimateReason(reasons,'Walls and doorway',constructionUplift);
+
+      const electricalUplift={
+        'Existing bedroom electrics nearby':0,
+        'New bathroom circuit or substantial electrical work expected':1000,
+        'Unknown':300
+      }[p.electricsNearby]||0;
+      total+=electricalUplift; addEstimateReason(reasons,'Electrical work',electricalUplift);
+
+      const add=(label,amount,condition)=>{if(condition){total+=amount;addEstimateReason(reasons,label,amount)}};
+      add('Walk-in shower upgrade',600,p.desiredItems.includes('Walk-in shower'));
+      add('Tiled wet-room construction',1600,p.desiredItems.includes('Tiled wet-room floor'));
+      add('Bath in new en-suite',1000,p.desiredItems.includes('Bath'));
+      add('Shower over bath',500,p.desiredItems.includes('Shower over bath'));
+      add('Wall-hung WC frame and boxing',800,p.desiredItems.includes('Wall-hung toilet'));
+      add('Back-to-wall WC',350,p.desiredItems.includes('Back-to-wall toilet'));
+      add('Vanity upgrade',300,p.desiredItems.includes('Vanity unit'));
+      add('Countertop basin and shelf',500,p.desiredItems.includes('Countertop basin and floating shelf'));
+      add('Towel radiator',350,p.desiredItems.includes('Towel radiator'));
+      add('LED mirror',250,p.desiredItems.includes('LED mirror'));
+      add('Tiled shower niche',350,p.desiredItems.includes('Tiled shower niche'));
+      add('Additional storage',250,p.desiredItems.includes('Additional storage'));
+      add('Concealed rainfall shower',450,p.showerType==='Concealed thermostatic rainfall and handset');
+      add('Electric shower supply allowance',900,p.showerType==='Electric shower');
+      add('Electric underfloor heating',650,p.heating==='Electric underfloor heating');
+
+      if(p.tileCoverage==='Shower fully tiled, half-height elsewhere'){total+=500;addEstimateReason(reasons,'Additional tiling coverage',500)}
+      else if(p.tileCoverage==='Fully tiled walls and floor'){const t=1400+area*60;total+=t;addEstimateReason(reasons,'Fully tiled room',t)}
+      else if(p.tileCoverage==='Not sure'){total+=350;addEstimateReason(reasons,'Provisional tiling allowance',350)}
+      if(p.wallTileSize==='1200 x 600mm'){total+=350;addEstimateReason(reasons,'Large-format tile handling',350)}
+      if(p.wallTileSize==='Small format / metro'){total+=250;addEstimateReason(reasons,'Small-format tile labour',250)}
+
+      const specUplift={Budget:0,Standard:1500,Mixed:3000,Premium:4500}[p.productLevel]||0;
+      total+=specUplift; addEstimateReason(reasons,`${p.productLevel} product specification`,specUplift);
+      const includedProducts={Budget:1500,Standard:3000,Mixed:4500,Premium:6000}[p.productLevel]||1500;
+      const productTotal=p.products.reduce((sum,item)=>sum+(item.price||0),0);
+      const productExcess=Math.max(0,productTotal-includedProducts);
+      total+=productExcess; addEstimateReason(reasons,'Linked products above included allowance',productExcess);
+
+      if(p.bathroomFloor==='Second floor or higher'){total+=300;addEstimateReason(reasons,'Upper-floor working',300)}
+      if(p.bathroomFloor==='Loft conversion'){total+=450;addEstimateReason(reasons,'Loft-level working',450)}
+      if(p.propertyType==='Upper-floor flat without lift'){total+=500;addEstimateReason(reasons,'No-lift flat access',500)}
+      if(p.access==='Difficult access'){total+=400;addEstimateReason(reasons,'Difficult access',400)}
+      if(p.parking==='Paid parking'||p.parking==='Difficult or unknown'){total+=250;addEstimateReason(reasons,'Parking / permits',250)}
+
+      const unknownValues=['Unknown','Not sure'].filter(Boolean);
+      const routeValues=[p.existingSpace,p.bathroomRelationship,p.waterNearby,p.soilRoute,p.ventilationRoute,p.roomConstruction,p.electricsNearby,p.floorStructure,p.access,p.parking];
+      const unknowns=routeValues.filter(v=>!v||unknownValues.includes(v)||String(v).startsWith('Not sure')).length;
+      const low=Math.round(total/100)*100;
+      const high=Math.round((total*(1.12+Math.min(unknowns,4)*.025))/100)*100;
+      let daysLow=9;
+      daysLow+=Math.round(Math.max(0,total-7000)/2300);
+      if(p.ensuiteLocation==='Loft or attic'||p.existingSpace==='Unconverted loft area') daysLow+=2;
+      const daysHigh=daysLow+3+Math.min(unknowns,3);
+      const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
+      return {low,high,total:Math.round(total),labour:Math.round(total-includedProducts),productAllowance:includedProducts,productTotal:Math.round(productTotal),daysLow,daysHigh,confidence,reasons:reasons.slice(0,10),pricingRoute:'Brand-new en-suite'};
+    }
+
+    function existingProjectEstimate(p){
+      const area=p.roomFloorArea;
+      const bases={
+        'Full bathroom renovation':{Budget:8000,Standard:10000,Mixed:12000,Premium:14500},
+        'Existing en-suite renovation':{Budget:6500,Standard:8500,Mixed:10500,Premium:13000},
+        'Shower room':{Budget:7000,Standard:9000,Mixed:11000,Premium:13500},
+        'Cloakroom':{Budget:3500,Standard:4500,Mixed:5500,Premium:7000},
+        'Bathroom refresh':{Budget:3000,Standard:3500,Mixed:4500,Premium:5500}
+      };
+      const base=(bases[p.projectType]||bases['Full bathroom renovation'])[p.productLevel]||10000;
+      let total=base;
+      const reasons=[[`${p.projectType} baseline (${p.productLevel})`,base]];
+      const add=(label,amount,condition)=>{if(condition){total+=amount;addEstimateReason(reasons,label,amount)}};
+      add('Move one main item',900,p.layoutChange==='Move one item');
+      add('Complete layout redesign',1800,p.layoutChange==='Complete layout change');
+      add('Major drainage movement',1200,p.drainageKnown==='Major movement expected');
+      add('Walk-in shower upgrade',500,p.desiredItems.includes('Walk-in shower'));
+      add('Tiled wet-room construction',1600,p.desiredItems.includes('Tiled wet-room floor'));
+      add('Bath added to shower-led project',900,p.desiredItems.includes('Bath')&&['Existing en-suite renovation','Shower room','Cloakroom'].includes(p.projectType));
+      add('Shower over bath upgrade',300,p.desiredItems.includes('Shower over bath'));
+      add('Wall-hung WC frame and boxing',800,p.desiredItems.includes('Wall-hung toilet'));
+      add('Back-to-wall WC',350,p.desiredItems.includes('Back-to-wall toilet'));
+      add('Countertop basin and shelf',500,p.desiredItems.includes('Countertop basin and floating shelf'));
+      add('Vanity upgrade',250,p.desiredItems.includes('Vanity unit'));
+      add('Concealed rainfall shower',450,p.showerType==='Concealed thermostatic rainfall and handset');
+      add('Tiled shower niche',350,p.desiredItems.includes('Tiled shower niche'));
+      add('LED mirror electrical allowance',250,p.desiredItems.includes('LED mirror'));
+      add('New extractor',250,p.desiredItems.includes('New extractor fan'));
+      add('Electric underfloor heating',650,p.heating==='Electric underfloor heating');
+      if(p.tileCoverage==='Shower fully tiled, half-height elsewhere'){total+=500;addEstimateReason(reasons,'Additional tiling coverage',500)}
+      else if(p.tileCoverage==='Fully tiled walls and floor'){const t=1200+area*60;total+=t;addEstimateReason(reasons,'Fully tiled room',t)}
+      if(p.wallTileSize==='1200 x 600mm'){total+=400;addEstimateReason(reasons,'Large-format tile handling',400)}
+      if(p.wallTileSize==='Small format / metro'){total+=250;addEstimateReason(reasons,'Small-format tile labour',250)}
+      add('Upper-floor structure allowance',450,p.floorStructure==='Unknown'&&p.bathroomFloor!=='Ground floor');
+      add('Upper-floor working',300,p.bathroomFloor==='Second floor or higher'||p.bathroomFloor==='Loft conversion');
+      add('No-lift flat access',500,p.propertyType==='Upper-floor flat without lift');
+      add('Difficult access',400,p.access==='Difficult access');
+      add('Parking / permits',250,p.parking==='Paid parking'||p.parking==='Difficult or unknown');
+
+      const includedProducts={Budget:1800,Standard:3000,Mixed:4500,Premium:6500}[p.productLevel]||3000;
+      const productTotal=p.products.reduce((sum,item)=>sum+(item.price||0),0);
+      const productExcess=Math.max(0,productTotal-includedProducts);
+      total+=productExcess; addEstimateReason(reasons,'Linked products above included allowance',productExcess);
+
+      const routeValues=[p.floorStructure,p.layoutChange,p.drainageKnown,p.propertyType,p.bathroomFloor,p.access,p.parking];
+      const unknowns=routeValues.filter(v=>!v||v==='Unknown'||v==='Not sure'||String(v).startsWith('Not sure')).length;
+      const low=Math.round(total/100)*100;
+      const high=Math.round((total*(1.10+Math.min(unknowns,4)*.02))/100)*100;
+      const baseDays={'Full bathroom renovation':10,'Existing en-suite renovation':8,'Shower room':8,'Cloakroom':5,'Bathroom refresh':3}[p.projectType]||9;
+      let daysLow=baseDays+Math.round(Math.max(0,total-base)/3000);
+      if(p.layoutChange==='Complete layout change'||p.desiredItems.includes('Tiled wet-room floor')) daysLow+=1;
+      const daysHigh=daysLow+3+Math.min(unknowns,2);
+      const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
+      return {low,high,total:Math.round(total),labour:Math.round(total-includedProducts),productAllowance:includedProducts,productTotal:Math.round(productTotal),daysLow,daysHigh,confidence,reasons:reasons.slice(0,10),pricingRoute:'Existing-room project'};
     }
 
     function calculateEstimate(){
       const p=getProject();
       if(!hasEstimateInputs(p)) return showIncompleteEstimate(p);
-      const area=p.roomFloorArea;
-      const base={"Full bathroom renovation":7800,"Existing en-suite renovation":6800,"New en-suite":11200,"Shower room":7200,"Cloakroom":3900,"Bathroom refresh":2800}[p.projectType]||7000;
-      let labour=base; const reasons=[];
-      if(p.layoutChange==='Move one item'){labour+=1200;reasons.push(['Layout alterations',1200])}
-      if(p.layoutChange==='Complete layout change'){labour+=2600;reasons.push(['Complete layout change',2600])}
-      if(p.drainageKnown==='Major movement expected'){labour+=1800;reasons.push(['Major drainage movement',1800])}
-      const add=(label,amount,condition)=>{if(condition){labour+=amount;reasons.push([label,amount])}};
-      add('Walk-in shower',1100,p.desiredItems.includes('Walk-in shower'));
-      add('Tiled wet-room construction',2400,p.desiredItems.includes('Tiled wet-room floor'));
-      add('Bath installation',700,p.desiredItems.includes('Bath'));
-      add('Shower over bath',650,p.desiredItems.includes('Shower over bath'));
-      add('Wall-hung WC frame and service wall',1250,p.desiredItems.includes('Wall-hung toilet'));
-      add('Back-to-wall WC',500,p.desiredItems.includes('Back-to-wall toilet'));
-      add('Countertop basin and floating shelf',650,p.desiredItems.includes('Countertop basin and floating shelf'));
-      add('Vanity installation',450,p.desiredItems.includes('Vanity unit'));
-      add('Concealed rainfall shower',700,p.showerType==='Concealed thermostatic rainfall and handset');
-      add('Shower niche',420,p.desiredItems.includes('Tiled shower niche'));
-      add('LED mirror electrical allowance',300,p.desiredItems.includes('LED mirror'));
-      add('New extractor',350,p.desiredItems.includes('New extractor fan'));
-      add('Underfloor heating',850,p.heating==='Electric underfloor heating');
-      if(p.tileCoverage==='Fully tiled walls and floor'){const t=1500+area*280;labour+=t;reasons.push(['Full tiling and preparation',t])}
-      else if(p.tileCoverage==='Shower fully tiled, half-height elsewhere'){const t=900+area*180;labour+=t;reasons.push(['Mixed tiling coverage',t])}
-      else if(p.tileCoverage==='Wet areas tiled, painted elsewhere'){const t=550+area*130;labour+=t;reasons.push(['Wet-area tiling',t])}
-      add('Large-format tile handling',700,p.wallTileSize==='1200 x 600mm');
-      add('Small-format tile labour',550,p.wallTileSize==='Small format / metro');
-      add('Unknown first-floor structure allowance',650,p.floorStructure==='Unknown' && p.bathroomFloor!=='Ground floor');
-      add('Upper-floor access',350,p.bathroomFloor==='Second floor or higher'||p.bathroomFloor==='Loft conversion');
-      add('No-lift flat access',600,p.propertyType==='Upper-floor flat without lift');
-      add('Difficult access',500,p.access==='Difficult access');
-      add('Parking / permit allowance',300,p.parking==='Paid parking'||p.parking==='Difficult or unknown');
-      const productTotal=p.products.reduce((s,x)=>s+(x.price||0),0);
-      let productAllowance=0;
-      if(!productTotal){productAllowance={Budget:2300,Standard:3800,Premium:6500,Mixed:4800}[p.productLevel]||3800}
-      const provisionalProducts=productTotal||productAllowance;
-      const specFactor={Budget:.92,Standard:1,Premium:1.13,Mixed:1.06}[p.productLevel]||1;
-      labour*=specFactor;
-      let low=(labour+provisionalProducts)*.91; let high=(labour+provisionalProducts)*1.14;
-      const unknowns=[!p.roomFloorArea,!p.floorStructure||p.floorStructure==='Unknown',!p.layoutChange||p.layoutChange==='Not sure',!p.drainageKnown||p.drainageKnown==='Unknown',!p.propertyType,!p.bathroomFloor,!p.postcode].filter(Boolean).length;
-      if(unknowns>=3){low*=.94;high*=1.12}
-      const daysLow=Math.max(3,Math.ceil(labour/780)); const daysHigh=Math.ceil(daysLow*1.35+1);
-      const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
-      lastEstimate={low:Math.round(low/100)*100,high:Math.round(high/100)*100,labour:Math.round(labour),productAllowance:Math.round(provisionalProducts),productTotal:Math.round(productTotal),daysLow,daysHigh,confidence,reasons:reasons.slice(0,7)};
+      lastEstimate=p.projectType==='New en-suite'?newEnsuiteEstimate(p):existingProjectEstimate(p);
       document.getElementById('estimateRange').textContent=`${money(lastEstimate.low)}–${money(lastEstimate.high)}`;
-      document.getElementById('durationText').textContent=`${daysLow}–${daysHigh} working days`;
+      document.getElementById('durationText').textContent=`${lastEstimate.daysLow}–${lastEstimate.daysHigh} working days`;
       document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
-      document.getElementById('productTotalText').textContent=productTotal?money(productTotal):`${money(productAllowance)} allowance`;
-      document.getElementById('confidenceText').textContent=`${confidence} confidence`;
-      const projectLabel=p.projectType?p.projectType.toLowerCase():'bathroom project'; const productLabel=p.productLevel?p.productLevel.toLowerCase():'provisional'; document.getElementById('estimateDescription').textContent=`Indicative complete-project range for a ${projectLabel} with a ${productLabel} product allowance. Hidden conditions and final product choices remain subject to survey.`;
-      const rows=[['Base build & installation',base],...lastEstimate.reasons,['Selected products / allowance',provisionalProducts]];
-      document.getElementById('breakdown').innerHTML='<h4 style="margin:0 0 8px">Main estimate drivers</h4>'+rows.map(r=>`<div class="break-row"><span>${escapeHtml(r[0])}</span><span>${money(r[1])}</span></div>`).join('')+'<p style="font-size:.76rem;color:var(--muted);margin:12px 0 0">Figures overlap within the calculation and are not a contractual itemised quotation.</p>';
-      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected'; const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high`:'Dimensions incomplete'],['Layout',p.layoutChange||'Not selected'],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
+      document.getElementById('productTotalText').textContent=lastEstimate.productTotal?money(lastEstimate.productTotal):`${money(lastEstimate.productAllowance)} included`;
+      document.getElementById('confidenceText').textContent=`${lastEstimate.confidence} confidence`;
+      document.getElementById('estimateDescription').textContent=p.projectType==='New en-suite'
+        ?'Indicative complete-project range for a brand-new en-suite. The £7,000 lower benchmark assumes a compact budget HMO room beside existing services; walls, drainage, electrics, ventilation, access and specification can move the figure substantially.'
+        :`Indicative complete-project range for a ${p.projectType.toLowerCase()} using a ${p.productLevel.toLowerCase()} specification. This Draft 2 benchmark avoids adding the same labour twice and remains subject to survey.`;
+      document.getElementById('breakdown').innerHTML='<h4 style="margin:0 0 8px">Main estimate drivers</h4>'+lastEstimate.reasons.map(r=>`<div class="break-row"><span>${escapeHtml(r[0])}</span><span>${r[1]<0?'−':''}${money(Math.abs(r[1]))}</span></div>`).join('')+'<p style="font-size:.76rem;color:var(--muted);margin:12px 0 0">Complete-project planning guide, not an itemised quotation. Baselines already include a provisional product allowance; product links add cost only where they exceed that allowance.</p>';
+      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected';
+      const routeDetail=p.projectType==='New en-suite'?[p.ensuiteLocation,p.bathroomRelationship,p.soilRoute,p.electricsNearby].filter(Boolean).join(' · '):p.layoutChange||'Not selected';
+      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high`:'Dimensions incomplete'],[p.projectType==='New en-suite'?'Construction & services':'Layout',routeDetail],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
       document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
       saveState();
       return lastEstimate;
@@ -507,6 +771,7 @@
         }
         restoring=false;
         syncProducts();
+        updateProjectRoute();
         steps.forEach((s,i)=>s.classList.toggle('active',i===currentStep));
         document.getElementById('stepTitle').textContent=titles[currentStep];
         document.getElementById('stepCount').textContent=`Step ${currentStep+1} of ${steps.length}`;
@@ -528,6 +793,7 @@
 
     form.addEventListener('change',()=>{syncProducts();saveState()});
     restoreState();
+    updateProjectRoute();
   })();
   </script>
   <!--Start of Tawk.to Script-->
