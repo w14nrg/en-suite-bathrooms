@@ -174,7 +174,7 @@
               <section class="step active" data-step="0">
                 <h3>What are you planning?</h3><p class="step-intro">Start with the project type and approximate dimensions.</p>
                 <div class="choice-grid">
-                  <div class="choice"><input checked type="radio" id="projectBathroom" name="projectType" value="Full bathroom renovation"><label for="projectBathroom"><strong>Full bathroom renovation</strong><span>Complete strip-out and new bathroom.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectBathroom" name="projectType" value="Full bathroom renovation"><label for="projectBathroom"><strong>Full bathroom renovation</strong><span>Complete strip-out and new bathroom.</span></label></div>
                   <div class="choice"><input type="radio" id="projectEnsuite" name="projectType" value="Existing en-suite renovation"><label for="projectEnsuite"><strong>Existing en-suite renovation</strong><span>Replace or redesign an existing en-suite.</span></label></div>
                   <div class="choice"><input type="radio" id="projectNewEnsuite" name="projectType" value="New en-suite"><label for="projectNewEnsuite"><strong>New en-suite</strong><span>Create a new room inside the property.</span></label></div>
                   <div class="choice"><input type="radio" id="projectShower" name="projectType" value="Shower room"><label for="projectShower"><strong>Shower room</strong><span>Shower-led renovation without a bath.</span></label></div>
@@ -204,8 +204,8 @@
                   <div class="check"><input type="checkbox" id="currentExtractor" name="currentItems" value="Extractor fan"><label for="currentExtractor">Extractor fan</label></div>
                   <div class="check"><input type="checkbox" id="currentUnknown" name="currentItems" value="Not sure"><label for="currentUnknown">Not sure</label></div>
                 </div>
-                <div class="field"><label for="layoutChange">Proposed layout</label><select class="input" id="layoutChange" name="layoutChange"><option value="Keep layout similar">Keep the layout broadly similar</option><option value="Move one item">Move one main item</option><option value="Complete layout change">Completely redesign the layout</option><option value="Not sure">Not sure — recommend a route</option></select></div>
-                <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
+                <div class="field"><label for="layoutChange">Proposed layout</label><select class="input" id="layoutChange" name="layoutChange"><option value="">Choose when ready</option><option value="Keep layout similar">Keep the layout broadly similar</option><option value="Move one item">Move one main item</option><option value="Complete layout change">Completely redesign the layout</option><option value="Not sure">Not sure — recommend a route</option></select></div>
+                <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Next: new fittings <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
 
@@ -228,29 +228,29 @@
                   <div class="check"><input type="checkbox" id="wantStorage" name="desiredItems" value="Additional storage"><label for="wantStorage">Extra storage</label></div>
                   <div class="check"><input type="checkbox" id="wantExtractor" name="desiredItems" value="New extractor fan"><label for="wantExtractor">New extractor</label></div>
                 </div>
-                <div class="grid2"><div class="field"><label for="showerType">Shower system</label><select class="input" id="showerType" name="showerType"><option value="Not selected">Not selected</option><option value="Exposed thermostatic shower">Exposed thermostatic shower</option><option value="Concealed thermostatic rainfall and handset">Concealed rainfall shower and handset</option><option value="Electric shower">Electric shower</option><option value="Not sure">Recommend a suitable shower</option></select></div><div class="field"><label for="heating">Floor heating</label><select class="input" id="heating" name="heating"><option value="No underfloor heating">No underfloor heating</option><option value="Electric underfloor heating">Electric underfloor heating</option><option value="Not sure">Not sure</option></select></div></div>
+                <div class="grid2"><div class="field"><label for="showerType">Shower system</label><select class="input" id="showerType" name="showerType"><option value="">Choose when ready</option><option value="Exposed thermostatic shower">Exposed thermostatic shower</option><option value="Concealed thermostatic rainfall and handset">Concealed rainfall shower and handset</option><option value="Electric shower">Electric shower</option><option value="Not sure">Recommend a suitable shower</option></select></div><div class="field"><label for="heating">Floor heating</label><select class="input" id="heating" name="heating"><option value="">Choose when ready</option><option value="No underfloor heating">No underfloor heating</option><option value="Electric underfloor heating">Electric underfloor heating</option><option value="Not sure">Not sure</option></select></div></div>
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Next: style & finish <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
 
               <section class="step" data-step="3">
                 <h3>Choose the finish</h3><p class="step-intro">The tile coverage, format and product level can materially alter the estimate.</p>
                 <div class="choice-grid">
-                  <div class="choice"><input checked type="radio" id="styleWarm" name="style" value="Warm stone and beige"><label for="styleWarm"><strong>Warm stone & beige</strong><span>Calm limestone or travertine effect.</span></label></div>
+                  <div class="choice"><input type="radio" id="styleWarm" name="style" value="Warm stone and beige"><label for="styleWarm"><strong>Warm stone & beige</strong><span>Calm limestone or travertine effect.</span></label></div>
                   <div class="choice"><input type="radio" id="styleMarble" name="style" value="White marble effect"><label for="styleMarble"><strong>White marble effect</strong><span>Bright and premium with subtle veining.</span></label></div>
                   <div class="choice"><input type="radio" id="styleGrey" name="style" value="Light grey concrete"><label for="styleGrey"><strong>Light grey concrete</strong><span>Modern, quiet and architectural.</span></label></div>
                   <div class="choice"><input type="radio" id="styleDark" name="style" value="Dark dramatic stone"><label for="styleDark"><strong>Dark dramatic stone</strong><span>Bold finish with controlled lighting.</span></label></div>
                   <div class="choice"><input type="radio" id="styleWood" name="style" value="Natural wood and neutral tiles"><label for="styleWood"><strong>Natural wood & neutral</strong><span>Warm timber tones with soft tiles.</span></label></div>
                   <div class="choice"><input type="radio" id="styleCustom" name="style" value="Customer product-led style"><label for="styleCustom"><strong>Product-led style</strong><span>Build the look from links you add.</span></label></div>
                 </div>
-                <div class="grid2"><div class="field"><label for="tileCoverage">Tiling coverage</label><select class="input" id="tileCoverage" name="tileCoverage"><option value="Fully tiled walls and floor">Fully tiled walls and floor</option><option value="Shower fully tiled, half-height elsewhere">Shower fully tiled, half-height elsewhere</option><option value="Wet areas tiled, painted elsewhere">Wet areas tiled, painted elsewhere</option><option value="Not sure">Recommend the best balance</option></select></div><div class="field"><label for="productLevel">Product level</label><select class="input" id="productLevel" name="productLevel"><option value="Standard">Good-quality standard</option><option value="Budget">Budget / rental</option><option value="Premium">Premium</option><option value="Mixed">Mixed: standard with selected premium items</option></select></div></div>
-                <div class="grid2"><div class="field"><label for="wallTileSize">Wall tile size</label><select class="input" id="wallTileSize" name="wallTileSize"><option value="600 x 300mm">600 × 300mm</option><option selected value="600 x 600mm">600 × 600mm</option><option value="1200 x 600mm">1200 × 600mm</option><option value="Small format / metro">Small format / metro</option><option value="Not sure">Not sure</option></select></div><div class="field"><label for="floorTileSize">Floor tile size</label><select class="input" id="floorTileSize" name="floorTileSize"><option value="300 x 300mm">300 × 300mm</option><option value="600 x 600mm">600 × 600mm</option><option value="Small mosaic">Small mosaic</option><option value="Not sure">Not sure</option></select></div></div>
+                <div class="grid2"><div class="field"><label for="tileCoverage">Tiling coverage</label><select class="input" id="tileCoverage" name="tileCoverage"><option value="">Choose when ready</option><option value="Fully tiled walls and floor">Fully tiled walls and floor</option><option value="Shower fully tiled, half-height elsewhere">Shower fully tiled, half-height elsewhere</option><option value="Wet areas tiled, painted elsewhere">Wet areas tiled, painted elsewhere</option><option value="Not sure">Recommend the best balance</option></select></div><div class="field"><label for="productLevel">Product level</label><select class="input" id="productLevel" name="productLevel"><option value="">Choose when ready</option><option value="Standard">Good-quality standard</option><option value="Budget">Budget / rental</option><option value="Premium">Premium</option><option value="Mixed">Mixed: standard with selected premium items</option></select></div></div>
+                <div class="grid2"><div class="field"><label for="wallTileSize">Wall tile size</label><select class="input" id="wallTileSize" name="wallTileSize"><option value="">Choose when ready</option><option value="600 x 300mm">600 × 300mm</option><option value="600 x 600mm">600 × 600mm</option><option value="1200 x 600mm">1200 × 600mm</option><option value="Small format / metro">Small format / metro</option><option value="Not sure">Not sure</option></select></div><div class="field"><label for="floorTileSize">Floor tile size</label><select class="input" id="floorTileSize" name="floorTileSize"><option value="">Choose when ready</option><option value="300 x 300mm">300 × 300mm</option><option value="600 x 600mm">600 × 600mm</option><option value="Small mosaic">Small mosaic</option><option value="Not sure">Not sure</option></select></div></div>
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Next: property & access <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
 
               <section class="step" data-step="4">
                 <h3>Property, access and products</h3><p class="step-intro">Add the practical details and any product links already found.</p>
-                <div class="grid3"><div class="field"><label for="propertyType">Property type</label><select class="input" id="propertyType" name="propertyType"><option value="House">House</option><option value="Ground-floor flat">Ground-floor flat</option><option value="Upper-floor flat with lift">Upper-floor flat with lift</option><option value="Upper-floor flat without lift">Upper-floor flat without lift</option></select></div><div class="field"><label for="bathroomFloor">Bathroom floor</label><select class="input" id="bathroomFloor" name="bathroomFloor"><option value="Ground floor">Ground floor</option><option value="First floor">First floor</option><option value="Second floor or higher">Second floor or higher</option><option value="Loft conversion">Loft conversion</option></select></div><div class="field"><label for="access">Access</label><select class="input" id="access" name="access"><option value="Straightforward">Straightforward</option><option value="Narrow stairs or hallway">Narrow stairs or hallway</option><option value="Difficult access">Difficult access</option><option value="Not sure">Not sure</option></select></div></div>
-                <div class="grid3"><div class="field"><label for="floorStructure">Floor structure</label><select class="input" id="floorStructure" name="floorStructure"><option value="Unknown">Not sure</option><option value="Timber floorboards or joists">Timber floorboards / joists</option><option value="Concrete">Concrete</option><option value="Existing tiled floor">Existing tiled floor</option></select></div><div class="field"><label for="postcode">Postcode</label><input class="input" id="postcode" name="postcode" placeholder="e.g. SW6 6BW"></div><div class="field"><label for="parking">Parking</label><select class="input" id="parking" name="parking"><option value="Free driveway">Free driveway</option><option value="Free street parking">Free street parking</option><option value="Visitor permit">Visitor permit</option><option value="Paid parking">Paid parking</option><option value="Difficult or unknown">Difficult / unknown</option></select></div></div>
+                <div class="grid3"><div class="field"><label for="propertyType">Property type</label><select class="input" id="propertyType" name="propertyType"><option value="">Choose when ready</option><option value="House">House</option><option value="Ground-floor flat">Ground-floor flat</option><option value="Upper-floor flat with lift">Upper-floor flat with lift</option><option value="Upper-floor flat without lift">Upper-floor flat without lift</option></select></div><div class="field"><label for="bathroomFloor">Bathroom floor</label><select class="input" id="bathroomFloor" name="bathroomFloor"><option value="">Choose when ready</option><option value="Ground floor">Ground floor</option><option value="First floor">First floor</option><option value="Second floor or higher">Second floor or higher</option><option value="Loft conversion">Loft conversion</option></select></div><div class="field"><label for="access">Access</label><select class="input" id="access" name="access"><option value="">Choose when ready</option><option value="Straightforward">Straightforward</option><option value="Narrow stairs or hallway">Narrow stairs or hallway</option><option value="Difficult access">Difficult access</option><option value="Not sure">Not sure</option></select></div></div>
+                <div class="grid3"><div class="field"><label for="floorStructure">Floor structure</label><select class="input" id="floorStructure" name="floorStructure"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Timber floorboards or joists">Timber floorboards / joists</option><option value="Concrete">Concrete</option><option value="Existing tiled floor">Existing tiled floor</option></select></div><div class="field"><label for="postcode">Postcode</label><input class="input" id="postcode" name="postcode" placeholder="e.g. SW6 6BW"></div><div class="field"><label for="parking">Parking</label><select class="input" id="parking" name="parking"><option value="">Choose when ready</option><option value="Free driveway">Free driveway</option><option value="Free street parking">Free street parking</option><option value="Visitor permit">Visitor permit</option><option value="Paid parking">Paid parking</option><option value="Difficult or unknown">Difficult / unknown</option></select></div></div>
                 <div class="notice"><strong>Product links:</strong> the first draft stores the link and displayed price. The AI can discuss the item, but may ask for dimensions, a screenshot or specification because retailer pages are not always readable automatically.</div>
                 <div id="productList" class="product-list"></div>
                 <button type="button" id="addProduct" class="btn btn-light"><i class="fa-solid fa-plus"></i> Add a product</button>
@@ -277,9 +277,9 @@
           </div>
 
           <aside class="panel assistant" id="assistantPanel">
-            <div class="assistant-head"><div class="assistant-title"><div class="orb"></div><div><h3>Bathroom Assistant</h3><p>Understands the project you are building</p></div></div></div>
+            <div class="assistant-head"><div class="assistant-title"><div class="orb"></div><div><h3>Bathroom Assistant</h3><p>Uses only answers actually entered</p></div></div><button type="button" id="startOver" class="btn btn-light" style="padding:9px 13px;font-size:.8rem">Start over</button></div>
             <div class="quick-prompts"><button data-quick="What should I decide next?">What next?</button><button data-quick="Will this layout probably fit?">Will it fit?</button><button data-quick="What products am I missing?">Missing products?</button><button data-quick="Explain wet room versus tray for my project.">Wet room or tray?</button></div>
-            <div class="chat-log" id="chatLog"><div class="bubble ai">Tell me what you are planning or ask a question at any stage. I will use the answers already entered, but I will not pretend measurements or hidden construction have been verified.</div></div>
+            <div class="chat-log" id="chatLog"><div class="bubble ai">Tell me what you are planning or ask a general question. I will use only the answers you actually enter and will not invent room details.</div></div>
             <div class="chat-compose"><textarea class="input" id="chatInput" placeholder="Ask about your layout, products, cost, tiles or installation…"></textarea><div class="chat-row"><label class="file-label" title="Attach bathroom photo"><i class="fa-solid fa-camera"></i><input type="file" id="chatPhoto" accept="image/*"></label><button type="button" id="sendChat" class="btn btn-gold" style="flex:1"><i class="fa-solid fa-paper-plane"></i> Ask</button></div><div class="photo-name" id="photoName"></div></div>
           </aside>
         </div>
@@ -307,7 +307,11 @@
     const steps = [...document.querySelectorAll('.step')];
     const titles = ['1. Project & room','2. Current layout','3. New fittings','4. Style & finish','5. Property & products','6. Estimate & concept'];
     let currentStep = 0;
-    let responseId = sessionStorage.getItem('bathroomPlannerResponseId') || '';
+    const STATE_KEY = 'ensuitesBathroomPlannerDraftV3';
+    const RESPONSE_KEY = 'bathroomPlannerResponseIdV3';
+    localStorage.removeItem('ensuitesBathroomPlannerDraftV2');
+    sessionStorage.removeItem('bathroomPlannerResponseIdV2');
+    let responseId = sessionStorage.getItem(RESPONSE_KEY) || '';
     let photoDataUrl = '';
     let products = [];
     let lastEstimate = null;
@@ -362,8 +366,40 @@
       };
     }
 
+    function getAIProject(){
+      const p=getProject();
+      const ai={...p};
+      if(!(p.projectType && p.roomFloorArea && p.desiredItems.length)) delete ai.estimate;
+      Object.keys(ai).forEach(key=>{
+        const val=ai[key];
+        if(val===null || val==='' || (Array.isArray(val) && val.length===0)) delete ai[key];
+      });
+      return ai;
+    }
+
+    function hasEstimateInputs(p){
+      return Boolean(p.projectType && p.roomFloorArea && p.desiredItems.length && p.productLevel);
+    }
+
+    function showIncompleteEstimate(p){
+      lastEstimate=null;
+      document.getElementById('estimateRange').textContent='£—';
+      document.getElementById('durationText').textContent='—';
+      document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
+      document.getElementById('productTotalText').textContent='Not calculated';
+      document.getElementById('confidenceText').textContent='More details needed';
+      document.getElementById('estimateDescription').textContent='Choose the project type, enter the room dimensions, select the main fittings and choose a product level before calculating a budget range.';
+      document.getElementById('breakdown').innerHTML='<div class="notice"><strong>No estimate has been created.</strong> The planner will not invent a project or use automatic bathroom assumptions.</div>';
+      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected';
+      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}`:'Dimensions incomplete'],['Layout',p.layoutChange||'Not selected'],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
+      document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
+      return null;
+    }
+
     function calculateEstimate(){
-      const p=getProject(); const area=p.roomFloorArea||4;
+      const p=getProject();
+      if(!hasEstimateInputs(p)) return showIncompleteEstimate(p);
+      const area=p.roomFloorArea;
       const base={"Full bathroom renovation":7800,"Existing en-suite renovation":6800,"New en-suite":11200,"Shower room":7200,"Cloakroom":3900,"Bathroom refresh":2800}[p.projectType]||7000;
       let labour=base; const reasons=[];
       if(p.layoutChange==='Move one item'){labour+=1200;reasons.push(['Layout alterations',1200])}
@@ -400,7 +436,7 @@
       const specFactor={Budget:.92,Standard:1,Premium:1.13,Mixed:1.06}[p.productLevel]||1;
       labour*=specFactor;
       let low=(labour+provisionalProducts)*.91; let high=(labour+provisionalProducts)*1.14;
-      const unknowns=[!p.roomFloorArea,p.floorStructure==='Unknown',p.layoutChange==='Not sure',p.drainageKnown==='Unknown',!p.postcode].filter(Boolean).length;
+      const unknowns=[!p.roomFloorArea,!p.floorStructure||p.floorStructure==='Unknown',!p.layoutChange||p.layoutChange==='Not sure',!p.drainageKnown||p.drainageKnown==='Unknown',!p.propertyType,!p.bathroomFloor,!p.postcode].filter(Boolean).length;
       if(unknowns>=3){low*=.94;high*=1.12}
       const daysLow=Math.max(3,Math.ceil(labour/780)); const daysHigh=Math.ceil(daysLow*1.35+1);
       const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
@@ -410,10 +446,10 @@
       document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
       document.getElementById('productTotalText').textContent=productTotal?money(productTotal):`${money(productAllowance)} allowance`;
       document.getElementById('confidenceText').textContent=`${confidence} confidence`;
-      document.getElementById('estimateDescription').textContent=`Indicative complete-project range for a ${p.projectType.toLowerCase()} with a ${p.productLevel.toLowerCase()} product level. Hidden conditions and final product choices remain subject to survey.`;
+      const projectLabel=p.projectType?p.projectType.toLowerCase():'bathroom project'; const productLabel=p.productLevel?p.productLevel.toLowerCase():'provisional'; document.getElementById('estimateDescription').textContent=`Indicative complete-project range for a ${projectLabel} with a ${productLabel} product allowance. Hidden conditions and final product choices remain subject to survey.`;
       const rows=[['Base build & installation',base],...lastEstimate.reasons,['Selected products / allowance',provisionalProducts]];
       document.getElementById('breakdown').innerHTML='<h4 style="margin:0 0 8px">Main estimate drivers</h4>'+rows.map(r=>`<div class="break-row"><span>${escapeHtml(r[0])}</span><span>${money(r[1])}</span></div>`).join('')+'<p style="font-size:.76rem;color:var(--muted);margin:12px 0 0">Figures overlap within the calculation and are not a contractual itemised quotation.</p>';
-      const summary=[['Project',p.projectType],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high`:'Dimensions incomplete'],['Layout',p.layoutChange],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style],['Tiling',p.tileCoverage],['Property',`${p.propertyType}, ${p.bathroomFloor}`],['Postcode',p.postcode||'Not entered']];
+      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected'; const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high`:'Dimensions incomplete'],['Layout',p.layoutChange||'Not selected'],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
       document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
       saveState();
       return lastEstimate;
@@ -426,11 +462,12 @@
       addBubble(message,'user'); document.getElementById('chatInput').value='';
       const typing=addBubble('Thinking about your bathroom…','ai typing'); document.getElementById('sendChat').disabled=true;
       try{
-        calculateEstimate();
-        const res=await fetch(`${API}/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,project:getProject(),previousResponseId:responseId,imageDataUrl:photoDataUrl})});
+        const currentProject=getProject();
+        if(hasEstimateInputs(currentProject)) calculateEstimate(); else lastEstimate=null;
+        const res=await fetch(`${API}/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,project:getAIProject(),previousResponseId:responseId,imageDataUrl:photoDataUrl})});
         const data=await res.json(); typing.remove();
         if(!res.ok)throw new Error(data.error||'The assistant is unavailable.');
-        responseId=data.responseId||responseId; sessionStorage.setItem('bathroomPlannerResponseId',responseId); addBubble(data.reply,'ai'); photoDataUrl='';document.getElementById('photoName').textContent='';document.getElementById('chatPhoto').value='';
+        responseId=data.responseId||responseId; sessionStorage.setItem(RESPONSE_KEY,responseId); addBubble(data.reply,'ai'); photoDataUrl='';document.getElementById('photoName').textContent='';document.getElementById('chatPhoto').value='';
       }catch(e){typing.remove();addBubble(e.message||'The assistant is temporarily unavailable.','error')}finally{document.getElementById('sendChat').disabled=false}
     }
     document.getElementById('sendChat').addEventListener('click',()=>askAI());
@@ -452,11 +489,11 @@
     });
 
     function saveState(){
-      try{const data={fields:{},checks:{},products,currentStep};[...form.elements].forEach(el=>{if(!el.name)return;if(el.type==='checkbox'||el.type==='radio'){data.checks[el.id]=el.checked}else{data.fields[el.name]=el.value}});localStorage.setItem('ensuitesBathroomPlannerDraft',JSON.stringify(data))}catch(e){}
+      try{const data={fields:{},checks:{},products,currentStep};[...form.elements].forEach(el=>{if(!el.name)return;if(el.type==='checkbox'||el.type==='radio'){data.checks[el.id]=el.checked}else{data.fields[el.name]=el.value}});localStorage.setItem(STATE_KEY,JSON.stringify(data))}catch(e){}
     }
     function restoreState(){
       try{
-        const data=JSON.parse(localStorage.getItem('ensuitesBathroomPlannerDraft')||'null');
+        const data=JSON.parse(localStorage.getItem(STATE_KEY)||'null');
         restoring=true;
         if(data){
           Object.entries(data.fields||{}).forEach(([name,val])=>{if(form.elements[name]&&typeof form.elements[name].value!=='undefined')form.elements[name].value=val});
@@ -477,6 +514,18 @@
         if(currentStep===5) calculateEstimate();
       }catch(e){restoring=false;createProductRow()}
     }
+    document.getElementById('startOver').addEventListener('click',()=>{
+      if(!confirm('Clear every planner answer and start a new AI conversation?')) return;
+      localStorage.removeItem(STATE_KEY);
+      sessionStorage.removeItem(RESPONSE_KEY);
+      responseId=''; photoDataUrl=''; products=[]; lastEstimate=null;
+      form.reset();
+      document.getElementById('productList').innerHTML='';
+      restoring=true; createProductRow(); restoring=false; syncProducts();
+      document.getElementById('chatLog').innerHTML='<div class="bubble ai">Tell me what you are planning or ask a general question. I will only use details you actually enter.</div>';
+      showStep(0);
+    });
+
     form.addEventListener('change',()=>{syncProducts();saveState()});
     restoreState();
   })();
