@@ -26,7 +26,7 @@
         "url":"https://www.en-suite.co.uk/planner.html",
         "applicationCategory":"DesignApplication",
         "operatingSystem":"Web browser",
-        "description":"An interactive bathroom, en-suite and shower-room planner with AI guidance, rough cost estimates, product selection and concept image generation.",
+        "description":"An interactive bathroom, en-suite and shower-room planner with AI guidance, guided project routes, product selection, conversational AI and concept image generation.",
         "provider":{"@id":"https://www.en-suite.co.uk/#business"}
       },
       {
@@ -50,76 +50,1249 @@
   }
   </script>
   <style>
-    :root{
-      --cream:#fbf7f0;--cream2:#f5eee3;--white:#fff;--ink:#1f1f1f;--muted:#6a675f;
-      --gold:#d4af37;--gold2:#b89121;--line:rgba(184,145,33,.24);--green:#1e7a51;
-      --shadow:0 22px 70px rgba(38,31,20,.10)
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
-    button,input,select,textarea{font:inherit}
-    a{color:inherit;text-decoration:none}
-    .serif{font-family:"Playfair Display",Georgia,serif}
-    .wrap{width:min(1220px,calc(100% - 36px));margin:auto}
-    .topbar{background:#fff;border-bottom:1px solid var(--line);font-size:.88rem}
-    .topbar .wrap{display:flex;justify-content:space-between;gap:18px;padding:10px 0;color:#5c584f}
-    .topbar a{color:var(--gold2);font-weight:700}
-    .nav{position:sticky;top:0;z-index:60;background:rgba(251,247,240,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .navrow{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:30px}
-    .brand{display:flex;align-items:center;gap:13px}.brand i{font-size:2.15rem;color:var(--gold)}
-    .brand-main{font-family:"Playfair Display",serif;font-size:1.75rem;line-height:.9;font-weight:400;letter-spacing:-.04em}
-    .brand-sub{font-size:.69rem;letter-spacing:.18em;color:var(--gold2);font-weight:700;margin-top:7px}
-    .desktop-nav{display:flex;gap:26px;align-items:center;font-size:.91rem;font-weight:600;color:#4f4b44}
-    .desktop-nav a:hover,.desktop-nav a.active{color:var(--gold2)}
-    .nav-cta{background:var(--gold);padding:12px 18px;border-radius:999px;color:#15120c!important}
-    .menu-btn{display:none;border:0;background:none;font-size:1.45rem}
-    .mobile-menu{display:none;padding:0 0 18px}.mobile-menu a{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
-    .hero{position:relative;overflow:hidden;background:linear-gradient(112deg,rgba(19,17,13,.92),rgba(32,27,19,.68)),url('bathroom-planner-example.png') center/cover;min-height:680px;color:#fff;display:flex;align-items:center}
-    .hero:after{content:"";position:absolute;inset:auto -160px -250px auto;width:620px;height:620px;border:1px solid rgba(212,175,55,.25);border-radius:50%}
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.18fr .82fr;gap:58px;align-items:center;padding:86px 0}
-    .kicker{text-transform:uppercase;letter-spacing:.22em;color:#e6c867;font-weight:700;font-size:.82rem}
-    h1{font-size:clamp(3.5rem,7.5vw,7rem);line-height:.9;letter-spacing:-.065em;font-weight:300;margin:18px 0 28px}
-    .hero p{font-size:1.16rem;color:rgba(255,255,255,.87);max-width:720px}
-    .buttons{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
-    .btn{border:0;border-radius:999px;padding:15px 23px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:.2s}
-    .btn:hover{transform:translateY(-2px)}.btn-gold{background:var(--gold);color:#16130d}.btn-light{background:#fff;color:#1d1a15}.btn-dark{background:#242019;color:#fff}.btn-outline{background:transparent;color:inherit;border:1px solid rgba(255,255,255,.45)}
-    .hero-card{background:rgba(255,255,255,.96);color:var(--ink);padding:28px;border-radius:28px;box-shadow:var(--shadow)}
-    .hero-card h2{font-size:2rem;margin:0 0 8px}.hero-card p{font-size:.96rem;color:var(--muted);margin:0 0 18px}
-    .mini-step{display:flex;gap:13px;padding:12px 0;border-top:1px solid var(--line)}.mini-step:first-of-type{border-top:0}.mini-step span{width:32px;height:32px;background:var(--cream2);color:var(--gold2);border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none}
-    .section{padding:88px 0}.section-white{background:#fff}.section-dark{background:#211e18;color:#fff}
-    .section-head{text-align:center;max-width:840px;margin:0 auto 42px}.section-head h2{font-size:clamp(2.6rem,5vw,4.8rem);line-height:.98;letter-spacing:-.045em;font-weight:300;margin:12px 0}.section-head p{font-size:1.08rem;color:var(--muted)}
-    .section-dark .section-head p{color:#c8c1b5}
-    .planner-shell{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:26px;align-items:start}
-    .panel{background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}
-    .planner-main{overflow:hidden}.progress-wrap{padding:24px 26px 18px;border-bottom:1px solid var(--line);background:#fffdf9}.progress-top{display:flex;justify-content:space-between;gap:12px;font-size:.87rem;font-weight:700}.progress-track{height:8px;background:#eee7dc;border-radius:999px;overflow:hidden;margin-top:12px}.progress-bar{height:100%;width:16.66%;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:.3s}
-    .step{display:none;padding:30px}.step.active{display:block}.step h3{font-family:"Playfair Display",serif;font-size:2.35rem;line-height:1;margin:0 0 8px;font-weight:400}.step-intro{color:var(--muted);margin:0 0 25px}
-    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .field{margin-bottom:17px}.field label{display:block;font-size:.88rem;font-weight:700;margin:0 0 7px}.field small{display:block;color:var(--muted);margin-top:6px}
-    .input{width:100%;border:1px solid #d9d1c4;background:#fff;border-radius:14px;padding:14px 15px;outline:none;transition:.2s}.input:focus{border-color:var(--gold2);box-shadow:0 0 0 4px rgba(212,175,55,.12)}
-    textarea.input{min-height:118px;resize:vertical}
-    .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-bottom:22px}.choice{position:relative}.choice input{position:absolute;opacity:0}.choice label{display:block;height:100%;border:1px solid #d9d1c4;border-radius:16px;padding:15px;background:#fff;cursor:pointer;transition:.2s}.choice label strong{display:block}.choice label span{display:block;font-size:.84rem;color:var(--muted);margin-top:3px}.choice input:checked+label{border-color:var(--gold2);background:#fffbef;box-shadow:0 0 0 3px rgba(212,175,55,.10)}
-    .check-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:22px}.check{position:relative}.check input{position:absolute;opacity:0}.check label{display:flex;align-items:center;gap:9px;padding:12px;border:1px solid #ddd5ca;border-radius:13px;cursor:pointer;font-size:.9rem;height:100%}.check label:before{content:"";width:18px;height:18px;border:1px solid #bdb4a6;border-radius:5px;flex:none}.check input:checked+label{border-color:var(--gold2);background:#fffbef}.check input:checked+label:before{background:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 4px #fff}
-    .step-actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px;border-top:1px solid var(--line);padding-top:22px}.step-actions .btn{min-width:135px}
-    .assistant{position:sticky;top:102px;overflow:hidden}.assistant-head{padding:21px;background:#242019;color:#fff}.assistant-title{display:flex;align-items:center;gap:12px}.assistant-title .orb{width:39px;height:39px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f8dc82,#b68b18);box-shadow:0 0 24px rgba(212,175,55,.35)}.assistant-head h3{margin:0;font-family:"Playfair Display",serif;font-size:1.55rem;font-weight:400}.assistant-head p{margin:5px 0 0;color:#d1c9bb;font-size:.85rem}
-    .quick-prompts{display:flex;gap:7px;overflow-x:auto;padding:13px;border-bottom:1px solid var(--line);background:#fffdf8}.quick-prompts button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:.76rem;cursor:pointer}
-    .chat-log{height:350px;overflow:auto;padding:15px;background:#faf7f1}.bubble{max-width:91%;padding:11px 13px;border-radius:15px;margin:0 0 11px;font-size:.88rem;white-space:pre-wrap}.bubble.ai{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}.bubble.user{background:#26221c;color:#fff;margin-left:auto;border-bottom-right-radius:4px}.bubble.error{background:#fff0ed;color:#9a2f22;border:1px solid #efc5bc}.typing{color:var(--muted);font-style:italic}
-    .chat-compose{padding:13px;background:#fff;border-top:1px solid var(--line)}.chat-compose textarea{min-height:74px}.chat-row{display:flex;gap:8px;margin-top:8px}.chat-row .btn{padding:10px 14px;font-size:.83rem}.file-label{border:1px solid var(--line);border-radius:999px;padding:9px 12px;cursor:pointer}.file-label input{display:none}.photo-name{font-size:.74rem;color:var(--muted);margin-top:6px}
-    .product-list{display:grid;gap:10px}.product-row{display:grid;grid-template-columns:1.4fr 1.8fr .7fr auto;gap:8px;align-items:end;padding:13px;background:#faf7f1;border-radius:16px}.product-row .field{margin:0}.remove-product{border:0;background:#efe5da;border-radius:11px;height:48px;width:48px;cursor:pointer}
-    .estimate-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.estimate-card{background:#27231c;color:#fff;border-radius:23px;padding:26px}.estimate-range{font-family:"Playfair Display",serif;font-size:3.2rem;line-height:1;color:#efcf70;margin:12px 0}.estimate-card p{color:#d5cec1}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{background:rgba(255,255,255,.08);border-radius:14px;padding:13px}.metric span{display:block;color:#cfc5b5;font-size:.78rem}.metric strong{font-size:1.05rem}
-    .breakdown{border:1px solid var(--line);border-radius:21px;padding:20px;background:#fff}.break-row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px dashed #ddd4c7}.break-row:last-child{border:0}.break-row span:last-child{font-weight:800}
-    .confidence{display:inline-flex;align-items:center;gap:7px;background:#e9f7ef;color:#17693f;border-radius:999px;padding:7px 11px;font-weight:700;font-size:.82rem}
-    .concept-box{margin-top:20px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:#fff}.concept-preview{aspect-ratio:3/2;background:#e9e1d5 center/cover;display:grid;place-items:center;position:relative}.concept-preview img{width:100%;height:100%;object-fit:cover;display:block}.concept-placeholder{text-align:center;padding:30px;color:#5d584e}.concept-placeholder i{font-size:3rem;color:var(--gold2);display:block;margin-bottom:12px}.concept-controls{padding:18px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}.concept-note{font-size:.78rem;color:var(--muted);max-width:610px}.loading-overlay{position:absolute;inset:0;background:rgba(35,31,25,.86);display:none;place-items:center;color:#fff;text-align:center;padding:25px}.loading-overlay.show{display:grid}.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}@keyframes spin{to{transform:rotate(360deg)}}
-    .summary-box{background:#fffcf4;border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px}.summary-box h4{margin:0 0 8px}.summary-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-size:.88rem}.summary-list div{padding:8px;background:#fff;border-radius:10px}
-    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.trust-card{padding:23px;background:#fff;border:1px solid var(--line);border-radius:20px}.trust-card i{color:var(--gold2);font-size:1.7rem}.trust-card h3{font-family:"Playfair Display",serif;font-size:1.4rem;margin:12px 0 6px}.trust-card p{color:var(--muted);font-size:.9rem}
-    .faq{max-width:900px;margin:auto}.faq details{background:#fff;border:1px solid var(--line);border-radius:17px;margin-bottom:11px;padding:18px}.faq summary{cursor:pointer;font-weight:700}.faq p{color:var(--muted)}
-    .cta{background:linear-gradient(120deg,#241f18,#403524);border-radius:30px;color:#fff;padding:44px;display:flex;justify-content:space-between;gap:28px;align-items:center}.cta h2{font-family:"Playfair Display",serif;font-size:3rem;line-height:1;margin:0 0 10px;font-weight:400}.cta p{color:#d8d0c2;max-width:700px}
-    footer{background:#1d1a16;color:#ddd;padding:55px 0 88px}.footer-grid{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:30px}.footer-grid h3,.footer-grid h4{color:#fff}.footer-grid a{display:block;color:#bfb8ae;margin:7px 0}.footer-bottom{border-top:1px solid #3b352d;margin-top:35px;padding-top:20px;display:flex;justify-content:space-between;color:#918b82;font-size:.82rem}
-    .mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:80;background:#fff;border-top:1px solid var(--line);grid-template-columns:repeat(3,1fr)}.mobile-bar a{padding:12px 5px;text-align:center;font-size:.78rem;font-weight:700}.mobile-bar a:nth-child(2){background:#25d366;color:#fff}.mobile-bar a:nth-child(3){background:var(--gold)}
-    .notice{padding:12px 14px;border-radius:13px;background:#fff7dc;border:1px solid #ead388;font-size:.84rem;color:#5c4d1b;margin-bottom:18px}
-    .hidden{display:none!important}
-    @media(max-width:980px){.desktop-nav{display:none}.menu-btn{display:block}.mobile-menu.open{display:block}.hero-grid,.planner-shell,.estimate-layout{grid-template-columns:1fr}.hero{min-height:auto}.assistant{position:relative;top:auto}.trust-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:640px){.topbar{display:none}.wrap{width:min(100% - 24px,1220px)}.navrow{min-height:68px}.brand-main{font-size:1.42rem}.hero-grid{padding:62px 0}.hero-card{padding:21px}.section{padding:65px 0}.step{padding:21px}.grid2,.grid3,.choice-grid,.check-grid,.summary-list{grid-template-columns:1fr}.product-row{grid-template-columns:1fr}.remove-product{width:100%}.step-actions{flex-direction:column-reverse}.step-actions .btn{width:100%}.estimate-range{font-size:2.5rem}.trust-grid{grid-template-columns:1fr}.cta{padding:28px;display:block}.cta h2{font-size:2.35rem}.footer-grid{grid-template-columns:1fr}.footer-bottom{display:block}.mobile-bar{display:grid}footer{padding-bottom:110px}.chat-log{height:310px}.concept-controls{display:block}.concept-controls .btn{width:100%;margin-bottom:11px}}
+:root {
+  --cream: #fbf7f0;
+  --cream2: #f5eee3;
+  --white: #fff;
+  --ink: #1f1f1f;
+  --muted: #6a675f;
+  --gold: #d4af37;
+  --gold2: #b89121;
+  --line: rgba(184, 145, 33, .24);
+  --green: #1e7a51;
+  --shadow: 0 22px 70px rgba(38, 31, 20, .10)
+}
+
+* {
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit
+}
+
+a {
+  color: inherit;
+  text-decoration: none
+}
+
+.serif {
+  font-family: "Playfair Display", Georgia, serif
+}
+
+.wrap {
+  width: min(1220px, calc(100% - 36px));
+  margin: auto
+}
+
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  font-size: .88rem
+}
+
+.topbar .wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 0;
+  color: #5c584f
+}
+
+.topbar a {
+  color: var(--gold2);
+  font-weight: 700
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(251, 247, 240, .96);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line)
+}
+
+.navrow {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px
+}
+
+.brand i {
+  font-size: 2.15rem;
+  color: var(--gold)
+}
+
+.brand-main {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  line-height: .9;
+  font-weight: 400;
+  letter-spacing: -.04em
+}
+
+.brand-sub {
+  font-size: .69rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+  font-weight: 700;
+  margin-top: 7px
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  font-size: .91rem;
+  font-weight: 600;
+  color: #4f4b44
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  color: var(--gold2)
+}
+
+.nav-cta {
+  background: var(--gold);
+  padding: 12px 18px;
+  border-radius: 999px;
+  color: #15120c !important
+}
+
+.menu-btn {
+  display: none;
+  border: 0;
+  background: none;
+  font-size: 1.45rem
+}
+
+.mobile-menu {
+  display: none;
+  padding: 0 0 18px
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line)
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(112deg, rgba(19, 17, 13, .92), rgba(32, 27, 19, .68)), url('bathroom-planner-example.png') center/cover;
+  min-height: 680px;
+  color: #fff;
+  display: flex;
+  align-items: center
+}
+
+.hero:after {
+  content: "";
+  position: absolute;
+  inset: auto -160px -250px auto;
+  width: 620px;
+  height: 620px;
+  border: 1px solid rgba(212, 175, 55, .25);
+  border-radius: 50%
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.18fr .82fr;
+  gap: 58px;
+  align-items: center;
+  padding: 86px 0
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: #e6c867;
+  font-weight: 700;
+  font-size: .82rem
+}
+
+h1 {
+  font-size: clamp(3.5rem, 7.5vw, 7rem);
+  line-height: .9;
+  letter-spacing: -.065em;
+  font-weight: 300;
+  margin: 18px 0 28px
+}
+
+.hero p {
+  font-size: 1.16rem;
+  color: rgba(255, 255, 255, .87);
+  max-width: 720px
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 30px
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 15px 23px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: .2s
+}
+
+.btn:hover {
+  transform: translateY(-2px)
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #16130d
+}
+
+.btn-light {
+  background: #fff;
+  color: #1d1a15
+}
+
+.btn-dark {
+  background: #242019;
+  color: #fff
+}
+
+.btn-outline {
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, .45)
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, .96);
+  color: var(--ink);
+  padding: 28px;
+  border-radius: 28px;
+  box-shadow: var(--shadow)
+}
+
+.hero-card h2 {
+  font-size: 2rem;
+  margin: 0 0 8px
+}
+
+.hero-card p {
+  font-size: .96rem;
+  color: var(--muted);
+  margin: 0 0 18px
+}
+
+.mini-step {
+  display: flex;
+  gap: 13px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line)
+}
+
+.mini-step:first-of-type {
+  border-top: 0
+}
+
+.mini-step span {
+  width: 32px;
+  height: 32px;
+  background: var(--cream2);
+  color: var(--gold2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  flex: none
+}
+
+.section {
+  padding: 88px 0
+}
+
+.section-white {
+  background: #fff
+}
+
+.section-dark {
+  background: #211e18;
+  color: #fff
+}
+
+.section-head {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto 42px
+}
+
+.section-head h2 {
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+  font-weight: 300;
+  margin: 12px 0
+}
+
+.section-head p {
+  font-size: 1.08rem;
+  color: var(--muted)
+}
+
+.section-dark .section-head p {
+  color: #c8c1b5
+}
+
+.planner-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 26px;
+  align-items: start
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow)
+}
+
+.planner-main {
+  overflow: hidden
+}
+
+.progress-wrap {
+  padding: 24px 26px 18px;
+  border-bottom: 1px solid var(--line);
+  background: #fffdf9
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: .87rem;
+  font-weight: 700
+}
+
+.progress-track {
+  height: 8px;
+  background: #eee7dc;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px
+}
+
+.progress-bar {
+  height: 100%;
+  width: 16.66%;
+  background: linear-gradient(90deg, var(--gold2), var(--gold));
+  transition: .3s
+}
+
+.step {
+  display: none;
+  padding: 30px
+}
+
+.step.active {
+  display: block
+}
+
+.step h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.35rem;
+  line-height: 1;
+  margin: 0 0 8px;
+  font-weight: 400
+}
+
+.step-intro {
+  color: var(--muted);
+  margin: 0 0 25px
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px
+}
+
+.field {
+  margin-bottom: 17px
+}
+
+.field label {
+  display: block;
+  font-size: .88rem;
+  font-weight: 700;
+  margin: 0 0 7px
+}
+
+.field small {
+  display: block;
+  color: var(--muted);
+  margin-top: 6px
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #d9d1c4;
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 15px;
+  outline: none;
+  transition: .2s
+}
+
+.input:focus {
+  border-color: var(--gold2);
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, .12)
+}
+
+textarea.input {
+  min-height: 118px;
+  resize: vertical
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 22px
+}
+
+.choice {
+  position: relative
+}
+
+.choice input {
+  position: absolute;
+  opacity: 0
+}
+
+.choice label {
+  display: block;
+  height: 100%;
+  border: 1px solid #d9d1c4;
+  border-radius: 16px;
+  padding: 15px;
+  background: #fff;
+  cursor: pointer;
+  transition: .2s
+}
+
+.choice label strong {
+  display: block
+}
+
+.choice label span {
+  display: block;
+  font-size: .84rem;
+  color: var(--muted);
+  margin-top: 3px
+}
+
+.choice input:checked+label {
+  border-color: var(--gold2);
+  background: #fffbef;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, .10)
+}
+
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 22px
+}
+
+.check {
+  position: relative
+}
+
+.check input {
+  position: absolute;
+  opacity: 0
+}
+
+.check label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid #ddd5ca;
+  border-radius: 13px;
+  cursor: pointer;
+  font-size: .9rem;
+  height: 100%
+}
+
+.check label:before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 1px solid #bdb4a6;
+  border-radius: 5px;
+  flex: none
+}
+
+.check input:checked+label {
+  border-color: var(--gold2);
+  background: #fffbef
+}
+
+.check input:checked+label:before {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 4px #fff
+}
+
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px
+}
+
+.step-actions .btn {
+  min-width: 135px
+}
+
+.assistant {
+  position: sticky;
+  top: 102px;
+  overflow: hidden
+}
+
+.assistant-head {
+  padding: 21px;
+  background: #242019;
+  color: #fff
+}
+
+.assistant-title {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.assistant-title .orb {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f8dc82, #b68b18);
+  box-shadow: 0 0 24px rgba(212, 175, 55, .35)
+}
+
+.assistant-head h3 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.55rem;
+  font-weight: 400
+}
+
+.assistant-head p {
+  margin: 5px 0 0;
+  color: #d1c9bb;
+  font-size: .85rem
+}
+
+.quick-prompts {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding: 13px;
+  border-bottom: 1px solid var(--line);
+  background: #fffdf8
+}
+
+.quick-prompts button {
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: .76rem;
+  cursor: pointer
+}
+
+.chat-log {
+  height: 350px;
+  overflow: auto;
+  padding: 15px;
+  background: #faf7f1
+}
+
+.bubble {
+  max-width: 91%;
+  padding: 11px 13px;
+  border-radius: 15px;
+  margin: 0 0 11px;
+  font-size: .88rem;
+  white-space: pre-wrap
+}
+
+.bubble.ai {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px
+}
+
+.bubble.user {
+  background: #26221c;
+  color: #fff;
+  margin-left: auto;
+  border-bottom-right-radius: 4px
+}
+
+.bubble.error {
+  background: #fff0ed;
+  color: #9a2f22;
+  border: 1px solid #efc5bc
+}
+
+.typing {
+  color: var(--muted);
+  font-style: italic
+}
+
+.chat-compose {
+  padding: 13px;
+  background: #fff;
+  border-top: 1px solid var(--line)
+}
+
+.chat-compose textarea {
+  min-height: 74px
+}
+
+.chat-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px
+}
+
+.chat-row .btn {
+  padding: 10px 14px;
+  font-size: .83rem
+}
+
+.file-label {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 12px;
+  cursor: pointer
+}
+
+.file-label input {
+  display: none
+}
+
+.photo-name {
+  font-size: .74rem;
+  color: var(--muted);
+  margin-top: 6px
+}
+
+.route-panel[hidden] {
+  display: none
+}
+
+.route-banner {
+  background: #f8f1e2;
+  border: 1px solid rgba(184, 145, 55, .28);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 20px
+}
+
+.route-banner strong {
+  display: block;
+  color: var(--gold2);
+  margin-bottom: 4px
+}
+
+.product-list {
+  display: grid;
+  gap: 12px
+}
+
+.product-row {
+  display: grid;
+  grid-template-columns: 1fr 1.65fr 1.25fr .65fr .55fr auto;
+  gap: 8px;
+  align-items: end;
+  padding: 14px;
+  background: #faf7f1;
+  border-radius: 16px
+}
+
+.product-row .field {
+  margin: 0
+}
+
+.product-actions {
+  display: flex;
+  gap: 7px;
+  align-items: center
+}
+
+.analyse-product,
+.remove-product {
+  border: 0;
+  border-radius: 11px;
+  height: 48px;
+  cursor: pointer
+}
+
+.analyse-product {
+  background: #27231c;
+  color: #fff;
+  padding: 0 13px;
+  white-space: nowrap
+}
+
+.remove-product {
+  background: #efe5da;
+  width: 48px
+}
+
+.product-status {
+  grid-column: 1/-1;
+  font-size: .78rem;
+  color: var(--muted);
+  min-height: 18px
+}
+
+.product-status.ok {
+  color: #277044
+}
+
+.product-status.error {
+  color: #9a2f22
+}
+
+.estimate-layout {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 18px
+}
+
+.estimate-card {
+  background: #27231c;
+  color: #fff;
+  border-radius: 23px;
+  padding: 26px
+}
+
+.estimate-range {
+  font-family: "Playfair Display", serif;
+  font-size: 3.2rem;
+  line-height: 1;
+  color: #efcf70;
+  margin: 12px 0
+}
+
+.estimate-card p {
+  color: #d5cec1
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px
+}
+
+.metric {
+  background: rgba(255, 255, 255, .08);
+  border-radius: 14px;
+  padding: 13px
+}
+
+.metric span {
+  display: block;
+  color: #cfc5b5;
+  font-size: .78rem
+}
+
+.metric strong {
+  font-size: 1.05rem
+}
+
+.breakdown {
+  border: 1px solid var(--line);
+  border-radius: 21px;
+  padding: 20px;
+  background: #fff
+}
+
+.break-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #ddd4c7
+}
+
+.break-row:last-child {
+  border: 0
+}
+
+.break-row span:last-child {
+  font-weight: 800
+}
+
+.confidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #e9f7ef;
+  color: #17693f;
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-weight: 700;
+  font-size: .82rem
+}
+
+.concept-box {
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 23px;
+  overflow: hidden;
+  background: #fff
+}
+
+.concept-preview {
+  aspect-ratio: 3/2;
+  background: #e9e1d5 center/cover;
+  display: grid;
+  place-items: center;
+  position: relative
+}
+
+.concept-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block
+}
+
+.concept-placeholder {
+  text-align: center;
+  padding: 30px;
+  color: #5d584e
+}
+
+.concept-placeholder i {
+  font-size: 3rem;
+  color: var(--gold2);
+  display: block;
+  margin-bottom: 12px
+}
+
+.concept-controls {
+  padding: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center
+}
+
+.concept-note {
+  font-size: .78rem;
+  color: var(--muted);
+  max-width: 610px
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(35, 31, 25, .86);
+  display: none;
+  place-items: center;
+  color: #fff;
+  text-align: center;
+  padding: 25px
+}
+
+.loading-overlay.show {
+  display: grid
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(255, 255, 255, .2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+.summary-box {
+  background: #fffcf4;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 18px
+}
+
+.summary-box h4 {
+  margin: 0 0 8px
+}
+
+.summary-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  font-size: .88rem
+}
+
+.summary-list div {
+  padding: 8px;
+  background: #fff;
+  border-radius: 10px
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px
+}
+
+.trust-card {
+  padding: 23px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px
+}
+
+.trust-card i {
+  color: var(--gold2);
+  font-size: 1.7rem
+}
+
+.trust-card h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  margin: 12px 0 6px
+}
+
+.trust-card p {
+  color: var(--muted);
+  font-size: .9rem
+}
+
+.faq {
+  max-width: 900px;
+  margin: auto
+}
+
+.faq details {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  margin-bottom: 11px;
+  padding: 18px
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 700
+}
+
+.faq p {
+  color: var(--muted)
+}
+
+.cta {
+  background: linear-gradient(120deg, #241f18, #403524);
+  border-radius: 30px;
+  color: #fff;
+  padding: 44px;
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  align-items: center
+}
+
+.cta h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0 0 10px;
+  font-weight: 400
+}
+
+.cta p {
+  color: #d8d0c2;
+  max-width: 700px
+}
+
+footer {
+  background: #1d1a16;
+  color: #ddd;
+  padding: 55px 0 88px
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr repeat(3, 1fr);
+  gap: 30px
+}
+
+.footer-grid h3,
+.footer-grid h4 {
+  color: #fff
+}
+
+.footer-grid a {
+  display: block;
+  color: #bfb8ae;
+  margin: 7px 0
+}
+
+.footer-bottom {
+  border-top: 1px solid #3b352d;
+  margin-top: 35px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: #918b82;
+  font-size: .82rem
+}
+
+.mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.mobile-bar a {
+  padding: 12px 5px;
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 700
+}
+
+.mobile-bar a:nth-child(2) {
+  background: #25d366;
+  color: #fff
+}
+
+.mobile-bar a:nth-child(3) {
+  background: var(--gold)
+}
+
+.notice {
+  padding: 12px 14px;
+  border-radius: 13px;
+  background: #fff7dc;
+  border: 1px solid #ead388;
+  font-size: .84rem;
+  color: #5c4d1b;
+  margin-bottom: 18px
+}
+
+.hidden {
+  display: none !important
+}
+
+@media(max-width:980px) {
+  .desktop-nav {
+    display: none
+  }
+
+  .menu-btn {
+    display: block
+  }
+
+  .mobile-menu.open {
+    display: block
+  }
+
+  .hero-grid,
+  .planner-shell,
+  .estimate-layout {
+    grid-template-columns: 1fr
+  }
+
+  .hero {
+    min-height: auto
+  }
+
+  .assistant {
+    position: relative;
+    top: auto
+  }
+
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+
+@media(max-width:640px) {
+  .topbar {
+    display: none
+  }
+
+  .wrap {
+    width: min(100% - 24px, 1220px)
+  }
+
+  .navrow {
+    min-height: 68px
+  }
+
+  .brand-main {
+    font-size: 1.42rem
+  }
+
+  .hero-grid {
+    padding: 62px 0
+  }
+
+  .hero-card {
+    padding: 21px
+  }
+
+  .section {
+    padding: 65px 0
+  }
+
+  .step {
+    padding: 21px
+  }
+
+  .grid2,
+  .grid3,
+  .choice-grid,
+  .check-grid,
+  .summary-list {
+    grid-template-columns: 1fr
+  }
+
+  .product-row {
+    grid-template-columns: 1fr
+  }
+
+  .remove-product {
+    width: 100%
+  }
+
+  .step-actions {
+    flex-direction: column-reverse
+  }
+
+  .step-actions .btn {
+    width: 100%
+  }
+
+  .estimate-range {
+    font-size: 2.5rem
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr
+  }
+
+  .cta {
+    padding: 28px;
+    display: block
+  }
+
+  .cta h2 {
+    font-size: 2.35rem
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr
+  }
+
+  .footer-bottom {
+    display: block
+  }
+
+  .mobile-bar {
+    display: grid
+  }
+
+  footer {
+    padding-bottom: 110px
+  }
+
+  .chat-log {
+    height: 310px
+  }
+
+  .concept-controls {
+    display: block
+  }
+
+  .concept-controls .btn {
+    width: 100%;
+    margin-bottom: 11px
+  }
+}
   </style>
 </head>
 <body>
@@ -139,7 +1312,7 @@
         <div>
           <div class="kicker">Bathroom planning, pricing &amp; visualisation</div>
           <h1 class="serif">Plan it before we build it.</h1>
-          <p>Describe the room, choose the fittings and finish, add products you like, receive an early cost and timescale guide, and generate a bathroom concept image. Not sure about something? Ask the bathroom assistant at any point.</p>
+          <p>Describe the room, choose the fittings and finish, add products you like, build a detailed project brief, organise product links, speak to a conversational bathroom assistant and generate a bathroom concept image. Not sure about something? Ask the bathroom assistant at any point.</p>
           <div class="buttons"><a href="#planner" class="btn btn-gold"><i class="fa-solid fa-wand-magic-sparkles"></i> Start my bathroom plan</a><button class="btn btn-outline" data-quick="I do not know where to start. Please guide me through planning my bathroom."><i class="fa-solid fa-comments"></i> Ask the AI helper</button></div>
         </div>
         <aside class="hero-card">
@@ -174,27 +1347,29 @@
               <section class="step active" data-step="0">
                 <h3>What are you planning?</h3><p class="step-intro">Start with the project type and approximate dimensions.</p>
                 <div class="choice-grid">
-                  <div class="choice"><input type="radio" id="projectBathroom" name="projectType" value="Full bathroom renovation"><label for="projectBathroom"><strong>Full bathroom renovation</strong><span>Complete strip-out and new bathroom.</span></label></div>
-                  <div class="choice"><input type="radio" id="projectEnsuite" name="projectType" value="Existing en-suite renovation"><label for="projectEnsuite"><strong>Existing en-suite renovation</strong><span>Replace or redesign an existing en-suite.</span></label></div>
-                  <div class="choice"><input type="radio" id="projectNewEnsuite" name="projectType" value="New en-suite"><label for="projectNewEnsuite"><strong>New en-suite</strong><span>Create a new en-suite inside a bedroom, loft or another room.</span></label></div>
-                  <div class="choice"><input type="radio" id="projectShower" name="projectType" value="Shower room"><label for="projectShower"><strong>Shower room</strong><span>Shower-led renovation without a bath.</span></label></div>
-                  <div class="choice"><input type="radio" id="projectCloak" name="projectType" value="Cloakroom"><label for="projectCloak"><strong>Cloakroom</strong><span>Compact WC and basin project.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectBathroom" name="projectType" value="Full bathroom refurbishment"><label for="projectBathroom"><strong>Full bathroom refurbishment</strong><span>Strip out and replace an existing bathroom.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectEnsuite" name="projectType" value="Existing en-suite refurbishment"><label for="projectEnsuite"><strong>Existing en-suite refurbishment</strong><span>Replace or redesign an en-suite already in use.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectNewEnsuite" name="projectType" value="New en-suite installation"><label for="projectNewEnsuite"><strong>New en-suite installation</strong><span>Create a completely new en-suite inside an ordinary room or new space.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectShower" name="projectType" value="Existing shower room refurbishment"><label for="projectShower"><strong>Shower room refurbishment</strong><span>Replace an existing shower-led bathroom.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectCloak" name="projectType" value="Existing cloakroom refurbishment"><label for="projectCloak"><strong>Existing cloakroom refurbishment</strong><span>Replace a WC and basin already in the room.</span></label></div>
+                  <div class="choice"><input type="radio" id="projectNewCloak" name="projectType" value="New cloakroom"><label for="projectNewCloak"><strong>New cloakroom</strong><span>Create a completely new WC and basin room.</span></label></div>
                   <div class="choice"><input type="radio" id="projectRefresh" name="projectType" value="Bathroom refresh"><label for="projectRefresh"><strong>Bathroom refresh</strong><span>Targeted upgrades with key items retained.</span></label></div>
                 </div>
                 <div class="grid3">
-                  <div class="field"><label id="roomLengthLabel" for="roomLength">Room length (metres)</label><input class="input" id="roomLength" name="roomLength" type="number" min="1" max="10" step="0.1" placeholder="e.g. 2.5"></div>
-                  <div class="field"><label id="roomWidthLabel" for="roomWidth">Room width (metres)</label><input class="input" id="roomWidth" name="roomWidth" type="number" min=".8" max="10" step="0.1" placeholder="e.g. 1.7"></div>
-                  <div class="field"><label id="ceilingHeightLabel" for="ceilingHeight">Ceiling height (metres)</label><input class="input" id="ceilingHeight" name="ceilingHeight" type="number" min="1.8" max="5" step="0.1" placeholder="e.g. 2.5"></div>
+                  <div class="field"><label for="roomLength">Room length (metres)</label><input class="input" id="roomLength" name="roomLength" type="number" min="1" max="10" step="0.1" placeholder="e.g. 2.5"></div>
+                  <div class="field"><label for="roomWidth">Room width (metres)</label><input class="input" id="roomWidth" name="roomWidth" type="number" min=".8" max="10" step="0.1" placeholder="e.g. 1.7"></div>
+                  <div class="field"><label for="ceilingHeight">Ceiling height (metres)</label><input class="input" id="ceilingHeight" name="ceilingHeight" type="number" min="1.8" max="5" step="0.1" placeholder="e.g. 2.5"></div>
                 </div>
                 <div class="field"><label for="projectDescription">Describe the room or what you want</label><textarea class="input" id="projectDescription" name="projectDescription" placeholder="Example: Remove the bath and create a tiled walk-in shower. I want warm stone tiles and a wall-hung toilet."></textarea><small>Not sure? Type it here and press “Ask AI about my description” below.</small></div>
                 <button type="button" class="btn btn-dark ask-description"><i class="fa-solid fa-comment-dots"></i> Ask AI about my description</button>
-                <div class="step-actions"><span></span><button type="button" class="btn btn-gold next-step">Next: current layout <i class="fa-solid fa-arrow-right"></i></button></div>
+                <div class="step-actions"><span></span><button type="button" class="btn btn-gold next-step">Next: project details <i class="fa-solid fa-arrow-right"></i></button></div>
               </section>
-              <section class="step" data-step="1">
-                <h3 id="stepTwoHeading">What is there now?</h3>
-                <p class="step-intro" id="stepTwoIntro">Select everything currently in the room, then tell us how much the layout may change.</p>
 
-                <div id="existingProjectQuestions">
+              <section class="step" data-step="1">
+                <h3 id="routeHeading">Tell us about the existing room</h3><p class="step-intro" id="routeIntro">The questions change automatically depending on whether this is a refurbishment or a completely new room.</p>
+
+                <div id="existingWetRoomPanel" class="route-panel">
+                  <div class="route-banner"><strong>Existing bathroom route</strong>This room already contains bathroom fittings, so we need to understand what is there now and how much the layout may change.</div>
                   <div class="check-grid">
                     <div class="check"><input type="checkbox" id="currentBath" name="currentItems" value="Bath"><label for="currentBath">Bath</label></div>
                     <div class="check"><input type="checkbox" id="currentOverBath" name="currentItems" value="Shower over bath"><label for="currentOverBath">Shower over bath</label></div>
@@ -204,47 +1379,33 @@
                     <div class="check"><input type="checkbox" id="currentVanity" name="currentItems" value="Vanity unit"><label for="currentVanity">Vanity unit</label></div>
                     <div class="check"><input type="checkbox" id="currentRadiator" name="currentItems" value="Radiator"><label for="currentRadiator">Radiator</label></div>
                     <div class="check"><input type="checkbox" id="currentExtractor" name="currentItems" value="Extractor fan"><label for="currentExtractor">Extractor fan</label></div>
-                    <div class="check"><input type="checkbox" id="currentEmpty" name="currentItems" value="Room is empty"><label for="currentEmpty">Room is empty</label></div>
                     <div class="check"><input type="checkbox" id="currentUnknown" name="currentItems" value="Not sure"><label for="currentUnknown">Not sure</label></div>
                   </div>
                   <div class="field"><label for="layoutChange">Proposed layout</label><select class="input" id="layoutChange" name="layoutChange"><option value="">Choose when ready</option><option value="Keep layout similar">Keep the layout broadly similar</option><option value="Move one item">Move one main item</option><option value="Complete layout change">Completely redesign the layout</option><option value="Not sure">Not sure — recommend a route</option></select></div>
-                  <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
+                  <div class="grid2"><div class="field"><label for="doorWindow">Door and window notes</label><input class="input" id="doorWindow" name="doorWindow" placeholder="e.g. door opposite bath, window on end wall"></div><div class="field"><label for="drainageKnown">Existing drainage / soil pipe</label><select class="input" id="drainageKnown" name="drainageKnown"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Keep existing positions">Keep existing positions</option><option value="Some movement expected">Some movement expected</option><option value="Major movement expected">Major movement expected</option></select></div></div>
                 </div>
 
-                <div id="newEnsuiteQuestions" hidden>
-                  <div class="notice"><strong>This is a new room:</strong> instead of asking which bathroom fittings are already there, the planner needs to understand where the en-suite will be built and how close it is to water, drainage, electrics and ventilation. Draft 2 uses a £7,000 starting benchmark for a compact budget HMO en-suite beside existing services, then adjusts for the real construction and service route.</div>
-
-                  <h4 style="margin:24px 0 12px">Where will the new en-suite go?</h4>
-                  <div class="choice-grid">
-                    <div class="choice"><input type="radio" id="ensuiteBedroom" name="ensuiteLocation" value="Inside an existing bedroom"><label for="ensuiteBedroom"><strong>Inside a bedroom</strong><span>Use part of an existing bedroom.</span></label></div>
-                    <div class="choice"><input type="radio" id="ensuiteLoft" name="ensuiteLocation" value="Loft or attic"><label for="ensuiteLoft"><strong>Loft or attic</strong><span>New en-suite within a loft area or conversion.</span></label></div>
-                    <div class="choice"><input type="radio" id="ensuiteSpare" name="ensuiteLocation" value="Spare room or box room"><label for="ensuiteSpare"><strong>Spare / box room</strong><span>Convert an existing small room.</span></label></div>
-                    <div class="choice"><input type="radio" id="ensuiteCupboard" name="ensuiteLocation" value="Dressing room, wardrobe or cupboard"><label for="ensuiteCupboard"><strong>Wardrobe / cupboard</strong><span>Convert an enclosed storage area.</span></label></div>
-                    <div class="choice"><input type="radio" id="ensuiteExtension" name="ensuiteLocation" value="Extension or newly built area"><label for="ensuiteExtension"><strong>Extension / new area</strong><span>Install within a new or unfinished space.</span></label></div>
-                    <div class="choice"><input type="radio" id="ensuiteOther" name="ensuiteLocation" value="Another existing room"><label for="ensuiteOther"><strong>Another room</strong><span>Convert a different part of the property.</span></label></div>
+                <div id="newRoomPanel" class="route-panel" hidden>
+                  <div class="route-banner"><strong>Completely new room route</strong>There are no existing bathroom fittings here. We need to understand where the new room will sit and how water, drainage, ventilation, walls and electrics could reach it.</div>
+                  <div class="field"><label>Where will the new en-suite or cloakroom be formed?</label><div class="choice-grid">
+                    <div class="choice"><input type="radio" id="newLocBedroom" name="newRoomLocation" value="Inside an existing bedroom"><label for="newLocBedroom"><strong>Inside a bedroom</strong><span>Partition off part of an existing bedroom.</span></label></div>
+                    <div class="choice"><input type="radio" id="newLocLoft" name="newRoomLocation" value="Loft or loft conversion"><label for="newLocLoft"><strong>Loft / loft conversion</strong><span>May involve sloping ceilings and longer service routes.</span></label></div>
+                    <div class="choice"><input type="radio" id="newLocOther" name="newRoomLocation" value="Part of another existing room"><label for="newLocOther"><strong>Another room</strong><span>Convert part of an office, dressing room or similar space.</span></label></div>
+                    <div class="choice"><input type="radio" id="newLocExtension" name="newRoomLocation" value="Extension, garage or outbuilding"><label for="newLocExtension"><strong>Extension / garage</strong><span>A new space with its own construction and service route.</span></label></div>
+                    <div class="choice"><input type="radio" id="newLocUnknown" name="newRoomLocation" value="Not sure"><label for="newLocUnknown"><strong>Not sure yet</strong><span>Let the assistant help identify the most realistic route.</span></label></div>
+                  </div></div>
+                  <div class="grid2"><div class="field"><label for="projectUse">How will it be used?</label><select class="input" id="projectUse" name="projectUse"><option value="">Choose when ready</option><option value="Main homeowner en-suite">Main homeowner en-suite</option><option value="Guest en-suite">Guest en-suite</option><option value="Landlord, Airbnb or HMO en-suite">Landlord / Airbnb / HMO</option><option value="Accessible or future-proofed room">Accessible / future-proofed</option><option value="Not sure">Not sure</option></select></div><div class="field"><label for="serviceProximity">Relationship to an existing bathroom</label><select class="input" id="serviceProximity" name="serviceProximity"><option value="">Choose when ready</option><option value="Directly beside an existing bathroom">Directly beside an existing bathroom</option><option value="Directly above or below an existing bathroom">Directly above or below an existing bathroom</option><option value="Same floor but not beside existing services">Same floor, but not beside it</option><option value="Far from existing bathroom and drainage">Far from existing bathroom / drainage</option><option value="Unknown">Not sure</option></select></div></div>
+                  <div class="grid2"><div class="field"><label for="soilAccess">Toilet soil-pipe route</label><select class="input" id="soilAccess" name="soilAccess"><option value="">Choose when ready</option><option value="Existing soil pipe very close">Existing soil pipe very close</option><option value="External wall suitable for a new soil connection">External wall may allow a new connection</option><option value="Long or difficult gravity route likely">Long / difficult gravity route</option><option value="Pumped waste may need consideration">Pumped waste may need consideration</option><option value="Unknown">Not sure</option></select></div><div class="field"><label for="waterAccess">Hot and cold water</label><select class="input" id="waterAccess" name="waterAccess"><option value="">Choose when ready</option><option value="Hot and cold supplies nearby">Supplies nearby</option><option value="Supplies elsewhere on the same floor">Elsewhere on same floor</option><option value="New supplies likely from another floor">Likely from another floor</option><option value="Unknown">Not sure</option></select></div></div>
+                  <div class="grid2"><div class="field"><label for="ventRoute">Extractor route</label><select class="input" id="ventRoute" name="ventRoute"><option value="">Choose when ready</option><option value="Directly through an external wall">Directly through external wall</option><option value="Through the roof">Through roof</option><option value="Ducted internally to outside">Internal duct route to outside</option><option value="No route identified">No route identified yet</option><option value="Unknown">Not sure</option></select></div><div class="field"><label for="electricsScope">Electrical work</label><select class="input" id="electricsScope" name="electricsScope"><option value="">Choose when ready</option><option value="Completely new bathroom electrics expected">Completely new bathroom electrics</option><option value="Nearby circuit may be available">Nearby circuit may be available</option><option value="Unknown">Not sure</option></select></div></div>
+                  <label style="display:block;font-weight:700;margin:4px 0 10px">Likely room-building work</label><div class="check-grid">
+                    <div class="check"><input type="checkbox" id="workPartitions" name="newRoomWorks" value="New partition walls"><label for="workPartitions">Partition walls</label></div>
+                    <div class="check"><input type="checkbox" id="workDoorway" name="newRoomWorks" value="New doorway"><label for="workDoorway">New doorway</label></div>
+                    <div class="check"><input type="checkbox" id="workSound" name="newRoomWorks" value="Sound insulation"><label for="workSound">Sound insulation</label></div>
+                    <div class="check"><input type="checkbox" id="workFloor" name="newRoomWorks" value="Raised floor or service boxing"><label for="workFloor">Raised floor / boxing</label></div>
+                    <div class="check"><input type="checkbox" id="workLoft" name="newRoomWorks" value="Sloping ceiling or roof alterations"><label for="workLoft">Roof / sloping ceiling work</label></div>
+                    <div class="check"><input type="checkbox" id="workUnknown" name="newRoomWorks" value="Not sure"><label for="workUnknown">Not sure</label></div>
                   </div>
-
-                  <div class="grid2">
-                    <div class="field"><label for="ensuiteUse">How will it be used?</label><select class="input" id="ensuiteUse" name="ensuiteUse"><option value="">Choose when ready</option><option value="Main bedroom en-suite">Main bedroom / everyday use</option><option value="Guest or family en-suite">Guest or family use</option><option value="Airbnb or short-let en-suite">Airbnb / short-let</option><option value="Rental or HMO en-suite">Rental / HMO</option><option value="Not sure">Not sure yet</option></select></div>
-                    <div class="field"><label for="existingSpace">What is the space now?</label><select class="input" id="existingSpace" name="existingSpace"><option value="">Choose when ready</option><option value="Open area within an occupied bedroom">Open area within a bedroom</option><option value="Existing separate finished room">Existing separate finished room</option><option value="Existing cupboard or wardrobe">Cupboard / wardrobe</option><option value="Unconverted loft area">Unconverted loft area</option><option value="New shell or unfinished area">New shell / unfinished area</option><option value="Not sure">Not sure</option></select></div>
-                  </div>
-
-                  <div class="grid2">
-                    <div class="field"><label for="bathroomRelationship">Position compared with an existing bathroom</label><select class="input" id="bathroomRelationship" name="bathroomRelationship"><option value="">Choose when ready</option><option value="Directly beside an existing bathroom">Directly beside an existing bathroom</option><option value="Directly above or below an existing bathroom">Directly above or below an existing bathroom</option><option value="Same floor and close to an existing bathroom">Same floor and fairly close</option><option value="Remote from existing bathrooms and plumbing">Far from existing bathrooms / plumbing</option><option value="No existing bathroom nearby">No bathroom nearby</option><option value="Unknown">Not sure</option></select></div>
-                    <div class="field"><label for="waterNearby">Known water supplies nearby</label><select class="input" id="waterNearby" name="waterNearby"><option value="">Choose when ready</option><option value="Hot and cold supplies nearby">Hot and cold supplies nearby</option><option value="Cold supply only nearby">Cold supply only nearby</option><option value="No known water supplies nearby">No known supplies nearby</option><option value="Unknown">Not sure</option></select></div>
-                  </div>
-
-                  <div class="grid2">
-                    <div class="field"><label for="soilRoute">Likely toilet / soil-pipe route</label><select class="input" id="soilRoute" name="soilRoute"><option value="">Choose when ready</option><option value="Existing soil pipe on the same or adjoining wall">Existing soil pipe on same / adjoining wall</option><option value="Existing soil pipe nearby but route needs checking">Soil pipe nearby, route needs checking</option><option value="External wall available for a new soil connection">External wall available for new connection</option><option value="Long or difficult gravity drainage route">Long / difficult gravity route</option><option value="Pumped waste may be required">Pumped waste may be required</option><option value="Unknown">Not sure</option></select></div>
-                    <div class="field"><label for="ventilationRoute">Possible extractor route</label><select class="input" id="ventilationRoute" name="ventilationRoute"><option value="">Choose when ready</option><option value="Directly through an external wall">Directly through external wall</option><option value="Through ceiling, loft or roof">Through ceiling / loft / roof</option><option value="Longer duct route required">Longer duct route</option><option value="No obvious external route">No obvious route</option><option value="Unknown">Not sure</option></select></div>
-                  </div>
-
-                  <div class="grid2">
-                    <div class="field"><label for="roomConstruction">Walls and doorway</label><select class="input" id="roomConstruction" name="roomConstruction"><option value="">Choose when ready</option><option value="New stud walls and doorway required">New stud walls and doorway required</option><option value="Some enclosing walls already exist">Some walls already exist</option><option value="Existing enclosed room with a doorway">Existing enclosed room / doorway</option><option value="Loft construction and enclosure required">Loft construction / enclosure required</option><option value="Unknown">Not sure</option></select></div>
-                    <div class="field"><label for="electricsNearby">Electrical supply and lighting</label><select class="input" id="electricsNearby" name="electricsNearby"><option value="">Choose when ready</option><option value="Existing bedroom electrics nearby">Existing room electrics nearby</option><option value="New bathroom circuit or substantial electrical work expected">New circuit / substantial work expected</option><option value="Unknown">Not sure</option></select></div>
-                  </div>
-
-                  <div class="field"><label for="ensuitePositionNotes">Anything else about the proposed position?</label><textarea class="input" id="ensuitePositionNotes" name="ensuitePositionNotes" placeholder="Example: small corner of a rear bedroom, directly beside the main bathroom, external wall on one side."></textarea></div>
+                  <div class="field"><label for="newRoomNotes">Anything important about the proposed location?</label><textarea class="input" id="newRoomNotes" name="newRoomNotes" placeholder="Example: It will take the corner of a bedroom and the main bathroom is directly through the wall."></textarea></div>
                 </div>
 
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Next: new fittings <i class="fa-solid fa-arrow-right"></i></button></div>
@@ -255,7 +1416,6 @@
                 <div class="check-grid">
                   <div class="check"><input type="checkbox" id="wantBath" name="desiredItems" value="Bath"><label for="wantBath">Bath</label></div>
                   <div class="check"><input type="checkbox" id="wantOverBath" name="desiredItems" value="Shower over bath"><label for="wantOverBath">Shower over bath</label></div>
-                  <div class="check"><input type="checkbox" id="wantStandardShower" name="desiredItems" value="Standard shower tray and enclosure"><label for="wantStandardShower">Standard shower tray / enclosure</label></div>
                   <div class="check"><input type="checkbox" id="wantWalkin" name="desiredItems" value="Walk-in shower"><label for="wantWalkin">Walk-in shower</label></div>
                   <div class="check"><input type="checkbox" id="wantWetroom" name="desiredItems" value="Tiled wet-room floor"><label for="wantWetroom">Tiled wet-room floor</label></div>
                   <div class="check"><input type="checkbox" id="wantStandardWC" name="desiredItems" value="Standard toilet"><label for="wantStandardWC">Standard toilet</label></div>
@@ -293,20 +1453,20 @@
                 <h3>Property, access and products</h3><p class="step-intro">Add the practical details and any product links already found.</p>
                 <div class="grid3"><div class="field"><label for="propertyType">Property type</label><select class="input" id="propertyType" name="propertyType"><option value="">Choose when ready</option><option value="House">House</option><option value="Ground-floor flat">Ground-floor flat</option><option value="Upper-floor flat with lift">Upper-floor flat with lift</option><option value="Upper-floor flat without lift">Upper-floor flat without lift</option></select></div><div class="field"><label for="bathroomFloor">Bathroom floor</label><select class="input" id="bathroomFloor" name="bathroomFloor"><option value="">Choose when ready</option><option value="Ground floor">Ground floor</option><option value="First floor">First floor</option><option value="Second floor or higher">Second floor or higher</option><option value="Loft conversion">Loft conversion</option></select></div><div class="field"><label for="access">Access</label><select class="input" id="access" name="access"><option value="">Choose when ready</option><option value="Straightforward">Straightforward</option><option value="Narrow stairs or hallway">Narrow stairs or hallway</option><option value="Difficult access">Difficult access</option><option value="Not sure">Not sure</option></select></div></div>
                 <div class="grid3"><div class="field"><label for="floorStructure">Floor structure</label><select class="input" id="floorStructure" name="floorStructure"><option value="">Choose when ready</option><option value="Unknown">Not sure</option><option value="Timber floorboards or joists">Timber floorboards / joists</option><option value="Concrete">Concrete</option><option value="Existing tiled floor">Existing tiled floor</option></select></div><div class="field"><label for="postcode">Postcode</label><input class="input" id="postcode" name="postcode" placeholder="e.g. SW6 6BW"></div><div class="field"><label for="parking">Parking</label><select class="input" id="parking" name="parking"><option value="">Choose when ready</option><option value="Free driveway">Free driveway</option><option value="Free street parking">Free street parking</option><option value="Visitor permit">Visitor permit</option><option value="Paid parking">Paid parking</option><option value="Difficult or unknown">Difficult / unknown</option></select></div></div>
-                <div class="notice"><strong>Product links:</strong> Draft 2 stores the link and displayed price. Baseline estimates already contain a provisional product allowance; entered links only increase the estimate where their combined price exceeds that allowance. The AI may still ask for dimensions, screenshots or specifications.</div>
+                <div class="notice"><strong>Product links:</strong> paste a retailer link and press <strong>Analyse link</strong>. The planner will try to collect the product name, price and available specifications. Some retailers block automatic reading, so manual details or a screenshot may still be needed.</div>
                 <div id="productList" class="product-list"></div>
                 <button type="button" id="addProduct" class="btn btn-light"><i class="fa-solid fa-plus"></i> Add a product</button>
                 <div class="step-actions"><button type="button" class="btn btn-light prev-step"><i class="fa-solid fa-arrow-left"></i> Back</button><button type="button" class="btn btn-gold next-step">Calculate my estimate <i class="fa-solid fa-calculator"></i></button></div>
               </section>
 
               <section class="step" data-step="5">
-                <h3>Your early project estimate</h3><p class="step-intro">This is an indicative planning range based on the information entered, not a fixed quotation.</p>
+                <h3>Your project summary</h3><p class="step-intro">The project routes, AI consultation, products and concept tool are being completed first. Automatic price figures are temporarily paused while the pricing engine is calibrated.</p>
                 <div class="estimate-layout">
-                  <div class="estimate-card"><span class="confidence"><i class="fa-solid fa-circle-check"></i> <span id="confidenceText">Medium confidence</span></span><div class="estimate-range" id="estimateRange">£—</div><p id="estimateDescription">Complete the planner to create your first budget range.</p><div class="metric-grid"><div class="metric"><span>Likely duration</span><strong id="durationText">—</strong></div><div class="metric"><span>Room floor area</span><strong id="areaText">—</strong></div><div class="metric"><span>Product links total</span><strong id="productTotalText">£0</strong></div><div class="metric"><span>Survey status</span><strong>Required for quote</strong></div></div></div>
+                  <div class="estimate-card"><span class="confidence"><i class="fa-solid fa-circle-check"></i> <span id="confidenceText">Medium confidence</span></span><div class="estimate-range" id="estimateRange">£—</div><p id="estimateDescription">Pricing is being calibrated against real project scopes.</p><div class="metric-grid"><div class="metric"><span>Likely duration</span><strong id="durationText">—</strong></div><div class="metric"><span>Room floor area</span><strong id="areaText">—</strong></div><div class="metric"><span>Product links total</span><strong id="productTotalText">£0</strong></div><div class="metric"><span>Survey status</span><strong>Required for quote</strong></div></div></div>
                   <div class="breakdown" id="breakdown"></div>
                 </div>
                 <div class="summary-box"><h4>Project summary supplied to the AI assistant</h4><div class="summary-list" id="summaryList"></div></div>
-                <div class="buttons"><button type="button" class="btn btn-dark" data-quick="Please explain my current estimate and the biggest reasons for the price range."><i class="fa-solid fa-comments"></i> Ask AI to explain the estimate</button><button type="button" class="btn btn-light" data-quick="How can I reduce the cost of this plan without making the bathroom look cheap?"><i class="fa-solid fa-arrow-trend-down"></i> Help reduce the cost</button></div>
+                <div class="buttons"><button type="button" class="btn btn-dark" data-quick="Based only on the project details I have supplied, what are likely to be the main cost drivers and unknowns? Do not invent a price."><i class="fa-solid fa-comments"></i> Discuss cost drivers</button><button type="button" class="btn btn-light" data-quick="What practical choices could simplify this project or reduce unnecessary work without making it look cheap?"><i class="fa-solid fa-arrow-trend-down"></i> Help reduce the cost</button></div>
 
                 <div class="concept-box">
                   <div class="concept-preview" id="conceptPreview"><div class="concept-placeholder" id="conceptPlaceholder"><i class="fa-regular fa-image"></i><strong>Your bathroom concept will appear here</strong><p>Generate an illustrative image from the project choices above.</p></div><div class="loading-overlay" id="conceptLoading"><div><div class="spinner"></div><strong>Designing your concept…</strong><p>This can take around one or two minutes. Keep this page open.</p></div></div></div>
@@ -319,10 +1479,10 @@
           </div>
 
           <aside class="panel assistant" id="assistantPanel">
-            <div class="assistant-head"><div class="assistant-title"><div class="orb"></div><div><h3>Bathroom Assistant</h3><p>Uses only answers actually entered</p></div></div><button type="button" id="startOver" class="btn btn-light" style="padding:9px 13px;font-size:.8rem">Start over</button></div>
-            <div class="quick-prompts"><button data-quick="What should I decide next?">What next?</button><button data-quick="Will this layout probably fit?">Will it fit?</button><button data-quick="What products am I missing?">Missing products?</button><button data-quick="Explain wet room versus tray for my project.">Wet room or tray?</button></div>
-            <div class="chat-log" id="chatLog"><div class="bubble ai">Tell me what you are planning or ask a general question. I will use only the answers you actually enter and will not invent room details.</div></div>
-            <div class="chat-compose"><textarea class="input" id="chatInput" placeholder="Ask about your layout, products, cost, tiles or installation…"></textarea><div class="chat-row"><label class="file-label" title="Attach bathroom photo"><i class="fa-solid fa-camera"></i><input type="file" id="chatPhoto" accept="image/*"></label><button type="button" id="sendChat" class="btn btn-gold" style="flex:1"><i class="fa-solid fa-paper-plane"></i> Ask</button></div><div class="photo-name" id="photoName"></div></div>
+            <div class="assistant-head"><div class="assistant-title"><div class="orb"></div><div><h3>Bathroom Assistant</h3><p>Conversational planning, one question at a time</p></div></div><button type="button" id="startOver" class="btn btn-light" style="padding:9px 13px;font-size:.8rem">Start over</button></div>
+            <div class="quick-prompts"><button data-quick="Please guide me through this project conversationally, one useful question at a time.">Plan with me</button><button data-quick="What should I decide next based only on what I have told you?">What next?</button><button data-quick="Review the products I have added. What important matching parts or specifications may be missing?">Review products</button><button data-quick="Will this layout probably fit, and what measurements still need checking?">Will it fit?</button></div>
+            <div class="chat-log" id="chatLog"><div class="bubble ai">Let's plan it together. Tell me what you have now or what you want to create. I’ll ask one useful question at a time, remember your answers and won’t assume there is already a bathroom.</div></div>
+            <div class="chat-compose"><textarea class="input" id="chatInput" placeholder="Talk to me about the project as you would during a survey…"></textarea><div class="chat-row"><label class="file-label" title="Attach bathroom photo"><i class="fa-solid fa-camera"></i><input type="file" id="chatPhoto" accept="image/*"></label><button type="button" id="sendChat" class="btn btn-gold" style="flex:1"><i class="fa-solid fa-paper-plane"></i> Ask</button></div><div class="photo-name" id="photoName"></div></div>
           </aside>
         </div>
       </div>
@@ -343,482 +1503,709 @@
   <div class="mobile-bar"><a href="tel:+442073860000"><i class="fa-solid fa-phone"></i><br>Call</a><a href="https://wa.me/442073860000"><i class="fa-brands fa-whatsapp"></i><br>WhatsApp</a><a href="#planner"><i class="fa-solid fa-wand-magic-sparkles"></i><br>Planner</a></div>
 
   <script>
-  (() => {
-    const API = 'https://en-suites-bathroom-ai.nicholas-griffith-uk.workers.dev';
-    const form = document.getElementById('plannerForm');
-    const steps = [...document.querySelectorAll('.step')];
-    const titles = ['1. Project & room','2. Current layout','3. New fittings','4. Style & finish','5. Property & products','6. Estimate & concept'];
-    let currentStep = 0;
-    const STATE_KEY = 'ensuitesBathroomPlannerDraftV5';
-    const RESPONSE_KEY = 'bathroomPlannerResponseIdV5';
-    localStorage.removeItem('ensuitesBathroomPlannerDraftV2');
-    localStorage.removeItem('ensuitesBathroomPlannerDraftV3');
-    sessionStorage.removeItem('bathroomPlannerResponseIdV2');
-    sessionStorage.removeItem('bathroomPlannerResponseIdV3');
-    let responseId = sessionStorage.getItem(RESPONSE_KEY) || '';
-    let photoDataUrl = '';
-    let products = [];
-    let lastEstimate = null;
-    let restoring = false;
+  
+(() => {
+  const API = 'https://en-suites-bathroom-ai.nicholas-griffith-uk.workers.dev';
+  const form = document.getElementById('plannerForm');
+  const steps = [...document.querySelectorAll('.step')];
+  const titles = ['1. Project & room', '2. Project route', '3. New fittings', '4. Style & finish',
+    '5. Property & products', '6. Summary & concept'
+  ];
+  let currentStep = 0;
+  const STATE_KEY = 'ensuitesBathroomPlannerDraftV4';
+  const RESPONSE_KEY = 'bathroomPlannerResponseIdV4';
+  const PRICING_ENABLED = false;
+  const NEW_ROOM_PROJECTS = new Set(['New en-suite installation', 'New cloakroom']);
+  localStorage.removeItem('ensuitesBathroomPlannerDraftV3');
+  sessionStorage.removeItem('bathroomPlannerResponseIdV3');
+  let responseId = sessionStorage.getItem(RESPONSE_KEY) || '';
+  let photoDataUrl = '';
+  let products = [];
+  let lastEstimate = null;
+  let restoring = false;
 
-    const money = n => new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(Math.round(n));
-    const selected = name => [...form.querySelectorAll(`[name="${name}"]:checked`)].map(x=>x.value);
-    const value = name => form.elements[name]?.value || '';
+  const money = n => new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    maximumFractionDigits: 0
+  }).format(Math.round(n));
+  const selected = name => [...form.querySelectorAll(`[name="${name}"]:checked`)].map(x => x.value);
+  const value = name => form.elements[name]?.value || '';
+  const isNewRoomProject = () => NEW_ROOM_PROJECTS.has(value('projectType'));
 
-    function isNewEnsuite(){ return value('projectType') === 'New en-suite'; }
+  function updateRouteUI() {
+    const selectedProject = value('projectType');
+    const newRoute = isNewRoomProject();
+    document.getElementById('existingWetRoomPanel').hidden = newRoute;
+    document.getElementById('newRoomPanel').hidden = !newRoute;
+    document.getElementById('routeHeading').textContent = newRoute ? 'Where will the new room be created?' :
+      'What is there now?';
+    document.getElementById('routeIntro').textContent = newRoute ?
+      'This is a completely new wet room, so the planner now asks about construction and service routes instead of existing bathroom fittings.' :
+      'Select what is currently in the room and tell us how much the layout may change.';
+    if (currentStep === 1) document.getElementById('stepTitle').textContent = newRoute ?
+      '2. New-room route' : '2. Existing-room route';
+    return selectedProject;
+  }
 
-    function updateProjectRoute(){
-      const newEnsuite = isNewEnsuite();
-      const existingBlock = document.getElementById('existingProjectQuestions');
-      const newBlock = document.getElementById('newEnsuiteQuestions');
-      existingBlock.hidden = newEnsuite;
-      newBlock.hidden = !newEnsuite;
+  function showStep(index) {
+    currentStep = Math.max(0, Math.min(steps.length - 1, index));
+    steps.forEach((s, i) => s.classList.toggle('active', i === currentStep));
+    document.getElementById('stepTitle').textContent = titles[currentStep];
+    document.getElementById('stepCount').textContent = `Step ${currentStep+1} of ${steps.length}`;
+    document.getElementById('progressBar').style.width = `${((currentStep+1)/steps.length)*100}%`;
+    updateRouteUI();
+    if (currentStep === 5) calculateEstimate();
+    document.getElementById('planner').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+    saveState();
+  }
 
-      document.getElementById('stepTwoHeading').textContent = newEnsuite ? 'Where will the new en-suite be created?' : 'What is there now?';
-      document.getElementById('stepTwoIntro').textContent = newEnsuite
-        ? 'A brand-new en-suite needs a different route. Tell us about the proposed space and how close it is to water, drainage, electrics and ventilation.'
-        : 'Select everything currently in the room, then tell us how much the layout may change.';
+  document.querySelectorAll('.next-step').forEach(b => b.addEventListener('click', () => showStep(
+    currentStep + 1)));
+  document.querySelectorAll('.prev-step').forEach(b => b.addEventListener('click', () => showStep(
+    currentStep - 1)));
+  document.getElementById('menuBtn').addEventListener('click', () => document.getElementById('mobileMenu')
+    .classList.toggle('open'));
 
-      document.getElementById('roomLengthLabel').textContent = newEnsuite ? 'Planned en-suite length (metres)' : 'Room length (metres)';
-      document.getElementById('roomWidthLabel').textContent = newEnsuite ? 'Planned en-suite width (metres)' : 'Room width (metres)';
-      document.getElementById('ceilingHeightLabel').textContent = newEnsuite ? 'Height in the proposed area (metres)' : 'Ceiling height (metres)';
-      titles[1] = newEnsuite ? '2. New en-suite position & services' : '2. Current layout';
-      if(currentStep === 1) document.getElementById('stepTitle').textContent = titles[1];
+  function createProductRow(item = {
+    type: 'Tiles',
+    url: '',
+    name: '',
+    price: '',
+    quantity: 1,
+    meta: {}
+  }) {
+    const id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    row.dataset.id = id;
+    row._meta = item.meta || {};
+    row.innerHTML =
+      `<div class="field"><label>Product type</label><select class="input product-type"><option>Tiles</option><option>Bath</option><option>Shower / valve</option><option>Shower tray / wet-room former</option><option>Screen / enclosure</option><option>Toilet</option><option>Basin / vanity</option><option>Taps</option><option>Radiator</option><option>Mirror</option><option>Accessories</option><option>Other</option></select></div><div class="field"><label>Product link</label><input class="input product-url" type="url" placeholder="https://…"></div><div class="field"><label>Product name</label><input class="input product-name" placeholder="Filled automatically when possible"></div><div class="field"><label>Price each</label><input class="input product-price" type="number" min="0" step=".01" placeholder="£"></div><div class="field"><label>Qty</label><input class="input product-qty" type="number" min="1" max="100" step="1" value="1"></div><div class="product-actions"><button type="button" class="analyse-product"><i class="fa-solid fa-magnifying-glass"></i> Analyse</button><button type="button" class="remove-product" aria-label="Remove product"><i class="fa-solid fa-trash"></i></button></div><div class="product-status"></div>`;
+    row.querySelector('.product-type').value = item.type || 'Other';
+    row.querySelector('.product-url').value = item.url || '';
+    row.querySelector('.product-name').value = item.name || '';
+    row.querySelector('.product-price').value = item.price || '';
+    row.querySelector('.product-qty').value = item.quantity || 1;
+    const status = row.querySelector('.product-status');
+    if (item.meta?.source) {
+      status.textContent =
+        `Read from ${item.meta.source}${item.meta.dimensions?` • ${item.meta.dimensions}`:''}`;
+      status.className = 'product-status ok'
     }
+    row.querySelectorAll('input,select').forEach(el => el.addEventListener('change', syncProducts));
+    row.querySelector('.analyse-product').addEventListener('click', () => analyseProductRow(row));
+    row.querySelector('.remove-product').addEventListener('click', () => {
+      row.remove();
+      syncProducts();
+    });
+    document.getElementById('productList').appendChild(row);
+    if (!restoring) syncProducts();
+  }
 
-    document.querySelectorAll('[name="projectType"]').forEach(input => input.addEventListener('change', () => {
-      updateProjectRoute();
-      responseId = '';
-      sessionStorage.removeItem(RESPONSE_KEY);
-      lastEstimate = null;
-      saveState();
-    }));
-
-    function showStep(index){
-      currentStep = Math.max(0,Math.min(steps.length-1,index));
-      steps.forEach((s,i)=>s.classList.toggle('active',i===currentStep));
-      document.getElementById('stepTitle').textContent=titles[currentStep];
-      document.getElementById('stepCount').textContent=`Step ${currentStep+1} of ${steps.length}`;
-      document.getElementById('progressBar').style.width=`${((currentStep+1)/steps.length)*100}%`;
-      if(currentStep===5) calculateEstimate();
-      document.getElementById('planner').scrollIntoView({behavior:'smooth',block:'start'});
-      saveState();
+  async function analyseProductRow(row) {
+    const url = row.querySelector('.product-url').value.trim();
+    const status = row.querySelector('.product-status');
+    const button = row.querySelector('.analyse-product');
+    if (!url) {
+      status.textContent = 'Paste a product link first.';
+      status.className = 'product-status error';
+      return
     }
-
-    document.querySelectorAll('.next-step').forEach(b=>b.addEventListener('click',()=>showStep(currentStep+1)));
-    document.querySelectorAll('.prev-step').forEach(b=>b.addEventListener('click',()=>showStep(currentStep-1)));
-    document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
-
-    function createProductRow(item={type:'Tiles',url:'',price:''}){
-      const id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random());
-      const row=document.createElement('div'); row.className='product-row'; row.dataset.id=id;
-      row.innerHTML=`<div class="field"><label>Product type</label><select class="input product-type"><option>Tiles</option><option>Bath</option><option>Shower / valve</option><option>Shower tray / wet-room former</option><option>Screen / enclosure</option><option>Toilet</option><option>Basin / vanity</option><option>Taps</option><option>Radiator</option><option>Mirror</option><option>Accessories</option><option>Other</option></select></div><div class="field"><label>Product link</label><input class="input product-url" type="url" placeholder="https://…"></div><div class="field"><label>Displayed price</label><input class="input product-price" type="number" min="0" step=".01" placeholder="£"></div><button type="button" class="remove-product" aria-label="Remove product"><i class="fa-solid fa-trash"></i></button>`;
-      row.querySelector('.product-type').value=item.type;
-      row.querySelector('.product-url').value=item.url;
-      row.querySelector('.product-price').value=item.price;
-      row.querySelectorAll('input,select').forEach(el=>el.addEventListener('change',syncProducts));
-      row.querySelector('.remove-product').addEventListener('click',()=>{row.remove();syncProducts();});
-      document.getElementById('productList').appendChild(row);
-      if(!restoring) syncProducts();
-    }
-    function syncProducts(){
-      products=[...document.querySelectorAll('.product-row')].map(r=>({type:r.querySelector('.product-type').value,url:r.querySelector('.product-url').value.trim(),price:Number(r.querySelector('.product-price').value)||0})).filter(p=>p.url||p.price);
-      saveState();
-    }
-    document.getElementById('addProduct').addEventListener('click',()=>createProductRow());
-
-    function getProject(){
-      const L=Number(value('roomLength'))||0,W=Number(value('roomWidth'))||0,H=Number(value('ceilingHeight'))||0;
-      const newEnsuite = isNewEnsuite();
-      const project = {
-        projectType:value('projectType'),roomLength:L||null,roomWidth:W||null,ceilingHeight:H||null,
-        roomFloorArea:L&&W?Number((L*W).toFixed(2)):null,
-        projectDescription:value('projectDescription'),
-        desiredItems:selected('desiredItems'),showerType:value('showerType'),heating:value('heating'),style:value('style'),tileCoverage:value('tileCoverage'),productLevel:value('productLevel'),wallTileSize:value('wallTileSize'),floorTileSize:value('floorTileSize'),
-        propertyType:value('propertyType'),bathroomFloor:value('bathroomFloor'),access:value('access'),floorStructure:value('floorStructure'),postcode:value('postcode').toUpperCase(),parking:value('parking'),products,
-        estimate:lastEstimate
-      };
-
-      if(newEnsuite){
-        Object.assign(project, {
-          projectRoute:'Brand-new en-suite installation',
-          existingBathroomFixtures:'None — this is not currently a bathroom',
-          ensuiteLocation:value('ensuiteLocation'),
-          ensuiteUse:value('ensuiteUse'),
-          existingSpace:value('existingSpace'),
-          bathroomRelationship:value('bathroomRelationship'),
-          waterNearby:value('waterNearby'),
-          soilRoute:value('soilRoute'),
-          ventilationRoute:value('ventilationRoute'),
-          roomConstruction:value('roomConstruction'),
-          electricsNearby:value('electricsNearby'),
-          ensuitePositionNotes:value('ensuitePositionNotes')
-        });
-      }else{
-        Object.assign(project, {
-          projectRoute:'Existing bathroom or room refurbishment',
-          currentItems:selected('currentItems'),layoutChange:value('layoutChange'),doorWindow:value('doorWindow'),drainageKnown:value('drainageKnown')
-        });
-      }
-      return project;
-    }
-
-    function getAIProject(){
-      const p=getProject();
-      const ai={...p};
-
-      // The customer-facing assistant only receives the published range and
-      // plain-English cost drivers. Internal calculator totals, baselines,
-      // labour splits and provisional product allowances are deliberately hidden.
-      if(p.estimate && p.projectType && p.roomFloorArea && p.desiredItems.length){
-        ai.estimate={
-          status:'Indicative early planning range — not a quotation',
-          low:p.estimate.low,
-          high:p.estimate.high,
-          daysLow:p.estimate.daysLow,
-          daysHigh:p.estimate.daysHigh,
-          confidence:p.estimate.confidence,
-          pricingRoute:p.estimate.pricingRoute,
-          mainDrivers:(p.estimate.reasons||[]).map(r=>r[0]),
-          customerFacingRule:'Treat the displayed low-to-high range as authoritative. Explain the main drivers without revealing or auditing internal baseline figures, individual calculator additions, labour splits or provisional product allowances. A zero linked-product total only means no priced product links were entered.'
-        };
-      }else{
-        delete ai.estimate;
-      }
-
-      Object.keys(ai).forEach(key=>{
-        const val=ai[key];
-        if(val===null || val==='' || (Array.isArray(val) && val.length===0)) delete ai[key];
+    button.disabled = true;
+    status.textContent = 'Reading the retailer page…';
+    status.className = 'product-status';
+    try {
+      const res = await fetch(`${API}/product`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          url
+        })
       });
-      return ai;
-    }
-
-    function hasEstimateInputs(p){
-      const common=Boolean(p.projectType && p.roomFloorArea && p.desiredItems.length && p.productLevel);
-      if(!common) return false;
-      if(p.projectType!=='New en-suite') return true;
-      return Boolean(p.ensuiteLocation && p.ensuiteUse && p.bathroomRelationship && p.waterNearby && p.soilRoute && p.ventilationRoute && p.roomConstruction && p.electricsNearby);
-    }
-
-    function showIncompleteEstimate(p){
-      lastEstimate=null;
-      document.getElementById('estimateRange').textContent='£—';
-      document.getElementById('durationText').textContent='—';
-      document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
-      document.getElementById('productTotalText').textContent='Not calculated';
-      document.getElementById('confidenceText').textContent='More details needed';
-      document.getElementById('estimateDescription').textContent=p.projectType==='New en-suite'
-        ?'Complete the new en-suite route: planned size, use, position relative to an existing bathroom, water, soil route, ventilation, walls/doorway, electrics, fittings and product level.'
-        :'Choose the project type, enter the room dimensions, select the main fittings and choose a product level before calculating a budget range.';
-      document.getElementById('breakdown').innerHTML=p.projectType==='New en-suite'
-        ?'<div class="notice"><strong>No guessed en-suite price.</strong> A new en-suite estimate only appears after the service and construction questions have been answered, including “Not sure” where necessary.</div>'
-        :'<div class="notice"><strong>No estimate has been created.</strong> The planner will not invent a project or use automatic bathroom assumptions.</div>';
-      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected';
-      const routeDetail=p.projectType==='New en-suite'?[p.ensuiteLocation,p.bathroomRelationship,p.ensuiteUse].filter(Boolean).join(' · ')||'Position details incomplete':p.layoutChange||'Not selected';
-      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}`:'Dimensions incomplete'],[p.projectType==='New en-suite'?'Position & route':'Layout',routeDetail],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
-      document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
-      return null;
-    }
-
-    function addEstimateReason(reasons,label,amount){
-      if(!amount) return;
-      reasons.push([label,Math.round(amount)]);
-    }
-
-    function newEnsuiteEstimate(p){
-      const area=p.roomFloorArea;
-      let total=7000;
-      const reasons=[['Compact new en-suite baseline (complete)',7000]];
-
-      const useUplift={
-        'Rental or HMO en-suite':0,
-        'Airbnb or short-let en-suite':600,
-        'Guest or family en-suite':1000,
-        'Main bedroom en-suite':2000,
-        'Not sure':800
-      }[p.ensuiteUse]||0;
-      total+=useUplift; addEstimateReason(reasons,'Use and finish expectation',useUplift);
-
-      const locationUplift={
-        'Inside an existing bedroom':0,
-        'Loft or attic':2500,
-        'Spare room or box room':-500,
-        'Dressing room, wardrobe or cupboard':200,
-        'Extension or newly built area':1500,
-        'Another existing room':500
-      }[p.ensuiteLocation]||0;
-      total+=locationUplift; addEstimateReason(reasons,'Proposed location',locationUplift);
-
-      const spaceUplift={
-        'Open area within an occupied bedroom':0,
-        'Existing separate finished room':-600,
-        'Existing cupboard or wardrobe':-200,
-        'Unconverted loft area':2500,
-        'New shell or unfinished area':500,
-        'Not sure':300
-      }[p.existingSpace]||0;
-      total+=spaceUplift; addEstimateReason(reasons,'Existing space condition',spaceUplift);
-
-      const relationshipUplift={
-        'Directly beside an existing bathroom':0,
-        'Directly above or below an existing bathroom':500,
-        'Same floor and close to an existing bathroom':700,
-        'Remote from existing bathrooms and plumbing':1800,
-        'No existing bathroom nearby':2300,
-        'Unknown':500
-      }[p.bathroomRelationship]||0;
-      total+=relationshipUplift; addEstimateReason(reasons,'Distance from existing bathroom',relationshipUplift);
-
-      const waterUplift={
-        'Hot and cold supplies nearby':0,
-        'Cold supply only nearby':500,
-        'No known water supplies nearby':1200,
-        'Unknown':300
-      }[p.waterNearby]||0;
-      total+=waterUplift; addEstimateReason(reasons,'Water supplies',waterUplift);
-
-      const soilUplift={
-        'Existing soil pipe on the same or adjoining wall':0,
-        'Existing soil pipe nearby but route needs checking':600,
-        'External wall available for a new soil connection':1200,
-        'Long or difficult gravity drainage route':1800,
-        'Pumped waste may be required':1500,
-        'Unknown':500
-      }[p.soilRoute]||0;
-      total+=soilUplift; addEstimateReason(reasons,'Toilet and soil route',soilUplift);
-
-      const ventUplift={
-        'Directly through an external wall':0,
-        'Through ceiling, loft or roof':400,
-        'Longer duct route required':700,
-        'No obvious external route':1200,
-        'Unknown':300
-      }[p.ventilationRoute]||0;
-      total+=ventUplift; addEstimateReason(reasons,'Extractor route',ventUplift);
-
-      const constructionUplift={
-        'New stud walls and doorway required':0,
-        'Some enclosing walls already exist':-300,
-        'Existing enclosed room with a doorway':-700,
-        'Loft construction and enclosure required':1200,
-        'Unknown':300
-      }[p.roomConstruction]||0;
-      total+=constructionUplift; addEstimateReason(reasons,'Walls and doorway',constructionUplift);
-
-      const electricalUplift={
-        'Existing bedroom electrics nearby':0,
-        'New bathroom circuit or substantial electrical work expected':1000,
-        'Unknown':300
-      }[p.electricsNearby]||0;
-      total+=electricalUplift; addEstimateReason(reasons,'Electrical work',electricalUplift);
-
-      const add=(label,amount,condition)=>{if(condition){total+=amount;addEstimateReason(reasons,label,amount)}};
-      add('Walk-in shower upgrade',600,p.desiredItems.includes('Walk-in shower'));
-      add('Tiled wet-room construction',1600,p.desiredItems.includes('Tiled wet-room floor'));
-      add('Bath in new en-suite',1000,p.desiredItems.includes('Bath'));
-      add('Shower over bath',500,p.desiredItems.includes('Shower over bath'));
-      add('Wall-hung WC frame and boxing',800,p.desiredItems.includes('Wall-hung toilet'));
-      add('Back-to-wall WC',350,p.desiredItems.includes('Back-to-wall toilet'));
-      add('Vanity upgrade',300,p.desiredItems.includes('Vanity unit'));
-      add('Countertop basin and shelf',500,p.desiredItems.includes('Countertop basin and floating shelf'));
-      add('Towel radiator',350,p.desiredItems.includes('Towel radiator'));
-      add('LED mirror',250,p.desiredItems.includes('LED mirror'));
-      add('Tiled shower niche',350,p.desiredItems.includes('Tiled shower niche'));
-      add('Additional storage',250,p.desiredItems.includes('Additional storage'));
-      add('Concealed rainfall shower',450,p.showerType==='Concealed thermostatic rainfall and handset');
-      add('Electric shower supply allowance',900,p.showerType==='Electric shower');
-      add('Electric underfloor heating',650,p.heating==='Electric underfloor heating');
-
-      if(p.tileCoverage==='Shower fully tiled, half-height elsewhere'){total+=500;addEstimateReason(reasons,'Additional tiling coverage',500)}
-      else if(p.tileCoverage==='Fully tiled walls and floor'){const t=1400+area*60;total+=t;addEstimateReason(reasons,'Fully tiled room',t)}
-      else if(p.tileCoverage==='Not sure'){total+=350;addEstimateReason(reasons,'Provisional tiling allowance',350)}
-      if(p.wallTileSize==='1200 x 600mm'){total+=350;addEstimateReason(reasons,'Large-format tile handling',350)}
-      if(p.wallTileSize==='Small format / metro'){total+=250;addEstimateReason(reasons,'Small-format tile labour',250)}
-
-      const specUplift={Budget:0,Standard:1500,Mixed:3000,Premium:4500}[p.productLevel]||0;
-      total+=specUplift; addEstimateReason(reasons,`${p.productLevel} product specification`,specUplift);
-      const includedProducts={Budget:1500,Standard:3000,Mixed:4500,Premium:6000}[p.productLevel]||1500;
-      const productTotal=p.products.reduce((sum,item)=>sum+(item.price||0),0);
-      const productExcess=Math.max(0,productTotal-includedProducts);
-      total+=productExcess; addEstimateReason(reasons,'Linked products above included allowance',productExcess);
-
-      if(p.bathroomFloor==='Second floor or higher'){total+=300;addEstimateReason(reasons,'Upper-floor working',300)}
-      if(p.bathroomFloor==='Loft conversion'){total+=450;addEstimateReason(reasons,'Loft-level working',450)}
-      if(p.propertyType==='Upper-floor flat without lift'){total+=500;addEstimateReason(reasons,'No-lift flat access',500)}
-      if(p.access==='Difficult access'){total+=400;addEstimateReason(reasons,'Difficult access',400)}
-      if(p.parking==='Paid parking'||p.parking==='Difficult or unknown'){total+=250;addEstimateReason(reasons,'Parking / permits',250)}
-
-      const unknownValues=['Unknown','Not sure'].filter(Boolean);
-      const routeValues=[p.existingSpace,p.bathroomRelationship,p.waterNearby,p.soilRoute,p.ventilationRoute,p.roomConstruction,p.electricsNearby,p.floorStructure,p.access,p.parking];
-      const unknowns=routeValues.filter(v=>!v||unknownValues.includes(v)||String(v).startsWith('Not sure')).length;
-      const low=Math.floor(total/100)*100;
-      const high=Math.ceil((total*(1.12+Math.min(unknowns,4)*.025))/100)*100;
-      let daysLow=9;
-      daysLow+=Math.round(Math.max(0,total-7000)/2300);
-      if(p.ensuiteLocation==='Loft or attic'||p.existingSpace==='Unconverted loft area') daysLow+=2;
-      const daysHigh=daysLow+3+Math.min(unknowns,3);
-      const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
-      return {low,high,total:Math.round(total),labour:Math.round(total-includedProducts),productAllowance:includedProducts,productTotal:Math.round(productTotal),daysLow,daysHigh,confidence,reasons:reasons.slice(0,10),pricingRoute:'Brand-new en-suite'};
-    }
-
-    function existingProjectEstimate(p){
-      const area=p.roomFloorArea;
-      const bases={
-        'Full bathroom renovation':{Budget:8000,Standard:10000,Mixed:12000,Premium:14500},
-        'Existing en-suite renovation':{Budget:6500,Standard:8500,Mixed:10500,Premium:13000},
-        'Shower room':{Budget:7000,Standard:9000,Mixed:11000,Premium:13500},
-        'Cloakroom':{Budget:3500,Standard:4500,Mixed:5500,Premium:7000},
-        'Bathroom refresh':{Budget:3000,Standard:3500,Mixed:4500,Premium:5500}
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'The product page could not be read.');
+      const product = data.product || {};
+      if (product.name && !row.querySelector('.product-name').value) row.querySelector('.product-name')
+        .value = product.name;
+      if (product.price && !Number(row.querySelector('.product-price').value)) row.querySelector(
+        '.product-price').value = product.price;
+      row._meta = {
+        brand: product.brand || '',
+        description: product.description || '',
+        dimensions: product.dimensions || '',
+        image: product.image || '',
+        source: product.source || '',
+        sku: product.sku || '',
+        finalUrl: product.finalUrl || url
       };
-      const base=(bases[p.projectType]||bases['Full bathroom renovation'])[p.productLevel]||10000;
-      let total=base;
-      const reasons=[[`${p.projectType} baseline (${p.productLevel})`,base]];
-      const add=(label,amount,condition)=>{if(condition){total+=amount;addEstimateReason(reasons,label,amount)}};
-      add('Move one main item',900,p.layoutChange==='Move one item');
-      add('Complete layout redesign',1800,p.layoutChange==='Complete layout change');
-      add('Major drainage movement',1200,p.drainageKnown==='Major movement expected');
-      add('Walk-in shower upgrade',500,p.desiredItems.includes('Walk-in shower'));
-      add('Tiled wet-room construction',1600,p.desiredItems.includes('Tiled wet-room floor'));
-      add('Bath added to shower-led project',900,p.desiredItems.includes('Bath')&&['Existing en-suite renovation','Shower room','Cloakroom'].includes(p.projectType));
-      add('Shower over bath upgrade',300,p.desiredItems.includes('Shower over bath'));
-      add('Wall-hung WC frame and boxing',800,p.desiredItems.includes('Wall-hung toilet'));
-      add('Back-to-wall WC',350,p.desiredItems.includes('Back-to-wall toilet'));
-      add('Countertop basin and shelf',500,p.desiredItems.includes('Countertop basin and floating shelf'));
-      add('Vanity upgrade',250,p.desiredItems.includes('Vanity unit'));
-      add('Concealed rainfall shower',450,p.showerType==='Concealed thermostatic rainfall and handset');
-      add('Tiled shower niche',350,p.desiredItems.includes('Tiled shower niche'));
-      add('LED mirror electrical allowance',250,p.desiredItems.includes('LED mirror'));
-      add('New extractor',250,p.desiredItems.includes('New extractor fan'));
-      add('Electric underfloor heating',650,p.heating==='Electric underfloor heating');
-      if(p.tileCoverage==='Shower fully tiled, half-height elsewhere'){total+=500;addEstimateReason(reasons,'Additional tiling coverage',500)}
-      else if(p.tileCoverage==='Fully tiled walls and floor'){const t=1200+area*60;total+=t;addEstimateReason(reasons,'Fully tiled room',t)}
-      if(p.wallTileSize==='1200 x 600mm'){total+=400;addEstimateReason(reasons,'Large-format tile handling',400)}
-      if(p.wallTileSize==='Small format / metro'){total+=250;addEstimateReason(reasons,'Small-format tile labour',250)}
-      add('Upper-floor structure allowance',450,p.floorStructure==='Unknown'&&p.bathroomFloor!=='Ground floor');
-      add('Upper-floor working',300,p.bathroomFloor==='Second floor or higher'||p.bathroomFloor==='Loft conversion');
-      add('No-lift flat access',500,p.propertyType==='Upper-floor flat without lift');
-      add('Difficult access',400,p.access==='Difficult access');
-      add('Parking / permits',250,p.parking==='Paid parking'||p.parking==='Difficult or unknown');
-
-      const includedProducts={Budget:1800,Standard:3000,Mixed:4500,Premium:6500}[p.productLevel]||3000;
-      const productTotal=p.products.reduce((sum,item)=>sum+(item.price||0),0);
-      const productExcess=Math.max(0,productTotal-includedProducts);
-      total+=productExcess; addEstimateReason(reasons,'Linked products above included allowance',productExcess);
-
-      const routeValues=[p.floorStructure,p.layoutChange,p.drainageKnown,p.propertyType,p.bathroomFloor,p.access,p.parking];
-      const unknowns=routeValues.filter(v=>!v||v==='Unknown'||v==='Not sure'||String(v).startsWith('Not sure')).length;
-      const low=Math.floor(total/100)*100;
-      const high=Math.ceil((total*(1.10+Math.min(unknowns,4)*.02))/100)*100;
-      const baseDays={'Full bathroom renovation':10,'Existing en-suite renovation':8,'Shower room':8,'Cloakroom':5,'Bathroom refresh':3}[p.projectType]||9;
-      let daysLow=baseDays+Math.round(Math.max(0,total-base)/3000);
-      if(p.layoutChange==='Complete layout change'||p.desiredItems.includes('Tiled wet-room floor')) daysLow+=1;
-      const daysHigh=daysLow+3+Math.min(unknowns,2);
-      const confidence=unknowns<=1?'High':unknowns<=3?'Medium':'Early';
-      return {low,high,total:Math.round(total),labour:Math.round(total-includedProducts),productAllowance:includedProducts,productTotal:Math.round(productTotal),daysLow,daysHigh,confidence,reasons:reasons.slice(0,10),pricingRoute:'Existing-room project'};
+      status.textContent =
+        `Read from ${product.source||'retailer'}${product.dimensions?` • ${product.dimensions}`:''}${product.price?` • ${new Intl.NumberFormat('en-GB',{style:'currency',currency:product.currency||'GBP'}).format(product.price)}`:''}`;
+      status.className = 'product-status ok';
+      syncProducts();
+    } catch (e) {
+      status.textContent = e.message ||
+        'Enter the product details manually or attach a screenshot in the chat.';
+      status.className = 'product-status error'
+    } finally {
+      button.disabled = false
     }
+  }
 
-    function calculateEstimate(){
-      const p=getProject();
-      if(!hasEstimateInputs(p)) return showIncompleteEstimate(p);
-      lastEstimate=p.projectType==='New en-suite'?newEnsuiteEstimate(p):existingProjectEstimate(p);
-      document.getElementById('estimateRange').textContent=`${money(lastEstimate.low)}–${money(lastEstimate.high)}`;
-      document.getElementById('durationText').textContent=`${lastEstimate.daysLow}–${lastEstimate.daysHigh} working days`;
-      document.getElementById('areaText').textContent=p.roomFloorArea?`${p.roomFloorArea}m²`:'Not entered';
-      document.getElementById('productTotalText').textContent=lastEstimate.productTotal?money(lastEstimate.productTotal):`${money(lastEstimate.productAllowance)} included`;
-      document.getElementById('confidenceText').textContent=`${lastEstimate.confidence} confidence`;
-      document.getElementById('estimateDescription').textContent=p.projectType==='New en-suite'
-        ?'Indicative complete-project range for a brand-new en-suite. The £7,000 lower benchmark assumes a compact budget HMO room beside existing services; walls, drainage, electrics, ventilation, access and specification can move the figure substantially.'
-        :`Indicative complete-project range for a ${p.projectType.toLowerCase()} using a ${p.productLevel.toLowerCase()} specification. This Draft 2 benchmark avoids adding the same labour twice and remains subject to survey.`;
-      document.getElementById('breakdown').innerHTML='<h4 style="margin:0 0 8px">Main estimate drivers</h4>'+lastEstimate.reasons.map(r=>`<div class="break-row"><span>${escapeHtml(r[0])}</span><span>${r[1]<0?'−':''}${money(Math.abs(r[1]))}</span></div>`).join('')+'<p style="font-size:.76rem;color:var(--muted);margin:12px 0 0">Complete-project planning guide, not an itemised quotation. Baselines already include a provisional product allowance; product links add cost only where they exceed that allowance.</p>';
-      const propertySummary=[p.propertyType,p.bathroomFloor].filter(Boolean).join(', ')||'Not selected';
-      const routeDetail=p.projectType==='New en-suite'?[p.ensuiteLocation,p.bathroomRelationship,p.soilRoute,p.electricsNearby].filter(Boolean).join(' · '):p.layoutChange||'Not selected';
-      const summary=[['Project',p.projectType||'Not selected'],['Room',p.roomFloorArea?`${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high`:'Dimensions incomplete'],[p.projectType==='New en-suite'?'Construction & services':'Layout',routeDetail],['Wanted',p.desiredItems.join(', ')||'Not selected'],['Style',p.style||'Not selected'],['Tiling',p.tileCoverage||'Not selected'],['Property',propertySummary],['Postcode',p.postcode||'Not entered']];
-      document.getElementById('summaryList').innerHTML=summary.map(x=>`<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
-      saveState();
-      return lastEstimate;
-    }
+  function syncProducts() {
+    products = [...document.querySelectorAll('.product-row')].map(r => ({
+      type: r.querySelector('.product-type').value,
+      url: r.querySelector('.product-url').value.trim(),
+      name: r.querySelector('.product-name').value.trim(),
+      price: Number(r.querySelector('.product-price').value) || 0,
+      quantity: Math.max(1, Number(r.querySelector('.product-qty').value) || 1),
+      meta: r._meta || {}
+    })).filter(p => p.url || p.name || p.price);
+    saveState();
+  }
+  document.getElementById('addProduct').addEventListener('click', () => createProductRow());
 
-    function escapeHtml(str=''){return String(str).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-    function addBubble(text,type='ai'){const b=document.createElement('div');b.className=`bubble ${type}`;b.textContent=text;document.getElementById('chatLog').appendChild(b);document.getElementById('chatLog').scrollTop=99999;return b}
-    async function askAI(message){
-      message=(message||document.getElementById('chatInput').value).trim(); if(!message)return;
-      addBubble(message,'user'); document.getElementById('chatInput').value='';
-      const typing=addBubble('Thinking about your bathroom…','ai typing'); document.getElementById('sendChat').disabled=true;
-      try{
-        const currentProject=getProject();
-        if(hasEstimateInputs(currentProject)) calculateEstimate(); else lastEstimate=null;
-        const res=await fetch(`${API}/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,project:getAIProject(),previousResponseId:responseId,imageDataUrl:photoDataUrl})});
-        const data=await res.json(); typing.remove();
-        if(!res.ok)throw new Error(data.error||'The assistant is unavailable.');
-        responseId=data.responseId||responseId; sessionStorage.setItem(RESPONSE_KEY,responseId); addBubble(data.reply,'ai'); photoDataUrl='';document.getElementById('photoName').textContent='';document.getElementById('chatPhoto').value='';
-      }catch(e){typing.remove();addBubble(e.message||'The assistant is temporarily unavailable.','error')}finally{document.getElementById('sendChat').disabled=false}
-    }
-    document.getElementById('sendChat').addEventListener('click',()=>askAI());
-    document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askAI()}});
-    document.querySelectorAll('[data-quick]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('assistantPanel').scrollIntoView({behavior:'smooth',block:'center'});askAI(b.dataset.quick)}));
-    document.querySelector('.ask-description').addEventListener('click',()=>{const d=value('projectDescription');askAI(d?`This is my description: "${d}". What does it sound like I am planning, and what is the next important question?`:'I am not sure how to describe my bathroom project. Please ask me the first useful question.')});
-    document.getElementById('chatPhoto').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;if(f.size>4500000){alert('Please choose an image under 4.5MB.');e.target.value='';return}const r=new FileReader();r.onload=()=>{photoDataUrl=r.result;document.getElementById('photoName').textContent=`Attached: ${f.name}`};r.readAsDataURL(f)});
+  function getProject() {
+    const L = Number(value('roomLength')) || 0,
+      W = Number(value('roomWidth')) || 0,
+      H = Number(value('ceilingHeight')) || 0;
+    const newRoute = isNewRoomProject();
+    return {
+      projectType: value('projectType'),
+      projectRoute: newRoute ? 'Completely new wet room' : 'Existing wet-room refurbishment',
+      roomLength: L || null,
+      roomWidth: W || null,
+      ceilingHeight: H || null,
+      roomFloorArea: L && W ? Number((L * W).toFixed(2)) : null,
+      projectDescription: value('projectDescription'),
+      currentItems: newRoute ? [] : selected('currentItems'),
+      layoutChange: newRoute ? '' : value('layoutChange'),
+      doorWindow: newRoute ? '' : value('doorWindow'),
+      drainageKnown: newRoute ? '' : value('drainageKnown'),
+      newRoomLocation: newRoute ? value('newRoomLocation') : '',
+      projectUse: newRoute ? value('projectUse') : '',
+      serviceProximity: newRoute ? value('serviceProximity') : '',
+      soilAccess: newRoute ? value('soilAccess') : '',
+      waterAccess: newRoute ? value('waterAccess') : '',
+      ventRoute: newRoute ? value('ventRoute') : '',
+      electricsScope: newRoute ? value('electricsScope') : '',
+      newRoomWorks: newRoute ? selected('newRoomWorks') : [],
+      newRoomNotes: newRoute ? value('newRoomNotes') : '',
+      desiredItems: selected('desiredItems'),
+      showerType: value('showerType'),
+      heating: value('heating'),
+      style: value('style'),
+      tileCoverage: value('tileCoverage'),
+      productLevel: value('productLevel'),
+      wallTileSize: value('wallTileSize'),
+      floorTileSize: value('floorTileSize'),
+      propertyType: value('propertyType'),
+      bathroomFloor: value('bathroomFloor'),
+      access: value('access'),
+      floorStructure: value('floorStructure'),
+      postcode: value('postcode').toUpperCase(),
+      parking: value('parking'),
+      products,
+      estimate: lastEstimate
+    };
+  }
 
-    document.getElementById('generateConcept').addEventListener('click',async()=>{
-      calculateEstimate(); const p=getProject();
-      if(!p.roomLength||!p.roomWidth||!p.desiredItems.length){alert('Enter the room dimensions and choose the main fittings before generating a concept.');return}
-      const today=new Date().toISOString().slice(0,10); const countKey=`bathroomConceptCount-${today}`; const count=Number(localStorage.getItem(countKey)||0);
-      if(count>=2){alert('This draft currently allows two concept generations per device each day. You can still edit the plan and arrange a survey.');return}
-      const loading=document.getElementById('conceptLoading');loading.classList.add('show');document.getElementById('generateConcept').disabled=true;
-      try{
-        const res=await fetch(`${API}/concept`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project:p})});const data=await res.json();if(!res.ok)throw new Error(data.error||'Concept generation failed.');
-        const img=new Image();img.alt='AI-generated bathroom concept based on planner choices';img.src=`data:${data.mimeType||'image/jpeg'};base64,${data.imageBase64}`;const preview=document.getElementById('conceptPreview');preview.querySelectorAll('img').forEach(i=>i.remove());preview.prepend(img);document.getElementById('conceptPlaceholder').classList.add('hidden');localStorage.setItem(countKey,String(count+1));
-      }catch(e){alert(e.message||'The concept could not be generated. Please try again.')}finally{loading.classList.remove('show');document.getElementById('generateConcept').disabled=false}
+  function getAIProject() {
+    const p = getProject();
+    const ai = {
+      ...p
+    };
+    if (!(p.projectType && p.roomFloorArea && p.desiredItems.length)) delete ai.estimate;
+    Object.keys(ai).forEach(key => {
+      const val = ai[key];
+      if (val === null || val === '' || (Array.isArray(val) && val.length === 0)) delete ai[key];
     });
+    return ai;
+  }
 
-    function saveState(){
-      try{const data={fields:{},checks:{},products,currentStep};[...form.elements].forEach(el=>{if(!el.name)return;if(el.type==='checkbox'||el.type==='radio'){data.checks[el.id]=el.checked}else{data.fields[el.name]=el.value}});localStorage.setItem(STATE_KEY,JSON.stringify(data))}catch(e){}
+  function hasEstimateInputs(p) {
+    return Boolean(p.projectType && p.roomFloorArea && p.desiredItems.length && p.productLevel);
+  }
+
+  function showIncompleteEstimate(p) {
+    lastEstimate = null;
+    document.getElementById('estimateRange').textContent = '£—';
+    document.getElementById('durationText').textContent = '—';
+    document.getElementById('areaText').textContent = p.roomFloorArea ? `${p.roomFloorArea}m²` :
+      'Not entered';
+    document.getElementById('productTotalText').textContent = 'Not calculated';
+    document.getElementById('confidenceText').textContent = 'More details needed';
+    document.getElementById('estimateDescription').textContent =
+      'Choose the project type, enter the room dimensions, select the main fittings and choose a product level before calculating a budget range.';
+    document.getElementById('breakdown').innerHTML =
+      '<div class="notice"><strong>No estimate has been created.</strong> The planner will not invent a project or use automatic bathroom assumptions.</div>';
+    const propertySummary = [p.propertyType, p.bathroomFloor].filter(Boolean).join(', ') || 'Not selected';
+    const summary = [
+      ['Project', p.projectType || 'Not selected'],
+      ['Room', p.roomFloorArea ?
+        `${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}` :
+        'Dimensions incomplete'
+      ],
+      ['Layout', p.layoutChange || 'Not selected'],
+      ['Wanted', p.desiredItems.join(', ') || 'Not selected'],
+      ['Style', p.style || 'Not selected'],
+      ['Tiling', p.tileCoverage || 'Not selected'],
+      ['Property', propertySummary],
+      ['Postcode', p.postcode || 'Not entered']
+    ];
+    document.getElementById('summaryList').innerHTML = summary.map(x =>
+      `<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
+    return null;
+  }
+
+  function showPricingCalibration(p) {
+    lastEstimate = null;
+    const productTotal = p.products.reduce((sum, item) => sum + (Number(item.price) || 0) * (Number(item
+      .quantity) || 1), 0);
+    document.getElementById('estimateRange').textContent = 'Pricing review';
+    document.getElementById('durationText').textContent = 'After scope review';
+    document.getElementById('areaText').textContent = p.roomFloorArea ? `${p.roomFloorArea}m²` :
+      'Not entered';
+    document.getElementById('productTotalText').textContent = productTotal ? money(productTotal) :
+      'No priced products';
+    document.getElementById('confidenceText').textContent = 'Routes being calibrated';
+    document.getElementById('estimateDescription').textContent =
+      'Automatic cost figures are temporarily paused so bathroom refurbishments, new en-suites, loft projects and compact landlord installations can each be priced from the correct scope.';
+    document.getElementById('breakdown').innerHTML =
+      '<div class="notice"><strong>No misleading figure shown.</strong> Complete the route, add products and use the AI assistant to identify the major work and unknowns. Pricing will be switched back on after separate route models are calibrated.</div>';
+    const routeDetail = p.projectRoute === 'Completely new wet room' ? [p.newRoomLocation, p
+      .serviceProximity
+    ].filter(Boolean).join(' • ') : p.layoutChange;
+    const propertySummary = [p.propertyType, p.bathroomFloor].filter(Boolean).join(', ') || 'Not selected';
+    const summary = [
+      ['Project', p.projectType || 'Not selected'],
+      ['Route', routeDetail || p.projectRoute || 'Not selected'],
+      ['Room', p.roomFloorArea ?
+        `${p.roomLength}m × ${p.roomWidth}m${p.ceilingHeight?` × ${p.ceilingHeight}m high`:''}` :
+        'Dimensions incomplete'
+      ],
+      ['Wanted', p.desiredItems.join(', ') || 'Not selected'],
+      ['Services', p.projectRoute === 'Completely new wet room' ? [p.soilAccess, p.waterAccess, p
+        .ventRoute
+      ].filter(Boolean).join(' • ') || 'Not selected' : p.drainageKnown || 'Not selected'],
+      ['Style', p.style || 'Not selected'],
+      ['Property', propertySummary],
+      ['Products', p.products.length ? `${p.products.length} added` : 'None added']
+    ];
+    document.getElementById('summaryList').innerHTML = summary.map(x =>
+      `<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
+    saveState();
+    return null;
+  }
+
+  function calculateEstimate() {
+    const p = getProject();
+    if (!PRICING_ENABLED) return showPricingCalibration(p);
+    if (!hasEstimateInputs(p)) return showIncompleteEstimate(p);
+    const area = p.roomFloorArea;
+    const base = {
+      "Full bathroom renovation": 7800,
+      "Existing en-suite renovation": 6800,
+      "New en-suite": 11200,
+      "Shower room": 7200,
+      "Cloakroom": 3900,
+      "Bathroom refresh": 2800
+    } [p.projectType] || 7000;
+    let labour = base;
+    const reasons = [];
+    if (p.layoutChange === 'Move one item') {
+      labour += 1200;
+      reasons.push(['Layout alterations', 1200])
     }
-    function restoreState(){
-      try{
-        const data=JSON.parse(localStorage.getItem(STATE_KEY)||'null');
-        restoring=true;
-        if(data){
-          Object.entries(data.fields||{}).forEach(([name,val])=>{if(form.elements[name]&&typeof form.elements[name].value!=='undefined')form.elements[name].value=val});
-          Object.entries(data.checks||{}).forEach(([id,checked])=>{const el=document.getElementById(id);if(el)el.checked=checked});
-          document.getElementById('productList').innerHTML='';
-          (data.products?.length?data.products:[{type:'Tiles',url:'',price:''}]).forEach(createProductRow);
-          currentStep=Number(data.currentStep)||0;
-        }else{
-          createProductRow();
-          currentStep=0;
+    if (p.layoutChange === 'Complete layout change') {
+      labour += 2600;
+      reasons.push(['Complete layout change', 2600])
+    }
+    if (p.drainageKnown === 'Major movement expected') {
+      labour += 1800;
+      reasons.push(['Major drainage movement', 1800])
+    }
+    const add = (label, amount, condition) => {
+      if (condition) {
+        labour += amount;
+        reasons.push([label, amount])
+      }
+    };
+    add('Walk-in shower', 1100, p.desiredItems.includes('Walk-in shower'));
+    add('Tiled wet-room construction', 2400, p.desiredItems.includes('Tiled wet-room floor'));
+    add('Bath installation', 700, p.desiredItems.includes('Bath'));
+    add('Shower over bath', 650, p.desiredItems.includes('Shower over bath'));
+    add('Wall-hung WC frame and service wall', 1250, p.desiredItems.includes('Wall-hung toilet'));
+    add('Back-to-wall WC', 500, p.desiredItems.includes('Back-to-wall toilet'));
+    add('Countertop basin and floating shelf', 650, p.desiredItems.includes(
+      'Countertop basin and floating shelf'));
+    add('Vanity installation', 450, p.desiredItems.includes('Vanity unit'));
+    add('Concealed rainfall shower', 700, p.showerType === 'Concealed thermostatic rainfall and handset');
+    add('Shower niche', 420, p.desiredItems.includes('Tiled shower niche'));
+    add('LED mirror electrical allowance', 300, p.desiredItems.includes('LED mirror'));
+    add('New extractor', 350, p.desiredItems.includes('New extractor fan'));
+    add('Underfloor heating', 850, p.heating === 'Electric underfloor heating');
+    if (p.tileCoverage === 'Fully tiled walls and floor') {
+      const t = 1500 + area * 280;
+      labour += t;
+      reasons.push(['Full tiling and preparation', t])
+    } else if (p.tileCoverage === 'Shower fully tiled, half-height elsewhere') {
+      const t = 900 + area * 180;
+      labour += t;
+      reasons.push(['Mixed tiling coverage', t])
+    } else if (p.tileCoverage === 'Wet areas tiled, painted elsewhere') {
+      const t = 550 + area * 130;
+      labour += t;
+      reasons.push(['Wet-area tiling', t])
+    }
+    add('Large-format tile handling', 700, p.wallTileSize === '1200 x 600mm');
+    add('Small-format tile labour', 550, p.wallTileSize === 'Small format / metro');
+    add('Unknown first-floor structure allowance', 650, p.floorStructure === 'Unknown' && p
+      .bathroomFloor !== 'Ground floor');
+    add('Upper-floor access', 350, p.bathroomFloor === 'Second floor or higher' || p.bathroomFloor ===
+      'Loft conversion');
+    add('No-lift flat access', 600, p.propertyType === 'Upper-floor flat without lift');
+    add('Difficult access', 500, p.access === 'Difficult access');
+    add('Parking / permit allowance', 300, p.parking === 'Paid parking' || p.parking ===
+      'Difficult or unknown');
+    const productTotal = p.products.reduce((s, x) => s + (x.price || 0) * (x.quantity || 1), 0);
+    let productAllowance = 0;
+    if (!productTotal) {
+      productAllowance = {
+        Budget: 2300,
+        Standard: 3800,
+        Premium: 6500,
+        Mixed: 4800
+      } [p.productLevel] || 3800
+    }
+    const provisionalProducts = productTotal || productAllowance;
+    const specFactor = {
+      Budget: .92,
+      Standard: 1,
+      Premium: 1.13,
+      Mixed: 1.06
+    } [p.productLevel] || 1;
+    labour *= specFactor;
+    let low = (labour + provisionalProducts) * .91;
+    let high = (labour + provisionalProducts) * 1.14;
+    const unknowns = [!p.roomFloorArea, !p.floorStructure || p.floorStructure === 'Unknown', !p
+      .layoutChange || p.layoutChange === 'Not sure', !p.drainageKnown || p.drainageKnown === 'Unknown', !
+      p.propertyType, !p.bathroomFloor, !p.postcode
+    ].filter(Boolean).length;
+    if (unknowns >= 3) {
+      low *= .94;
+      high *= 1.12
+    }
+    const daysLow = Math.max(3, Math.ceil(labour / 780));
+    const daysHigh = Math.ceil(daysLow * 1.35 + 1);
+    const confidence = unknowns <= 1 ? 'High' : unknowns <= 3 ? 'Medium' : 'Early';
+    lastEstimate = {
+      low: Math.round(low / 100) * 100,
+      high: Math.round(high / 100) * 100,
+      labour: Math.round(labour),
+      productAllowance: Math.round(provisionalProducts),
+      productTotal: Math.round(productTotal),
+      daysLow,
+      daysHigh,
+      confidence,
+      reasons: reasons.slice(0, 7)
+    };
+    document.getElementById('estimateRange').textContent =
+      `${money(lastEstimate.low)}–${money(lastEstimate.high)}`;
+    document.getElementById('durationText').textContent = `${daysLow}–${daysHigh} working days`;
+    document.getElementById('areaText').textContent = p.roomFloorArea ? `${p.roomFloorArea}m²` :
+      'Not entered';
+    document.getElementById('productTotalText').textContent = productTotal ? money(productTotal) :
+      `${money(productAllowance)} allowance`;
+    document.getElementById('confidenceText').textContent = `${confidence} confidence`;
+    const projectLabel = p.projectType ? p.projectType.toLowerCase() : 'bathroom project';
+    const productLabel = p.productLevel ? p.productLevel.toLowerCase() : 'provisional';
+    document.getElementById('estimateDescription').textContent =
+      `Indicative complete-project range for a ${projectLabel} with a ${productLabel} product allowance. Hidden conditions and final product choices remain subject to survey.`;
+    const rows = [
+      ['Base build & installation', base], ...lastEstimate.reasons, ['Selected products / allowance',
+        provisionalProducts
+      ]
+    ];
+    document.getElementById('breakdown').innerHTML =
+      '<h4 style="margin:0 0 8px">Main estimate drivers</h4>' + rows.map(r =>
+        `<div class="break-row"><span>${escapeHtml(r[0])}</span><span>${money(r[1])}</span></div>`).join(
+      '') +
+      '<p style="font-size:.76rem;color:var(--muted);margin:12px 0 0">Figures overlap within the calculation and are not a contractual itemised quotation.</p>';
+    const propertySummary = [p.propertyType, p.bathroomFloor].filter(Boolean).join(', ') || 'Not selected';
+    const summary = [
+      ['Project', p.projectType || 'Not selected'],
+      ['Room', p.roomFloorArea ? `${p.roomLength}m × ${p.roomWidth}m × ${p.ceilingHeight||'?'}m high` :
+        'Dimensions incomplete'
+      ],
+      ['Layout', p.layoutChange || 'Not selected'],
+      ['Wanted', p.desiredItems.join(', ') || 'Not selected'],
+      ['Style', p.style || 'Not selected'],
+      ['Tiling', p.tileCoverage || 'Not selected'],
+      ['Property', propertySummary],
+      ['Postcode', p.postcode || 'Not entered']
+    ];
+    document.getElementById('summaryList').innerHTML = summary.map(x =>
+      `<div><strong>${escapeHtml(x[0])}:</strong><br>${escapeHtml(x[1])}</div>`).join('');
+    saveState();
+    return lastEstimate;
+  }
+
+  function escapeHtml(str = '') {
+    return String(str).replace(/[&<>'"]/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    } [c]))
+  }
+
+  function addBubble(text, type = 'ai') {
+    const b = document.createElement('div');
+    b.className = `bubble ${type}`;
+    b.textContent = text;
+    document.getElementById('chatLog').appendChild(b);
+    document.getElementById('chatLog').scrollTop = 99999;
+    return b
+  }
+  async function askAI(message) {
+    message = (message || document.getElementById('chatInput').value).trim();
+    if (!message) return;
+    addBubble(message, 'user');
+    document.getElementById('chatInput').value = '';
+    const typing = addBubble('Thinking about your bathroom…', 'ai typing');
+    document.getElementById('sendChat').disabled = true;
+    try {
+      const currentProject = getProject();
+      if (hasEstimateInputs(currentProject)) calculateEstimate();
+      else lastEstimate = null;
+      const res = await fetch(`${API}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message,
+          project: getAIProject(),
+          previousResponseId: responseId,
+          imageDataUrl: photoDataUrl
+        })
+      });
+      const data = await res.json();
+      typing.remove();
+      if (!res.ok) throw new Error(data.error || 'The assistant is unavailable.');
+      responseId = data.responseId || responseId;
+      sessionStorage.setItem(RESPONSE_KEY, responseId);
+      addBubble(data.reply, 'ai');
+      photoDataUrl = '';
+      document.getElementById('photoName').textContent = '';
+      document.getElementById('chatPhoto').value = '';
+    } catch (e) {
+      typing.remove();
+      addBubble(e.message || 'The assistant is temporarily unavailable.', 'error')
+    } finally {
+      document.getElementById('sendChat').disabled = false
+    }
+  }
+  document.getElementById('sendChat').addEventListener('click', () => askAI());
+  document.getElementById('chatInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      askAI()
+    }
+  });
+  document.querySelectorAll('[data-quick]').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('assistantPanel').scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+    askAI(b.dataset.quick)
+  }));
+  document.querySelector('.ask-description').addEventListener('click', () => {
+    const d = value('projectDescription');
+    askAI(d ?
+      `This is my description: "${d}". What does it sound like I am planning, and what is the next important question?` :
+      'I am not sure how to describe my bathroom project. Please ask me the first useful question.')
+  });
+  document.getElementById('chatPhoto').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    if (f.size > 4500000) {
+      alert('Please choose an image under 4.5MB.');
+      e.target.value = '';
+      return
+    }
+    const r = new FileReader();
+    r.onload = () => {
+      photoDataUrl = r.result;
+      document.getElementById('photoName').textContent = `Attached: ${f.name}`
+    };
+    r.readAsDataURL(f)
+  });
+
+  document.getElementById('generateConcept').addEventListener('click', async () => {
+    calculateEstimate();
+    const p = getProject();
+    if (!p.roomLength || !p.roomWidth || !p.desiredItems.length) {
+      alert('Enter the room dimensions and choose the main fittings before generating a concept.');
+      return
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    const countKey = `bathroomConceptCount-${today}`;
+    const count = Number(localStorage.getItem(countKey) || 0);
+    if (count >= 2) {
+      alert(
+        'This draft currently allows two concept generations per device each day. You can still edit the plan and arrange a survey.'
+        );
+      return
+    }
+    const loading = document.getElementById('conceptLoading');
+    loading.classList.add('show');
+    document.getElementById('generateConcept').disabled = true;
+    try {
+      const res = await fetch(`${API}/concept`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          project: p
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Concept generation failed.');
+      const img = new Image();
+      img.alt = 'AI-generated bathroom concept based on planner choices';
+      img.src = `data:${data.mimeType||'image/jpeg'};base64,${data.imageBase64}`;
+      const preview = document.getElementById('conceptPreview');
+      preview.querySelectorAll('img').forEach(i => i.remove());
+      preview.prepend(img);
+      document.getElementById('conceptPlaceholder').classList.add('hidden');
+      localStorage.setItem(countKey, String(count + 1));
+    } catch (e) {
+      alert(e.message || 'The concept could not be generated. Please try again.')
+    } finally {
+      loading.classList.remove('show');
+      document.getElementById('generateConcept').disabled = false
+    }
+  });
+
+  function saveState() {
+    try {
+      const data = {
+        fields: {},
+        checks: {},
+        products,
+        currentStep
+      };
+      [...form.elements].forEach(el => {
+        if (!el.name) return;
+        if (el.type === 'checkbox' || el.type === 'radio') {
+          data.checks[el.id] = el.checked
+        } else {
+          data.fields[el.name] = el.value
         }
-        restoring=false;
-        syncProducts();
-        updateProjectRoute();
-        steps.forEach((s,i)=>s.classList.toggle('active',i===currentStep));
-        document.getElementById('stepTitle').textContent=titles[currentStep];
-        document.getElementById('stepCount').textContent=`Step ${currentStep+1} of ${steps.length}`;
-        document.getElementById('progressBar').style.width=`${((currentStep+1)/steps.length)*100}%`;
-        if(currentStep===5) calculateEstimate();
-      }catch(e){restoring=false;createProductRow()}
-    }
-    document.getElementById('startOver').addEventListener('click',()=>{
-      if(!confirm('Clear every planner answer and start a new AI conversation?')) return;
-      localStorage.removeItem(STATE_KEY);
-      sessionStorage.removeItem(RESPONSE_KEY);
-      responseId=''; photoDataUrl=''; products=[]; lastEstimate=null;
-      form.reset();
-      document.getElementById('productList').innerHTML='';
-      restoring=true; createProductRow(); restoring=false; syncProducts();
-      document.getElementById('chatLog').innerHTML='<div class="bubble ai">Tell me what you are planning or ask a general question. I will only use details you actually enter.</div>';
-      showStep(0);
-    });
+      });
+      localStorage.setItem(STATE_KEY, JSON.stringify(data))
+    } catch (e) {}
+  }
 
-    form.addEventListener('change',()=>{syncProducts();saveState()});
-    restoreState();
-    updateProjectRoute();
-  })();
+  function restoreState() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STATE_KEY) || 'null');
+      restoring = true;
+      if (data) {
+        Object.entries(data.fields || {}).forEach(([name, val]) => {
+          if (form.elements[name] && typeof form.elements[name].value !== 'undefined') form.elements[
+            name].value = val
+        });
+        Object.entries(data.checks || {}).forEach(([id, checked]) => {
+          const el = document.getElementById(id);
+          if (el) el.checked = checked
+        });
+        document.getElementById('productList').innerHTML = '';
+        (data.products?.length ? data.products : [{
+          type: 'Tiles',
+          url: '',
+          name: '',
+          price: '',
+          quantity: 1,
+          meta: {}
+        }]).forEach(createProductRow);
+        currentStep = Number(data.currentStep) || 0;
+      } else {
+        createProductRow();
+        currentStep = 0;
+      }
+      restoring = false;
+      syncProducts();
+      steps.forEach((s, i) => s.classList.toggle('active', i === currentStep));
+      document.getElementById('stepTitle').textContent = titles[currentStep];
+      document.getElementById('stepCount').textContent = `Step ${currentStep+1} of ${steps.length}`;
+      document.getElementById('progressBar').style.width = `${((currentStep+1)/steps.length)*100}%`;
+      updateRouteUI();
+      if (currentStep === 5) calculateEstimate();
+    } catch (e) {
+      restoring = false;
+      createProductRow()
+    }
+  }
+  document.getElementById('startOver').addEventListener('click', () => {
+    if (!confirm('Clear every planner answer and start a new AI conversation?')) return;
+    localStorage.removeItem(STATE_KEY);
+    sessionStorage.removeItem(RESPONSE_KEY);
+    responseId = '';
+    photoDataUrl = '';
+    products = [];
+    lastEstimate = null;
+    form.reset();
+    document.getElementById('productList').innerHTML = '';
+    restoring = true;
+    createProductRow();
+    restoring = false;
+    syncProducts();
+    document.getElementById('chatLog').innerHTML =
+      '<div class="bubble ai">Let\'s plan it together. Tell me what you have now or what you want to create. I’ll ask one useful question at a time and won’t assume there is already a bathroom.</div>';
+    showStep(0);
+  });
+
+  form.querySelectorAll('[name="projectType"]').forEach(input => input.addEventListener('change', () => {
+    updateRouteUI();
+    if (restoring) return;
+    responseId = '';
+    sessionStorage.removeItem(RESPONSE_KEY);
+    addBubble(
+      `Understood — ${value('projectType')}. I have switched to the ${isNewRoomProject()?'new-room construction':'existing-room refurbishment'} questions and started a fresh project conversation.`,
+      'ai');
+  }));
+  form.addEventListener('change', () => {
+    updateRouteUI();
+    syncProducts();
+    saveState()
+  });
+  restoreState();
+})();
+  
   </script>
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+var Tawk_API = Tawk_API || {},
+  Tawk_LoadStart = new Date();
+(function() {
+  var s1 = document.createElement("script"),
+    s0 = document.getElementsByTagName("script")[0];
+  s1.async = true;
+  s1.src = 'https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j';
+  s1.charset = 'UTF-8';
+  s1.setAttribute('crossorigin', '*');
+  s0.parentNode.insertBefore(s1, s0);
+})();
   </script>
   <!--End of Tawk.to Script-->
 </body>
