@@ -1,0 +1,25 @@
+name = "ensuite-live-chat"
+main = "src/index.js"
+compatibility_date = "2026-07-23"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ensuite-live-chat-db"
+database_id = "PASTE_D1_DATABASE_ID_HERE"
+
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+BUSINESS_NAME = "En-Suites & Bathrooms"
+OWNER_NAME = "Nicholas"
+SITE_ORIGINS = "https://en-suite.co.uk,https://www.en-suite.co.uk"
+PUBLIC_CHAT_URL = "https://chat.en-suite.co.uk/inbox.html"
+VAPID_SUBJECT = "https://en-suite.co.uk"
