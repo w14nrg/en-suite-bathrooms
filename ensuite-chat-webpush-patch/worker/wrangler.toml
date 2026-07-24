@@ -12,7 +12,7 @@ run_worker_first = true
 [[d1_databases]]
 binding = "DB"
 database_name = "ensuite-live-chat-db"
-database_id = "PASTE_D1_DATABASE_ID_HERE"
+database_id = "60dc2148-ce9a-4308-8cd5-dc71f2f790a4"
 
 [triggers]
 crons = ["* * * * *"]
