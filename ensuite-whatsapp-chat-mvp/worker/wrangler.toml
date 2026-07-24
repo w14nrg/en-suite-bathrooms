@@ -1,6 +1,7 @@
 name = "ensuite-live-chat"
 main = "src/index.js"
 compatibility_date = "2026-07-23"
+compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 [assets]
@@ -11,7 +12,7 @@ run_worker_first = true
 [[d1_databases]]
 binding = "DB"
 database_name = "ensuite-live-chat-db"
-database_id = "PASTE_D1_DATABASE_ID_HERE"
+database_id = "60dc2148-ce9a-4308-8cd5-dc71f2f790a4"
 
 [triggers]
 crons = ["* * * * *"]
@@ -21,10 +22,4 @@ BUSINESS_NAME = "En-Suites & Bathrooms"
 OWNER_NAME = "Nicholas"
 SITE_ORIGINS = "https://en-suite.co.uk,https://www.en-suite.co.uk"
 PUBLIC_CHAT_URL = "https://chat.en-suite.co.uk/inbox.html"
-FIREBASE_API_KEY = "PASTE_FIREBASE_WEB_API_KEY"
-FIREBASE_AUTH_DOMAIN = "PASTE_PROJECT_ID.firebaseapp.com"
-FIREBASE_PROJECT_ID = "PASTE_FIREBASE_PROJECT_ID"
-FIREBASE_STORAGE_BUCKET = "PASTE_PROJECT_ID.firebasestorage.app"
-FIREBASE_MESSAGING_SENDER_ID = "PASTE_MESSAGING_SENDER_ID"
-FIREBASE_APP_ID = "PASTE_FIREBASE_APP_ID"
-FIREBASE_VAPID_KEY = "PASTE_WEB_PUSH_CERTIFICATE_KEY_PAIR"
+VAPID_SUBJECT = "https://en-suite.co.uk"
