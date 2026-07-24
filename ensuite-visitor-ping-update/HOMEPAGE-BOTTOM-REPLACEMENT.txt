@@ -1,0 +1,16 @@
+Replace everything from:
+
+<script src="assets/js/site.js"></script>
+
+right down to the end of index.html with this:
+
+<script src="assets/js/site.js"></script>
+<script
+  src="https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev/widget.js?v=3"
+  data-api="https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev"
+  data-whatsapp="442073860000"
+  defer
+></script>
+</body></html>
+
+This removes the complete Tawk.to block and keeps only the new En-Suite live chat.
