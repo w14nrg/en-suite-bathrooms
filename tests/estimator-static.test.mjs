@@ -7,18 +7,19 @@ const root = resolve(import.meta.dirname, "..");
 const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
 
-test("the estimator starts as a simple empty-room 2D and 3D planner", () => {
-  assert.match(estimator, /Start with an empty room/);
+test("the /estimator route exposes the Draft 2 project choices and simple planner", () => {
+  assert.match(estimator, /Planner · Draft 2/);
+  assert.match(estimator, /data-route="bathroom"/);
+  assert.match(estimator, /data-route="ensuite"/);
+  assert.match(estimator, /data-route="cloakroom"/);
+  assert.match(estimator, /id="drawWall"/);
+  assert.match(estimator, /id="serviceList"/);
+  assert.match(estimator, /id="productUrl"/);
+  assert.match(estimator, /id="estimateTotal"/);
   assert.match(estimator, /data-view="2d"/);
   assert.match(estimator, /data-view="3d"/);
-  assert.match(estimator, /id="roomWidth"/);
-  assert.match(estimator, /id="roomLength"/);
-  assert.match(estimator, /id="fixturePalette"/);
-  assert.match(estimator, /id="planSvg"/);
   assert.match(estimator, /three@0\.185\.1/);
   assert.match(estimator, /estimator-simple\.mjs/);
-  assert.doesNotMatch(estimator, /routeGate/);
-  assert.doesNotMatch(estimator, /estimatePanel/);
 });
 
 test("the existing planner remains a normal working page without a redirect", () => {
