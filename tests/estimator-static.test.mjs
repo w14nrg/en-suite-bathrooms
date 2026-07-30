@@ -7,18 +7,23 @@ const root = resolve(import.meta.dirname, "..");
 const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
 
-test("the /estimator route exposes the Draft 2 project choices and simple planner", () => {
-  assert.match(estimator, /Planner · Draft 2/);
+test("the /estimator route exposes the Draft 3 planner", () => {
+  assert.match(estimator, /Planner · Draft 3/);
   assert.match(estimator, /data-route="bathroom"/);
   assert.match(estimator, /data-route="ensuite"/);
   assert.match(estimator, /data-route="cloakroom"/);
   assert.match(estimator, /id="drawWall"/);
   assert.match(estimator, /id="serviceList"/);
   assert.match(estimator, /id="productUrl"/);
+  assert.match(estimator, /id="currentBathroomPhoto"/);
+  assert.match(estimator, /id="wallSqm"/);
+  assert.match(estimator, /id="floorSqm"/);
+  assert.match(estimator, /id="tileLink"/);
   assert.match(estimator, /id="estimateTotal"/);
   assert.match(estimator, /data-view="2d"/);
   assert.match(estimator, /data-view="3d"/);
   assert.match(estimator, /three@0\.185\.1/);
+  assert.match(estimator, /estimator-draft3\.css/);
   assert.match(estimator, /estimator-simple\.mjs/);
 });
 
