@@ -7,13 +7,18 @@ const root = resolve(import.meta.dirname, "..");
 const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
 
-test("the additive /estimator route contains the required product positioning", () => {
-  assert.match(estimator, /Design Your Room &amp; Build an Estimate/);
-  assert.match(estimator, /data-route="existing"/);
-  assert.match(estimator, /data-route="newEnsuite"/);
-  assert.match(estimator, /data-route="cloakroom"/);
+test("the estimator starts as a simple empty-room 2D and 3D planner", () => {
+  assert.match(estimator, /Start with an empty room/);
+  assert.match(estimator, /data-view="2d"/);
+  assert.match(estimator, /data-view="3d"/);
+  assert.match(estimator, /id="roomWidth"/);
+  assert.match(estimator, /id="roomLength"/);
+  assert.match(estimator, /id="fixturePalette"/);
+  assert.match(estimator, /id="planSvg"/);
   assert.match(estimator, /three@0\.185\.1/);
-  assert.match(estimator, /estimator-app\.mjs/);
+  assert.match(estimator, /estimator-simple\.mjs/);
+  assert.doesNotMatch(estimator, /routeGate/);
+  assert.doesNotMatch(estimator, /estimatePanel/);
 });
 
 test("the existing planner remains a normal working page without a redirect", () => {
@@ -52,4 +57,3 @@ test("all local assets referenced by the estimator exist", () => {
     assert.ok(existsSync(localPath), `Missing local estimator asset: ${reference}`);
   }
 });
-
