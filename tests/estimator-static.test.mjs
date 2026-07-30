@@ -35,9 +35,9 @@ test("the /estimator route exposes the simplified Draft 4 planner", () => {
   assert.doesNotMatch(estimator, /£60\/m²/);
 });
 
-test("the existing planner remains a normal working page without a redirect", () => {
+test("the existing AI planner remains a normal working page without a redirect", () => {
   const planner = readFileSync(resolve(root, "planner.html"), "utf8");
-  assert.match(planner, /Bathroom Project Planner/);
+  assert.match(planner, /AI Bathroom Planner/);
   assert.match(planner, /assets\/js\/site\.js/);
   assert.doesNotMatch(planner, /http-equiv=["']refresh/i);
   assert.doesNotMatch(planner, /location\.(?:href|replace).*estimator/i);
