@@ -1,0 +1,91 @@
+/* Draft 4: independent project plans, compact products and automatic hidden-rate tiling. */
+.collapsible-card { padding: 0; overflow: hidden; }
+.collapsible-card > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; padding: 15px 17px; user-select: none; }
+.collapsible-card > summary::-webkit-details-marker { display: none; }
+.collapsible-card > summary > span { display: flex; align-items: center; gap: 10px; }
+.collapsible-card > summary > span > strong { font-size: .94rem; }
+.collapsible-card > summary > i { color: var(--planner-muted); font-size: .76rem; transition: transform .18s ease; }
+.collapsible-card[open] > summary { border-bottom: 1px solid var(--planner-line); }
+.collapsible-card[open] > summary > i { transform: rotate(180deg); }
+.collapsible-card-body { padding: 15px 17px 17px; }
+.collapsible-card-body > p { margin: 0 0 13px; color: var(--planner-muted); font-size: .82rem; line-height: 1.45; }
+.card-action-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+.card-action-row > p { margin: 0; color: var(--planner-muted); font-size: .82rem; line-height: 1.42; }
+.route-helper { max-width: 520px; margin: 6px 0 0; color: var(--planner-muted); font-size: .78rem; line-height: 1.4; }
+
+.product-groups { display: grid; gap: 8px; }
+.product-group { border: 1px solid var(--planner-line); border-radius: 11px; overflow: hidden; background: #fbfaf8; }
+.product-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; list-style: none; padding: 10px 11px; }
+.product-group > summary::-webkit-details-marker { display: none; }
+.product-group > summary > span { display: flex; align-items: center; gap: 8px; }
+.product-group > summary > span > i { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 50%; background: var(--planner-gold-soft); color: var(--planner-gold-dark); font-size: .74rem; }
+.product-group > summary strong { font-size: .78rem; }
+.product-group > summary > i { color: var(--planner-muted); font-size: .68rem; transition: transform .18s ease; }
+.product-group[open] > summary { border-bottom: 1px solid var(--planner-line); background: #fff; }
+.product-group[open] > summary > i { transform: rotate(180deg); }
+.product-group .fixture-palette { padding: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.product-group .fixture-button { min-height: 58px; padding: 7px 5px; font-size: .65rem; }
+
+.zone-size-label { fill: var(--planner-gold-dark); font-size: 13px; font-weight: 750; text-anchor: middle; pointer-events: none; }
+.zone-resize-handle { fill: var(--planner-gold); stroke: #fff; stroke-width: 4; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
+.zone-resize-handle.edge.e, .zone-resize-handle.edge.w { cursor: ew-resize; }
+.zone-resize-handle.edge.n, .zone-resize-handle.edge.s { cursor: ns-resize; }
+.zone-resize-handle.corner.nw, .zone-resize-handle.corner.se { cursor: nwse-resize; }
+.zone-resize-handle.corner.ne, .zone-resize-handle.corner.sw { cursor: nesw-resize; }
+.object-rotate-handle { cursor: pointer; filter: none; }
+.object-rotate-handle circle { fill: var(--planner-gold); stroke: #fff; stroke-width: 4; }
+.object-rotate-handle text { fill: #fff !important; font-size: 18px !important; font-weight: 900 !important; pointer-events: none; }
+
+.rotate-3d-button { position: absolute; z-index: 3; right: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 8px; min-height: 42px; border: 1px solid var(--planner-gold-dark); border-radius: 11px; background: var(--planner-gold); color: #fff; cursor: pointer; padding: 9px 13px; font: inherit; font-size: .78rem; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,.14); }
+.rotate-3d-button:hover, .rotate-3d-button:focus-visible { background: var(--planner-gold-dark); }
+
+.photo-upload-button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; border: 1px dashed var(--planner-gold); border-radius: 11px; background: var(--planner-gold-soft); color: var(--planner-gold-dark); cursor: pointer; font-size: .78rem; font-weight: 800; }
+.visually-hidden-file { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.photo-preview { margin-top: 11px; overflow: hidden; border: 1px solid var(--planner-line); border-radius: 11px; background: #eee; }
+.photo-preview img { display: block; width: 100%; max-height: 220px; object-fit: cover; }
+.photo-status-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; }
+.photo-status-row > span { overflow: hidden; color: var(--planner-muted); font-size: .7rem; text-overflow: ellipsis; white-space: nowrap; }
+
+.product-link-fields > label { display: grid; gap: 5px; color: var(--planner-muted); font-size: .72rem; font-weight: 700; }
+.product-link-fields select,
+.tiling-estimator-box select { width: 100%; border: 1px solid var(--planner-line); border-radius: 10px; background: #fff; color: var(--planner-ink); padding: 9px 10px; font: inherit; font-size: .78rem; }
+.price-found { margin: 0 !important; border: 1px solid #bfdbc4; border-radius: 9px; background: #f0f8f1; color: #315f39 !important; padding: 8px 9px; font-size: .72rem !important; font-weight: 750; }
+.link-feedback.is-error { color: #943a32; }
+
+.tiling-estimator-box { display: grid; gap: 10px; border: 1px solid var(--planner-line); border-radius: 12px; background: #fbfaf8; padding: 12px; }
+.tiling-box-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tiling-box-heading > span { display: grid; gap: 2px; }
+.tiling-box-heading strong { font-size: .82rem; }
+.tiling-box-heading small { color: var(--planner-muted); font-size: .68rem; }
+.tiling-choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tiling-sqm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tiling-estimator-box label { display: grid; gap: 5px; color: var(--planner-muted); font-size: .72rem; font-weight: 700; }
+.tiling-estimator-box label > small { color: var(--planner-muted); font-size: .62rem; font-weight: 500; line-height: 1.35; }
+.tiling-estimator-box input[type="url"] { width: 100%; border: 1px solid var(--planner-line); border-radius: 10px; background: #fff; color: var(--planner-ink); padding: 9px 10px; font: inherit; font-size: .78rem; }
+.tiling-estimator-box input:disabled { cursor: not-allowed; opacity: .5; }
+.tiling-estimator-box > p { margin: 0; color: var(--planner-muted); font-size: .65rem; line-height: 1.4; }
+.area-reset { justify-self: start; padding: 0; }
+.estimate-intro { grid-template-columns: minmax(0, 1fr) minmax(300px, .95fr); }
+.estimate-line-included b { max-width: 140px; color: var(--planner-gold-dark); font-size: .73rem; line-height: 1.25; text-align: right; }
+
+@media (max-width: 1040px) {
+  .planner-sidebar { align-items: start; }
+  .collapsible-card { min-width: 0; }
+}
+
+@media (max-width: 720px) {
+  .product-group .fixture-palette { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .estimate-intro { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .tiling-choice-grid, .tiling-sqm-grid { grid-template-columns: 1fr; }
+  .rotate-3d-button span { display: none; }
+  .rotate-3d-button { width: 44px; height: 44px; justify-content: center; padding: 0; border-radius: 50%; }
+}
+
+@media (max-width: 460px) {
+  .product-group .fixture-palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .collapsible-card > summary { padding: 14px 15px; }
+  .collapsible-card-body { padding: 14px 15px 16px; }
+}
