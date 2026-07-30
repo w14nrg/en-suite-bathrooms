@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Bathroom & En-Suite Planner | En-Suites &amp; Bathrooms</title>
-  <meta name="description" content="Plan a bathroom, new en-suite or cloakroom in simple 2D, mark known services, add products and see a live early estimate.">
+  <meta name="description" content="Plan a bathroom, new en-suite or cloakroom in simple 2D and 3D, add products and tiles, and see a live early estimate.">
   <link rel="canonical" href="https://www.en-suite.co.uk/estimator/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bathroom & En-Suite Planner">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/site.css">
   <link rel="stylesheet" href="../assets/css/estimator-simple.css">
-  <link rel="stylesheet" href="../assets/css/estimator-draft3.css">
+  <link rel="stylesheet" href="../assets/css/estimator-draft4.css">
   <script type="importmap">
     {
       "imports": {
@@ -72,9 +72,9 @@
   <main class="planner-main">
     <section class="planner-heading wrap">
       <div>
-        <p class="planner-kicker">Planner · Draft 3</p>
+        <p class="planner-kicker">Planner · Draft 4</p>
         <h1>Build the room, then build the price</h1>
-        <p>Start in simple 2D, resize every wall, draw any known pipe routes and add the exact items you are considering. Switch to 3D whenever you need to check the layout.</p>
+        <p>Start in simple 2D, add the items you want and switch to 3D whenever you need to check the layout. The estimate updates as the room, products and tiling change.</p>
       </div>
       <div class="save-state" aria-live="polite">
         <span class="save-dot" aria-hidden="true"></span>
@@ -86,6 +86,7 @@
       <div>
         <p class="planner-kicker">Project</p>
         <h2 id="projectTypeTitle">What are you planning?</h2>
+        <p class="route-helper">Each option keeps its own separate design, so changing project type will not mix the rooms together.</p>
       </div>
       <div id="routeChoices" class="route-choice-grid">
         <button type="button" data-route="bathroom">
@@ -98,7 +99,7 @@
         </button>
         <button type="button" data-route="cloakroom">
           <i class="fa-solid fa-toilet" aria-hidden="true"></i>
-          <span><strong>Cloakroom</strong><small>Compact WC and basin; drainage needs a survey</small></span>
+          <span><strong>Cloakroom</strong><small>Compact WC and basin; installation requires a survey</small></span>
         </button>
       </div>
     </section>
@@ -149,21 +150,9 @@
           </div>
         </details>
 
-        <details class="planner-card collapsible-card">
-          <summary>
-            <span><span class="step-pill">2</span><strong>Known services</strong></span>
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-          </summary>
-          <div class="collapsible-card-body">
-            <p>Choose Draw, then drag a coloured line across the 2D plan. Leave anything unknown blank for the survey.</p>
-            <div id="serviceList" class="service-list"></div>
-            <p id="serviceDrawHint" class="draw-wall-hint service-draw-hint" hidden></p>
-          </div>
-        </details>
-
         <details class="planner-card collapsible-card" open>
           <summary>
-            <span><span class="step-pill">3</span><strong>Add items</strong></span>
+            <span><span class="step-pill">2</span><strong>Add items</strong></span>
             <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </summary>
           <div class="collapsible-card-body">
@@ -179,14 +168,13 @@
                 <label>Product link
                   <input id="productUrl" type="url" inputmode="url" placeholder="Paste the retailer link">
                 </label>
-                <div class="link-grid">
-                  <label>Item type
-                    <select id="productFamily"></select>
-                  </label>
-                  <label>Displayed price
-                    <span class="input-prefix"><b>£</b><input id="productPrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></span>
-                  </label>
-                </div>
+                <label>Item type
+                  <select id="productFamily"></select>
+                </label>
+                <p id="productPriceFound" class="price-found" hidden></p>
+                <label id="productManualPrice" hidden>Displayed price
+                  <span class="input-prefix"><b>£</b><input id="productPrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Enter the retailer price"></span>
+                </label>
                 <button id="addProductLink" type="button" class="primary-planner-action">Add product to plan</button>
                 <p id="productLinkFeedback" class="link-feedback" aria-live="polite"></p>
               </div>
@@ -196,7 +184,7 @@
 
         <details class="planner-card collapsible-card photo-card">
           <summary>
-            <span><span class="step-pill">4</span><strong>Current bathroom photo</strong></span>
+            <span><span class="step-pill">3</span><strong>Current bathroom photo</strong></span>
             <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </summary>
           <div class="collapsible-card-body">
@@ -234,15 +222,16 @@
 
         <div class="workspace-canvas">
           <div id="planSurface" class="plan-surface">
-            <svg id="planSvg" viewBox="0 0 1000 700" role="img" aria-label="Top-down room plan. Drag fixtures, service routes, walls and every side of the new en-suite room."></svg>
+            <svg id="planSvg" viewBox="0 0 1000 700" role="img" aria-label="Top-down room plan. Drag fixtures, walls and every side of the new en-suite room."></svg>
             <div id="emptyHint" class="empty-room-hint">
               <i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i>
               <strong>Your room is empty</strong>
-              <span>Resize it, draw known services and add only the items you need.</span>
+              <span>Resize it and add only the items you need.</span>
             </div>
           </div>
           <div id="threeSurface" class="three-surface" hidden>
             <div class="three-help"><i class="fa-solid fa-hand-pointer"></i> Drag a fixture to move it <span>·</span> drag empty space to turn the room</div>
+            <button id="rotate3d" class="rotate-3d-button" type="button" hidden><i class="fa-solid fa-rotate-right"></i><span>Rotate selected 90°</span></button>
           </div>
         </div>
 
@@ -265,25 +254,45 @@
                 <p id="estimateNote"></p>
               </div>
               <div class="tiling-estimator-box">
-                <div class="tiling-rate-row">
-                  <span><strong>Tiling fitting allowance</strong><small>Labour only — tiles are separate</small></span>
-                  <b id="tilingRate">£60/m²</b>
+                <div class="tiling-box-heading">
+                  <span><strong>Tiling</strong><small>The fitting cost updates the total automatically.</small></span>
                 </div>
+                <div class="tiling-choice-grid">
+                  <label>Wall coverage
+                    <select id="wallCoverage">
+                      <option value="none">No wall tiling</option>
+                      <option value="shower">Shower or bath area</option>
+                      <option value="full">Full room walls</option>
+                    </select>
+                  </label>
+                  <label>Tile type
+                    <select id="tileType"></select>
+                  </label>
+                </div>
+                <label class="form-check estimate-check">
+                  <input id="floorIncluded" class="form-check-input" type="checkbox">
+                  <span class="form-check-label">Include floor tiling</span>
+                </label>
                 <div class="tiling-sqm-grid">
                   <label>Wall area
-                    <span class="input-suffix"><input id="wallSqm" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0"><b>m²</b></span>
+                    <span class="input-suffix"><input id="wallSqm" type="number" min="0" step="0.1" inputmode="decimal"><b>m²</b></span>
+                    <small id="wallAreaHelp"></small>
                   </label>
                   <label>Floor area
-                    <span class="input-suffix"><input id="floorSqm" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0"><b>m²</b></span>
+                    <span class="input-suffix"><input id="floorSqm" type="number" min="0" step="0.1" inputmode="decimal"><b>m²</b></span>
+                    <small id="floorAreaHelp"></small>
                   </label>
                 </div>
+                <button id="useCalculatedAreas" type="button" class="text-action area-reset" hidden>Use areas calculated from the room</button>
                 <label>Tile link
                   <input id="tileLink" type="url" inputmode="url" placeholder="Paste the tile product link">
                 </label>
-                <label>Tile price per m²
-                  <span class="input-prefix"><b>£</b><input id="tilePrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></span>
+                <p id="tilePriceFound" class="price-found" hidden></p>
+                <label id="tileManualPrice" hidden>Tile price per m²
+                  <span class="input-prefix"><b>£</b><input id="tilePrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Enter the retailer price per m²"></span>
                 </label>
-                <p>Tile supply uses 10% ordering wastage when a price is entered.</p>
+                <p id="tileLinkFeedback" class="link-feedback" aria-live="polite"></p>
+                <p>Tile supply includes 10% ordering wastage. Installation rates are included in the estimate but are not shown separately.</p>
               </div>
             </div>
             <div id="estimateLines" class="estimate-lines"></div>
