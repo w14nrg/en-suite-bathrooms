@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bathroom Estimator | En-Suites &amp; Bathrooms</title>
+  <meta name="description" content="Design a bathroom, new en-suite or cloakroom in interactive 3D and build an early itemised estimate before a home survey.">
+  <link rel="canonical" href="https://www.en-suite.co.uk/estimator/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Design Your Room &amp; Build an Estimate">
+  <meta property="og:description" content="An interactive 3D bathroom and en-suite estimator from En-Suites &amp; Bathrooms.">
+  <meta property="og:url" content="https://www.en-suite.co.uk/estimator/">
+  <meta property="og:image" content="https://www.en-suite.co.uk/assets/images/estimator-social.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/estimator.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body class="estimator-page">
+  <div class="topbar estimator-topbar">
+    <div class="wrap">
+      <span>Visit us at 287 Munster Road, Fulham, London SW6 6BW</span>
+      <span>Early planning guide <span aria-hidden="true">·</span> <a href="tel:+442073860000">0207 386 0000</a></span>
+    </div>
+  </div>
+
+  <header class="site-header estimator-site-header">
+    <div class="wrap navrow">
+      <a class="brand" href="../index.html" aria-label="En-Suites and Bathrooms home">
+        <i class="fa-solid fa-bath brand-icon" aria-hidden="true"></i>
+        <div>
+          <div class="brand-main">EN-SUITES</div>
+          <div class="brand-sub">&amp; BATHROOMS</div>
+        </div>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="../bathrooms.html">Bathrooms</a>
+        <a href="../en-suites.html">En-Suites</a>
+        <a href="./" class="estimator-nav-active" data-estimator-nav>Estimator</a>
+        <a href="../price-guide.html">Price Guide</a>
+        <a href="../index.html#contact" class="nav-cta">Enquire</a>
+      </nav>
+      <button id="menuButton" class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="../bathrooms.html">Bathrooms</a>
+      <a href="../en-suites.html">En-Suites</a>
+      <a href="./" data-estimator-nav>Estimator</a>
+      <a href="../price-guide.html">Price Guide</a>
+      <a href="../how-it-works.html">How It Works</a>
+      <div class="mobile-actions">
+        <a href="tel:+442073860000">Call</a>
+        <a href="https://wa.me/442073860000">WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="estimator-main">
+    <section class="estimator-intro wrap">
+      <div>
+        <p class="panel-kicker">Bathroom Estimator · Draft One</p>
+        <h1>Design Your Room &amp; Build an Estimate</h1>
+        <p>Create a clear first plan in real 3D. Measurements, services and product suitability are still verified during a home survey.</p>
+      </div>
+      <div class="save-state">
+        <span class="save-dot" aria-hidden="true"></span>
+        <span id="saveStatus">Saved on this device</span>
+      </div>
+    </section>
+
+    <div class="stage-shell">
+      <div class="stage-meta wrap">
+        <span id="currentStageName">Step 1 of 6: Room</span>
+        <button type="button" id="resetAction"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Reset room</button>
+      </div>
+      <nav id="stageTabs" class="estimator-stage-tabs wrap" aria-label="Estimator stages"></nav>
+    </div>
+
+    <section class="estimator-workspace" aria-label="Bathroom estimator workspace">
+      <aside class="estimator-config">
+        <div id="stagePanel" class="stage-panel"></div>
+        <div class="stage-actions">
+          <button id="stageBack" class="secondary-button" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back</button>
+          <button id="stageNext" class="primary-button" type="button">Next step <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+      </aside>
+
+      <section class="estimator-viewer" aria-label="Interactive room">
+        <div class="viewer-toolbar" aria-label="3D controls">
+          <div class="toolbar-group view-buttons">
+            <button type="button" class="is-active" data-view="3d" title="3D perspective"><i class="fa-solid fa-cube" aria-hidden="true"></i><span>3D</span></button>
+            <button type="button" data-view="overhead" title="Overhead view"><i class="fa-solid fa-border-all" aria-hidden="true"></i><span>Top</span></button>
+            <button type="button" data-view="north" title="North wall view"><i class="fa-regular fa-square" aria-hidden="true"></i><span>North</span></button>
+            <button type="button" data-view="east" title="East wall view"><i class="fa-regular fa-square" aria-hidden="true"></i><span>East</span></button>
+            <button type="button" data-view="walk" title="Walk view"><i class="fa-solid fa-person-walking" aria-hidden="true"></i><span>Walk</span></button>
+          </div>
+          <div class="toolbar-divider" aria-hidden="true"></div>
+          <div class="toolbar-group transform-buttons">
+            <button type="button" class="is-active" data-transform="translate" title="Move selected object"><i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i><span>Move</span></button>
+            <button type="button" data-transform="rotate" title="Rotate selected object"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Rotate</span></button>
+          </div>
+          <div class="toolbar-spacer"></div>
+          <label class="fade-toggle" title="Fade the nearest wall automatically">
+            <input id="wallFade" type="checkbox" checked>
+            <span>Fade walls</span>
+          </label>
+          <div class="toolbar-group edit-buttons">
+            <button id="undoAction" type="button" title="Undo"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i><span>Undo</span></button>
+            <button id="redoAction" type="button" title="Redo"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Redo</span></button>
+            <button id="deleteAction" type="button" class="danger" title="Delete selected object"><i class="fa-solid fa-trash" aria-hidden="true"></i><span>Delete</span></button>
+          </div>
+        </div>
+
+        <div id="estimatorCanvas" class="estimator-canvas">
+          <div class="canvas-help">
+            <span><i class="fa-solid fa-computer-mouse" aria-hidden="true"></i> Drag to orbit</span>
+            <span><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> Scroll or pinch to zoom</span>
+            <span><i class="fa-solid fa-hand" aria-hidden="true"></i> Right-drag or two fingers to pan</span>
+          </div>
+          <div id="walkPad" class="walk-pad" hidden aria-label="Walk controls">
+            <button type="button" data-walk="forward" aria-label="Walk forward"><i class="fa-solid fa-chevron-up"></i></button>
+            <button type="button" data-walk="left" aria-label="Walk left"><i class="fa-solid fa-chevron-left"></i></button>
+            <button type="button" data-walk="back" aria-label="Walk back"><i class="fa-solid fa-chevron-down"></i></button>
+            <button type="button" data-walk="right" aria-label="Walk right"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div id="webglFallback" class="webgl-fallback" hidden>
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            <strong>3D could not start in this browser.</strong>
+            <p>Try a current version of Chrome, Edge, Safari or Firefox with hardware acceleration enabled.</p>
+          </div>
+        </div>
+
+        <div id="warningPanel" class="warning-panel"></div>
+        <div id="selectionInspector" class="selection-inspector"></div>
+      </section>
+
+      <aside id="estimatePanel" class="estimate-panel" aria-label="Live estimate"></aside>
+    </section>
+  </main>
+
+  <button id="estimateToggle" class="estimate-toggle" type="button" aria-label="Open live estimate"></button>
+
+  <div id="routeGate" class="route-gate" role="dialog" aria-modal="true" aria-labelledby="routeTitle">
+    <div class="route-gate-card">
+      <div class="route-gate-brand">
+        <span class="route-gate-icon"><i class="fa-solid fa-cubes" aria-hidden="true"></i></span>
+        <div><small>Bathroom Estimator</small><strong>Draft One</strong></div>
+      </div>
+      <p class="panel-kicker">Let’s start with your project</p>
+      <h2 id="routeTitle">What are you planning?</h2>
+      <p class="route-gate-lead">Choose the closest route. Each uses the same simple 3D room, with questions and checks tailored to the work.</p>
+      <div class="route-options">
+        <button type="button" data-route="existing">
+          <span class="route-option-icon"><i class="fa-solid fa-bath" aria-hidden="true"></i></span>
+          <span><strong>Renovate an existing bathroom or en-suite</strong><small>Measure the existing room, then position new products.</small></span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-route="newEnsuite" class="route-featured">
+          <span class="route-option-icon"><i class="fa-solid fa-house-chimney-window" aria-hidden="true"></i></span>
+          <span><strong>Create a brand-new en-suite</strong><small>Build a movable room inside a bedroom, loft or cupboard.</small><em>Room within a room</em></span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-route="cloakroom">
+          <span class="route-option-icon"><i class="fa-solid fa-toilet" aria-hidden="true"></i></span>
+          <span><strong>Create or renovate a cloakroom</strong><small>Plan a compact WC and basin around the real services.</small></span>
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div id="resumeBox" class="resume-box" hidden>
+        <div><strong>Continue your saved design</strong><span id="resumeSummary"></span></div>
+        <div>
+          <button id="resumeProject" class="primary-button" type="button">Continue</button>
+          <button id="discardSaved" class="text-button danger" type="button">Discard</button>
+        </div>
+      </div>
+      <p class="route-disclaimer"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Your design autosaves in this browser. Nothing is sent until you choose to prepare an enquiry.</p>
+    </div>
+  </div>
+
+  <div id="estimatorToast" class="estimator-toast" role="status" aria-live="polite"></div>
+
+  <script src="../assets/js/site.js"></script>
+  <script type="module" src="../assets/js/estimator-app.mjs"></script>
+
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+</body>
+</html>

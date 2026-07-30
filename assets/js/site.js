@@ -1,5 +1,16 @@
 
 (function(){
+ const addEstimatorNavigation=()=>{
+  if(document.querySelector('[data-estimator-nav]'))return;
+  const makeLink=(classes='')=>{const link=document.createElement('a');link.href='/estimator/';link.textContent='Estimator';link.dataset.estimatorNav='';if(classes)link.className=classes;return link};
+  const classicDesktop=document.querySelector('.desktop-nav');
+  if(classicDesktop){const link=makeLink();const enquire=classicDesktop.querySelector('.nav-cta');classicDesktop.insertBefore(link,enquire||null)}
+  const modernDesktop=[...document.querySelectorAll('header nav')].find(nav=>nav.className.includes('lg:flex'));
+  if(modernDesktop&&!modernDesktop.querySelector('[data-estimator-nav]')){const sample=modernDesktop.querySelector('a');const link=makeLink(sample?.className||'');const enquire=[...modernDesktop.querySelectorAll('a')].find(item=>item.getAttribute('href')?.includes('#contact'));modernDesktop.insertBefore(link,enquire||null)}
+  const mobile=document.getElementById('mobileMenu');
+  if(mobile&&!mobile.querySelector('[data-estimator-nav]')){const nav=mobile.querySelector('nav')||mobile;const sample=nav.querySelector('a');const link=makeLink(sample?.className||'');const actions=nav.querySelector('.mobile-actions, .flex.gap-3');nav.insertBefore(link,actions||null)}
+ };
+ addEstimatorNavigation();
  const btn=document.getElementById('menuButton'),menu=document.getElementById('mobileMenu');
  if(btn&&menu)btn.addEventListener('click',()=>{menu.classList.toggle('open');btn.setAttribute('aria-expanded',menu.classList.contains('open'))});
  const modal=document.getElementById('offerModal'), open=document.getElementById('offerOpen'), close=document.getElementById('offerClose');
