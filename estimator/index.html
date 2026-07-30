@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Bathroom Estimator | En-Suites &amp; Bathrooms</title>
-  <meta name="description" content="Design a bathroom, new en-suite or cloakroom in interactive 3D and build an early itemised estimate before a home survey.">
+  <title>Bathroom Planner | En-Suites &amp; Bathrooms</title>
+  <meta name="description" content="Create your bathroom room shape in simple 2D, add and drag fixtures, then switch to 3D at any time.">
   <link rel="canonical" href="https://www.en-suite.co.uk/estimator/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Design Your Room &amp; Build an Estimate">
-  <meta property="og:description" content="An interactive 3D bathroom and en-suite estimator from En-Suites &amp; Bathrooms.">
+  <meta property="og:title" content="Simple Bathroom Planner">
+  <meta property="og:description" content="Start with an empty room, size it, add fixtures and switch between 2D and 3D.">
   <meta property="og:url" content="https://www.en-suite.co.uk/estimator/">
   <meta property="og:image" content="https://www.en-suite.co.uk/assets/images/estimator-social.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/site.css">
-  <link rel="stylesheet" href="../assets/css/estimator.css">
+  <link rel="stylesheet" href="../assets/css/estimator-simple.css">
   <script type="importmap">
     {
       "imports": {
@@ -27,11 +27,11 @@
     }
   </script>
 </head>
-<body class="estimator-page">
+<body class="simple-planner-page">
   <div class="topbar estimator-topbar">
     <div class="wrap">
       <span>Visit us at 287 Munster Road, Fulham, London SW6 6BW</span>
-      <span>Early planning guide <span aria-hidden="true">·</span> <a href="tel:+442073860000">0207 386 0000</a></span>
+      <span>Planning guide <span aria-hidden="true">·</span> <a href="tel:+442073860000">0207 386 0000</a></span>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="../bathrooms.html">Bathrooms</a>
         <a href="../en-suites.html">En-Suites</a>
-        <a href="./" class="estimator-nav-active" data-estimator-nav>Estimator</a>
+        <a href="./" class="estimator-nav-active">Planner</a>
         <a href="../price-guide.html">Price Guide</a>
         <a href="../index.html#contact" class="nav-cta">Enquire</a>
       </nav>
@@ -58,7 +58,7 @@
     <div id="mobileMenu" class="mobile-menu">
       <a href="../bathrooms.html">Bathrooms</a>
       <a href="../en-suites.html">En-Suites</a>
-      <a href="./" data-estimator-nav>Estimator</a>
+      <a href="./">Planner</a>
       <a href="../price-guide.html">Price Guide</a>
       <a href="../how-it-works.html">How It Works</a>
       <div class="mobile-actions">
@@ -68,132 +68,104 @@
     </div>
   </header>
 
-  <main class="estimator-main">
-    <section class="estimator-intro wrap">
+  <main class="planner-main">
+    <section class="planner-heading wrap">
       <div>
-        <p class="panel-kicker">Bathroom Estimator · Draft One</p>
-        <h1>Design Your Room &amp; Build an Estimate</h1>
-        <p>Create a clear first plan in real 3D. Measurements, services and product suitability are still verified during a home survey.</p>
+        <p class="planner-kicker">Bathroom planner</p>
+        <h1>Start with an empty room</h1>
+        <p>Size the room in 2D, add only the fixtures you need and drag them into place. Switch to 3D whenever you like.</p>
       </div>
-      <div class="save-state">
+      <div class="save-state" aria-live="polite">
         <span class="save-dot" aria-hidden="true"></span>
         <span id="saveStatus">Saved on this device</span>
       </div>
     </section>
 
-    <div class="stage-shell">
-      <div class="stage-meta wrap">
-        <span id="currentStageName">Step 1 of 6: Room</span>
-        <button type="button" id="resetAction"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Reset room</button>
-      </div>
-      <nav id="stageTabs" class="estimator-stage-tabs wrap" aria-label="Estimator stages"></nav>
-    </div>
+    <section class="planner-shell wrap" aria-label="Bathroom room planner">
+      <aside class="planner-sidebar">
+        <section class="planner-card room-card">
+          <div class="card-heading-row">
+            <div>
+              <span class="step-pill">1</span>
+              <h2>Room size</h2>
+            </div>
+            <button id="resetPlanner" type="button" class="text-action">Reset</button>
+          </div>
+          <p>Type the measurements or drag the gold handles on the plan.</p>
+          <div class="room-input-grid">
+            <label>Width
+              <span class="input-suffix"><input id="roomWidth" type="number" min="1" max="8" step="0.05" inputmode="decimal"><b>m</b></span>
+            </label>
+            <label>Length
+              <span class="input-suffix"><input id="roomLength" type="number" min="1" max="10" step="0.05" inputmode="decimal"><b>m</b></span>
+            </label>
+            <label>Height
+              <span class="input-suffix"><input id="roomHeight" type="number" min="1.8" max="4" step="0.05" inputmode="decimal"><b>m</b></span>
+            </label>
+          </div>
+        </section>
 
-    <section class="estimator-workspace" aria-label="Bathroom estimator workspace">
-      <aside class="estimator-config">
-        <div id="stagePanel" class="stage-panel"></div>
-        <div class="stage-actions">
-          <button id="stageBack" class="secondary-button" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back</button>
-          <button id="stageNext" class="primary-button" type="button">Next step <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-        </div>
+        <section class="planner-card fixture-card">
+          <div class="card-heading-row">
+            <div>
+              <span class="step-pill">2</span>
+              <h2>Add fixtures</h2>
+            </div>
+            <button id="clearFixtures" type="button" class="text-action danger">Clear</button>
+          </div>
+          <p>Tap an item once to add it. Nothing is placed automatically.</p>
+          <div id="fixturePalette" class="fixture-palette"></div>
+        </section>
+
+        <section id="selectionPanel" class="planner-card selection-card" aria-live="polite"></section>
       </aside>
 
-      <section class="estimator-viewer" aria-label="Interactive room">
-        <div class="viewer-toolbar" aria-label="3D controls">
-          <div class="toolbar-group view-buttons">
-            <button type="button" class="is-active" data-view="3d" title="3D perspective"><i class="fa-solid fa-cube" aria-hidden="true"></i><span>3D</span></button>
-            <button type="button" data-view="overhead" title="Overhead view"><i class="fa-solid fa-border-all" aria-hidden="true"></i><span>Top</span></button>
-            <button type="button" data-view="north" title="North wall view"><i class="fa-regular fa-square" aria-hidden="true"></i><span>North</span></button>
-            <button type="button" data-view="east" title="East wall view"><i class="fa-regular fa-square" aria-hidden="true"></i><span>East</span></button>
-            <button type="button" data-view="walk" title="Walk view"><i class="fa-solid fa-person-walking" aria-hidden="true"></i><span>Walk</span></button>
+      <section class="planner-workspace">
+        <div class="workspace-toolbar">
+          <div class="view-switch" aria-label="Planner view">
+            <button type="button" class="is-active" data-view="2d" aria-pressed="true"><i class="fa-regular fa-square"></i><span>2D plan</span></button>
+            <button type="button" data-view="3d" aria-pressed="false"><i class="fa-solid fa-cube"></i><span>3D room</span></button>
           </div>
-          <div class="toolbar-divider" aria-hidden="true"></div>
-          <div class="toolbar-group transform-buttons">
-            <button type="button" class="is-active" data-transform="translate" title="Move selected object"><i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i><span>Move</span></button>
-            <button type="button" data-transform="rotate" title="Rotate selected object"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Rotate</span></button>
-          </div>
-          <div class="toolbar-spacer"></div>
-          <label class="fade-toggle" title="Fade the nearest wall automatically">
-            <input id="wallFade" type="checkbox" checked>
-            <span>Fade walls</span>
-          </label>
-          <div class="toolbar-group edit-buttons">
-            <button id="undoAction" type="button" title="Undo"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i><span>Undo</span></button>
-            <button id="redoAction" type="button" title="Redo"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i><span>Redo</span></button>
-            <button id="deleteAction" type="button" class="danger" title="Delete selected object"><i class="fa-solid fa-trash" aria-hidden="true"></i><span>Delete</span></button>
+          <div class="workspace-actions">
+            <button id="undoAction" type="button" aria-label="Undo" title="Undo"><i class="fa-solid fa-rotate-left"></i></button>
+            <button id="redoAction" type="button" aria-label="Redo" title="Redo"><i class="fa-solid fa-rotate-right"></i></button>
+            <button id="centre3d" type="button" hidden><i class="fa-solid fa-expand"></i><span>Centre room</span></button>
           </div>
         </div>
 
-        <div id="estimatorCanvas" class="estimator-canvas">
-          <div class="canvas-help">
-            <span><i class="fa-solid fa-computer-mouse" aria-hidden="true"></i> Drag to orbit</span>
-            <span><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> Scroll or pinch to zoom</span>
-            <span><i class="fa-solid fa-hand" aria-hidden="true"></i> Right-drag or two fingers to pan</span>
+        <div class="workspace-canvas">
+          <div id="planSurface" class="plan-surface">
+            <svg id="planSvg" viewBox="0 0 1000 700" role="img" aria-label="Top-down bathroom plan. Drag fixtures to move them and use the gold handles to resize the room."></svg>
+            <div id="emptyHint" class="empty-room-hint">
+              <i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i>
+              <strong>Your room is empty</strong>
+              <span>Drag the gold edge handles to resize it, then add fixtures from the left.</span>
+            </div>
           </div>
-          <div id="walkPad" class="walk-pad" hidden aria-label="Walk controls">
-            <button type="button" data-walk="forward" aria-label="Walk forward"><i class="fa-solid fa-chevron-up"></i></button>
-            <button type="button" data-walk="left" aria-label="Walk left"><i class="fa-solid fa-chevron-left"></i></button>
-            <button type="button" data-walk="back" aria-label="Walk back"><i class="fa-solid fa-chevron-down"></i></button>
-            <button type="button" data-walk="right" aria-label="Walk right"><i class="fa-solid fa-chevron-right"></i></button>
-          </div>
-          <div id="webglFallback" class="webgl-fallback" hidden>
-            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-            <strong>3D could not start in this browser.</strong>
-            <p>Try a current version of Chrome, Edge, Safari or Firefox with hardware acceleration enabled.</p>
+          <div id="threeSurface" class="three-surface" hidden>
+            <div class="three-help"><i class="fa-solid fa-hand-pointer"></i> Drag a fixture to move it <span>·</span> drag empty space to turn the room</div>
           </div>
         </div>
 
-        <div id="warningPanel" class="warning-panel"></div>
-        <div id="selectionInspector" class="selection-inspector"></div>
+        <div class="workspace-footer">
+          <span id="roomSummary"></span>
+          <span class="drag-tip"><i class="fa-solid fa-magnet"></i> Items snap in 50mm steps</span>
+        </div>
+        <div id="plannerWarning" class="planner-warning" hidden></div>
       </section>
+    </section>
 
-      <aside id="estimatePanel" class="estimate-panel" aria-label="Live estimate"></aside>
+    <section class="next-stage wrap">
+      <div>
+        <p class="planner-kicker">Next stage</p>
+        <h2>Pricing comes after the room works properly</h2>
+        <p>The planner is now focused only on creating the room and positioning fixtures. Product choices, finishes and prices will be added once this part feels effortless.</p>
+      </div>
     </section>
   </main>
 
-  <button id="estimateToggle" class="estimate-toggle" type="button" aria-label="Open live estimate"></button>
-
-  <div id="routeGate" class="route-gate" role="dialog" aria-modal="true" aria-labelledby="routeTitle">
-    <div class="route-gate-card">
-      <div class="route-gate-brand">
-        <span class="route-gate-icon"><i class="fa-solid fa-cubes" aria-hidden="true"></i></span>
-        <div><small>Bathroom Estimator</small><strong>Draft One</strong></div>
-      </div>
-      <p class="panel-kicker">Let’s start with your project</p>
-      <h2 id="routeTitle">What are you planning?</h2>
-      <p class="route-gate-lead">Choose the closest route. Each uses the same simple 3D room, with questions and checks tailored to the work.</p>
-      <div class="route-options">
-        <button type="button" data-route="existing">
-          <span class="route-option-icon"><i class="fa-solid fa-bath" aria-hidden="true"></i></span>
-          <span><strong>Renovate an existing bathroom or en-suite</strong><small>Measure the existing room, then position new products.</small></span>
-          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        </button>
-        <button type="button" data-route="newEnsuite" class="route-featured">
-          <span class="route-option-icon"><i class="fa-solid fa-house-chimney-window" aria-hidden="true"></i></span>
-          <span><strong>Create a brand-new en-suite</strong><small>Build a movable room inside a bedroom, loft or cupboard.</small><em>Room within a room</em></span>
-          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        </button>
-        <button type="button" data-route="cloakroom">
-          <span class="route-option-icon"><i class="fa-solid fa-toilet" aria-hidden="true"></i></span>
-          <span><strong>Create or renovate a cloakroom</strong><small>Plan a compact WC and basin around the real services.</small></span>
-          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div id="resumeBox" class="resume-box" hidden>
-        <div><strong>Continue your saved design</strong><span id="resumeSummary"></span></div>
-        <div>
-          <button id="resumeProject" class="primary-button" type="button">Continue</button>
-          <button id="discardSaved" class="text-button danger" type="button">Discard</button>
-        </div>
-      </div>
-      <p class="route-disclaimer"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Your design autosaves in this browser. Nothing is sent until you choose to prepare an enquiry.</p>
-    </div>
-  </div>
-
-  <div id="estimatorToast" class="estimator-toast" role="status" aria-live="polite"></div>
-
   <script src="../assets/js/site.js"></script>
-  <script type="module" src="../assets/js/estimator-app.mjs"></script>
+  <script type="module" src="../assets/js/estimator-simple.mjs"></script>
 
   <!--Start of Tawk.to Script-->
   <script type="text/javascript">
