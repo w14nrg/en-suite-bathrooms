@@ -24,7 +24,10 @@
    const style=document.createElement('style');
    style.id='googleProofStyles';
    style.textContent=`
-    .google-proof{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:clamp(24px,4vw,52px);align-items:stretch}
+    .google-proof{display:block}
+    .google-location-intro{max-width:920px;margin:0 0 clamp(24px,4vw,38px)}
+    .google-location-intro h2{margin:0;font-size:clamp(1.85rem,3.6vw,3rem)}
+    .google-proof-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:clamp(24px,4vw,52px);align-items:stretch}
     .google-map-card,.google-reviews-panel{background:#fff;border:1px solid rgba(212,175,55,.28);border-radius:28px;overflow:hidden;box-shadow:0 20px 55px rgba(20,20,20,.08)}
     .google-map-card{position:relative;min-height:500px}
     .google-map-card iframe{display:block;width:100%;height:100%;min-height:500px;border:0}
@@ -34,12 +37,12 @@
     .google-reviews-panel h2{margin-bottom:10px}
     .google-reviews-intro{color:#686868;line-height:1.7;margin:0 0 24px}
     .google-review-window{overflow:hidden;position:relative}
-    .google-review-track{display:flex;transition:transform .55s ease;will-change:transform}
-    .google-review{min-width:100%;padding:4px 2px}
-    .google-review-card{border:1px solid rgba(212,175,55,.25);border-radius:22px;background:#fbf7f0;padding:28px;min-height:230px;display:flex;flex-direction:column;justify-content:center}
+    .google-review-track{display:flex;align-items:stretch;transition:transform .55s ease;will-change:transform}
+    .google-review{min-width:100%;padding:4px 2px;display:flex}
+    .google-review-card{width:100%;border:1px solid rgba(212,175,55,.25);border-radius:22px;background:#fbf7f0;padding:28px;display:flex;flex-direction:column;justify-content:center}
     .google-review-stars{color:#d4af37;letter-spacing:.13em;font-size:1.3rem;margin-bottom:18px;white-space:nowrap}
     .google-review-card h3{font-family:'Playfair Display',serif;font-size:clamp(1.55rem,2.6vw,2rem);font-weight:400;margin:0 0 12px}
-    .google-review-card p{color:#606060;line-height:1.75;margin:0}
+    .google-review-card p{color:#505050;line-height:1.7;margin:0;font-size:1rem}
     .google-review-source{display:flex;align-items:center;gap:9px;margin-top:22px;color:#444;font-size:.92rem;font-weight:700}
     .google-review-source i{color:#4285f4}
     .google-review-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px}
@@ -52,8 +55,8 @@
     .google-review-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
     .google-review-actions .btn{justify-content:center}
     @media (prefers-reduced-motion:reduce){.google-review-track{transition:none}}
-    @media (max-width:900px){.google-proof{grid-template-columns:1fr}.google-map-card,.google-map-card iframe{min-height:390px}.google-reviews-panel{min-width:0}}
-    @media (max-width:520px){.google-map-card,.google-reviews-panel{border-radius:22px}.google-map-card,.google-map-card iframe{min-height:340px}.google-reviews-panel{padding:26px 20px}.google-review-card{padding:24px 20px;min-height:250px}.google-map-link{left:12px;bottom:12px}.google-review-controls{align-items:flex-end}}
+    @media (max-width:900px){.google-proof-grid{grid-template-columns:1fr}.google-map-card,.google-map-card iframe{min-height:390px}.google-reviews-panel{min-width:0}}
+    @media (max-width:520px){.google-map-card,.google-reviews-panel{border-radius:22px}.google-map-card,.google-map-card iframe{min-height:340px}.google-reviews-panel{padding:26px 20px}.google-review-card{padding:24px 20px}.google-map-link{left:12px;bottom:12px}.google-review-controls{align-items:flex-end}}
    `;
    document.head.appendChild(style);
   }
@@ -61,56 +64,62 @@
   split.className='wrap google-proof';
   split.dataset.googleProof='';
   split.innerHTML=`
-   <div class="google-map-card">
-    <iframe src="${mapUrl}" title="Google map showing En-Suites & Bathrooms Ltd at 287 Munster Road, Fulham" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    <a class="google-map-link" href="${profileUrl}" target="_blank" rel="noopener"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i> View on Google Maps</a>
+   <div class="google-location-intro">
+    <p class="kicker">Fulham high street</p>
+    <h2>Visit us at our high street shop at 287 Munster Road, SW6 6BW</h2>
    </div>
-   <div class="google-reviews-panel">
-    <p class="kicker">Customer feedback</p>
-    <h2>5★ Google Reviews</h2>
-    <p class="google-reviews-intro">Read customer feedback on our Google Business Profile.</p>
-    <div class="google-review-window" aria-roledescription="carousel" aria-label="Featured Google reviews">
-     <div class="google-review-track" data-review-track>
-      <article class="google-review" aria-label="Google review 1 of 3">
-       <div class="google-review-card">
-        <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
-        <h3>Five-star customer feedback</h3>
-        <p>Open our Google Business Profile to read this customer’s review in full.</p>
-        <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
-       </div>
-      </article>
-      <article class="google-review" aria-label="Google review 2 of 3">
-       <div class="google-review-card">
-        <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
-        <h3>Five-star customer feedback</h3>
-        <p>Open our Google Business Profile to read this customer’s review in full.</p>
-        <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
-       </div>
-      </article>
-      <article class="google-review" aria-label="Google review 3 of 3">
-       <div class="google-review-card">
-        <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
-        <h3>Five-star customer feedback</h3>
-        <p>Open our Google Business Profile to read this customer’s review in full.</p>
-        <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
-       </div>
-      </article>
-     </div>
+   <div class="google-proof-grid">
+    <div class="google-map-card">
+     <iframe src="${mapUrl}" title="Google map showing En-Suites & Bathrooms Ltd at 287 Munster Road, Fulham" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+     <a class="google-map-link" href="${profileUrl}" target="_blank" rel="noopener"><i class="fa-solid fa-location-arrow" aria-hidden="true"></i> View on Google Maps</a>
     </div>
-    <div class="google-review-controls">
-     <div class="google-review-arrows">
-      <button class="google-review-arrow" type="button" data-review-prev aria-label="Previous review"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-      <button class="google-review-arrow" type="button" data-review-next aria-label="Next review"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+    <div class="google-reviews-panel">
+     <p class="kicker">Customer feedback</p>
+     <h2>5★ Google Reviews</h2>
+     <p class="google-reviews-intro">What our customers say about their completed bathrooms.</p>
+     <div class="google-review-window" aria-roledescription="carousel" aria-label="Featured Google reviews">
+      <div class="google-review-track" data-review-track>
+       <article class="google-review" aria-label="Google review from Gemma, 1 of 3">
+        <div class="google-review-card">
+         <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
+         <h3>Gemma</h3>
+         <p>Great price.<br><br>Absolutely fantastic, could not recommend highly enough, delighted with our new bathroom.</p>
+         <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
+        </div>
+       </article>
+       <article class="google-review" aria-label="Google review from Jamie, 2 of 3">
+        <div class="google-review-card">
+         <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
+         <h3>Jamie</h3>
+         <p>From start to finish, their service was exceptional. Their team took the time to understand my vision for a modern, functional bathroom and provided expert advice that enhanced the design while staying within my budget. The craftsmanship was impeccable, with every detail meticulously executed, from the sleek tiling to the flawless plumbing work.</p>
+         <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
+        </div>
+       </article>
+       <article class="google-review" aria-label="Google review from Chris, 3 of 3">
+        <div class="google-review-card">
+         <div class="google-review-stars" aria-label="Five stars">★★★★★</div>
+         <h3>Chris</h3>
+         <p>I recently had a full bathroom renovation carried out and I’m really pleased with the whole experience. From the first conversation through to the finished result, everything was explained clearly and the help and guidance throughout made a big difference.<br><br>They were easy to deal with, kept everything organised, and made the process feel much less stressful than I expected. The bathroom now looks great and the workmanship is excellent. I’d happily recommend them to anyone thinking about having their bathroom done.</p>
+         <div class="google-review-source"><i class="fa-brands fa-google" aria-hidden="true"></i> Posted on Google</div>
+        </div>
+       </article>
+      </div>
      </div>
-     <div class="google-review-dots" aria-label="Choose review">
-      <button class="google-review-dot is-active" type="button" data-review-dot="0" aria-label="Show review 1" aria-current="true"></button>
-      <button class="google-review-dot" type="button" data-review-dot="1" aria-label="Show review 2"></button>
-      <button class="google-review-dot" type="button" data-review-dot="2" aria-label="Show review 3"></button>
+     <div class="google-review-controls">
+      <div class="google-review-arrows">
+       <button class="google-review-arrow" type="button" data-review-prev aria-label="Previous review"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+       <button class="google-review-arrow" type="button" data-review-next aria-label="Next review"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <div class="google-review-dots" aria-label="Choose review">
+       <button class="google-review-dot is-active" type="button" data-review-dot="0" aria-label="Show Gemma's review" aria-current="true"></button>
+       <button class="google-review-dot" type="button" data-review-dot="1" aria-label="Show Jamie's review"></button>
+       <button class="google-review-dot" type="button" data-review-dot="2" aria-label="Show Chris's review"></button>
+      </div>
      </div>
-    </div>
-    <div class="google-review-actions">
-     <a class="btn btn-gold" href="${profileUrl}" target="_blank" rel="noopener"><i class="fa-brands fa-google" aria-hidden="true"></i> Read our Google reviews</a>
-     <a class="btn btn-light" href="tel:+442073860000"><i class="fa-solid fa-phone" aria-hidden="true"></i> Call 0207 386 0000</a>
+     <div class="google-review-actions">
+      <a class="btn btn-gold" href="${profileUrl}" target="_blank" rel="noopener"><i class="fa-brands fa-google" aria-hidden="true"></i> Read our Google reviews</a>
+      <a class="btn btn-light" href="tel:+442073860000"><i class="fa-solid fa-phone" aria-hidden="true"></i> Call 0207 386 0000</a>
+     </div>
     </div>
    </div>`;
 
