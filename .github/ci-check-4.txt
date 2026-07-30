@@ -1,1 +1,1 @@
-Rerun after removing the obsolete legacy planner script assertion.
+Run JavaScript syntax checks and the complete site test suite.
