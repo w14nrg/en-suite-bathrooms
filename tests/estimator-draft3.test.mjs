@@ -8,6 +8,13 @@ import {
 } from "../assets/js/estimator-draft3-core.mjs";
 import { resizeZoneFromHandle } from "../assets/js/estimator-draft3-plan.mjs";
 
+function close(actual, expected, tolerance = 1e-9) {
+  assert.ok(
+    Math.abs(actual - expected) <= tolerance,
+    `Expected ${actual} to be within ${tolerance} of ${expected}`,
+  );
+}
+
 test("Draft 3 keeps the agreed bathroom and en-suite core prices", () => {
   const bathroom = calculateDraft3Estimate(createDraft3State("bathroom"));
   const ensuite = calculateDraft3Estimate(createDraft3State("ensuite"));
@@ -28,7 +35,7 @@ test("tiling uses customer-entered square metres and keeps tiles separate", () =
   const estimate = calculateDraft3Estimate(state);
   assert.equal(estimate.sections.tiling.labourRate, TILING_LABOUR_RATE);
   assert.equal(estimate.sections.tiling.fitting, 840);
-  assert.equal(estimate.sections.tiling.tileOrderArea, 15.4);
+  close(estimate.sections.tiling.tileOrderArea, 15.4);
   assert.equal(estimate.sections.tiling.tileSupply, 539);
 });
 
@@ -45,8 +52,8 @@ test("every side of the proposed en-suite can resize while the opposite side sta
     { x: baseline.x - 0.25, z: baseline.z },
     state.room,
   );
-  assert.equal(state.zone.x, baseline.x - 0.25);
-  assert.equal(state.zone.x + state.zone.width, originalRight);
+  close(state.zone.x, baseline.x - 0.25);
+  close(state.zone.x + state.zone.width, originalRight);
 
   const secondBaseline = { ...state.zone };
   resizeZoneFromHandle(
@@ -56,8 +63,8 @@ test("every side of the proposed en-suite can resize while the opposite side sta
     { x: secondBaseline.x, z: secondBaseline.z - 0.2 },
     state.room,
   );
-  assert.equal(state.zone.z, secondBaseline.z - 0.2);
-  assert.equal(state.zone.z + state.zone.depth, originalTop);
+  close(state.zone.z, secondBaseline.z - 0.2);
+  close(state.zone.z + state.zone.depth, originalTop);
 });
 
 test("known service routes are represented by start and exit points", () => {
