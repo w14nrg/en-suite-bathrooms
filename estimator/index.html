@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Bathroom &amp; En-Suite Planner | En-Suites &amp; Bathrooms</title>
-  <meta name="description" content="Plan a bathroom, new en-suite or cloakroom in simple 2D, mark services, add products and see a live early estimate. Switch to 3D at any time.">
+  <title>Bathroom & En-Suite Planner | En-Suites &amp; Bathrooms</title>
+  <meta name="description" content="Plan a bathroom, new en-suite or cloakroom in simple 2D, mark known services, add products and see a live early estimate.">
   <link rel="canonical" href="https://www.en-suite.co.uk/estimator/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Bathroom &amp; En-Suite Planner">
-  <meta property="og:description" content="Build the room in 2D, switch to 3D and see a live planning estimate.">
+  <meta property="og:title" content="Bathroom & En-Suite Planner">
+  <meta property="og:description" content="Build the room in 2D, switch to 3D, add products and see a live early estimate.">
   <meta property="og:url" content="https://www.en-suite.co.uk/estimator/">
   <meta property="og:image" content="https://www.en-suite.co.uk/assets/images/estimator-social.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/site.css">
   <link rel="stylesheet" href="../assets/css/estimator-simple.css">
+  <link rel="stylesheet" href="../assets/css/estimator-draft3.css">
   <script type="importmap">
     {
       "imports": {
@@ -71,9 +72,9 @@
   <main class="planner-main">
     <section class="planner-heading wrap">
       <div>
-        <p class="planner-kicker">Planner · Draft 2</p>
-        <h1>Build the room first</h1>
-        <p>Start in simple 2D, create the real space, mark any known pipes and drag fixtures into place. Switch to 3D whenever you need to check it.</p>
+        <p class="planner-kicker">Planner · Draft 3</p>
+        <h1>Build the room, then build the price</h1>
+        <p>Start in simple 2D, resize every wall, draw any known pipe routes and add the exact items you are considering. Switch to 3D whenever you need to check the layout.</p>
       </div>
       <div class="save-state" aria-live="polite">
         <span class="save-dot" aria-hidden="true"></span>
@@ -93,7 +94,7 @@
         </button>
         <button type="button" data-route="ensuite">
           <i class="fa-solid fa-house-chimney-window" aria-hidden="true"></i>
-          <span><strong>Create a new en-suite</strong><small>Draw a room inside a bedroom, loft or larger space</small></span>
+          <span><strong>Create a new en-suite</strong><small>Build a room inside a bedroom, loft or larger space</small></span>
         </button>
         <button type="button" data-route="cloakroom">
           <i class="fa-solid fa-toilet" aria-hidden="true"></i>
@@ -104,80 +105,116 @@
 
     <section class="planner-shell wrap" aria-label="Bathroom and en-suite planner">
       <aside class="planner-sidebar">
-        <section class="planner-card room-card">
-          <div class="card-heading-row">
-            <div><span class="step-pill">1</span><h2 id="roomCardTitle">Room size</h2></div>
-            <button id="resetPlanner" type="button" class="text-action">Reset</button>
-          </div>
-          <p id="roomCardHelp">Type the measurements or drag the gold handles on the plan.</p>
-          <div class="room-input-grid">
-            <label>Width
-              <span class="input-suffix"><input id="roomWidth" type="number" min="1" max="8" step="0.05" inputmode="decimal"><b>m</b></span>
-            </label>
-            <label>Length
-              <span class="input-suffix"><input id="roomLength" type="number" min="1" max="10" step="0.05" inputmode="decimal"><b>m</b></span>
-            </label>
-            <label>Height
-              <span class="input-suffix"><input id="roomHeight" type="number" min="1.8" max="4" step="0.05" inputmode="decimal"><b>m</b></span>
-            </label>
-          </div>
-          <div id="ensuiteControls" class="ensuite-controls" hidden>
-            <div class="subsection-heading">
-              <strong>New en-suite room</strong>
-              <span>Drag the gold room or use these sizes.</span>
+        <details class="planner-card collapsible-card" open>
+          <summary>
+            <span><span class="step-pill">1</span><strong id="roomCardTitle">Room size and walls</strong></span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <div class="collapsible-card-body">
+            <div class="card-action-row">
+              <p id="roomCardHelp">Type the measurements or drag the gold handles on the plan.</p>
+              <button id="resetPlanner" type="button" class="text-action">Reset</button>
             </div>
-            <div class="room-input-grid two">
+            <div class="room-input-grid">
               <label>Width
-                <span class="input-suffix"><input id="zoneWidth" type="number" min="1" max="5" step="0.05" inputmode="decimal"><b>m</b></span>
+                <span class="input-suffix"><input id="roomWidth" type="number" min="1" max="8" step="0.05" inputmode="decimal"><b>m</b></span>
               </label>
-              <label>Depth
-                <span class="input-suffix"><input id="zoneDepth" type="number" min="1" max="5" step="0.05" inputmode="decimal"><b>m</b></span>
+              <label>Length
+                <span class="input-suffix"><input id="roomLength" type="number" min="1" max="10" step="0.05" inputmode="decimal"><b>m</b></span>
+              </label>
+              <label>Height
+                <span class="input-suffix"><input id="roomHeight" type="number" min="1.8" max="4" step="0.05" inputmode="decimal"><b>m</b></span>
               </label>
             </div>
-          </div>
-          <div class="room-tools">
-            <button id="drawWall" type="button"><i class="fa-solid fa-ruler-combined"></i><span>Draw a wall</span></button>
-            <button id="cancelDraw" type="button" hidden><i class="fa-solid fa-xmark"></i><span>Cancel drawing</span></button>
-            <button id="clearWalls" type="button"><i class="fa-solid fa-eraser"></i><span>Clear added walls</span></button>
-          </div>
-          <p id="drawWallHint" class="draw-wall-hint" hidden>Drag from one point to another on the 2D plan.</p>
-        </section>
-
-        <section class="planner-card service-card">
-          <div class="card-heading-row">
-            <div><span class="step-pill">2</span><h2>Known services</h2></div>
-          </div>
-          <p>Only mark a pipe or route when you know roughly where it is. Its marker can then be dragged on the plan.</p>
-          <div id="serviceList" class="service-list"></div>
-        </section>
-
-        <section class="planner-card fixture-card">
-          <div class="card-heading-row">
-            <div><span class="step-pill">3</span><h2>Add items</h2></div>
-            <button id="clearFixtures" type="button" class="text-action danger">Clear</button>
-          </div>
-          <p>Tap once to add. Select any item to rotate, duplicate or delete it.</p>
-          <div id="fixturePalette" class="fixture-palette"></div>
-
-          <details class="product-link-box">
-            <summary><i class="fa-solid fa-link" aria-hidden="true"></i> Add a product link</summary>
-            <div class="product-link-fields">
-              <label>Product link
-                <input id="productUrl" type="url" inputmode="url" placeholder="Paste the retailer link">
-              </label>
-              <div class="link-grid">
-                <label>Item type
-                  <select id="productFamily"></select>
+            <div id="ensuiteControls" class="ensuite-controls" hidden>
+              <div class="subsection-heading">
+                <strong>New en-suite room</strong>
+                <span>Resize it from any side or corner on the plan.</span>
+              </div>
+              <div class="room-input-grid two">
+                <label>Width
+                  <span class="input-suffix"><input id="zoneWidth" type="number" min="1" max="5" step="0.05" inputmode="decimal"><b>m</b></span>
                 </label>
-                <label>Displayed price
-                  <span class="input-prefix"><b>£</b><input id="productPrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></span>
+                <label>Depth
+                  <span class="input-suffix"><input id="zoneDepth" type="number" min="1" max="5" step="0.05" inputmode="decimal"><b>m</b></span>
                 </label>
               </div>
-              <button id="addProductLink" type="button" class="primary-planner-action">Add product to plan</button>
-              <p id="productLinkFeedback" class="link-feedback" aria-live="polite"></p>
             </div>
-          </details>
-        </section>
+            <div class="room-tools">
+              <button id="drawWall" type="button"><i class="fa-solid fa-ruler-combined"></i><span>Draw a wall</span></button>
+              <button id="cancelDraw" type="button" hidden><i class="fa-solid fa-xmark"></i><span>Cancel drawing</span></button>
+              <button id="clearWalls" type="button"><i class="fa-solid fa-eraser"></i><span>Clear added walls</span></button>
+            </div>
+            <p id="drawWallHint" class="draw-wall-hint" hidden>Drag from one point to another on the 2D plan.</p>
+          </div>
+        </details>
+
+        <details class="planner-card collapsible-card">
+          <summary>
+            <span><span class="step-pill">2</span><strong>Known services</strong></span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <div class="collapsible-card-body">
+            <p>Choose Draw, then drag a coloured line across the 2D plan. Leave anything unknown blank for the survey.</p>
+            <div id="serviceList" class="service-list"></div>
+            <p id="serviceDrawHint" class="draw-wall-hint service-draw-hint" hidden></p>
+          </div>
+        </details>
+
+        <details class="planner-card collapsible-card" open>
+          <summary>
+            <span><span class="step-pill">3</span><strong>Add items</strong></span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <div class="collapsible-card-body">
+            <div class="card-action-row">
+              <p>Open a category, then tap once to add an item.</p>
+              <button id="clearFixtures" type="button" class="text-action danger">Clear</button>
+            </div>
+            <div id="fixturePalette" class="product-groups"></div>
+
+            <details class="product-link-box">
+              <summary><i class="fa-solid fa-link" aria-hidden="true"></i> Add a product link</summary>
+              <div class="product-link-fields">
+                <label>Product link
+                  <input id="productUrl" type="url" inputmode="url" placeholder="Paste the retailer link">
+                </label>
+                <div class="link-grid">
+                  <label>Item type
+                    <select id="productFamily"></select>
+                  </label>
+                  <label>Displayed price
+                    <span class="input-prefix"><b>£</b><input id="productPrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></span>
+                  </label>
+                </div>
+                <button id="addProductLink" type="button" class="primary-planner-action">Add product to plan</button>
+                <p id="productLinkFeedback" class="link-feedback" aria-live="polite"></p>
+              </div>
+            </details>
+          </div>
+        </details>
+
+        <details class="planner-card collapsible-card photo-card">
+          <summary>
+            <span><span class="step-pill">4</span><strong>Current bathroom photo</strong></span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <div class="collapsible-card-body">
+            <p>Add a clear photo from the doorway. It stays in this saved planner on your device.</p>
+            <label class="photo-upload-button" for="currentBathroomPhoto">
+              <i class="fa-solid fa-camera" aria-hidden="true"></i>
+              <span>Upload or take a photo</span>
+            </label>
+            <input id="currentBathroomPhoto" class="visually-hidden-file" type="file" accept="image/*" capture="environment">
+            <div id="photoPreview" class="photo-preview" hidden>
+              <img id="photoImage" alt="">
+            </div>
+            <div class="photo-status-row">
+              <span id="photoStatus">No photo added yet.</span>
+              <button id="removePhoto" type="button" class="text-action danger" hidden>Remove</button>
+            </div>
+          </div>
+        </details>
 
         <section id="selectionPanel" class="planner-card selection-card" aria-live="polite"></section>
       </aside>
@@ -197,11 +234,11 @@
 
         <div class="workspace-canvas">
           <div id="planSurface" class="plan-surface">
-            <svg id="planSvg" viewBox="0 0 1000 700" role="img" aria-label="Top-down room plan. Drag fixtures, service markers, walls and the new en-suite room to position them."></svg>
+            <svg id="planSvg" viewBox="0 0 1000 700" role="img" aria-label="Top-down room plan. Drag fixtures, service routes, walls and every side of the new en-suite room."></svg>
             <div id="emptyHint" class="empty-room-hint">
               <i class="fa-solid fa-up-down-left-right" aria-hidden="true"></i>
               <strong>Your room is empty</strong>
-              <span>Resize the room, mark known services and add only the items you need.</span>
+              <span>Resize it, draw known services and add only the items you need.</span>
             </div>
           </div>
           <div id="threeSurface" class="three-surface" hidden>
@@ -211,7 +248,7 @@
 
         <div class="workspace-footer">
           <span id="roomSummary"></span>
-          <span class="drag-tip"><i class="fa-solid fa-magnet"></i> Items snap in 50mm steps</span>
+          <span class="drag-tip"><i class="fa-solid fa-magnet"></i> Items snap in 50mm steps · select and press R to rotate</span>
         </div>
         <div id="plannerWarning" class="planner-warning" hidden></div>
 
@@ -227,18 +264,26 @@
                 <h2 id="estimateHeading">Bathroom planning estimate</h2>
                 <p id="estimateNote"></p>
               </div>
-              <div class="estimate-options">
-                <label>Wall tiling
-                  <select id="wallTiling">
-                    <option value="none">Not included</option>
-                    <option value="shower">Shower area only</option>
-                    <option value="full">Full room walls</option>
-                  </select>
+              <div class="tiling-estimator-box">
+                <div class="tiling-rate-row">
+                  <span><strong>Tiling fitting allowance</strong><small>Labour only — tiles are separate</small></span>
+                  <b id="tilingRate">£60/m²</b>
+                </div>
+                <div class="tiling-sqm-grid">
+                  <label>Wall area
+                    <span class="input-suffix"><input id="wallSqm" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0"><b>m²</b></span>
+                  </label>
+                  <label>Floor area
+                    <span class="input-suffix"><input id="floorSqm" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0"><b>m²</b></span>
+                  </label>
+                </div>
+                <label>Tile link
+                  <input id="tileLink" type="url" inputmode="url" placeholder="Paste the tile product link">
                 </label>
-                <label class="form-check estimate-check">
-                  <input id="floorTiling" class="form-check-input" type="checkbox">
-                  <span class="form-check-label">Include floor tiling</span>
+                <label>Tile price per m²
+                  <span class="input-prefix"><b>£</b><input id="tilePrice" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional"></span>
                 </label>
+                <p>Tile supply uses 10% ordering wastage when a price is entered.</p>
               </div>
             </div>
             <div id="estimateLines" class="estimate-lines"></div>
