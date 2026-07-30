@@ -1,0 +1,41 @@
+EN-SUITES & BATHROOMS — LIVE CHAT TEST
+
+Keep Tawk.to on the site until every test below passes.
+
+PHONE APP
+[ ] Open https://chat.en-suite.co.uk/inbox.html on Nicholas's Pixel.
+[ ] Sign in.
+[ ] Tap Enable alerts and allow notifications.
+[ ] Confirm the automatic test notification arrives while Chrome is open.
+[ ] Add En-Suite Leads to the home screen / install the app.
+[ ] Lock the phone and send another test alert.
+[ ] Confirm tapping the notification opens the correct app/inbox.
+
+CUSTOMER CHAT
+[ ] Open en-suite.co.uk in an incognito window or a different phone.
+[ ] Open Message us.
+[ ] Send the first message.
+[ ] Confirm Nicholas receives an immediate phone notification.
+[ ] Leave it unread and confirm reminders arrive after about 2 and 5 minutes.
+[ ] Tap the notification and confirm the exact conversation opens.
+[ ] Confirm opening the conversation stops further reminder alerts.
+[ ] Press Take over.
+[ ] Confirm the customer sees “Nicholas has joined the conversation.”
+[ ] Reply as Nicholas and confirm it appears in the website widget.
+[ ] Send another customer reply and confirm it appears in the app.
+
+WHATSAPP
+[ ] Confirm Continue on WhatsApp opens the En-Suites business chat.
+[ ] Enter a UK mobile number during the enquiry.
+[ ] Confirm the green WhatsApp button in Nicholas's inbox opens that customer.
+
+FAILURE TESTS
+[ ] Test with the Pixel screen locked.
+[ ] Test with Chrome closed.
+[ ] Test after restarting the phone.
+[ ] Test after leaving the app unused overnight.
+[ ] Confirm the inbox still requires the admin password on a new device.
+
+GO LIVE
+[ ] Keep both systems active for at least one full day of testing.
+[ ] Remove Tawk.to only after the notification and takeover tests pass.
