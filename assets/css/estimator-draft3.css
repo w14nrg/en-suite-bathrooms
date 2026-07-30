@@ -1,0 +1,88 @@
+/* Draft 3: compact collapsible controls, service routes and full en-suite resizing. */
+.collapsible-card { padding: 0; overflow: hidden; }
+.collapsible-card > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; padding: 15px 17px; user-select: none; }
+.collapsible-card > summary::-webkit-details-marker { display: none; }
+.collapsible-card > summary > span { display: flex; align-items: center; gap: 10px; }
+.collapsible-card > summary > span > strong { font-size: .94rem; }
+.collapsible-card > summary > i { color: var(--planner-muted); font-size: .76rem; transition: transform .18s ease; }
+.collapsible-card[open] > summary { border-bottom: 1px solid var(--planner-line); }
+.collapsible-card[open] > summary > i { transform: rotate(180deg); }
+.collapsible-card-body { padding: 15px 17px 17px; }
+.collapsible-card-body > p { margin: 0 0 13px; color: var(--planner-muted); font-size: .82rem; line-height: 1.45; }
+.card-action-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+.card-action-row > p { margin: 0; color: var(--planner-muted); font-size: .82rem; line-height: 1.42; }
+
+.product-groups { display: grid; gap: 8px; }
+.product-group { border: 1px solid var(--planner-line); border-radius: 11px; overflow: hidden; background: #fbfaf8; }
+.product-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; list-style: none; padding: 10px 11px; }
+.product-group > summary::-webkit-details-marker { display: none; }
+.product-group > summary > span { display: flex; align-items: center; gap: 8px; }
+.product-group > summary > span > i { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 50%; background: var(--planner-gold-soft); color: var(--planner-gold-dark); font-size: .74rem; }
+.product-group > summary strong { font-size: .78rem; }
+.product-group > summary > i { color: var(--planner-muted); font-size: .68rem; transition: transform .18s ease; }
+.product-group[open] > summary { border-bottom: 1px solid var(--planner-line); background: #fff; }
+.product-group[open] > summary > i { transform: rotate(180deg); }
+.product-group .fixture-palette { padding: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.product-group .fixture-button { min-height: 58px; padding: 7px 5px; font-size: .65rem; }
+
+.service-actions { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+.service-row .service-actions button { min-width: 54px; }
+.service-row .service-actions .service-hide { min-width: 29px; width: 29px; height: 29px; padding: 0; border-radius: 50%; color: var(--planner-danger); }
+.service-draw-hint { margin-top: 10px !important; }
+.service-route { fill: none; stroke-width: 9; stroke-linecap: round; opacity: .75; vector-effect: non-scaling-stroke; pointer-events: none; }
+.service-route-group.is-selected .service-route { stroke-width: 12; filter: url(#selectedGlow); }
+.service-start { cursor: grab; }
+.service-start circle:first-child { stroke: #fff; stroke-width: 3; }
+.service-start circle:last-child { fill: none; stroke-width: 2; opacity: .45; }
+.service-preview { fill: none; stroke-width: 10; stroke-dasharray: 14 9; stroke-linecap: round; opacity: .8; pointer-events: none; }
+.service-preview-point { stroke: #fff; stroke-width: 3; pointer-events: none; }
+.service-marker.waste-symbol rect { stroke: #fff; stroke-width: 4; }
+.service-marker.soil-symbol circle:first-child { stroke-width: 5; }
+.service-marker .service-outside-label { fill: #514d46; font-size: 11px; font-weight: 850; }
+.service-marker.extractor-symbol path { pointer-events: none; }
+
+.zone-size-label { fill: var(--planner-gold-dark); font-size: 13px; font-weight: 750; text-anchor: middle; pointer-events: none; }
+.zone-resize-handle { fill: var(--planner-gold); stroke: #fff; stroke-width: 4; filter: drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
+.zone-resize-handle.edge.e, .zone-resize-handle.edge.w { cursor: ew-resize; }
+.zone-resize-handle.edge.n, .zone-resize-handle.edge.s { cursor: ns-resize; }
+.zone-resize-handle.corner.nw, .zone-resize-handle.corner.se { cursor: nwse-resize; }
+.zone-resize-handle.corner.ne, .zone-resize-handle.corner.sw { cursor: nesw-resize; }
+.object-rotate-handle { cursor: pointer; filter: none; }
+.object-rotate-handle circle { fill: var(--planner-gold); stroke: #fff; stroke-width: 4; }
+.object-rotate-handle text { fill: #fff !important; font-size: 18px !important; font-weight: 900 !important; pointer-events: none; }
+
+.photo-upload-button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; border: 1px dashed var(--planner-gold); border-radius: 11px; background: var(--planner-gold-soft); color: var(--planner-gold-dark); cursor: pointer; font-size: .78rem; font-weight: 800; }
+.visually-hidden-file { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.photo-preview { margin-top: 11px; overflow: hidden; border: 1px solid var(--planner-line); border-radius: 11px; background: #eee; }
+.photo-preview img { display: block; width: 100%; max-height: 220px; object-fit: cover; }
+.photo-status-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; }
+.photo-status-row > span { overflow: hidden; color: var(--planner-muted); font-size: .7rem; text-overflow: ellipsis; white-space: nowrap; }
+
+.tiling-estimator-box { display: grid; gap: 9px; border: 1px solid var(--planner-line); border-radius: 12px; background: #fbfaf8; padding: 12px; }
+.tiling-rate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tiling-rate-row > span { display: grid; gap: 2px; }
+.tiling-rate-row strong { font-size: .79rem; }
+.tiling-rate-row small { color: var(--planner-muted); font-size: .67rem; }
+.tiling-rate-row b { color: var(--planner-gold-dark); font-size: .9rem; white-space: nowrap; }
+.tiling-sqm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tiling-estimator-box label { display: grid; gap: 5px; color: var(--planner-muted); font-size: .72rem; font-weight: 700; }
+.tiling-estimator-box input[type="url"] { width: 100%; border: 1px solid var(--planner-line); border-radius: 10px; background: #fff; color: var(--planner-ink); padding: 9px 10px; font: inherit; font-size: .78rem; }
+.tiling-estimator-box > p { margin: 0; color: var(--planner-muted); font-size: .65rem; line-height: 1.4; }
+.estimate-intro { grid-template-columns: minmax(0, 1fr) minmax(280px, .9fr); }
+
+@media (max-width: 1040px) {
+  .planner-sidebar { align-items: start; }
+  .collapsible-card { min-width: 0; }
+}
+
+@media (max-width: 720px) {
+  .product-group .fixture-palette { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .estimate-intro { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 460px) {
+  .product-group .fixture-palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiling-sqm-grid { grid-template-columns: 1fr; }
+  .collapsible-card > summary { padding: 14px 15px; }
+  .collapsible-card-body { padding: 14px 15px 16px; }
+}
