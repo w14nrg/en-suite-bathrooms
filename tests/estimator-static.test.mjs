@@ -1,13 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
+const siteJs = readFileSync(resolve(root, "assets", "js", "site.js"), "utf8");
+const estimatorFixes = readFileSync(resolve(root, "assets", "js", "estimator-fixes.mjs"), "utf8");
 
-test("the /estimator route exposes the simplified Draft 4 planner", () => {
+test("the /estimator route exposes the Draft 4 room and price estimator", () => {
   assert.match(estimator, /Planner · Draft 4/);
   assert.match(estimator, /data-route="bathroom"/);
   assert.match(estimator, /data-route="ensuite"/);
@@ -35,35 +37,43 @@ test("the /estimator route exposes the simplified Draft 4 planner", () => {
   assert.doesNotMatch(estimator, /£60\/m²/);
 });
 
-test("the existing AI planner remains a normal working page without a redirect", () => {
-  const planner = readFileSync(resolve(root, "planner.html"), "utf8");
-  assert.match(planner, /AI Bathroom Planner/);
-  assert.doesNotMatch(planner, /http-equiv=["']refresh/i);
-  assert.doesNotMatch(planner, /location\.(?:href|replace).*estimator/i);
+test("legacy planner URLs permanently lead to the estimator", () => {
+  const redirects = readFileSync(resolve(root, "_redirects"), "utf8");
+  assert.match(redirects, /^\/planner\.html\s+\/estimator\/\s+301/m);
+  assert.match(redirects, /^\/planner\s+\/estimator\/\s+301/m);
+
+  const plannerPath = resolve(root, "planner.html");
+  assert.ok(existsSync(plannerPath), "A physical fallback redirect exists for hosts that ignore _redirects");
+  const planner = readFileSync(plannerPath, "utf8");
+  assert.match(planner, /url=\/estimator\//i);
+  assert.match(planner, /location\.replace\(["']\/estimator\//i);
 });
 
-test("the estimator keeps the existing chat integration and is in the sitemap", () => {
-  assert.match(estimator, /6a2161974a36f41c2edf02c6\/1jq96ae0j/);
+test("the shared site script replaces old planner links and loads only the custom live helper", () => {
+  assert.match(siteJs, /function rewritePlannerLinks/);
+  assert.match(siteJs, /Bathroom Estimator/);
+  assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev\/widget\.js/);
+  assert.match(siteJs, /TAWK_PATTERN/);
+  assert.match(siteJs, /loadEstimatorFixes/);
+});
+
+test("the estimator has its compact contextual AI assistant and automatic link checks", () => {
+  assert.match(estimatorFixes, /Need help with your estimate\?/);
+  assert.match(estimatorFixes, /Bathroom Assistant/);
+  assert.match(estimatorFixes, /en-suites-bathroom-ai\.nicholas-griffith-uk\.workers\.dev/);
+  assert.match(estimatorFixes, /productsAndFittings/);
+  assert.match(estimatorFixes, /addEventListener\("paste"/);
+  assert.match(estimatorFixes, /Price found: £\$\{price\} per m²/);
+});
+
+test("the estimator remains in the sitemap and all local assets exist", () => {
   const sitemap = readFileSync(resolve(root, "sitemap.xml"), "utf8");
   assert.match(sitemap, /https:\/\/www\.en-suite\.co\.uk\/estimator\//);
+  assert.doesNotMatch(sitemap, /https:\/\/www\.en-suite\.co\.uk\/planner\.html/);
 
-  const htmlPages = readdirSync(root).filter((name) => name.endsWith(".html"));
-  for (const page of htmlPages) {
-    const html = readFileSync(resolve(root, page), "utf8");
-    assert.match(html, /6a2161974a36f41c2edf02c6\/1jq96ae0j/, `${page} keeps Tawk chat`);
-  }
-});
-
-test("all local assets referenced by the estimator exist", () => {
   const references = [...estimator.matchAll(/(?:href|src)="([^"]+)"/g)]
     .map((match) => match[1])
-    .filter(
-      (value) =>
-        !value.startsWith("http") &&
-        !value.startsWith("tel:") &&
-        !value.startsWith("mailto:") &&
-        !value.startsWith("#"),
-    );
+    .filter((value) => !value.startsWith("http") && !value.startsWith("tel:") && !value.startsWith("mailto:") && !value.startsWith("#"));
 
   for (const reference of references) {
     const localPath = resolve(dirname(estimatorPath), reference.split("#")[0]);
