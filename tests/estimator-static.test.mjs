@@ -8,6 +8,7 @@ const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
 const siteJs = readFileSync(resolve(root, "assets", "js", "site.js"), "utf8");
 const estimatorFixes = readFileSync(resolve(root, "assets", "js", "estimator-fixes.mjs"), "utf8");
+const estimatorReader = readFileSync(resolve(root, "assets", "js", "estimator-reader.mjs"), "utf8");
 
 test("the /estimator route exposes the Draft 4 room and price estimator", () => {
   assert.match(estimator, /Planner · Draft 4/);
@@ -64,7 +65,9 @@ test("the estimator has its compact contextual AI assistant and automatic link c
   assert.match(estimatorFixes, /en-suites-bathroom-ai\.nicholas-griffith-uk\.workers\.dev/);
   assert.match(estimatorFixes, /productsAndFittings/);
   assert.match(estimatorFixes, /addEventListener\("paste"/);
-  assert.match(estimatorFixes, /Price found: £\$\{price\} per m²/);
+  assert.match(estimatorFixes, /estimator-reader\.mjs/);
+  assert.match(estimatorReader, /Price found: £\$\{displayed\} per m²/);
+  assert.match(estimatorReader, /https:\/\/r\.jina\.ai\//);
 });
 
 test("the estimator remains in the sitemap and all local assets exist", () => {
