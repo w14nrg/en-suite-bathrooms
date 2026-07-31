@@ -68,12 +68,14 @@
     };
 
     const desktop = document.querySelector(".desktop-nav");
-    if (desktop && !desktop.querySelector('[data-estimator-nav="true"]') && ![...desktop.links].some((link) => link.pathname === "/estimator/")) {
+    const desktopLinks = desktop ? [...desktop.querySelectorAll("a[href]")] : [];
+    if (desktop && !desktop.querySelector('[data-estimator-nav="true"]') && !desktopLinks.some((link) => link.pathname === "/estimator/")) {
       desktop.insertBefore(makeLink(), desktop.querySelector(".nav-cta") || null);
     }
 
     const mobile = document.getElementById("mobileMenu");
-    if (mobile && !mobile.querySelector('[data-estimator-nav="true"]') && ![...mobile.querySelectorAll("a")].some((link) => link.pathname === "/estimator/")) {
+    const mobileLinks = mobile ? [...mobile.querySelectorAll("a[href]")] : [];
+    if (mobile && !mobile.querySelector('[data-estimator-nav="true"]') && !mobileLinks.some((link) => link.pathname === "/estimator/")) {
       const sample = mobile.querySelector("a");
       const link = makeLink(sample?.className || "");
       mobile.insertBefore(link, mobile.querySelector(".mobile-actions") || null);
