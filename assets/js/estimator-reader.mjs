@@ -1,11 +1,12 @@
-const previousFetch = window.fetch.bind(window);
+const browser = typeof window !== "undefined";
+const previousFetch = browser ? window.fetch.bind(window) : globalThis.fetch.bind(globalThis);
 const READER_PREFIX = "https://r.jina.ai/";
 const PRODUCT_WORKER = "https://en-suites-bathroom-ai.nicholas-griffith-uk.workers.dev/product";
 
 function requestUrl(input) {
   try {
-    if (input instanceof Request) return new URL(input.url, location.href);
-    return new URL(String(input), location.href);
+    if (typeof Request !== "undefined" && input instanceof Request) return new URL(input.url, browser ? location.href : "https://www.en-suite.co.uk/");
+    return new URL(String(input), browser ? location.href : "https://www.en-suite.co.uk/");
   } catch {
     return null;
   }
@@ -156,27 +157,29 @@ function updateTileUi(target, data) {
   }
 }
 
-window.fetch = async function githubPagesEstimatorFetch(input, init) {
-  const url = requestUrl(input);
-  if (!url || !url.pathname.endsWith("/api/product-preview")) return previousFetch(input, init);
+if (browser) {
+  window.fetch = async function githubPagesEstimatorFetch(input, init) {
+    const url = requestUrl(input);
+    if (!url || !url.pathname.endsWith("/api/product-preview")) return previousFetch(input, init);
 
-  const target = url.searchParams.get("url") || "";
-  let data;
-  try {
-    data = await readerPreview(target);
-    if (!data.ok) throw new Error(data.message);
-  } catch {
+    const target = url.searchParams.get("url") || "";
+    let data;
     try {
-      data = await workerPreview(target);
+      data = await readerPreview(target);
+      if (!data.ok) throw new Error(data.message);
     } catch {
-      data = {
-        ok: false,
-        message: "The price could not be read automatically. Enter the displayed retailer price below.",
-        retailer: retailerName(target),
-      };
+      try {
+        data = await workerPreview(target);
+      } catch {
+        data = {
+          ok: false,
+          message: "The price could not be read automatically. Enter the displayed retailer price below.",
+          retailer: retailerName(target),
+        };
+      }
     }
-  }
 
-  requestAnimationFrame(() => updateTileUi(target, data));
-  return responseFor(data);
-};
+    requestAnimationFrame(() => updateTileUi(target, data));
+    return responseFor(data);
+  };
+}
