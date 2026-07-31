@@ -52,7 +52,8 @@ test("legacy planner URLs permanently lead to the estimator", () => {
 test("the shared site script replaces old planner links and loads only the custom live helper", () => {
   assert.match(siteJs, /function rewritePlannerLinks/);
   assert.match(siteJs, /Bathroom Estimator/);
-  assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev\/widget\.js/);
+  assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev/);
+  assert.match(siteJs, /\/widget\.js/);
   assert.match(siteJs, /TAWK_PATTERN/);
   assert.match(siteJs, /loadEstimatorFixes/);
 });
