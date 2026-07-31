@@ -1,76 +1,9 @@
-const PREVIEW_ENDPOINT = "/api/product-preview-v2";
+import "./estimator-reader.mjs";
+
 const AI_ENDPOINT = "https://en-suites-bathroom-ai.nicholas-griffith-uk.workers.dev";
 const STORAGE_KEY = "ensuites-bathrooms-planner-draft-4";
 const RESPONSE_KEY = "bathroomEstimatorResponseIdV1";
 const nativeFetch = window.fetch.bind(window);
-
-function parsedRequestUrl(input) {
-  try {
-    if (input instanceof Request) return new URL(input.url, location.href);
-    return new URL(String(input), location.href);
-  } catch {
-    return null;
-  }
-}
-
-function sameUrl(left, right) {
-  try {
-    return new URL(left, location.href).href === new URL(right, location.href).href;
-  } catch {
-    return String(left || "").trim() === String(right || "").trim();
-  }
-}
-
-function updatePriceUi(targetUrl, data, responseOk) {
-  const tileLink = document.querySelector("#tileLink");
-  const productLink = document.querySelector("#productUrl");
-
-  if (tileLink && sameUrl(tileLink.value, targetUrl)) {
-    const found = document.querySelector("#tilePriceFound");
-    const manual = document.querySelector("#tileManualPrice");
-    const input = document.querySelector("#tilePrice");
-    const unit = String(data?.unit || "").toLowerCase();
-    const squareMetre = ["sqm", "m2", "m²"].includes(unit);
-
-    if (responseOk && data?.ok && Number.isFinite(Number(data.price)) && squareMetre) {
-      const price = Number(data.price).toFixed(2);
-      if (input) {
-        input.value = price;
-        input.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-      if (found) {
-        found.textContent = `Price found: £${price} per m²`;
-        found.hidden = false;
-      }
-      if (manual) manual.hidden = true;
-    } else {
-      if (found) found.hidden = true;
-      if (manual) manual.hidden = false;
-    }
-  }
-
-  if (productLink && sameUrl(productLink.value, targetUrl)) {
-    const found = document.querySelector("#productPriceFound");
-    const manual = document.querySelector("#productManualPrice");
-    if (!responseOk || !data?.ok) {
-      if (found) found.hidden = true;
-      if (manual) manual.hidden = false;
-    }
-  }
-}
-
-window.fetch = async function estimatorFetch(input, init) {
-  const requestUrl = parsedRequestUrl(input);
-  if (!requestUrl || !requestUrl.pathname.endsWith("/api/product-preview")) return nativeFetch(input, init);
-
-  const targetUrl = requestUrl.searchParams.get("url") || "";
-  requestUrl.pathname = PREVIEW_ENDPOINT;
-  const response = await nativeFetch(requestUrl.toString(), init);
-  response.clone().json().then((data) => {
-    requestAnimationFrame(() => updatePriceUi(targetUrl, data, response.ok));
-  }).catch(() => requestAnimationFrame(() => updatePriceUi(targetUrl, null, false)));
-  return response;
-};
 
 function validCompleteUrl(value) {
   try {
