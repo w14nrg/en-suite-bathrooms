@@ -1,5 +1,5 @@
-name = "ensuite-live-chat"
-main = "src/index.js"
+name = "en-suite-bathrooms"
+main = "src/fixed-entry.js"
 compatibility_date = "2026-07-23"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
@@ -21,5 +21,5 @@ crons = ["* * * * *"]
 BUSINESS_NAME = "En-Suites & Bathrooms"
 OWNER_NAME = "Nicholas"
 SITE_ORIGINS = "https://en-suite.co.uk,https://www.en-suite.co.uk"
-PUBLIC_CHAT_URL = "https://chat.en-suite.co.uk/inbox.html"
+PUBLIC_CHAT_URL = "https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev/inbox.html"
 VAPID_SUBJECT = "https://en-suite.co.uk"
