@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+
+const siteCss = await readFile(new URL('../assets/css/site.css', import.meta.url), 'utf8');
+const fixedEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/fixed-entry.js', import.meta.url), 'utf8');
+const wrangler = await readFile(new URL('../ensuite-chat-webpush-patch/worker/wrangler.toml', import.meta.url), 'utf8');
+
+test('live chat messages are forced back into a vertical stack', () => {
+  assert.match(siteCss, /\.eb-chat-messages\.eb-chat-live-area\.active\{display:block!important;/);
+  assert.match(fixedEntry, /ENSUITE_CHAT_VERTICAL_FIX_20260807/);
+  assert.match(fixedEntry, /display:block!important;flex:1!important;overflow-y:auto!important/);
+});
+
+test('owner inbox repairs stale web-push subscriptions on load', () => {
+  assert.match(fixedEntry, /registration\.pushManager\.getSubscription\(\)/);
+  assert.match(fixedEntry, /registration\.pushManager\.subscribe/);
+  assert.match(fixedEntry, /\/api\/admin\/push-devices/);
+  assert.match(fixedEntry, /\/api\/admin\/push-test/);
+  assert.match(fixedEntry, /applicationServerKey/);
+});
+
+test('production worker deploy points at the patched entry file', () => {
+  assert.match(wrangler, /name = "en-suite-bathrooms"/);
+  assert.match(wrangler, /main = "src\/fixed-entry\.js"/);
+  assert.doesNotMatch(wrangler, /PASTE_D1_DATABASE_ID_HERE/);
+});
