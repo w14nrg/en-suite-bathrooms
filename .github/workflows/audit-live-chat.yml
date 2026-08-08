@@ -38,17 +38,18 @@ jobs:
           check_url 'Website CSS' "$SITE/assets/css/site.css" site.css
           check_url 'Worker health' "$WORKER/health" health.json
           check_url 'Worker fix status' "$WORKER/fix-status.json" fix-status.json
+          check_url 'Worker validation self-test' "$WORKER/validation-test.json" validation.json
           check_url 'Worker push config' "$WORKER/push-config.json" push-config.json
           check_url 'Worker widget' "$WORKER/widget.js" widget.js
           check_url 'Owner inbox' "$WORKER/inbox.html" inbox.html
-          check_url 'Push repair script' "$WORKER/push-repair.js" push-repair.js
+          check_url 'Push repair v2 script' "$WORKER/push-repair-v2.js" push-repair-v2.js
           check_url 'Push service worker' "$WORKER/push-sw.js" push-sw.js
 
-          echo '--- health ---'
-          cat health.json 2>/dev/null || true
-          echo
           echo '--- fix status ---'
           cat fix-status.json 2>/dev/null || true
+          echo
+          echo '--- validation ---'
+          cat validation.json 2>/dev/null || true
           echo
           echo '--- push config ---'
           cat push-config.json 2>/dev/null || true
@@ -58,13 +59,32 @@ jobs:
           grep -q 'Emergency live-chat layout fix' site.css && echo 'PASS website emergency chat layout CSS is live' || { echo 'FAIL website chat layout CSS missing'; fail=1; }
           grep -q 'eb-chat-messages.eb-chat-live-area.active{display:block!important' site.css && echo 'PASS website forces vertical message layout' || { echo 'FAIL vertical layout rule missing'; fail=1; }
 
+          grep -q '"version":"2026-08-08.2"' fix-status.json && echo 'PASS hardened Worker version is live' || { echo 'FAIL hardened Worker version is NOT live'; fail=1; }
+          grep -q '"chat_validation":true' fix-status.json && echo 'PASS server-side chat validation is enabled' || { echo 'FAIL chat validation not enabled'; fail=1; }
           grep -q 'ENSUITE_CHAT_VERTICAL_FIX_20260807' widget.js && echo 'PASS Worker-level vertical chat fix is live' || { echo 'FAIL Worker-level vertical chat fix is NOT live'; fail=1; }
-          grep -q 'eb-name-gate' widget.js && echo 'PASS current name-gate widget is live' || { echo 'FAIL current name-gate widget not live'; fail=1; }
-          grep -q '/push-repair.js?v=2026-08-07.1' inbox.html && echo 'PASS owner inbox loads push repair' || { echo 'FAIL owner inbox push repair not live'; fail=1; }
-          grep -q '__ENSUITE_PUSH_REPAIR__' push-repair.js && echo 'PASS push auto-repair script is live' || { echo 'FAIL push auto-repair script missing'; fail=1; }
+          grep -q 'ENSUITE_CHAT_RELIABILITY_20260808' widget.js && echo 'PASS hardened widget patch is live' || { echo 'FAIL hardened widget patch is NOT live'; fail=1; }
+          grep -q '/push-repair-v2.js?v=2026-08-08.2' inbox.html && echo 'PASS owner inbox loads hardened push repair' || { echo 'FAIL hardened push repair not loaded'; fail=1; }
+          grep -q '__ENSUITE_PUSH_REPAIR_V2__' push-repair-v2.js && echo 'PASS push rotation/receipt repair script is live' || { echo 'FAIL push v2 repair script missing'; fail=1; }
           grep -q '"configured":true' push-config.json && echo 'PASS VAPID push is configured' || { echo 'FAIL VAPID push is not configured'; fail=1; }
           grep -q 'self.addEventListener("push"' push-sw.js && echo 'PASS push service worker has push handler' || { echo 'FAIL push handler missing'; fail=1; }
+          grep -q '/api/push-receipt' push-sw.js && echo 'PASS service worker records actual browser push receipt' || { echo 'FAIL push receipt callback missing'; fail=1; }
           grep -q 'notificationclick' push-sw.js && echo 'PASS push notification click handler exists' || { echo 'FAIL push notification click handler missing'; fail=1; }
+
+          python3 - <<'PY' || fail=1
+          import json
+          d=json.load(open('validation.json'))
+          required=[
+            'rejects_hi_as_name','rejects_hi_as_project','rejects_hi_as_area',
+            'rejects_hi_as_brief','rejects_hi_as_timing','rejects_hi_as_contact',
+            'accepts_name','accepts_project','accepts_area','accepts_brief',
+            'accepts_timing','accepts_contact'
+          ]
+          missing=[k for k in required if d.get(k) is not True]
+          if missing:
+              print('FAIL validation self-test:', ', '.join(missing))
+              raise SystemExit(1)
+          print('PASS nonsense greetings are rejected at every enquiry step')
+          PY
 
           admin_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -o admin.json -w '%{http_code}' "$WORKER/api/admin/conversations" || true)
           echo "Unauthenticated admin endpoint HTTP $admin_code"
@@ -97,8 +117,6 @@ jobs:
               fail=1
             fi
           fi
-
-          if grep -q 'embed.tawk.to' site.html; then echo 'INFO Tawk fallback script is still present on the website'; else echo 'INFO Tawk fallback script is absent'; fi
 
           echo "AUDIT_FAIL=$fail"
           exit "$fail"
