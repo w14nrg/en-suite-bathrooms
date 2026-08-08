@@ -88,15 +88,7 @@ jobs:
             echo 'FAIL site-visit endpoint did not accept the notification test'
             fail=1
           else
-            sent=$(python3 - <<'PY'
-import json
-try:
-    with open('visit.json', encoding='utf-8') as f:
-        print(int(json.load(f).get('sent', 0)))
-except Exception:
-    print(0)
-PY
-)
+            sent=$(python3 -c "import json; print(int(json.load(open('visit.json')).get('sent', 0)))" 2>/dev/null || echo 0)
             echo "Production push accepted by $sent enabled device(s)"
             if [ "$sent" -ge 1 ]; then
               echo 'PASS production Web Push provider accepted a real site-visit alert'
