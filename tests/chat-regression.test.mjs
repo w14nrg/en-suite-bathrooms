@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises';
 const siteCss = await readFile(new URL('../assets/css/site.css', import.meta.url), 'utf8');
 const fixedEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/fixed-entry.js', import.meta.url), 'utf8');
 const reliabilityEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/reliability-entry.js', import.meta.url), 'utf8');
+const diagnosticsEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/diagnostics-entry.js', import.meta.url), 'utf8');
 const wrangler = await readFile(new URL('../ensuite-chat-webpush-patch/worker/wrangler.toml', import.meta.url), 'utf8');
 
 test('live chat messages are forced back into a vertical stack', () => {
@@ -35,10 +36,12 @@ test('reliability layer rotates push subscriptions and records browser delivery 
   assert.match(reliabilityEntry, /\/api\/push-receipt/);
   assert.match(reliabilityEntry, /\/api\/admin\/push-diagnostics/);
   assert.match(reliabilityEntry, /last_receipt_at/);
+  assert.match(diagnosticsEntry, /push-receipt-status\.json/);
+  assert.match(diagnosticsEntry, /push_receipts/);
 });
 
-test('production worker deploy points at the hardened reliability entry file', () => {
+test('production worker deploy points at the diagnostics-wrapped hardened entry file', () => {
   assert.match(wrangler, /name = "en-suite-bathrooms"/);
-  assert.match(wrangler, /main = "src\/reliability-entry\.js"/);
+  assert.match(wrangler, /main = "src\/diagnostics-entry\.js"/);
   assert.doesNotMatch(wrangler, /PASTE_D1_DATABASE_ID_HERE/);
 });
