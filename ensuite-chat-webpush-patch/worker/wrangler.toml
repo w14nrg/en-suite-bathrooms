@@ -1,5 +1,5 @@
 name = "en-suite-bathrooms"
-main = "src/reliability-entry.js"
+main = "src/diagnostics-entry.js"
 compatibility_date = "2026-07-23"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
