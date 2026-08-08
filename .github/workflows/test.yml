@@ -19,12 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Check Draft 4 JavaScript syntax
+      - name: Check JavaScript syntax
         run: |
           node --check assets/js/estimator-draft4-core.mjs
           node --check assets/js/estimator-draft4-store.mjs
           node --check assets/js/estimator-draft4-render.mjs
           node --check assets/js/estimator-draft4-app.mjs
           node --check functions/api/product-preview.js
+          node --check ensuite-chat-webpush-patch/worker/src/index.js
+          node --check ensuite-chat-webpush-patch/worker/src/fixed-entry.js
+          node --check ensuite-chat-webpush-patch/worker/src/reliability-entry.js
+          node --check ensuite-chat-webpush-patch/worker/public/widget.js
       - name: Run tests
         run: npm test
