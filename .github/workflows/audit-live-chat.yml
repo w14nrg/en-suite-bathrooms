@@ -1,0 +1,80 @@
+name: Audit live chat production
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-live-chat.yml'
+      - 'assets/css/site.css'
+      - 'index.html'
+      - 'ensuite-chat-webpush-patch/worker/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit public website and live Worker
+        shell: bash
+        run: |
+          set -u
+          fail=0
+          SITE='https://www.en-suite.co.uk'
+          WORKER='https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev'
+
+          check_url() {
+            name="$1"
+            url="$2"
+            out="$3"
+            code=$(curl -L -sS --connect-timeout 15 --max-time 30 -o "$out" -w '%{http_code}' "$url" || true)
+            echo "$name HTTP $code"
+            if [ "$code" != '200' ]; then fail=1; fi
+          }
+
+          check_url 'Website' "$SITE/" site.html
+          check_url 'Website CSS' "$SITE/assets/css/site.css" site.css
+          check_url 'Worker health' "$WORKER/health" health.json
+          check_url 'Worker fix status' "$WORKER/fix-status.json" fix-status.json
+          check_url 'Worker push config' "$WORKER/push-config.json" push-config.json
+          check_url 'Worker widget' "$WORKER/widget.js" widget.js
+          check_url 'Owner inbox' "$WORKER/inbox.html" inbox.html
+          check_url 'Push repair script' "$WORKER/push-repair.js" push-repair.js
+          check_url 'Push service worker' "$WORKER/push-sw.js" push-sw.js
+
+          echo '--- health ---'
+          cat health.json 2>/dev/null || true
+          echo
+          echo '--- fix status ---'
+          cat fix-status.json 2>/dev/null || true
+          echo
+          echo '--- push config ---'
+          cat push-config.json 2>/dev/null || true
+          echo
+
+          grep -q 'en-suite-bathrooms.nicholas-griffith-uk.workers.dev/widget.js' site.html && echo 'PASS website points at production Worker' || { echo 'FAIL website Worker embed'; fail=1; }
+          grep -q 'Emergency live-chat layout fix' site.css && echo 'PASS website emergency chat layout CSS is live' || { echo 'FAIL website chat layout CSS missing'; fail=1; }
+          grep -q 'eb-chat-messages.eb-chat-live-area.active{display:block!important' site.css && echo 'PASS website forces vertical message layout' || { echo 'FAIL vertical layout rule missing'; fail=1; }
+
+          grep -q 'ENSUITE_CHAT_VERTICAL_FIX_20260807' widget.js && echo 'PASS Worker-level vertical chat fix is live' || { echo 'FAIL Worker-level vertical chat fix is NOT live'; fail=1; }
+          grep -q 'eb-name-gate' widget.js && echo 'PASS current name-gate widget is live' || { echo 'FAIL current name-gate widget not live'; fail=1; }
+          grep -q '/push-repair.js?v=2026-08-07.1' inbox.html && echo 'PASS owner inbox loads push repair' || { echo 'FAIL owner inbox push repair not live'; fail=1; }
+          grep -q '__ENSUITE_PUSH_REPAIR__' push-repair.js && echo 'PASS push auto-repair script is live' || { echo 'FAIL push auto-repair script missing'; fail=1; }
+          grep -q '"configured":true' push-config.json && echo 'PASS VAPID push is configured' || { echo 'FAIL VAPID push is not configured'; fail=1; }
+          grep -q 'self.addEventListener("push"' push-sw.js && echo 'PASS push service worker has push handler' || { echo 'FAIL push handler missing'; fail=1; }
+          grep -q 'notificationclick' push-sw.js && echo 'PASS push notification click handler exists' || { echo 'FAIL notification click handler missing'; fail=1; }
+
+          admin_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -o admin.json -w '%{http_code}' "$WORKER/api/admin/conversations" || true)
+          echo "Unauthenticated admin endpoint HTTP $admin_code"
+          if [ "$admin_code" = '401' ]; then echo 'PASS admin API is protected'; else echo 'FAIL admin API protection unexpected'; fail=1; fi
+
+          cors_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -X OPTIONS -H 'Origin: https://www.en-suite.co.uk' -H 'Access-Control-Request-Method: POST' -o cors.txt -w '%{http_code}' "$WORKER/api/conversations" || true)
+          echo "Public chat CORS preflight HTTP $cors_code"
+          if [ "$cors_code" = '204' ] || [ "$cors_code" = '200' ]; then echo 'PASS public chat CORS preflight'; else echo 'FAIL public chat CORS preflight'; fail=1; fi
+
+          if grep -q 'embed.tawk.to' site.html; then echo 'INFO Tawk fallback script is still present on the website'; else echo 'INFO Tawk fallback script is absent'; fi
+
+          echo "AUDIT_FAIL=$fail"
+          exit "$fail"
