@@ -29,6 +29,7 @@ jobs:
           node --check ensuite-chat-webpush-patch/worker/src/index.js
           node --check ensuite-chat-webpush-patch/worker/src/fixed-entry.js
           node --check ensuite-chat-webpush-patch/worker/src/reliability-entry.js
+          node --check ensuite-chat-webpush-patch/worker/src/diagnostics-entry.js
           node --check ensuite-chat-webpush-patch/worker/public/widget.js
       - name: Run tests
         run: npm test
