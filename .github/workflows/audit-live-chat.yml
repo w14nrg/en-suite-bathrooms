@@ -64,7 +64,7 @@ jobs:
           grep -q '__ENSUITE_PUSH_REPAIR__' push-repair.js && echo 'PASS push auto-repair script is live' || { echo 'FAIL push auto-repair script missing'; fail=1; }
           grep -q '"configured":true' push-config.json && echo 'PASS VAPID push is configured' || { echo 'FAIL VAPID push is not configured'; fail=1; }
           grep -q 'self.addEventListener("push"' push-sw.js && echo 'PASS push service worker has push handler' || { echo 'FAIL push handler missing'; fail=1; }
-          grep -q 'notificationclick' push-sw.js && echo 'PASS push notification click handler exists' || { echo 'FAIL notification click handler missing'; fail=1; }
+          grep -q 'notificationclick' push-sw.js && echo 'PASS push notification click handler exists' || { echo 'FAIL push notification click handler missing'; fail=1; }
 
           admin_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -o admin.json -w '%{http_code}' "$WORKER/api/admin/conversations" || true)
           echo "Unauthenticated admin endpoint HTTP $admin_code"
@@ -73,6 +73,38 @@ jobs:
           cors_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -X OPTIONS -H 'Origin: https://www.en-suite.co.uk' -H 'Access-Control-Request-Method: POST' -o cors.txt -w '%{http_code}' "$WORKER/api/conversations" || true)
           echo "Public chat CORS preflight HTTP $cors_code"
           if [ "$cors_code" = '204' ] || [ "$cors_code" = '200' ]; then echo 'PASS public chat CORS preflight'; else echo 'FAIL public chat CORS preflight'; fail=1; fi
+
+          visit_code=$(curl -L -sS --connect-timeout 15 --max-time 30 \
+            -X POST \
+            -H 'Origin: https://www.en-suite.co.uk' \
+            -H 'Content-Type: application/json' \
+            --data '{"page_url":"https://www.en-suite.co.uk/?production_push_audit=1","page_title":"Production push audit","referrer":""}' \
+            -o visit.json -w '%{http_code}' \
+            "$WORKER/api/site-visit" || true)
+          echo "Synthetic site-visit HTTP $visit_code"
+          cat visit.json 2>/dev/null || true
+          echo
+          if [ "$visit_code" != '200' ]; then
+            echo 'FAIL site-visit endpoint did not accept the notification test'
+            fail=1
+          else
+            sent=$(python3 - <<'PY'
+import json
+try:
+    with open('visit.json', encoding='utf-8') as f:
+        print(int(json.load(f).get('sent', 0)))
+except Exception:
+    print(0)
+PY
+)
+            echo "Production push accepted by $sent enabled device(s)"
+            if [ "$sent" -ge 1 ]; then
+              echo 'PASS production Web Push provider accepted a real site-visit alert'
+            else
+              echo 'FAIL production has no working enabled push subscription'
+              fail=1
+            fi
+          fi
 
           if grep -q 'embed.tawk.to' site.html; then echo 'INFO Tawk fallback script is still present on the website'; else echo 'INFO Tawk fallback script is absent'; fi
 
