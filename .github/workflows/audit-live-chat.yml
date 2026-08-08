@@ -44,6 +44,7 @@ jobs:
           check_url 'Owner inbox' "$WORKER/inbox.html" inbox.html
           check_url 'Push repair v2 script' "$WORKER/push-repair-v2.js" push-repair-v2.js
           check_url 'Push service worker' "$WORKER/push-sw.js" push-sw.js
+          check_url 'Push receipt status' "$WORKER/push-receipt-status.json" receipt-before.json
 
           echo '--- fix status ---'
           cat fix-status.json 2>/dev/null || true
@@ -53,6 +54,9 @@ jobs:
           echo
           echo '--- push config ---'
           cat push-config.json 2>/dev/null || true
+          echo
+          echo '--- receipt before ---'
+          cat receipt-before.json 2>/dev/null || true
           echo
 
           grep -q 'en-suite-bathrooms.nicholas-griffith-uk.workers.dev/widget.js' site.html && echo 'PASS website points at production Worker' || { echo 'FAIL website Worker embed'; fail=1; }
@@ -94,6 +98,7 @@ jobs:
           echo "Public chat CORS preflight HTTP $cors_code"
           if [ "$cors_code" = '204' ] || [ "$cors_code" = '200' ]; then echo 'PASS public chat CORS preflight'; else echo 'FAIL public chat CORS preflight'; fail=1; fi
 
+          push_started=$(date -u +%s)
           visit_code=$(curl -L -sS --connect-timeout 15 --max-time 30 \
             -X POST \
             -H 'Origin: https://www.en-suite.co.uk' \
@@ -116,6 +121,27 @@ jobs:
               echo 'FAIL production has no working enabled push subscription'
               fail=1
             fi
+          fi
+
+          receipt_ok=0
+          for attempt in 1 2 3 4 5 6 7 8; do
+            sleep 2
+            curl -L -sS --connect-timeout 15 --max-time 30 -o receipt-after.json "$WORKER/push-receipt-status.json" || true
+            receipt_epoch=$(python3 -c "import json,datetime; s=json.load(open('receipt-after.json')).get('last_receipt_at'); print(int(datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()) if s else 0)" 2>/dev/null || echo 0)
+            echo "Browser receipt attempt $attempt: epoch=$receipt_epoch"
+            if [ "$receipt_epoch" -ge "$push_started" ]; then
+              receipt_ok=1
+              break
+            fi
+          done
+          echo '--- receipt after ---'
+          cat receipt-after.json 2>/dev/null || true
+          echo
+          if [ "$receipt_ok" -eq 1 ]; then
+            echo 'PASS a registered browser actually received and handled the production push'
+          else
+            echo 'FAIL provider accepted the push but no registered browser confirmed receiving it'
+            fail=1
           fi
 
           echo "AUDIT_FAIL=$fail"
