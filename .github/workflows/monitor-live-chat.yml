@@ -1,6 +1,11 @@
 name: Monitor live chat production
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'ensuite-chat-webpush-patch/worker/**'
+      - '.github/workflows/monitor-live-chat.yml'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
