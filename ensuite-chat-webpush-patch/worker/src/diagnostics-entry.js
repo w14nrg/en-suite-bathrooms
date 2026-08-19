@@ -1,5 +1,6 @@
 import app from "./reliability-entry.js";
 
+// Production redeploy requested 2026-08-19 after live chat outage report.
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
