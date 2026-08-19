@@ -1,6 +1,6 @@
 import app from "./index.js";
 
-const FIX_VERSION = "2026-08-07.1";
+const FIX_VERSION = "2026-08-19.1";
 
 const PUSH_REPAIR_JS = String.raw`(() => {
   if (window.__ENSUITE_PUSH_REPAIR__) return;
@@ -150,6 +150,14 @@ const PUSH_REPAIR_JS = String.raw`(() => {
 })();`;
 
 function patchWidget(source) {
+  const staleSessionPattern = 'if (response.status === 404) return false;\n    if (!response.ok) return true;';
+  if (!source.includes("ENSUITE_CHAT_STALE_SESSION_FIX_20260819") && source.includes(staleSessionPattern)) {
+    source = source.replace(
+      staleSessionPattern,
+      '/* ENSUITE_CHAT_STALE_SESSION_FIX_20260819 */\n    if (!response.ok) return false;'
+    );
+  }
+
   if (source.includes("ENSUITE_CHAT_VERTICAL_FIX_20260807")) return source;
   const marker = "document.head.appendChild(style);";
   const fix = String.raw`
