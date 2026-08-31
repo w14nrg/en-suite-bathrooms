@@ -2,7 +2,7 @@
   "use strict";
 
   const HELPER_HOST = "en-suite-bathrooms.nicholas-griffith-uk.workers.dev";
-  const HELPER_SRC = `https://${HELPER_HOST}/widget.js`;
+  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260831", location.origin).href;
   const TAWK_PATTERN = /(?:embed\.tawk\.to|tawk\.to|Tawk_API|Tawk_LoadStart)/i;
 
   function blockTawk() {
