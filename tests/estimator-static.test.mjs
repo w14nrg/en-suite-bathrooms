@@ -7,6 +7,7 @@ const root = resolve(import.meta.dirname, "..");
 const estimatorPath = resolve(root, "estimator", "index.html");
 const estimator = readFileSync(estimatorPath, "utf8");
 const siteJs = readFileSync(resolve(root, "assets", "js", "site.js"), "utf8");
+const chatWidget = readFileSync(resolve(root, "assets", "js", "ensuite-chat-widget.js"), "utf8");
 const estimatorFixes = readFileSync(resolve(root, "assets", "js", "estimator-fixes.mjs"), "utf8");
 const estimatorReader = readFileSync(resolve(root, "assets", "js", "estimator-reader.mjs"), "utf8");
 
@@ -54,8 +55,13 @@ test("the shared site script replaces old planner links and loads only the custo
   assert.match(siteJs, /function rewritePlannerLinks/);
   assert.match(siteJs, /Bathroom Estimator/);
   assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev/);
-  assert.match(siteJs, /\/widget\.js/);
+  assert.match(siteJs, /\/assets\/js\/ensuite-chat-widget\.js/);
   assert.match(siteJs, /TAWK_PATTERN/);
+  assert.match(chatWidget, /notifyOwnerOfVisit/);
+  assert.match(chatWidget, /\/api\/site-visit/);
+  assert.match(chatWidget, /\/api\/conversations/);
+  assert.doesNotMatch(chatWidget, /navigator\.webdriver/);
+  assert.doesNotMatch(chatWidget, /document\.referrer/);
   assert.match(siteJs, /loadEstimatorFixes/);
 });
 
