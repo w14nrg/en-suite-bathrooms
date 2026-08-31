@@ -446,6 +446,14 @@ function patchWidgetV2(source) {
     .replace('const visitPingCooldownMs = 30 * 60 * 1000;', 'const visitPingCooldownMs = 60 * 1000;')
     .replace('window.setTimeout(notifyOwnerOfVisit, 5000);', 'window.setTimeout(notifyOwnerOfVisit, 1500);')
     .replace(
+      'if (document.visibilityState !== "visible" || navigator.webdriver) return;',
+      '/* ENSUITE_GOOGLE_ADS_POLICY_CLEANUP_20260831 */\n    if (document.visibilityState !== "visible") return;'
+    )
+    .replace(
+      'page_url: location.href,\n          page_title: document.title,\n          referrer: document.referrer',
+      'page_url: location.origin + location.pathname,\n          page_title: document.title,\n          referrer: ""'
+    )
+    .replace(
       'if (!response.ok) return;\n      try { localStorage.setItem(visitPingKey, String(now)); } catch {}',
       'if (!response.ok) return;\n      const visitResult = await response.json().catch(() => ({}));\n      if (Number(visitResult.sent || 0) > 0) { try { localStorage.setItem(visitPingKey, String(now)); } catch {} }'
     )
