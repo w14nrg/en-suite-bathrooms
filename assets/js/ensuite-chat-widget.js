@@ -326,6 +326,7 @@
   }
 
   setNameRequired(!(state.id && state.token));
+  void notifyOwnerOfVisit();
 
   function startPolling() {
     stopPolling();
