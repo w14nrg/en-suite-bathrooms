@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'ensuite-chat-webpush-patch/worker/**'
+      - 'assets/js/site.js'
+      - 'index.html'
       - '.github/workflows/monitor-live-chat.yml'
   schedule:
     - cron: '*/15 * * * *'
@@ -20,71 +21,34 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
-    defaults:
-      run:
-        working-directory: ensuite-chat-webpush-patch/worker
-    env:
-      WORKER: https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
+    timeout-minutes: 4
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Probe production chat
-        id: probe
+      - name: Probe website and Tawk live chat
         shell: bash
         run: |
-          set +e
-          health_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/health.json -w '%{http_code}' "$WORKER/health")
-          widget_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/widget.js -w '%{http_code}' "$WORKER/widget.js")
-          status_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/fix-status.json -w '%{http_code}' "$WORKER/fix-status.json")
+          set -u
+          SITE='https://www.en-suite.co.uk'
+          TAWK='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j'
 
-          healthy=true
-          [ "$health_code" = "200" ] || healthy=false
-          [ "$widget_code" = "200" ] || healthy=false
-          [ "$status_code" = "200" ] || healthy=false
-          grep -q 'ENSUITE_CHAT_RELIABILITY_20260808' /tmp/widget.js 2>/dev/null || healthy=false
-          grep -q 'ENSUITE_CHAT_STALE_SESSION_FIX_20260819' /tmp/widget.js 2>/dev/null || healthy=false
+          site_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/site.html -w '%{http_code}' "$SITE/" || true)
+          js_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/site.js -w '%{http_code}' "$SITE/assets/js/site.js" || true)
+          tawk_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/tawk.js -w '%{http_code}' "$TAWK" || true)
 
-          echo "health=$health_code widget=$widget_code status=$status_code healthy=$healthy"
-          echo "healthy=$healthy" >> "$GITHUB_OUTPUT"
+          echo "website=$site_code site_js=$js_code tawk=$tawk_code"
 
-      - uses: actions/setup-node@v4
-        if: steps.probe.outputs.healthy != 'true'
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: ensuite-chat-webpush-patch/worker/package.json
+          [ "$site_code" = '200' ] || { echo 'Website is unavailable'; exit 1; }
+          [ "$js_code" = '200' ] || { echo 'Website JavaScript is unavailable'; exit 1; }
+          [ "$tawk_code" = '200' ] || { echo 'Tawk live chat is unavailable'; exit 1; }
 
-      - name: Verify Cloudflare credentials
-        if: steps.probe.outputs.healthy != 'true'
-        run: |
-          test -n "$CLOUDFLARE_API_TOKEN" || (echo "CLOUDFLARE_API_TOKEN is not configured" && exit 1)
-          test -n "$CLOUDFLARE_ACCOUNT_ID" || (echo "CLOUDFLARE_ACCOUNT_ID is not configured" && exit 1)
+          grep -q 'embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j' /tmp/site.js \
+            || { echo 'Standard Tawk property is missing'; exit 1; }
 
-      - name: Install worker dependencies
-        if: steps.probe.outputs.healthy != 'true'
-        run: npm install --no-audit --no-fund
+          if grep -Eq 'workers\.dev|navigator\.webdriver|Node\.prototype\.insertBefore|TAWK_PATTERN' /tmp/site.js; then
+            echo 'Obsolete custom Worker or script-blocking code returned'
+            exit 1
+          fi
 
-      - name: Redeploy unhealthy production chat
-        if: steps.probe.outputs.healthy != 'true'
-        run: npx wrangler deploy
+          grep -q 'Tawk_API' /tmp/tawk.js \
+            || { echo 'Tawk property response is unexpected'; exit 1; }
 
-      - name: Verify production after recovery
-        if: steps.probe.outputs.healthy != 'true'
-        shell: bash
-        run: |
-          for attempt in 1 2 3 4 5 6; do
-            sleep 5
-            health_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/health-after.json -w '%{http_code}' "$WORKER/health" || true)
-            widget_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/widget-after.js -w '%{http_code}' "$WORKER/widget.js" || true)
-            if [ "$health_code" = "200" ] && [ "$widget_code" = "200" ] && grep -q 'ENSUITE_CHAT_STALE_SESSION_FIX_20260819' /tmp/widget-after.js; then
-              echo "Production chat recovered on attempt $attempt"
-              exit 0
-            fi
-            echo "Recovery attempt $attempt: health=$health_code widget=$widget_code"
-          done
-          echo "Production live chat is still unhealthy after redeploy"
-          exit 1
+          echo 'Production website and standard live chat are healthy'
