@@ -5,9 +5,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/audit-live-chat.yml'
-      - 'assets/css/site.css'
+      - 'assets/js/site.js'
       - 'index.html'
-      - 'ensuite-chat-webpush-patch/worker/**'
   workflow_dispatch:
 
 permissions:
@@ -17,13 +16,13 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - name: Audit public website and live Worker
+      - name: Audit public website and standard live chat
         shell: bash
         run: |
           set -u
           fail=0
           SITE='https://www.en-suite.co.uk'
-          WORKER='https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev'
+          TAWK='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j'
 
           check_url() {
             name="$1"
@@ -35,114 +34,30 @@ jobs:
           }
 
           check_url 'Website' "$SITE/" site.html
-          check_url 'Website CSS' "$SITE/assets/css/site.css" site.css
-          check_url 'Worker health' "$WORKER/health" health.json
-          check_url 'Worker fix status' "$WORKER/fix-status.json" fix-status.json
-          check_url 'Worker validation self-test' "$WORKER/validation-test.json" validation.json
-          check_url 'Worker push config' "$WORKER/push-config.json" push-config.json
-          check_url 'Worker widget' "$WORKER/widget.js" widget.js
-          check_url 'Owner inbox' "$WORKER/inbox.html" inbox.html
-          check_url 'Push repair v2 script' "$WORKER/push-repair-v2.js" push-repair-v2.js
-          check_url 'Push service worker' "$WORKER/push-sw.js" push-sw.js
-          check_url 'Push receipt status' "$WORKER/push-receipt-status.json" receipt-before.json
+          check_url 'Website JavaScript' "$SITE/assets/js/site.js" site.js
+          check_url 'Tawk live chat' "$TAWK" tawk.js
 
-          echo '--- fix status ---'
-          cat fix-status.json 2>/dev/null || true
-          echo
-          echo '--- validation ---'
-          cat validation.json 2>/dev/null || true
-          echo
-          echo '--- push config ---'
-          cat push-config.json 2>/dev/null || true
-          echo
-          echo '--- receipt before ---'
-          cat receipt-before.json 2>/dev/null || true
-          echo
+          grep -q 'embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j' site.js \
+            && echo 'PASS standard Tawk property is installed' \
+            || { echo 'FAIL standard Tawk property missing'; fail=1; }
 
-          grep -q 'en-suite-bathrooms.nicholas-griffith-uk.workers.dev/widget.js' site.html && echo 'PASS website points at production Worker' || { echo 'FAIL website Worker embed'; fail=1; }
-          grep -q 'Emergency live-chat layout fix' site.css && echo 'PASS website emergency chat layout CSS is live' || { echo 'FAIL website chat layout CSS missing'; fail=1; }
-          grep -q 'eb-chat-messages.eb-chat-live-area.active{display:block!important' site.css && echo 'PASS website forces vertical message layout' || { echo 'FAIL vertical layout rule missing'; fail=1; }
-
-          grep -q '"version":"2026-08-08.2"' fix-status.json && echo 'PASS hardened Worker version is live' || { echo 'FAIL hardened Worker version is NOT live'; fail=1; }
-          grep -q '"chat_validation":true' fix-status.json && echo 'PASS server-side chat validation is enabled' || { echo 'FAIL chat validation not enabled'; fail=1; }
-          grep -q 'ENSUITE_CHAT_VERTICAL_FIX_20260807' widget.js && echo 'PASS Worker-level vertical chat fix is live' || { echo 'FAIL Worker-level vertical chat fix is NOT live'; fail=1; }
-          grep -q 'ENSUITE_CHAT_RELIABILITY_20260808' widget.js && echo 'PASS hardened widget patch is live' || { echo 'FAIL hardened widget patch is NOT live'; fail=1; }
-          grep -q '/push-repair-v2.js?v=2026-08-08.2' inbox.html && echo 'PASS owner inbox loads hardened push repair' || { echo 'FAIL hardened push repair not loaded'; fail=1; }
-          grep -q '__ENSUITE_PUSH_REPAIR_V2__' push-repair-v2.js && echo 'PASS push rotation/receipt repair script is live' || { echo 'FAIL push v2 repair script missing'; fail=1; }
-          grep -q '"configured":true' push-config.json && echo 'PASS VAPID push is configured' || { echo 'FAIL VAPID push is not configured'; fail=1; }
-          grep -q 'self.addEventListener("push"' push-sw.js && echo 'PASS push service worker has push handler' || { echo 'FAIL push handler missing'; fail=1; }
-          grep -q '/api/push-receipt' push-sw.js && echo 'PASS service worker records actual browser push receipt' || { echo 'FAIL push receipt callback missing'; fail=1; }
-          grep -q 'notificationclick' push-sw.js && echo 'PASS push notification click handler exists' || { echo 'FAIL push notification click handler missing'; fail=1; }
-
-          python3 - <<'PY' || fail=1
-          import json
-          d=json.load(open('validation.json'))
-          required=[
-            'rejects_hi_as_name','rejects_hi_as_project','rejects_hi_as_area',
-            'rejects_hi_as_brief','rejects_hi_as_timing','rejects_hi_as_contact',
-            'accepts_name','accepts_project','accepts_area','accepts_brief',
-            'accepts_timing','accepts_contact'
-          ]
-          missing=[k for k in required if d.get(k) is not True]
-          if missing:
-              print('FAIL validation self-test:', ', '.join(missing))
-              raise SystemExit(1)
-          print('PASS nonsense greetings are rejected at every enquiry step')
-          PY
-
-          admin_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -o admin.json -w '%{http_code}' "$WORKER/api/admin/conversations" || true)
-          echo "Unauthenticated admin endpoint HTTP $admin_code"
-          if [ "$admin_code" = '401' ]; then echo 'PASS admin API is protected'; else echo 'FAIL admin API protection unexpected'; fail=1; fi
-
-          cors_code=$(curl -L -sS --connect-timeout 15 --max-time 30 -X OPTIONS -H 'Origin: https://www.en-suite.co.uk' -H 'Access-Control-Request-Method: POST' -o cors.txt -w '%{http_code}' "$WORKER/api/conversations" || true)
-          echo "Public chat CORS preflight HTTP $cors_code"
-          if [ "$cors_code" = '204' ] || [ "$cors_code" = '200' ]; then echo 'PASS public chat CORS preflight'; else echo 'FAIL public chat CORS preflight'; fail=1; fi
-
-          push_started=$(date -u +%s)
-          visit_code=$(curl -L -sS --connect-timeout 15 --max-time 30 \
-            -X POST \
-            -H 'Origin: https://www.en-suite.co.uk' \
-            -H 'Content-Type: application/json' \
-            --data '{"page_url":"https://www.en-suite.co.uk/?production_push_audit=1","page_title":"Production push audit","referrer":""}' \
-            -o visit.json -w '%{http_code}' \
-            "$WORKER/api/site-visit" || true)
-          echo "Synthetic site-visit HTTP $visit_code"
-          cat visit.json 2>/dev/null || true
-          echo
-          if [ "$visit_code" != '200' ]; then
-            echo 'FAIL site-visit endpoint did not accept the notification test'
+          if grep -Eq 'workers\.dev|navigator\.webdriver|Node\.prototype\.insertBefore|TAWK_PATTERN' site.js; then
+            echo 'FAIL obsolete custom Worker or script-blocking code is present'
             fail=1
           else
-            sent=$(python3 -c "import json; print(int(json.load(open('visit.json')).get('sent', 0)))" 2>/dev/null || echo 0)
-            echo "Production push accepted by $sent enabled device(s)"
-            if [ "$sent" -ge 1 ]; then
-              echo 'PASS production Web Push provider accepted a real site-visit alert'
-            else
-              echo 'FAIL production has no working enabled push subscription'
-              fail=1
-            fi
+            echo 'PASS no custom Worker or script-blocking code'
           fi
 
-          receipt_ok=0
-          for attempt in 1 2 3 4 5 6 7 8; do
-            sleep 2
-            curl -L -sS --connect-timeout 15 --max-time 30 -o receipt-after.json "$WORKER/push-receipt-status.json" || true
-            receipt_epoch=$(python3 -c "import json,datetime; s=json.load(open('receipt-after.json')).get('last_receipt_at'); print(int(datetime.datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()) if s else 0)" 2>/dev/null || echo 0)
-            echo "Browser receipt attempt $attempt: epoch=$receipt_epoch"
-            if [ "$receipt_epoch" -ge "$push_started" ]; then
-              receipt_ok=1
-              break
-            fi
-          done
-          echo '--- receipt after ---'
-          cat receipt-after.json 2>/dev/null || true
-          echo
-          if [ "$receipt_ok" -eq 1 ]; then
-            echo 'PASS a registered browser actually received and handled the production push'
-          else
-            echo 'FAIL provider accepted the push but no registered browser confirmed receiving it'
+          if grep -q 'ensuiteChatFallback' site.html; then
+            echo 'FAIL obsolete duplicate chat fallback is present'
             fail=1
+          else
+            echo 'PASS no duplicate chat fallback'
           fi
+
+          grep -q 'Tawk_API' tawk.js \
+            && echo 'PASS Tawk property script is responding' \
+            || { echo 'FAIL Tawk property script response is unexpected'; fail=1; }
 
           echo "AUDIT_FAIL=$fail"
           exit "$fail"
