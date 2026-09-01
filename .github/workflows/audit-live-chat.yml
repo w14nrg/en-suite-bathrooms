@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/audit-live-chat.yml'
       - 'assets/js/site.js'
+      - 'assets/js/ensuite-chat-widget.js'
       - 'index.html'
   workflow_dispatch:
 
@@ -16,13 +17,13 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - name: Audit public website and standard live chat
+      - name: Audit public website and own live chat
         shell: bash
         run: |
           set -u
           fail=0
           SITE='https://www.en-suite.co.uk'
-          TAWK='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j'
+          WORKER='https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev'
 
           check_url() {
             name="$1"
@@ -35,29 +36,31 @@ jobs:
 
           check_url 'Website' "$SITE/" site.html
           check_url 'Website JavaScript' "$SITE/assets/js/site.js" site.js
-          check_url 'Tawk live chat' "$TAWK" tawk.js
+          check_url 'First-party chat widget' "$SITE/assets/js/ensuite-chat-widget.js" widget.js
+          check_url 'Chat API health' "$WORKER/health" health.json
 
-          grep -q 'embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j' site.js \
-            && echo 'PASS standard Tawk property is installed' \
-            || { echo 'FAIL standard Tawk property missing'; fail=1; }
+          grep -q '/assets/js/ensuite-chat-widget.js' site.js \
+            && echo 'PASS first-party chat widget is installed' \
+            || { echo 'FAIL first-party chat widget missing'; fail=1; }
 
-          if grep -Eq 'workers\.dev|navigator\.webdriver|Node\.prototype\.insertBefore|TAWK_PATTERN' site.js; then
-            echo 'FAIL obsolete custom Worker or script-blocking code is present'
+          grep -q 'en-suite-bathrooms.nicholas-griffith-uk.workers.dev' site.js \
+            && echo 'PASS own chat API is configured' \
+            || { echo 'FAIL own chat API missing'; fail=1; }
+
+          if grep -Eqi 'tawk|navigator\.webdriver|document\.referrer|Node\.prototype\.insertBefore' site.js widget.js; then
+            echo 'FAIL prohibited external chat or crawler-evasion code is present'
             fail=1
           else
-            echo 'PASS no custom Worker or script-blocking code'
+            echo 'PASS no prohibited external chat or crawler-evasion code'
           fi
 
-          if grep -q 'ensuiteChatFallback' site.html; then
-            echo 'FAIL obsolete duplicate chat fallback is present'
-            fail=1
-          else
-            echo 'PASS no duplicate chat fallback'
-          fi
+          grep -q '/api/site-visit' widget.js \
+            && echo 'PASS visitor notifications are wired' \
+            || { echo 'FAIL visitor notifications missing'; fail=1; }
 
-          grep -q 'Tawk_API' tawk.js \
-            && echo 'PASS Tawk property script is responding' \
-            || { echo 'FAIL Tawk property script response is unexpected'; fail=1; }
+          grep -q '/api/conversations' widget.js \
+            && echo 'PASS live chat API is wired' \
+            || { echo 'FAIL live chat API missing'; fail=1; }
 
           echo "AUDIT_FAIL=$fail"
           exit "$fail"
