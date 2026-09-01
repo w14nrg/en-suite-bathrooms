@@ -51,14 +51,16 @@ test("legacy planner URLs permanently lead to the estimator", () => {
   assert.match(planner, /location\.replace\(["']\/estimator\//i);
 });
 
-test("the shared site script replaces old planner links and loads the standard live chat", () => {
+test("the shared site script replaces old planner links and loads only the custom live helper", () => {
   assert.match(siteJs, /function rewritePlannerLinks/);
   assert.match(siteJs, /Bathroom Estimator/);
-  assert.match(siteJs, /embed\.tawk\.to\/6a2161974a36f41c2edf02c6\/1jq96ae0j/);
-  assert.doesNotMatch(siteJs, /workers\.dev/);
+  assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev/);
+  assert.match(siteJs, /\/assets\/js\/ensuite-chat-widget\.js/);
+  assert.doesNotMatch(siteJs, /tawk/i);
   assert.doesNotMatch(siteJs, /Node\.prototype\.insertBefore/);
-  assert.doesNotMatch(siteJs, /TAWK_PATTERN/);
   assert.match(chatWidget, /notifyOwnerOfVisit/);
+  assert.match(chatWidget, /\/api\/site-visit/);
+  assert.match(chatWidget, /\/api\/conversations/);
   assert.doesNotMatch(chatWidget, /navigator\.webdriver/);
   assert.doesNotMatch(chatWidget, /document\.referrer/);
   assert.match(siteJs, /loadEstimatorFixes/);
