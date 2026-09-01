@@ -1,24 +1,18 @@
 (function () {
   "use strict";
 
-  const TAWK_SRC = "https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j";
+  const HELPER_HOST = "en-suite-bathrooms.nicholas-griffith-uk.workers.dev";
+  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260831", location.origin).href;
 
-  function ensureLiveChat() {
-    if (document.querySelector(`script[src="${TAWK_SRC}"]`)) return;
-    window.Tawk_API = window.Tawk_API || {};
-    const previousOnLoad = window.Tawk_API.onLoad;
-    window.Tawk_API.onLoad = function onTawkLoad() {
-      if (typeof previousOnLoad === "function") previousOnLoad();
-      document.getElementById("ensuiteChatFallback")?.remove();
-    };
-    window.Tawk_LoadStart = window.Tawk_LoadStart || new Date();
+  function ensureOwnHelper() {
+    if ([...document.scripts].some((script) => script.src === HELPER_SRC)) return;
     const script = document.createElement("script");
-    script.async = true;
-    script.src = TAWK_SRC;
-    script.charset = "UTF-8";
-    script.setAttribute("crossorigin", "*");
-    script.dataset.ensuiteLiveChat = "true";
-    document.head.appendChild(script);
+    script.src = HELPER_SRC;
+    script.dataset.api = `https://${HELPER_HOST}`;
+    script.dataset.whatsapp = "442073860000";
+    script.dataset.ensuiteOwnHelper = "true";
+    script.defer = true;
+    document.body.appendChild(script);
   }
 
   function rewritePlannerLinks() {
@@ -193,7 +187,7 @@
     addGoogleMapAndReviews();
     loadEstimatorFixes();
     bindPageControls();
-    ensureLiveChat();
+    ensureOwnHelper();
 
     const observer = new MutationObserver(() => rewritePlannerLinks());
     observer.observe(document.body, { childList: true, subtree: true });
