@@ -2,7 +2,7 @@
   "use strict";
 
   const HELPER_HOST = "en-suite-bathrooms.nicholas-griffith-uk.workers.dev";
-  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260831", location.origin).href;
+  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260901-own-chat", location.origin).href;
 
   function ensureOwnHelper() {
     if ([...document.scripts].some((script) => script.src === HELPER_SRC)) return;
