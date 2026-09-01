@@ -4,30 +4,6 @@
   window.__ENSUITE_CHAT_LOADED__ = true;
 
 
-  // Remove the old Tawk.to widget so only this live chat appears.
-  const hideTawk = () => {
-    try { window.Tawk_API?.hideWidget?.(); } catch {}
-    const selectors = [
-      'script[src*="embed.tawk.to"]',
-      'iframe[src*="tawk.to"]',
-      '#tawkchat-container',
-      '[id^="tawk_"]',
-      '[id^="tawk-"]',
-      '[class*="tawk-"]'
-    ];
-    for (const node of document.querySelectorAll(selectors.join(','))) {
-      try { node.remove(); } catch { node.style.display = 'none'; }
-    }
-  };
-  const tawkBlockStyle = document.createElement('style');
-  tawkBlockStyle.textContent = 'iframe[src*="tawk.to"],#tawkchat-container,[id^="tawk_"],[id^="tawk-"],[class*="tawk-"]{display:none!important;visibility:hidden!important}';
-  document.head.appendChild(tawkBlockStyle);
-  hideTawk();
-  const tawkObserver = new MutationObserver(hideTawk);
-  tawkObserver.observe(document.documentElement, { childList: true, subtree: true });
-  setTimeout(hideTawk, 500);
-  setTimeout(hideTawk, 2000);
-
   const script = document.currentScript;
   const apiBase = (script?.dataset.api || new URL(script.src).origin).replace(/\/$/, "");
   const whatsappNumber = String(script?.dataset.whatsapp || "").replace(/\D/g, "");
