@@ -3,10 +3,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const siteCss = await readFile(new URL('../assets/css/site.css', import.meta.url), 'utf8');
+const publicChatWidget = await readFile(new URL('../assets/js/ensuite-chat-widget.js', import.meta.url), 'utf8');
 const fixedEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/fixed-entry.js', import.meta.url), 'utf8');
 const reliabilityEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/reliability-entry.js', import.meta.url), 'utf8');
 const diagnosticsEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/diagnostics-entry.js', import.meta.url), 'utf8');
 const wrangler = await readFile(new URL('../ensuite-chat-webpush-patch/worker/wrangler.toml', import.meta.url), 'utf8');
+
+test('public widget triggers one first-party visitor alert on page load', () => {
+  assert.match(publicChatWidget, /void notifyOwnerOfVisit\(\);/);
+  assert.equal((publicChatWidget.match(/void notifyOwnerOfVisit\(\);/g) || []).length, 1);
+  assert.doesNotMatch(publicChatWidget, /tawk/i);
+});
 
 test('live chat messages are forced back into a vertical stack', () => {
   assert.match(siteCss, /\.eb-chat-messages\.eb-chat-live-area\.active\{display:block!important;/);
