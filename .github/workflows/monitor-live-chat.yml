@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'assets/js/site.js'
-      - 'index.html'
+      - 'assets/js/ensuite-chat-widget.js'
       - '.github/workflows/monitor-live-chat.yml'
   schedule:
     - cron: '*/15 * * * *'
@@ -23,32 +23,37 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Probe website and Tawk live chat
+      - name: Probe website and own live chat
         shell: bash
         run: |
           set -u
           SITE='https://www.en-suite.co.uk'
-          TAWK='https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j'
+          WORKER='https://en-suite-bathrooms.nicholas-griffith-uk.workers.dev'
 
           site_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/site.html -w '%{http_code}' "$SITE/" || true)
           js_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/site.js -w '%{http_code}' "$SITE/assets/js/site.js" || true)
-          tawk_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/tawk.js -w '%{http_code}' "$TAWK" || true)
+          widget_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/widget.js -w '%{http_code}' "$SITE/assets/js/ensuite-chat-widget.js" || true)
+          health_code=$(curl -L -sS --connect-timeout 10 --max-time 20 -o /tmp/health.json -w '%{http_code}' "$WORKER/health" || true)
 
-          echo "website=$site_code site_js=$js_code tawk=$tawk_code"
+          echo "website=$site_code site_js=$js_code widget=$widget_code api_health=$health_code"
 
           [ "$site_code" = '200' ] || { echo 'Website is unavailable'; exit 1; }
           [ "$js_code" = '200' ] || { echo 'Website JavaScript is unavailable'; exit 1; }
-          [ "$tawk_code" = '200' ] || { echo 'Tawk live chat is unavailable'; exit 1; }
+          [ "$widget_code" = '200' ] || { echo 'First-party chat widget is unavailable'; exit 1; }
+          [ "$health_code" = '200' ] || { echo 'Own chat API is unavailable'; exit 1; }
 
-          grep -q 'embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j' /tmp/site.js \
-            || { echo 'Standard Tawk property is missing'; exit 1; }
+          grep -q '/assets/js/ensuite-chat-widget.js' /tmp/site.js \
+            || { echo 'First-party chat widget is missing'; exit 1; }
 
-          if grep -Eq 'workers\.dev|navigator\.webdriver|Node\.prototype\.insertBefore|TAWK_PATTERN' /tmp/site.js; then
-            echo 'Obsolete custom Worker or script-blocking code returned'
+          grep -q '/api/conversations' /tmp/widget.js \
+            || { echo 'Live chat API wiring is missing'; exit 1; }
+
+          grep -q '/api/site-visit' /tmp/widget.js \
+            || { echo 'Visitor notification wiring is missing'; exit 1; }
+
+          if grep -Eqi 'tawk|navigator\.webdriver|document\.referrer|Node\.prototype\.insertBefore' /tmp/site.js /tmp/widget.js; then
+            echo 'Prohibited external chat or crawler-evasion code returned'
             exit 1
           fi
 
-          grep -q 'Tawk_API' /tmp/tawk.js \
-            || { echo 'Tawk property response is unexpected'; exit 1; }
-
-          echo 'Production website and standard live chat are healthy'
+          echo 'Production website, own chat and visitor notifications are healthy'
