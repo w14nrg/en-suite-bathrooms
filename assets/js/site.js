@@ -6,6 +6,11 @@
   function ensureLiveChat() {
     if (document.querySelector(`script[src="${TAWK_SRC}"]`)) return;
     window.Tawk_API = window.Tawk_API || {};
+    const previousOnLoad = window.Tawk_API.onLoad;
+    window.Tawk_API.onLoad = function onTawkLoad() {
+      if (typeof previousOnLoad === "function") previousOnLoad();
+      document.getElementById("ensuiteChatFallback")?.remove();
+    };
     window.Tawk_LoadStart = window.Tawk_LoadStart || new Date();
     const script = document.createElement("script");
     script.async = true;
