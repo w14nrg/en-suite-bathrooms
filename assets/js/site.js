@@ -1,40 +1,19 @@
 (function () {
   "use strict";
 
-  const HELPER_HOST = "en-suite-bathrooms.nicholas-griffith-uk.workers.dev";
-  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260831", location.origin).href;
-  const TAWK_PATTERN = /(?:embed\.tawk\.to|tawk\.to|Tawk_API|Tawk_LoadStart)/i;
+  const TAWK_SRC = "https://embed.tawk.to/6a2161974a36f41c2edf02c6/1jq96ae0j";
 
-  function blockTawk() {
-    const originalInsertBefore = Node.prototype.insertBefore;
-    Node.prototype.insertBefore = function protectedInsertBefore(node, reference) {
-      const source = node?.src || node?.textContent || "";
-      if (node?.nodeName === "SCRIPT" && TAWK_PATTERN.test(source)) return node;
-      return originalInsertBefore.call(this, node, reference);
-    };
-
-    const remove = () => {
-      document.querySelectorAll("script, iframe").forEach((node) => {
-        const source = node.src || node.textContent || "";
-        if (TAWK_PATTERN.test(source)) node.remove();
-      });
-      try {
-        delete window.Tawk_API;
-        delete window.Tawk_LoadStart;
-      } catch {
-        window.Tawk_API = undefined;
-        window.Tawk_LoadStart = undefined;
-      }
-    };
-
-    const observer = new MutationObserver(remove);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-    remove();
-    window.setTimeout(() => {
-      remove();
-      observer.disconnect();
-      Node.prototype.insertBefore = originalInsertBefore;
-    }, 3500);
+  function ensureLiveChat() {
+    if (document.querySelector(`script[src="${TAWK_SRC}"]`)) return;
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = window.Tawk_LoadStart || new Date();
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = TAWK_SRC;
+    script.charset = "UTF-8";
+    script.setAttribute("crossorigin", "*");
+    script.dataset.ensuiteLiveChat = "true";
+    document.head.appendChild(script);
   }
 
   function rewritePlannerLinks() {
@@ -80,54 +59,6 @@
       const link = makeLink(sample?.className || "");
       mobile.insertBefore(link, mobile.querySelector(".mobile-actions") || null);
     }
-  }
-
-  function ensureOwnHelper() {
-    if ([...document.scripts].some((script) => script.src === HELPER_SRC)) return;
-    const script = document.createElement("script");
-    script.src = HELPER_SRC;
-    script.dataset.api = `https://${HELPER_HOST}`;
-    script.dataset.whatsapp = "442073860000";
-    script.dataset.ensuiteOwnHelper = "true";
-    script.defer = true;
-    document.body.appendChild(script);
-  }
-
-  function installHelperSpacing() {
-    if (document.getElementById("ensuiteHelperSpacing")) return;
-    const style = document.createElement("style");
-    style.id = "ensuiteHelperSpacing";
-    style.textContent = `
-      @media (max-width:760px){
-        body{padding-bottom:calc(62px + env(safe-area-inset-bottom))}
-        .mobile-bar{z-index:1000000!important}
-        iframe[src*="${HELPER_HOST}"]{bottom:calc(74px + env(safe-area-inset-bottom))!important;max-height:calc(100dvh - 100px)!important}
-      }
-    `;
-    document.head.appendChild(style);
-
-    const position = () => {
-      if (!matchMedia("(max-width:760px)").matches) return;
-      const candidates = document.querySelectorAll(`iframe[src*="${HELPER_HOST}"], [data-ensuite-chat], [class*="chat" i], [id*="chat" i]`);
-      candidates.forEach((candidate) => {
-        if (candidate.closest?.(".mobile-bar, .estimator-ai-sheet")) return;
-        let fixed = candidate;
-        let node = candidate;
-        while (node && node !== document.body) {
-          if (getComputedStyle(node).position === "fixed") fixed = node;
-          node = node.parentElement;
-        }
-        if (!fixed || fixed === document.body) return;
-        fixed.style.setProperty("bottom", "calc(74px + env(safe-area-inset-bottom))", "important");
-        fixed.style.setProperty("max-height", "calc(100dvh - 100px)", "important");
-        fixed.style.setProperty("z-index", "999999", "important");
-      });
-    };
-
-    new MutationObserver(position).observe(document.documentElement, { childList: true, subtree: true });
-    addEventListener("resize", position);
-    setTimeout(position, 700);
-    setTimeout(position, 1800);
   }
 
   function loadEstimatorFixes() {
@@ -252,14 +183,12 @@
   }
 
   function start() {
-    blockTawk();
     rewritePlannerLinks();
     addEstimatorNavigation();
     addGoogleMapAndReviews();
-    installHelperSpacing();
     loadEstimatorFixes();
     bindPageControls();
-    ensureOwnHelper();
+    ensureLiveChat();
 
     const observer = new MutationObserver(() => rewritePlannerLinks());
     observer.observe(document.body, { childList: true, subtree: true });
