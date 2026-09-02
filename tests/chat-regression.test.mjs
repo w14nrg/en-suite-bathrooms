@@ -15,6 +15,12 @@ test('public widget triggers one first-party visitor alert on page load', () => 
   assert.doesNotMatch(publicChatWidget, /tawk/i);
 });
 
+test('mobile chat stays above the fixed call and WhatsApp bar', () => {
+  assert.match(publicChatWidget, /@media\(max-width:520px\)\{\.eb-chat-launch\{right:12px;bottom:72px\}/);
+  assert.match(publicChatWidget, /\.eb-chat-panel\{right:6px;bottom:72px;/);
+  assert.doesNotMatch(publicChatWidget, /\.eb-chat-launch\{right:12px;bottom:12px\}/);
+});
+
 test('live chat messages are forced back into a vertical stack', () => {
   assert.match(siteCss, /\.eb-chat-messages\.eb-chat-live-area\.active\{display:block!important;/);
   assert.match(fixedEntry, /ENSUITE_CHAT_VERTICAL_FIX_20260807/);
