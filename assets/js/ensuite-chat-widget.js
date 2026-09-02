@@ -50,7 +50,7 @@
     .eb-chat-actions{padding:8px 10px 0;background:#f7f8f8}.eb-chat-whatsapp{display:none;width:100%;text-align:center;text-decoration:none;border:1px solid #25d366;color:#087b36;background:#fff;border-radius:9px;padding:9px;font:700 13px Arial,sans-serif}.eb-chat-whatsapp.show{display:block}
     .eb-chat-form{display:flex;gap:8px;padding:9px 10px;background:#f7f8f8}.eb-chat-form textarea{flex:1;resize:none;min-height:44px;max-height:104px;border:0;border-radius:22px;padding:12px 15px;font:15px Arial,sans-serif;outline:none;box-shadow:0 0 0 1px #d9e2ec inset}.eb-chat-form button{border:0;width:44px;height:44px;border-radius:50%;background:#102a43;color:#fff;font-weight:800;cursor:pointer;font-size:18px}
     .eb-chat-note{font-size:10px;color:#627d98;padding:0 12px 9px;background:#f7f8f8;text-align:center}
-    @media(max-width:520px){.eb-chat-launch{right:12px;bottom:12px}.eb-chat-panel{right:6px;bottom:68px;width:calc(100vw - 12px);height:calc(100vh - 82px);border-radius:14px}}
+    @media(max-width:520px){.eb-chat-launch{right:12px;bottom:72px}.eb-chat-panel{right:6px;bottom:72px;width:calc(100vw - 12px);height:calc(100vh - 84px);height:calc(100dvh - 84px);border-radius:14px}}
   `;
     /* ENSUITE_CHAT_VERTICAL_FIX_20260807 */
   style.textContent +=
