@@ -88,7 +88,7 @@ test("the estimator remains in the sitemap and all local assets exist", () => {
     .filter((value) => !value.startsWith("http") && !value.startsWith("tel:") && !value.startsWith("mailto:") && !value.startsWith("#"));
 
   for (const reference of references) {
-    const localPath = resolve(dirname(estimatorPath), reference.split("#")[0]);
+    const localPath = resolve(dirname(estimatorPath), reference.split(/[?#]/)[0]);
     assert.ok(existsSync(localPath), `Missing local estimator asset: ${reference}`);
   }
 });
