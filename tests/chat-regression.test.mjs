@@ -9,10 +9,11 @@ const reliabilityEntry = await readFile(new URL('../ensuite-chat-webpush-patch/w
 const diagnosticsEntry = await readFile(new URL('../ensuite-chat-webpush-patch/worker/src/diagnostics-entry.js', import.meta.url), 'utf8');
 const wrangler = await readFile(new URL('../ensuite-chat-webpush-patch/worker/wrangler.toml', import.meta.url), 'utf8');
 
-test('public widget triggers one first-party visitor alert on page load', () => {
+test('dormant public widget does not contain legacy third-party chat code', () => {
   assert.match(publicChatWidget, /void notifyOwnerOfVisit\(\);/);
   assert.equal((publicChatWidget.match(/void notifyOwnerOfVisit\(\);/g) || []).length, 1);
   assert.doesNotMatch(publicChatWidget, /tawk/i);
+  assert.doesNotMatch(publicChatWidget, /workers\.dev/i);
 });
 
 test('mobile chat stays above the fixed call and WhatsApp bar', () => {

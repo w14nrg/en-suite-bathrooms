@@ -1,20 +1,6 @@
 (function () {
   "use strict";
 
-  const HELPER_HOST = "en-suite-bathrooms.nicholas-griffith-uk.workers.dev";
-  const HELPER_SRC = new URL("/assets/js/ensuite-chat-widget.js?v=20260902-mobile-clear", location.origin).href;
-
-  function ensureOwnHelper() {
-    if ([...document.scripts].some((script) => script.src === HELPER_SRC)) return;
-    const script = document.createElement("script");
-    script.src = HELPER_SRC;
-    script.dataset.api = `https://${HELPER_HOST}`;
-    script.dataset.whatsapp = "442073860000";
-    script.dataset.ensuiteOwnHelper = "true";
-    script.defer = true;
-    document.body.appendChild(script);
-  }
-
   function rewritePlannerLinks() {
     document.querySelectorAll("a[href]").forEach((link) => {
       const raw = link.getAttribute("href") || "";
@@ -187,8 +173,6 @@
     addGoogleMapAndReviews();
     loadEstimatorFixes();
     bindPageControls();
-    ensureOwnHelper();
-
     const observer = new MutationObserver(() => rewritePlannerLinks());
     observer.observe(document.body, { childList: true, subtree: true });
     setTimeout(() => observer.disconnect(), 5000);

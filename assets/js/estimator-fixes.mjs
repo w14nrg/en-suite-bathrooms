@@ -1,6 +1,3 @@
-import "./estimator-reader.mjs";
-
-const AI_ENDPOINT = "https://en-suites-bathroom-ai.nicholas-griffith-uk.workers.dev";
 const STORAGE_KEY = "ensuites-bathrooms-planner-draft-4";
 const RESPONSE_KEY = "bathroomEstimatorResponseIdV1";
 const nativeFetch = window.fetch.bind(window);
@@ -250,7 +247,6 @@ function start() {
   renameEstimator();
   installLinkFixes();
   installMobile3D();
-  installAiAssistant();
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });

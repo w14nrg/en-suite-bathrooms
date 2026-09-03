@@ -51,11 +51,12 @@ test("legacy planner URLs permanently lead to the estimator", () => {
   assert.match(planner, /location\.replace\(["']\/estimator\//i);
 });
 
-test("the shared site script replaces old planner links and loads only the custom live helper", () => {
+test("the shared site script replaces old planner links without external chat helpers", () => {
   assert.match(siteJs, /function rewritePlannerLinks/);
   assert.match(siteJs, /Bathroom Estimator/);
-  assert.match(siteJs, /en-suite-bathrooms\.nicholas-griffith-uk\.workers\.dev/);
-  assert.match(siteJs, /\/assets\/js\/ensuite-chat-widget\.js/);
+  assert.doesNotMatch(siteJs, /workers\.dev/);
+  assert.doesNotMatch(siteJs, /ensuite-chat-widget\.js/);
+  assert.doesNotMatch(siteJs, /ensureOwnHelper/);
   assert.doesNotMatch(siteJs, /tawk/i);
   assert.doesNotMatch(siteJs, /Node\.prototype\.insertBefore/);
   assert.match(chatWidget, /notifyOwnerOfVisit/);
@@ -65,13 +66,14 @@ test("the shared site script replaces old planner links and loads only the custo
   assert.doesNotMatch(chatWidget, /document\.referrer/);
   assert.match(siteJs, /loadEstimatorFixes/);
 });
-test("the estimator has its compact contextual AI assistant and automatic link checks", () => {
+test("the estimator keeps local fixes without loading external worker services", () => {
   assert.match(estimatorFixes, /Need help with your estimate\?/);
   assert.match(estimatorFixes, /Bathroom Assistant/);
-  assert.match(estimatorFixes, /en-suites-bathroom-ai\.nicholas-griffith-uk\.workers\.dev/);
+  assert.doesNotMatch(estimatorFixes, /workers\.dev/);
+  assert.doesNotMatch(estimatorFixes, /estimator-reader\.mjs/);
+  assert.doesNotMatch(estimatorFixes, /^\s*installAiAssistant\(\);/m);
   assert.match(estimatorFixes, /productsAndFittings/);
   assert.match(estimatorFixes, /addEventListener\("paste"/);
-  assert.match(estimatorFixes, /estimator-reader\.mjs/);
   assert.match(estimatorReader, /Price found: £\$\{displayed\} per m²/);
   assert.match(estimatorReader, /https:\/\/r\.jina\.ai\//);
 });
