@@ -46,15 +46,6 @@
     }
   }
 
-  function loadEstimatorFixes() {
-    if (!location.pathname.startsWith("/estimator") || document.querySelector("script[data-estimator-fixes]")) return;
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "/assets/js/estimator-fixes.mjs?v=20260731b";
-    script.dataset.estimatorFixes = "true";
-    document.head.appendChild(script);
-  }
-
   function addGoogleMapAndReviews() {
     if (document.querySelector("[data-google-proof]")) return;
     const heading = [...document.querySelectorAll("h2")].find((item) => item.textContent.trim() === "287 Munster Road, Fulham");
@@ -171,7 +162,6 @@
     rewritePlannerLinks();
     addEstimatorNavigation();
     addGoogleMapAndReviews();
-    loadEstimatorFixes();
     bindPageControls();
     const observer = new MutationObserver(() => rewritePlannerLinks());
     observer.observe(document.body, { childList: true, subtree: true });

@@ -10,6 +10,7 @@ const siteJs = readFileSync(resolve(root, "assets", "js", "site.js"), "utf8");
 const chatWidget = readFileSync(resolve(root, "assets", "js", "ensuite-chat-widget.js"), "utf8");
 const estimatorFixes = readFileSync(resolve(root, "assets", "js", "estimator-fixes.mjs"), "utf8");
 const estimatorReader = readFileSync(resolve(root, "assets", "js", "estimator-reader.mjs"), "utf8");
+const estimatorSimple = readFileSync(resolve(root, "assets", "js", "estimator-simple.mjs"), "utf8");
 
 test("the /estimator route exposes the Draft 4 room and price estimator", () => {
   assert.match(estimator, /Planner · Draft 4/);
@@ -64,7 +65,8 @@ test("the shared site script replaces old planner links without external chat he
   assert.match(chatWidget, /\/api\/conversations/);
   assert.doesNotMatch(chatWidget, /navigator\.webdriver/);
   assert.doesNotMatch(chatWidget, /document\.referrer/);
-  assert.match(siteJs, /loadEstimatorFixes/);
+  assert.doesNotMatch(siteJs, /loadEstimatorFixes/);
+  assert.match(estimatorSimple, /estimator-fixes\.mjs\?v=20260903-ads-clean/);
 });
 test("the estimator keeps local fixes without loading external worker services", () => {
   assert.match(estimatorFixes, /Need help with your estimate\?/);
