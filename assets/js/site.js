@@ -1,6 +1,26 @@
 (function () {
   "use strict";
 
+  const ADS_CONVERSIONS = Object.freeze({
+    completedEnquiry: "AW-18401275072/G6_DCNH-oPAcEMDZtMZE",
+    directWhatsApp: "AW-18401275072/KIa5CNT-oPAcEMDZtMZE"
+  });
+
+  function trackAdsConversion(destination) {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", "conversion", { send_to: destination });
+  }
+
+  function bindDirectWhatsAppTracking() {
+    if (document.documentElement.dataset.adsWhatsAppBound) return;
+    document.documentElement.dataset.adsWhatsAppBound = "true";
+    document.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const link = target?.closest('a[href*="wa.me/"]');
+      if (link) trackAdsConversion(ADS_CONVERSIONS.directWhatsApp);
+    }, { capture: true });
+  }
+
   function rewritePlannerLinks() {
     document.querySelectorAll("a[href]").forEach((link) => {
       const raw = link.getAttribute("href") || "";
@@ -135,6 +155,7 @@
         event.preventDefault();
         const data = new FormData(form);
         const text = ["Hello, I would like to discuss a project.", `Name: ${data.get("name") || ""}`, `Area/postcode: ${data.get("postcode") || ""}`, `Project: ${data.get("project") || ""}`, `Budget: ${data.get("budget") || ""}`, `Details: ${data.get("details") || ""}`].join("\n");
+        trackAdsConversion(ADS_CONVERSIONS.completedEnquiry);
         window.open(`https://wa.me/442073860000?text=${encodeURIComponent(text)}`, "_blank", "noopener");
       });
     }
@@ -163,6 +184,7 @@
     addEstimatorNavigation();
     addGoogleMapAndReviews();
     bindPageControls();
+    bindDirectWhatsAppTracking();
     const observer = new MutationObserver(() => rewritePlannerLinks());
     observer.observe(document.body, { childList: true, subtree: true });
     setTimeout(() => observer.disconnect(), 5000);
