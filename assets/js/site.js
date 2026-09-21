@@ -7,6 +7,7 @@
   });
 
   function trackAdsConversion(destination) {
+    if (!window.EnsuitePrivacy?.hasOptionalConsent?.()) return;
     if (typeof window.gtag !== "function") return;
     window.gtag("event", "conversion", { send_to: destination });
   }
@@ -67,6 +68,7 @@
   }
 
   function addGoogleMapAndReviews() {
+    if (!window.EnsuitePrivacy?.hasOptionalConsent?.()) return;
     if (document.querySelector("[data-google-proof]")) return;
     const heading = [...document.querySelectorAll("h2")].find((item) => item.textContent.trim() === "287 Munster Road, Fulham");
     const section = heading?.closest("section");
@@ -179,10 +181,21 @@
     }
   }
 
+  function addPrivacyFooterLink() {
+    const bottom = document.querySelector(".footer-bottom");
+    if (!bottom || bottom.querySelector("[data-privacy-link]")) return;
+    const item = document.createElement("span");
+    item.innerHTML = '<a data-privacy-link href="privacy-policy.html" style="color:inherit">Privacy &amp; Cookies</a>';
+    bottom.appendChild(item);
+  }
+
+
   function start() {
+    addPrivacyFooterLink();
     rewritePlannerLinks();
     addEstimatorNavigation();
     addGoogleMapAndReviews();
+    window.addEventListener("ensuite:optional-consent-granted", addGoogleMapAndReviews, { once: true });
     bindPageControls();
     bindDirectWhatsAppTracking();
     const observer = new MutationObserver(() => rewritePlannerLinks());
