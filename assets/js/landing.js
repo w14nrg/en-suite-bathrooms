@@ -6,6 +6,7 @@
   });
 
   function trackAdsConversion(destination) {
+    if (!window.EnsuitePrivacy?.hasOptionalConsent?.()) return;
     if (typeof window.gtag !== "function") return;
     window.gtag("event", "conversion", { send_to: destination });
   }
@@ -31,7 +32,17 @@
     });
   }
 
+  function addPrivacyFooterLink() {
+    const bottom = document.querySelector(".footer-bottom");
+    if (!bottom || bottom.querySelector("[data-privacy-link]")) return;
+    const item = document.createElement("span");
+    item.innerHTML = '<a data-privacy-link href="privacy-policy.html" style="color:inherit">Privacy &amp; Cookies</a>';
+    bottom.appendChild(item);
+  }
+
+
   function start() {
+    addPrivacyFooterLink();
     bindMobileMenu();
     bindDirectWhatsAppTracking();
   }
