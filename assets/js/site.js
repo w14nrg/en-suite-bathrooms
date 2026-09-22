@@ -22,49 +22,23 @@
     }, { capture: true });
   }
 
-  function rewritePlannerLinks() {
-    document.querySelectorAll("a[href]").forEach((link) => {
-      const raw = link.getAttribute("href") || "";
+  function removeEstimatorLinks() {
+    document.querySelectorAll('a[href], [data-estimator-nav="true"]').forEach((link) => {
+      const raw = link.getAttribute?.("href") || "";
       let path = raw;
       try {
         path = new URL(raw, location.href).pathname;
       } catch {
         // Keep the raw value for relative-link matching.
       }
-      if (!/(^|\/)planner(?:\.html)?\/?$/i.test(path)) return;
-      link.setAttribute("href", "/estimator/");
-      const text = link.textContent.trim();
-      if (/project\s*planner/i.test(text)) link.textContent = "Bathroom Estimator";
-      else if (/ai\s*bathroom\s*planner/i.test(text)) link.textContent = "Bathroom Estimator";
-      else if (/ai\s*planner/i.test(text)) link.textContent = "Estimator";
-      else if (/planner/i.test(text)) link.textContent = "Estimator";
-      link.dataset.estimatorLinkUpdated = "true";
+      if (
+        link.matches?.('[data-estimator-nav="true"]') ||
+        /(^|\/)estimator\/?$/i.test(path) ||
+        /(^|\/)planner(?:\.html)?\/?$/i.test(path)
+      ) {
+        link.remove();
+      }
     });
-  }
-
-  function addEstimatorNavigation() {
-    const makeLink = (className = "") => {
-      const link = document.createElement("a");
-      link.href = "/estimator/";
-      link.textContent = "Estimator";
-      link.dataset.estimatorNav = "true";
-      if (className) link.className = className;
-      return link;
-    };
-
-    const desktop = document.querySelector(".desktop-nav");
-    const desktopLinks = desktop ? [...desktop.querySelectorAll("a[href]")] : [];
-    if (desktop && !desktop.querySelector('[data-estimator-nav="true"]') && !desktopLinks.some((link) => link.pathname === "/estimator/")) {
-      desktop.insertBefore(makeLink(), desktop.querySelector(".nav-cta") || null);
-    }
-
-    const mobile = document.getElementById("mobileMenu");
-    const mobileLinks = mobile ? [...mobile.querySelectorAll("a[href]")] : [];
-    if (mobile && !mobile.querySelector('[data-estimator-nav="true"]') && !mobileLinks.some((link) => link.pathname === "/estimator/")) {
-      const sample = mobile.querySelector("a");
-      const link = makeLink(sample?.className || "");
-      mobile.insertBefore(link, mobile.querySelector(".mobile-actions") || null);
-    }
   }
 
   function addGoogleMapAndReviews() {
@@ -192,13 +166,12 @@
 
   function start() {
     addPrivacyFooterLink();
-    rewritePlannerLinks();
-    addEstimatorNavigation();
+    removeEstimatorLinks();
     addGoogleMapAndReviews();
     window.addEventListener("ensuite:optional-consent-granted", addGoogleMapAndReviews, { once: true });
     bindPageControls();
     bindDirectWhatsAppTracking();
-    const observer = new MutationObserver(() => rewritePlannerLinks());
+    const observer = new MutationObserver(() => removeEstimatorLinks());
     observer.observe(document.body, { childList: true, subtree: true });
     setTimeout(() => observer.disconnect(), 5000);
   }
