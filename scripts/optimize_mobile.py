@@ -137,7 +137,7 @@ def fonts():
             if f"font-family: '{family}'" not in block: continue
             m=re.search(r'url\((https://[^)]+\.woff2)\)',block)
             if m: face.append(('U+0000-00FF' in block,m.group(1)))
-        if not face: raise RuntimeError(f'No WOFF2 font for {family}')
+        if not face: raise RuntimeError(f'No WOFF2 font for {family}; CSS end: {css[-2400:]}')
         fonturl=next((u for latin,u in face if latin),face[-1][1])
         data=urllib.request.urlopen(fonturl,timeout=45).read()
         if len(data)<1000 or len(data)>250_000: raise RuntimeError(f'Unexpected font file {family}')
