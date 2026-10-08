@@ -1,0 +1,62 @@
+name: Measure mobile PageSpeed and Lighthouse
+
+on:
+  push:
+    branches:
+      - performance/mobile-speed-20261008
+      - main
+    paths:
+      - .github/workflows/mobile-pagespeed-benchmark.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Google PageSpeed Insights API (mobile)
+        shell: bash
+        run: |
+          mkdir -p reports
+          for name in homepage fulham; do
+            if [ "$name" = homepage ]; then u="https://www.en-suite.co.uk/"; else u="https://www.en-suite.co.uk/bathroom-renovations-fulham.html"; fi
+            echo "PageSpeed Insights mobile: $name $u"
+            code=$(curl -L -sS -m 110 -G -o "reports/psi-$name.json" -w "%{http_code}" \
+              --data-urlencode "url=$u" --data "strategy=mobile" \
+              "https://pagespeedonline.googleapis.com/pagespeedonline/v5/runPagespeed" || true)
+            echo "$name PageSpeed API HTTP $code"
+            if [ "$code" = 200 ]; then
+              python -c 'import json,sys; d=json.load(open(sys.argv[1])); l=d.get("lighthouseResult",{}); a=l.get("audits",{}); print("PSI",sys.argv[2],"score",round(100*l.get("categories",{}).get("performance",{}).get("score",0)), "LCP",a.get("largest-contentful-paint",{}).get("displayValue"), "bytes",a.get("total-byte-weight",{}).get("numericValue"))' "reports/psi-$name.json" "$name"
+            else
+              echo "$name: PageSpeed API unavailable; retaining response and running Lighthouse below"
+            fi
+          done
+      - name: Install Lighthouse
+        run: npm install -g lighthouse@12
+      - name: Lighthouse mobile - homepage
+        run: |
+          lighthouse https://www.en-suite.co.uk/ --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --throttling-method=simulate --output=json --output-path=reports/lighthouse-homepage.json --quiet
+      - name: Lighthouse mobile - Fulham
+        run: |
+          lighthouse https://www.en-suite.co.uk/bathroom-renovations-fulham.html --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --throttling-method=simulate --output=json --output-path=reports/lighthouse-fulham.json --quiet
+      - name: Summarise mobile lab results
+        run: |
+          python - <<'PY'
+          import json
+          for name in ('homepage','fulham'):
+              d=json.load(open('reports/lighthouse-'+name+'.json'))
+              a=d['audits']; score=round(100*d['categories']['performance']['score'])
+              lcp=a['largest-contentful-paint']['numericValue']/1000
+              fcp=a['first-contentful-paint']['numericValue']/1000
+              total=a.get('total-byte-weight',{}).get('numericValue')
+              print(f'MOBILE LAB RESULT: {name} score={score}, LCP={lcp:.2f}s, FCP={fcp:.2f}s, totalBytes={total}')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-speed-${{ github.run_id }}
+          path: reports/
+          if-no-files-found: warn
