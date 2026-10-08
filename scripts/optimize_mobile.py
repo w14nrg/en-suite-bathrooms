@@ -132,6 +132,9 @@ def fonts():
     css=urllib.request.urlopen(req,timeout=40).read().decode()
     rules=[]
     for family,name in [('Inter','inter'),('Playfair Display','playfair-display')]:
+        if family=='Playfair Display':
+            play_url='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..700&display=swap'
+            css=urllib.request.urlopen(urllib.request.Request(play_url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'}),timeout=40).read().decode()
         face=[]
         for block in re.findall(r'@font-face\s*\{[^}]+\}',css,re.S):
             if f"font-family: '{family}'" not in block: continue
