@@ -57,6 +57,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mobile-speed-${{ github.ref_name }}-${{ github.run_id }}
+          name: mobile-speed-${{ github.run_id }}
           path: reports/
           if-no-files-found: warn
