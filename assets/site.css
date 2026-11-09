@@ -343,6 +343,18 @@ table.cmp-cols tbody th{background:var(--paper)}
 
 .area-trades{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px 28px;margin-top:22px}.area-trades .at{border-top:2px solid var(--copper,#c8875a);padding-top:12px}.area-trades h3{margin:0 0 6px;font-size:1.12rem}.area-trades p{margin:0 0 8px}
 .compare-wide .compare-frame{aspect-ratio:4/3!important}.project-detail .compare-wide{max-width:640px}
+
+.logo-mark.house{width:62px;height:54px;border:none;border-radius:0}
+.logo-mark.house svg{width:62px;height:54px}
+.logo-text .logo-tag{display:block;font-size:8.6px;font-weight:600;letter-spacing:.17em;color:var(--gold-dark);margin-top:4px;white-space:nowrap}
+.logo-mark.play .w{transform-box:fill-box;transform-origin:bottom;animation:esW .45s ease-out both;animation-delay:var(--d)}
+.logo-mark.play .b{animation:esB .35s cubic-bezier(.3,1.5,.6,1) both;animation-delay:var(--d)}
+.logo-mark.play .gl{animation:esG .7s ease-out both;animation-delay:var(--d)}
+@keyframes esW{from{transform:scaleY(0)}to{transform:none}}
+@keyframes esB{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+@keyframes esG{from{opacity:0}to{opacity:1}}
+@media(max-width:700px){.logo-mark.house{width:54px;height:47px}.logo-mark.house svg{width:54px;height:47px}.logo-text .logo-tag{font-size:7.4px;letter-spacing:.15em}}
+@media(prefers-reduced-motion:reduce){.logo-mark.play *{animation:none!important}}
 .btn-gold{color:#120f0d}.preview-ribbon{background:#9a5631}:root{--ink:#2a2826;--paper:#f5f5f6;--paper2:#e8e9eb;--border:#d7d9dc}
 body{color:#2a2826}
 .hero,.section-team,.pair-box,.dark-cta,.inner-hero:not(.area-hero):not(.project-top){background:#141312}
