@@ -354,6 +354,15 @@ table.cmp-cols tbody th{background:var(--paper)}
 .tn-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize}
 .intro-grid{grid-template-columns:auto 1fr auto}
 @media(max-width:700px){.intro-grid{grid-template-columns:1fr}.tn-slider{width:min(100%,300px)}}
+.story .story-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.story .story-grid figure{margin:0;flex:1 1 auto;height:280px;position:relative}
+.story .story-grid figure img,.story .story-grid figure picture{height:280px!important;width:100%!important;min-width:150px;object-fit:cover;border-radius:6px;display:block;aspect-ratio:auto!important}
+.story .story-grid figcaption{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(20,19,18,.78);color:#fff;font-size:.8rem;padding:4px 8px;border-radius:4px}
+.story .story-more{margin:34px 0 12px;font-size:1.15rem}
+.story-strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+.story-strip a{flex:0 0 auto;scroll-snap-align:start}
+.story-strip img{height:180px;width:auto;border-radius:5px;display:block}
+@media(max-width:700px){.story .story-grid figure,.story .story-grid figure img,.story .story-grid figure picture{height:190px!important}.story .story-grid figure{flex-basis:40%}.story-strip img{height:140px}}
 
 .logo-mark.house{width:62px;height:54px;border:none;border-radius:0}
 .logo-mark.house svg{width:62px;height:54px}
