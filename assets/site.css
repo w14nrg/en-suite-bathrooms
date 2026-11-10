@@ -343,7 +343,7 @@ table.cmp-cols tbody th{background:var(--paper)}
 
 .area-trades{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px 28px;margin-top:22px}.area-trades .at{border-top:2px solid var(--copper,#c8875a);padding-top:12px}.area-trades h3{margin:0 0 6px;font-size:1.12rem}.area-trades p{margin:0 0 8px}
 .compare-wide .compare-frame{aspect-ratio:4/3!important}.project-detail .compare-wide{max-width:640px}
-.tn-slider{position:relative;width:280px;aspect-ratio:4/3;border-radius:6px;overflow:hidden;cursor:ew-resize;touch-action:pan-y;user-select:none;flex-shrink:0}
+.tn-slider{position:relative;width:220px;aspect-ratio:5/6;border-radius:6px;overflow:hidden;cursor:ew-resize;touch-action:pan-y;user-select:none;flex-shrink:0}
 .tn-slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .tn-top{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
 .tn-bar{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 3px rgba(0,0,0,.6);pointer-events:none}
@@ -353,7 +353,7 @@ table.cmp-cols tbody th{background:var(--paper)}
 .tn-tag-l{left:8px}.tn-tag-r{right:8px}
 .tn-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize}
 .intro-grid{grid-template-columns:auto 1fr auto}
-@media(max-width:700px){.intro-grid{grid-template-columns:1fr}.tn-slider{width:100%}}
+@media(max-width:700px){.intro-grid{grid-template-columns:1fr}.tn-slider{width:min(100%,300px)}}
 
 .logo-mark.house{width:62px;height:54px;border:none;border-radius:0}
 .logo-mark.house svg{width:62px;height:54px}

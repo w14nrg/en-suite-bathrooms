@@ -147,5 +147,22 @@ if('scrollRestoration' in history)history.scrollRestoration='manual';window.scro
 /* Then / now slider on the homepage owner strip */
 document.querySelectorAll('[data-tn]').forEach(function (el) {
   var r = el.querySelector('.tn-range');
-  if (r) r.addEventListener('input', function () { el.style.setProperty('--p', r.value + '%'); });
+  var set = function (v) { el.style.setProperty('--p', v + '%'); if (r) r.value = v; };
+  var touched = false;
+  if (r) r.addEventListener('input', function () { touched = true; set(r.value); });
+  // one gentle sweep when it first comes into view, so people see both photos
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function (es) {
+    if (!es[0].isIntersecting) return; io.disconnect();
+    var keys = [[0, 40], [900, 92], [1900, 8], [2800, 40]], t0 = null;
+    function step(ts) {
+      if (touched) return; if (t0 === null) t0 = ts; var t = ts - t0, i = 1;
+      while (i < keys.length && keys[i][0] < t) i++;
+      if (i >= keys.length) { set(40); return; }
+      var a = keys[i - 1], b = keys[i], k = (t - a[0]) / (b[0] - a[0]); k = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      set(Math.round(a[1] + (b[1] - a[1]) * k)); requestAnimationFrame(step);
+    }
+    setTimeout(function () { requestAnimationFrame(step); }, 400);
+  }, { threshold: .6 });
+  io.observe(el);
 });
