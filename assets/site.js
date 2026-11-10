@@ -143,3 +143,9 @@ if('scrollRestoration' in history)history.scrollRestoration='manual';window.scro
     window.gtag("event", "conversion", { send_to: DIRECT_WHATSAPP });
   }, { capture: true });
 })();
+
+/* Then / now slider on the homepage owner strip */
+document.querySelectorAll('[data-tn]').forEach(function (el) {
+  var r = el.querySelector('.tn-range');
+  if (r) r.addEventListener('input', function () { el.style.setProperty('--p', r.value + '%'); });
+});
