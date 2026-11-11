@@ -364,11 +364,34 @@ table.cmp-cols tbody th{background:var(--paper)}
 .story-strip img{height:180px;width:auto;border-radius:5px;display:block}
 @media(max-width:700px){.story .story-grid figure,.story .story-grid figure img,.story .story-grid figure picture{height:190px!important}.story .story-grid figure{flex-basis:40%}.story-strip img{height:140px}}
 
-.team-mini.team-cards{grid-template-columns:repeat(5,1fr)}
+.team-mini.team-cards{grid-template-columns:repeat(6,1fr)}
+@media(max-width:1100px){.team-mini.team-cards{grid-template-columns:repeat(4,1fr)}}
 .team-cards>div{text-align:center}
 .tm-face{display:block;width:72px;height:72px;border-radius:50%;object-fit:cover;margin:0 auto 14px;border:2px solid #514a43}
 .team-mini span.tm-init{display:flex;align-items:center;justify-content:center;background:#3a342f;color:var(--gold);font:1.6rem/1 var(--serif);margin:0 auto 14px}
 @media(max-width:960px){.team-mini.team-cards{grid-template-columns:repeat(2,1fr)}}
+
+.book{max-width:640px;display:grid;gap:18px}
+.book fieldset{border:0;padding:0;margin:0}
+.book legend{font-weight:700;margin-bottom:10px}
+.book-type{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.book-card{display:block;border:1px solid #ced0d2;border-radius:12px;padding:16px;cursor:pointer;background:#fff}
+.book-card input{margin-right:8px}
+.book-card strong{font-size:1.05rem}
+.book-card span{display:block;margin-top:6px;font-size:.9rem;color:#5c554e}
+.book-card:has(input:checked){border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+.book-fields{display:grid;gap:18px}
+.book label{display:grid;gap:6px;font-weight:600}
+.book input:not([type=radio]):not([type=checkbox]),.book select,.book textarea{font:inherit;font-weight:400;padding:11px 12px;border:1px solid #c5c7c9;border-radius:8px;background:#fff;width:100%;box-sizing:border-box}
+.book-days label{display:inline-flex;align-items:center;gap:8px;font-weight:400;margin-right:18px}
+.book-warn{color:#9a3b1f;font-weight:600;margin:0}
+.book-note{font-size:.9rem;color:#5c554e;margin:0}
+.book .btn.is-off{opacity:.45;pointer-events:none}
+@media(max-width:600px){.book-type{grid-template-columns:1fr}}
+.book-fields[hidden],.book-warn[hidden]{display:none}
+.book-card{position:relative;padding-left:44px}
+.book-card input{position:absolute;left:16px;top:19px;margin:0}
+.book label[hidden]{display:none}
 
 .logo-mark.house{width:62px;height:54px;border:none;border-radius:0}
 .logo-mark.house svg{width:62px;height:54px}
